@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://in-syncprofiles.manus.space/sitemap.xml

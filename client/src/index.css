@@ -1,0 +1,481 @@
+/* ============================================================
+   DESIGN SYSTEM: Aurora — Immersive Depth
+   Movement: Apple Vision Pro meets Northern Lights
+   Fonts: Cormorant Garamond (display/italic) + Outfit (body)
+   Philosophy: Premium, otherworldly, unforgettable inclusion
+   ============================================================ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Northern Lights palette — forest green, sky blue & gold */
+  --navy: oklch(0.13 0.06 155);       /* deep forest green replaces navy */
+  --navy-deep: oklch(0.08 0.05 155);  /* darkest forest green */
+  --navy-mid: oklch(0.17 0.06 155);   /* mid forest green */
+  --gold: oklch(0.82 0.14 75);
+  --gold-light: oklch(0.92 0.10 78);
+  --gold-dim: oklch(0.65 0.11 75);
+
+  --background: oklch(0.08 0.05 155); /* deep forest green background */
+  --foreground: oklch(0.97 0.01 130);
+  --card: oklch(0.12 0.06 220);       /* deep blue card */
+  --card-foreground: oklch(0.97 0.01 130);
+  --popover: oklch(0.12 0.06 220);
+  --popover-foreground: oklch(0.97 0.01 130);
+  --primary: oklch(0.82 0.14 75);
+  --primary-foreground: oklch(0.08 0.05 155);
+  --secondary: oklch(0.16 0.07 220);  /* rich blue secondary */
+  --secondary-foreground: oklch(0.92 0.10 78);
+  --muted: oklch(0.14 0.06 200);
+  --muted-foreground: oklch(0.65 0.06 155);
+  --accent: oklch(0.82 0.14 75);
+  --accent-foreground: oklch(0.08 0.05 155);
+  --destructive: oklch(0.60 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.82 0.14 75 / 25%);
+  --input: oklch(0.82 0.14 75 / 20%);
+  --ring: oklch(0.60 0.15 240 / 60%);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    cursor: pointer;
+  }
+  /* Focus visible for accessibility — only on keyboard navigation, not mouse clicks */
+  :focus-visible {
+    outline: 2px solid oklch(0.60 0.15 240 / 70%);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  /* Suppress focus ring on mouse/touch interactions */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding-left: 2rem; padding-right: 2rem; max-width: 1400px; }
+  }
+
+  /* Gold glow effect */
+  .gold-glow {
+    box-shadow: 0 0 20px oklch(0.72 0.14 75 / 40%), 0 0 40px oklch(0.72 0.14 75 / 20%);
+  }
+  .gold-glow-sm {
+    box-shadow: 0 0 10px oklch(0.72 0.14 75 / 35%), 0 0 20px oklch(0.72 0.14 75 / 15%);
+  }
+  .gold-text {
+    color: oklch(0.72 0.14 75);
+  }
+  .gold-border {
+    border: 1.5px solid oklch(0.72 0.14 75 / 60%);
+  }
+  .navy-surface {
+    background: oklch(0.13 0.06 155); /* forest green surface */
+  }
+  .navy-deep-surface {
+    background: oklch(0.08 0.05 155); /* deep forest green */
+  }
+
+  /* Editable field highlight */
+  .editable-field {
+    border-bottom: 2px solid oklch(0.72 0.14 75 / 40%);
+    transition: border-color 180ms ease-out, background 180ms ease-out;
+    border-radius: 4px 4px 0 0;
+    padding: 2px 6px;
+    outline: none;
+  }
+  .editable-field:focus {
+    border-bottom-color: oklch(0.72 0.14 75);
+    background: oklch(0.72 0.14 75 / 8%);
+  }
+  .editable-field:hover:not(:focus) {
+    border-bottom-color: oklch(0.72 0.14 75 / 65%);
+    background: oklch(0.72 0.14 75 / 4%);
+  }
+
+  /* Service icon circle */
+  .service-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: oklch(0.13 0.06 155); /* forest green service circle */
+    border: 2px solid oklch(0.72 0.14 75 / 55%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+  }
+  .service-circle:hover {
+    transform: scale(1.08);
+    border-color: oklch(0.72 0.14 75);
+    box-shadow: 0 0 18px oklch(0.72 0.14 75 / 50%);
+  }
+  .service-circle.selected {
+    border-color: oklch(0.72 0.14 75);
+    background: oklch(0.72 0.14 75 / 15%);
+    box-shadow: 0 0 24px oklch(0.72 0.14 75 / 60%);
+  }
+  .service-circle:active {
+    transform: scale(0.96);
+  }
+
+  /* Sparkle animation */
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes goldPulse {
+    0%, 100% { box-shadow: 0 0 15px oklch(0.72 0.14 75 / 35%); }
+    50% { box-shadow: 0 0 30px oklch(0.72 0.14 75 / 65%), 0 0 50px oklch(0.72 0.14 75 / 25%); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes connectorDraw {
+    from { stroke-dashoffset: 200; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  .animate-sparkle { animation: sparkle 2s ease-in-out infinite; }
+  .animate-float { animation: float 3s ease-in-out infinite; }
+  .animate-gold-pulse { animation: goldPulse 2.5s ease-in-out infinite; }
+  .animate-fade-in-up { animation: fadeInUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) both; }
+
+  .shimmer-text {
+    background: linear-gradient(90deg, oklch(0.72 0.14 75), oklch(0.92 0.08 78), oklch(0.72 0.14 75));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Video player */
+  .video-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid oklch(0.72 0.14 75 / 40%);
+  }
+  .video-container:hover {
+    border-color: oklch(0.72 0.14 75 / 70%);
+    box-shadow: 0 0 20px oklch(0.72 0.14 75 / 30%);
+  }
+
+  /* Panel tabs */
+  /* Northern Lights glass surface — forest green + sky blue */
+  .glass-surface {
+    background: rgba(6, 20, 10, 0.60);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border: 1px solid rgba(100, 220, 130, 0.15);
+  }
+  .glass-card {
+    background: rgba(14, 8, 35, 0.65);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid rgba(160, 120, 255, 0.20);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .aurora-glow {
+    box-shadow: 0 0 30px rgba(60, 200, 100, 0.30), 0 0 60px rgba(140, 80, 255, 0.20);
+  }
+  .aurora-text {
+    background: linear-gradient(135deg, #c9a84c 0%, #f0d080 30%, #5dde8a 65%, #b07fe8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes auroraShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes auroraFloat {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-8px) scale(1.02); opacity: 1; }
+  }
+  @keyframes glassGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(60,200,100,0.25), 0 0 40px rgba(140,80,255,0.15); }
+    50% { box-shadow: 0 0 40px rgba(60,200,100,0.45), 0 0 80px rgba(140,80,255,0.25); }
+  }
+  .animate-aurora-float { animation: auroraFloat 4s ease-in-out infinite; }
+  .animate-glass-glow { animation: glassGlow 3s ease-in-out infinite; }
+
+  .panel-tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: oklch(0.65 0.05 155);
+    transition: all 160ms ease-out;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: 'Outfit', sans-serif;
+  }
+  .panel-tab:hover {
+    color: oklch(0.85 0.12 78);
+    background: oklch(0.72 0.14 75 / 10%);
+  }
+  .panel-tab.active {
+    color: oklch(0.72 0.14 75);
+    background: oklch(0.72 0.14 75 / 15%);
+    border-color: oklch(0.72 0.14 75 / 40%);
+  }
+
+  /* Accessible skip link */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: oklch(0.82 0.14 75);
+    color: oklch(0.08 0.05 155);
+    padding: 8px 16px;
+    z-index: 100;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+    transition: top 200ms ease-out;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-sparkle, .animate-float, .animate-gold-pulse, .animate-fade-in-up, .shimmer-text {
+      animation: none !important;
+    }
+    * { transition-duration: 0.01ms !important; }
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY OVERRIDES
+   Applied via root class toggles from AccessibilityToolbar
+   ============================================================ */
+
+/* Font scaling — applied via CSS variable */
+:root { --a11y-font-scale: 1; }
+.a11y-font-scale body,
+body {
+  font-size: calc(16px * var(--a11y-font-scale, 1));
+}
+
+/* High contrast mode */
+.a11y-high-contrast {
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.05 0 0);
+  --card-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / 80%);
+  --gold: oklch(0.90 0.18 75);
+  --gold-light: oklch(0.95 0.12 78);
+  --muted-foreground: oklch(0.85 0 0);
+}
+.a11y-high-contrast body {
+  background: black !important;
+  color: white !important;
+}
+.a11y-high-contrast a,
+.a11y-high-contrast button {
+  outline: 2px solid oklch(0.90 0.18 75) !important;
+}
+.a11y-high-contrast :focus-visible {
+  outline: 3px solid yellow !important;
+  outline-offset: 4px !important;
+}
+
+/* Dyslexia-friendly font — Lexend (loaded via index.html) */
+.a11y-dyslexia body,
+.a11y-dyslexia p,
+.a11y-dyslexia span,
+.a11y-dyslexia button,
+.a11y-dyslexia input,
+.a11y-dyslexia textarea,
+.a11y-dyslexia label,
+.a11y-dyslexia li {
+  font-family: 'Lexend', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.8 !important;
+}
+
+/* Reduced motion */
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Accessibility panel slide-up animation */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Pulse soft for TTS stop button */
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 4px 20px oklch(0.65 0.20 25 / 40%); }
+  50%       { box-shadow: 0 4px 30px oklch(0.65 0.20 25 / 70%); }
+}
+
+/* Shimmer drift — slow floating glow for Sky & Gold background */
+@keyframes shimmerDrift {
+  0%   { transform: translateX(-50%) translateY(0px) scale(1); opacity: 0.8; }
+  50%  { transform: translateX(-50%) translateY(-30px) scale(1.08); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(10px) scale(0.96); opacity: 0.7; }
+}
+
+/* Bounce — for screenshot tip camera icon */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  40%       { transform: translateY(-6px); }
+  60%       { transform: translateY(-3px); }
+}
+
+/* ============================================================
+   PRINT STYLES — for Save / Print Profile on /view
+   ============================================================ */
+@media print {
+  /* Hide everything except the profile content */
+  body > *:not(#root) { display: none !important; }
+
+  /* Hide UI chrome: accessibility toolbar, read-aloud button,
+     back-to-top button, shimmer overlay, footer print button */
+  [data-accessibility-toolbar],
+  .accessibility-toolbar,
+  [data-no-print],
+  [aria-label="Save or print this profile"],
+  [aria-label="Back to top"],
+  [aria-label="Pause reading aloud"],
+  [aria-label="Resume reading aloud"],
+  [aria-label="Read this page aloud"],
+  [aria-label="Stop reading aloud"],
+  [aria-label="Scroll to top"] {
+    display: none !important;
+  }
+
+  /* Remove page padding added for the fixed top bar */
+  #root > div,
+  [style*="paddingTop: \"110px\""] {
+    padding-top: 0 !important;
+  }
+
+  /* Reset backgrounds so colours print correctly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Keep the profile card centred and full-width */
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+  }
+
+  /* Avoid page breaks inside thread cards */
+  [style*="borderRadius: \"16px\""],
+  [style*="borderLeft:"] {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Remove fixed/sticky elements */
+  [style*="position: \"fixed\""],
+  [style*="position:fixed"] {
+    display: none !important;
+  }
+
+  /* Ensure shimmer overlay is hidden */
+  [style*="radial-gradient(ellipse"] {
+    display: none !important;
+  }
+}
