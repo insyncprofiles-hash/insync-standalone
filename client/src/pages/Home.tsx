@@ -421,7 +421,7 @@ function DemoThreadSection({ num, icon, title, subtitle, children }: { num: numb
   );
 }
 
-const DEFAULT_DEMO_VIDEO = "/assets/sw_final_video_new_music_46a119c4.mp4";
+const DEFAULT_DEMO_VIDEO = "/manus-storage/sw_final_video_new_music_46a119c4.mp4";
 function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }: { profile: ProfileData; onClose: () => void; videoUrl?: string | null; isDemo?: boolean; hostedUrl?: string | null }) {
   // Block right-click, text selection, and keyboard copy shortcuts
   React.useEffect(() => {
@@ -729,7 +729,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
 
           {/* Intro Video */}
           {(() => {
-            const effectiveVideoUrl = videoUrl && !videoUrl.startsWith('/assets') ? videoUrl : null;
+            const effectiveVideoUrl = videoUrl && !videoUrl.startsWith('/manus-storage') ? videoUrl : null;
             if (!effectiveVideoUrl) {
               return (
                 <div style={{ padding: '0 20px 16px' }}>
@@ -959,7 +959,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
 
           {/* QR Code */}
           {(() => {
-            const qrUrl = !isDemo && hostedUrl ? hostedUrl : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://YOUR_DOMAIN/pricing');
+            const qrUrl = !isDemo && hostedUrl ? hostedUrl : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://in-syncprofiles.manus.space/pricing');
             const qrLabel = !isDemo && hostedUrl ? 'Scan to open this profile' : 'Scan to get your own profile';
             return (
               <div id='demo-overlay-qr' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px 24px', background: 'white', borderRadius: '20px', boxShadow: '0 4px 24px rgba(74,144,217,0.12)', border: '1.5px solid rgba(74,144,217,0.15)' }}>
@@ -1103,7 +1103,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                         ctx.fillText('InSync Profiles', W/2, 920);
                         ctx.font = '24px Arial';
                         ctx.fillStyle = '#777777';
-                        ctx.fillText('YOUR_DOMAIN', W/2, 958);
+                        ctx.fillText('in-syncprofiles.manus.space', W/2, 958);
 
                         // Corner brackets
                         const s = 36; const lw = 4;
@@ -1316,9 +1316,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     return localStorage.getItem("insync_hosted_url") || "";
   });
   const [downloadReady, setDownloadReady] = useState(false);
-  const [deckOptIn, setDeckOptIn] = useState<boolean>(() => {
-    return localStorage.getItem("insync_deck_optin") === "true";
-  });
   const [expandedServiceId, setExpandedServiceId] = useState<string | null>(null);
   const [clientPreview, setClientPreview] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -2269,7 +2266,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 {/* Sample video — always shown so worker can see what it looks like */}
                 <div style={{ borderRadius: "14px", overflow: "hidden", border: `1px solid ${A.borderGold}`, marginBottom: "14px" }}>
                   <video
-                    src="/assets/sw_final_video_new_music_46a119c4.mp4"
+                    src="/manus-storage/sw_final_video_new_music_46a119c4.mp4"
                     controls
                     playsInline
                     style={{ width: "100%", display: "block", background: "#000" }}
@@ -2308,12 +2305,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <label style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 600, color: A.textDim, display: "block", marginBottom: "6px" }}>Paste your video link here (YouTube, Google Drive, Dropbox, etc.)</label>
                   <input
                     style={{ ...THREAD_INPUT, width: "100%" }}
-                    value={personalVideoUrl && !personalVideoUrl.startsWith("/assets") ? personalVideoUrl : ""}
+                    value={personalVideoUrl && !personalVideoUrl.startsWith("/manus-storage") ? personalVideoUrl : ""}
                     onChange={e => setPersonalVideoUrl(e.target.value || null)}
                     placeholder="https://youtu.be/your-video-id"
                     aria-label="Video URL"
                   />
-                  {personalVideoUrl && !personalVideoUrl.startsWith("/assets") && (
+                  {personalVideoUrl && !personalVideoUrl.startsWith("/manus-storage") && (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "6px" }}>
                       {(personalVideoUrl.includes('youtu.be') || personalVideoUrl.includes('youtube.com')) ? (
                         <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ YouTube link detected — will embed inline for clients</span>
@@ -2637,96 +2634,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
             </Section>
 
-            {/* ── Support Deck Opt-In ── */}
-            {!isClientView && (
-              <div style={{
-                background: deckOptIn ? "rgba(45,212,191,0.08)" : "rgba(255,255,255,0.04)",
-                border: `1.5px solid ${deckOptIn ? "rgba(45,212,191,0.40)" : "rgba(255,255,255,0.10)"}`,
-                borderRadius: "16px",
-                padding: "20px",
-                marginTop: "16px",
-                transition: "all 0.25s cubic-bezier(0.23,1,0.32,1)",
-              }}>
-                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#2dd4bf" }}>
-                      🃏 Support Deck
-                    </p>
-                    <p style={{ margin: "0 0 8px", fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 700, color: "rgba(255,255,255,0.90)" }}>
-                      List yourself on the Support Deck
-                    </p>
-                    <p style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "rgba(255,255,255,0.50)", lineHeight: 1.6 }}>
-                      {deckOptIn
-                        ? "Your profile is visible on the Support Deck. Participants can find and scan your Presence card."
-                        : "Make yourself discoverable to participants, families, and coordinators. Not assigned. Chosen."}
-                    </p>
-                    {deckOptIn && (
-                      <a
-                        href="/deck"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ display: "inline-block", marginTop: "10px", fontSize: "12px", color: "#2dd4bf", textDecoration: "none", fontWeight: 600, fontFamily: "'Outfit', sans-serif" }}
-                      >
-                        View Support Deck →
-                      </a>
-                    )}
-                  </div>
-                  {/* Toggle switch */}
-                  <button
-                    onClick={() => {
-                      const next = !deckOptIn;
-                      setDeckOptIn(next);
-                      localStorage.setItem("insync_deck_optin", String(next));
-                      if (next && hostedUrl) {
-                        // Submit listing to deck
-                        const listing = {
-                          pid: profileId || Math.random().toString(36).slice(2, 10),
-                          profileUrl: hostedUrl,
-                          workerName: profile.name || "Support Worker",
-                          location: profile.location || "",
-                          services: profile.services.filter((s: { selected: boolean }) => s.selected).map((s: { label: string }) => s.label).slice(0, 6),
-                          availability: "available",
-                          tagline: profile.tagline || "",
-                          addedAt: Date.now(),
-                        };
-                        const existing: unknown[] = JSON.parse(localStorage.getItem("insync_deck_listings") || "[]");
-                        const filtered = existing.filter((l: unknown) => (l as { pid: string }).pid !== listing.pid);
-                        filtered.unshift(listing);
-                        localStorage.setItem("insync_deck_listings", JSON.stringify(filtered));
-                      } else if (!next) {
-                        // Remove from deck
-                        const existing: unknown[] = JSON.parse(localStorage.getItem("insync_deck_listings") || "[]");
-                        const filtered = existing.filter((l: unknown) => (l as { pid: string }).pid !== profileId);
-                        localStorage.setItem("insync_deck_listings", JSON.stringify(filtered));
-                      }
-                    }}
-                    style={{
-                      width: "52px", height: "28px",
-                      borderRadius: "14px",
-                      background: deckOptIn ? "#2dd4bf" : "rgba(255,255,255,0.15)",
-                      border: "none", cursor: "pointer",
-                      position: "relative",
-                      transition: "background 0.2s cubic-bezier(0.23,1,0.32,1)",
-                      flexShrink: 0,
-                    }}
-                    aria-label={deckOptIn ? "Remove from Support Deck" : "List on Support Deck"}
-                    aria-pressed={deckOptIn}
-                  >
-                    <span style={{
-                      position: "absolute",
-                      top: "3px",
-                      left: deckOptIn ? "27px" : "3px",
-                      width: "22px", height: "22px",
-                      borderRadius: "50%",
-                      background: "#fff",
-                      transition: "left 0.2s cubic-bezier(0.23,1,0.32,1)",
-                      boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
-                      display: "block",
-                    }} />
-                  </button>
-                </div>
-              </div>
-            )}
             </div>{/* end hidden share section */}
           </>
         )}
@@ -2919,7 +2826,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       {/* ── Brand Footer ─────────────────────────────────────── */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '32px 16px 40px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+        <img src="/manus-storage/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
         <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 800, color: 'rgba(255,255,255,0.65)', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>InSync Profiles</p>
         <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.3)', margin: 0 }}>&copy; {new Date().getFullYear()} InSync Profiles. All rights reserved. &nbsp;·&nbsp; ABN 54 116 010 622</p>
         <a href="/privacy" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', textDecoration: 'underline', marginTop: '2px' }}>Terms of Sale &amp; Refund Policy</a>
