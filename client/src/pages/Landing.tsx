@@ -316,11 +316,11 @@ export default function Landing() {
           aria-expanded={mobileMenuOpen}
           style={{
             display: "none", // overridden by CSS below
-            width: "40px", height: "40px", borderRadius: "10px",
+            width: "52px", height: "44px", borderRadius: "10px",
             background: mobileMenuOpen ? `rgba(45,212,191,0.15)` : "transparent",
             border: `1.5px solid ${mobileMenuOpen ? C.teal : C.border}`,
             cursor: "pointer",
-            flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px",
+            flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
             transition: "all 150ms ease-out", flexShrink: 0,
           }}
         >
@@ -333,6 +333,7 @@ export default function Landing() {
               <span style={{ display: "block", width: "18px", height: "2px", borderRadius: "2px", background: C.textBody }} />
               <span style={{ display: "block", width: "18px", height: "2px", borderRadius: "2px", background: C.textBody }} />
               <span style={{ display: "block", width: "18px", height: "2px", borderRadius: "2px", background: C.textBody }} />
+              <span style={{ display: "block", fontSize: "9px", fontWeight: 700, color: C.textBody, letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1, marginTop: "1px" }}>Menu</span>
             </>
           )}
         </button>
@@ -559,7 +560,7 @@ export default function Landing() {
           <div style={{ position: "relative", zIndex: 1, display: "flex", gap: "56px", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
 
             {/* ── LEFT: Headline + CTAs ── */}
-            <div style={{ flex: "1 1 380px", maxWidth: "520px" }}>
+            <div style={{ flex: "1 1 380px", maxWidth: "520px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
               {/* Sector tag */}
               <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: C.bgGlass, border: `1px solid ${C.border}`, borderRadius: "99px", padding: "6px 16px", marginBottom: "28px" }}>
                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.teal, display: "inline-block", flexShrink: 0 }} aria-hidden="true" />

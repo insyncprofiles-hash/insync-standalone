@@ -284,7 +284,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             aria-expanded={openPanel === "theme"}
             aria-controls="theme-panel"
             style={{
-              width: "48px", height: "44px", borderRadius: "10px",
+              width: "40px", height: "40px", borderRadius: "10px",
               background: openPanel === "theme" ? "rgba(74,144,217,0.10)" : "transparent",
               border: "none", cursor: "pointer",
               display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
@@ -294,7 +294,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
             <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
             <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-            <span style={{ display: "block", fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 700, color: "#1a2e4a", letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1, marginTop: "1px" }}>Menu</span>
           </button>
         ) : (
           <div style={{ width: "40px" }} />
