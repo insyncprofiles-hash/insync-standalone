@@ -1007,6 +1007,9 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                   </button>
                 )}
                 {!isDemo && hostedUrl && (
+                  <LanyardPreview profile={profile} qrSelector='#demo-overlay-qr svg' />
+                )}
+                {!isDemo && hostedUrl && (
                   <button
                     onClick={() => {
                       // Generate personalised lanyard card using Canvas
@@ -1166,6 +1169,123 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
           <polyline points='18 15 12 9 6 15' />
         </svg>
       </button>
+    </div>
+  );
+}
+
+// ── Lanyard Card Preview ─────────────────────────────────────
+function LanyardPreview({ profile, qrSelector }: { profile: ProfileData; qrSelector: string }) {
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const W = 280, H = 420;
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Background
+    ctx.fillStyle = '#0A0A0A';
+    ctx.fillRect(0, 0, W, H);
+    // Diagonal band
+    for (let x = 0; x < W; x++) {
+      for (let y = 0; y < H; y++) {
+        const d = (x + y) / (W + H);
+        if (d > 0.28 && d < 0.58) {
+          const t = (d - 0.28) / 0.30;
+          const r = Math.round(90 + t * 130);
+          const g = Math.round(10 + t * 40);
+          const b = Math.round(200 - t * 90);
+          ctx.fillStyle = `rgb(${r},${g},${b})`;
+          ctx.fillRect(x, y, 1, 1);
+        }
+      }
+    }
+
+    // Outer border
+    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
+    ctx.strokeRect(3, 3, W - 6, H - 6);
+
+    // Corner brackets
+    const s = 14;
+    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
+    [[4,4],[W-4,4],[4,H-4],[W-4,H-4]].forEach(([px,py]) => {
+      const dx = px < W/2 ? 1 : -1;
+      const dy = py < H/2 ? 1 : -1;
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px+dx*s, py); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py+dy*s); ctx.stroke();
+    });
+
+    // Lanyard hole
+    ctx.beginPath();
+    ctx.arc(W/2, 14, 9, 0, Math.PI*2);
+    ctx.fillStyle = '#111111'; ctx.fill();
+    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2; ctx.stroke();
+
+    // QR area
+    const QR_SIZE = 172;
+    const QR_X = (W - QR_SIZE) / 2;
+    const QR_Y = 30;
+    ctx.fillStyle = '#F5F0E8';
+    ctx.fillRect(QR_X, QR_Y, QR_SIZE, QR_SIZE);
+    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
+    ctx.strokeRect(QR_X - 4, QR_Y - 4, QR_SIZE + 8, QR_SIZE + 8);
+
+    const drawText = () => {
+      ctx.textAlign = 'center';
+      // SUPPORT WORKER gold
+      ctx.font = 'bold 13px Arial';
+      ctx.fillStyle = '#FFD700';
+      ctx.fillText('SUPPORT WORKER', W/2, 222);
+      // Location
+      ctx.font = '10px Arial';
+      ctx.fillStyle = '#DDDDDD';
+      ctx.fillText(profile.location || '', W/2, 238);
+      // Rule
+      ctx.strokeStyle = '#9955EE'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(20, 250); ctx.lineTo(W-20, 250); ctx.stroke();
+      // Support Worker white
+      ctx.font = 'bold 20px Arial';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText('Support Worker', W/2, 300);
+      // Brand
+      ctx.font = '11px Arial';
+      ctx.fillStyle = '#BB77FF';
+      ctx.fillText('InSync Profiles', W/2, 330);
+      // URL
+      ctx.font = '9px Arial';
+      ctx.fillStyle = '#777777';
+      ctx.fillText('insyncprofiles.net', W/2, 348);
+    };
+
+    // Try to render QR from SVG
+    const svgEl = document.querySelector(qrSelector) as SVGSVGElement | null;
+    if (svgEl) {
+      const serializer = new XMLSerializer();
+      const svgStr = serializer.serializeToString(svgEl);
+      const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const qrImg = new Image();
+      qrImg.onload = () => {
+        ctx.drawImage(qrImg, QR_X, QR_Y, QR_SIZE, QR_SIZE);
+        URL.revokeObjectURL(url);
+        drawText();
+      };
+      qrImg.src = url;
+    } else {
+      drawText();
+    }
+  }, [profile.location, qrSelector]);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', marginTop: '8px' }}>
+      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: '#9955EE', margin: 0, letterSpacing: '0.08em', textTransform: 'uppercase' }}>🪪 Lanyard Card Preview</p>
+      <canvas
+        ref={canvasRef}
+        style={{ borderRadius: '10px', boxShadow: '0 4px 24px rgba(100,50,200,0.35)', maxWidth: '200px', width: '100%' }}
+        aria-label="Preview of your personalised lanyard card"
+      />
     </div>
   );
 }
