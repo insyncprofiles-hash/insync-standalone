@@ -1019,69 +1019,119 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                       const ctx = canvas.getContext('2d');
                       if (!ctx) return;
 
-                      // Background: metallic purple-to-gold brushed effect
-                      // Base dark layer
-                      ctx.fillStyle = '#0E0818';
+                      // ── MATT BLACK BASE ──
+                      ctx.fillStyle = '#121212';
                       ctx.fillRect(0, 0, W, H);
-                      // Main metallic gradient top-left purple to bottom-right gold
-                      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-                      bgGrad.addColorStop(0,    '#1A0840');
-                      bgGrad.addColorStop(0.18, '#3B1280');
-                      bgGrad.addColorStop(0.38, '#6B2FBF');
-                      bgGrad.addColorStop(0.52, '#7B3FCC');
-                      bgGrad.addColorStop(0.65, '#8B5E10');
-                      bgGrad.addColorStop(0.80, '#B8820A');
-                      bgGrad.addColorStop(0.92, '#D4A010');
-                      bgGrad.addColorStop(1,    '#C89008');
-                      ctx.fillStyle = bgGrad;
-                      ctx.fillRect(0, 0, W, H);
-                      // Horizontal brushed-metal streaks
+
+                      // ── DIAGONAL AURORA STRIP (purple → gold) ──
+                      // Strip is a parallelogram: enters top-right, exits bottom-left
                       ctx.save();
-                      for (let i = 0; i < 80; i++) {
-                        const y2 = Math.random() * H;
-                        const alpha = Math.random() * 0.06 + 0.01;
-                        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-                        ctx.fillRect(0, y2, W, Math.random() * 3 + 0.5);
+                      const STRIP_TOP_Y = 200;
+                      const STRIP_BOT_Y = 850;
+                      const STRIP_W = 320;
+                      // Clip to parallelogram shape
+                      ctx.beginPath();
+                      ctx.moveTo(W, STRIP_TOP_Y);
+                      ctx.lineTo(W, STRIP_TOP_Y + STRIP_W);
+                      ctx.lineTo(0, STRIP_BOT_Y + STRIP_W);
+                      ctx.lineTo(0, STRIP_BOT_Y);
+                      ctx.closePath();
+                      ctx.clip();
+                      // Aurora gradient across the strip (perpendicular to strip direction)
+                      const auroraGrad = ctx.createLinearGradient(W, STRIP_TOP_Y, 0, STRIP_BOT_Y + STRIP_W);
+                      auroraGrad.addColorStop(0,    '#C8960A');
+                      auroraGrad.addColorStop(0.18, '#9A6A10');
+                      auroraGrad.addColorStop(0.38, '#7B4A8A');
+                      auroraGrad.addColorStop(0.55, '#5C2DA8');
+                      auroraGrad.addColorStop(0.72, '#3D1A7A');
+                      auroraGrad.addColorStop(1,    '#1A0840');
+                      ctx.fillStyle = auroraGrad;
+                      ctx.fillRect(0, 0, W, H);
+                      // Brushed metal streaks
+                      for (let i = 0; i < 120; i++) {
+                        const t = Math.random();
+                        const yL = STRIP_BOT_Y + t * STRIP_W;
+                        const yR = STRIP_TOP_Y + t * STRIP_W;
+                        const alpha = (Math.random() * 0.07 + 0.01).toFixed(3);
+                        ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+                        ctx.lineWidth = Math.random() * 1.5 + 0.3;
+                        ctx.beginPath(); ctx.moveTo(0, yL); ctx.lineTo(W, yR); ctx.stroke();
                       }
-                      ctx.restore();
-                      // Diagonal light sheen
-                      ctx.save();
-                      const sheen = ctx.createLinearGradient(0, 0, W * 0.7, H * 0.7);
-                      sheen.addColorStop(0,    'rgba(255,255,255,0.00)');
-                      sheen.addColorStop(0.35, 'rgba(255,255,255,0.10)');
-                      sheen.addColorStop(0.5,  'rgba(255,255,255,0.18)');
-                      sheen.addColorStop(0.65, 'rgba(255,255,255,0.08)');
-                      sheen.addColorStop(1,    'rgba(255,255,255,0.00)');
-                      ctx.fillStyle = sheen;
+                      // Diagonal sheen highlight
+                      const sheenGrad = ctx.createLinearGradient(W * 0.3, 0, W * 0.7, H);
+                      sheenGrad.addColorStop(0,   'rgba(255,255,255,0)');
+                      sheenGrad.addColorStop(0.4, 'rgba(255,255,255,0.13)');
+                      sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.22)');
+                      sheenGrad.addColorStop(0.6, 'rgba(255,255,255,0.10)');
+                      sheenGrad.addColorStop(1,   'rgba(255,255,255,0)');
+                      ctx.fillStyle = sheenGrad;
                       ctx.fillRect(0, 0, W, H);
                       ctx.restore();
 
-                      // Lanyard hole
-                      ctx.beginPath();
-                      ctx.arc(W/2, 36, 22, 0, Math.PI*2);
-                      ctx.fillStyle = '#111111';
+                      // ── ROUNDED RECT HELPER ──
+                      const roundRect = (rx: number, ry: number, rw: number, rh: number, r: number) => {
+                        ctx.beginPath();
+                        ctx.moveTo(rx + r, ry);
+                        ctx.lineTo(rx + rw - r, ry);
+                        ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + r);
+                        ctx.lineTo(rx + rw, ry + rh - r);
+                        ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - r, ry + rh);
+                        ctx.lineTo(rx + r, ry + rh);
+                        ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - r);
+                        ctx.lineTo(rx, ry + r);
+                        ctx.quadraticCurveTo(rx, ry, rx + r, ry);
+                        ctx.closePath();
+                      };
+
+                      // ── SCAN ME pill (top-left dark rounded rect) ──
+                      const PILL_PAD = 28;
+                      const SCAN_X = 30, SCAN_Y = 60, SCAN_W = 380, SCAN_H = 230;
+                      ctx.save();
+                      roundRect(SCAN_X, SCAN_Y, SCAN_W, SCAN_H, 32);
+                      ctx.fillStyle = 'rgba(14,14,14,0.88)';
                       ctx.fill();
-                      ctx.strokeStyle = '#FFD700';
-                      ctx.lineWidth = 4;
+                      ctx.restore();
+                      // SCAN ME. text — large gold serif-style
+                      ctx.font = 'bold 110px Georgia, serif';
+                      ctx.fillStyle = '#D4A017';
+                      ctx.textAlign = 'left';
+                      ctx.fillText('SCAN', SCAN_X + PILL_PAD, SCAN_Y + 115);
+                      ctx.fillText('ME.', SCAN_X + PILL_PAD, SCAN_Y + 220);
+
+                      // ── LANYARD HOLE ──
+                      ctx.beginPath();
+                      ctx.arc(W/2, 30, 20, 0, Math.PI*2);
+                      ctx.fillStyle = '#0a0a0a';
+                      ctx.fill();
+                      ctx.strokeStyle = '#D4A017';
+                      ctx.lineWidth = 3;
                       ctx.stroke();
 
-                      // QR code — draw from existing SVG
+                      // ── QR CODE — draw from existing SVG ──
                       const svgEl = document.querySelector('#demo-overlay-qr svg') as SVGSVGElement | null;
-                      const QR_SIZE = 430;
+                      const QR_SIZE = 320;
                       const QR_X = (W - QR_SIZE) / 2;
-                      const QR_Y = 75;
+                      const QR_Y = 360;
                       const drawRest = (qrDataUrl?: string) => {
                         if (qrDataUrl) {
                           const qrImg = new Image();
                           qrImg.onload = () => {
-                            // QR background
-                            ctx.fillStyle = '#F5F0E8';
-                            ctx.fillRect(QR_X, QR_Y, QR_SIZE, QR_SIZE);
+                            // White QR background with rounded corners
+                            ctx.save();
+                            roundRect(QR_X - 12, QR_Y - 12, QR_SIZE + 24, QR_SIZE + 24, 16);
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fill();
+                            ctx.restore();
                             ctx.drawImage(qrImg, QR_X, QR_Y, QR_SIZE, QR_SIZE);
-                            // Gold border
-                            ctx.strokeStyle = '#FFD700';
-                            ctx.lineWidth = 5;
-                            ctx.strokeRect(QR_X - 10, QR_Y - 10, QR_SIZE + 20, QR_SIZE + 20);
+                            // Gold corner scan brackets
+                            const bs = 38, bw = 5;
+                            ctx.strokeStyle = '#D4A017'; ctx.lineWidth = bw;
+                            [[QR_X-16,QR_Y-16],[QR_X+QR_SIZE+16,QR_Y-16],[QR_X-16,QR_Y+QR_SIZE+16],[QR_X+QR_SIZE+16,QR_Y+QR_SIZE+16]].forEach(([bx,by],idx) => {
+                              const dx = idx % 2 === 0 ? 1 : -1;
+                              const dy = idx < 2 ? 1 : -1;
+                              ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + dx*bs, by); ctx.stroke();
+                              ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx, by + dy*bs); ctx.stroke();
+                            });
                             finishCard();
                           };
                           qrImg.src = qrDataUrl;
@@ -1091,62 +1141,39 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                       };
 
                       const finishCard = () => {
-                        const workerLocation = profile.location || '';
-
-                        // "SUPPORT WORKER" in gold directly under QR (QR ends at ~y=515)
+                        // ── SUPPORT WORKER pill (bottom dark rounded rect) ──
+                        const SW_X = 30, SW_Y = 760, SW_W = W - 60, SW_H = 220;
+                        ctx.save();
+                        roundRect(SW_X, SW_Y, SW_W, SW_H, 32);
+                        ctx.fillStyle = 'rgba(14,14,14,0.88)';
+                        ctx.fill();
+                        ctx.restore();
+                        ctx.font = 'bold 96px Georgia, serif';
+                        ctx.fillStyle = '#D4A017';
                         ctx.textAlign = 'center';
-                        ctx.font = 'bold 52px Arial';
-                        ctx.fillStyle = '#FFD700';
-                        ctx.fillText('SUPPORT WORKER', W/2, 590);
+                        ctx.fillText('SUPPORT', W/2, SW_Y + 105);
+                        ctx.fillText('WORKER', W/2, SW_Y + 200);
 
-                        // Gold rule under role
-                        ctx.strokeStyle = '#FFD700';
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        ctx.moveTo(80, 615); ctx.lineTo(W-80, 615);
-                        ctx.stroke();
-
-                        // Location
-                        ctx.font = '28px Arial';
-                        ctx.fillStyle = '#CCAAFF';
-                        ctx.fillText(workerLocation, W/2, 660);
-
-                        // Purple rule
-                        ctx.strokeStyle = '#9955EE';
-                        ctx.lineWidth = 3;
-                        ctx.beginPath();
-                        ctx.moveTo(50, 700); ctx.lineTo(W-50, 700);
-                        ctx.stroke();
-
-                        // Logo image in place of white Support Worker text
+                        // ── LOGO + URL ──
                         const logoImg = new Image();
                         logoImg.onload = () => {
-                          const LOGO_SIZE = 220;
-                          const LOGO_X = (W - LOGO_SIZE) / 2;
-                          const LOGO_Y = 710;
-                          ctx.drawImage(logoImg, LOGO_X, LOGO_Y, LOGO_SIZE, LOGO_SIZE);
-
-                          // insyncprofiles.net grey
-                          ctx.font = '22px Arial';
-                          ctx.fillStyle = '#888888';
+                          const LOGO_SIZE = 80;
+                          ctx.drawImage(logoImg, W/2 - LOGO_SIZE/2, 1000, LOGO_SIZE, LOGO_SIZE);
+                          ctx.font = '18px Arial';
+                          ctx.fillStyle = '#666666';
                           ctx.textAlign = 'center';
-                          ctx.fillText('insyncprofiles.net', W/2, 960);
-
-                          // Corner brackets
-                          const s = 36; const lw = 4;
-                          ctx.strokeStyle = '#FFD700'; ctx.lineWidth = lw;
-                          [[12,12],[W-12,12],[12,H-12],[W-12,H-12]].forEach(([bpx,bpy]) => {
-                            const dx = bpx < W/2 ? 1 : -1;
-                            const dy = bpy < H/2 ? 1 : -1;
-                            ctx.beginPath(); ctx.moveTo(bpx, bpy); ctx.lineTo(bpx+dx*s, bpy); ctx.stroke();
-                            ctx.beginPath(); ctx.moveTo(bpx, bpy); ctx.lineTo(bpx, bpy+dy*s); ctx.stroke();
-                          });
-
-                          // Outer border
-                          ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4;
-                          ctx.strokeRect(6, 6, W-12, H-12);
-
+                          ctx.fillText('insyncprofiles.net', W/2, 1030);
                           // Download
+                          const a = document.createElement('a');
+                          a.href = canvas.toDataURL('image/png');
+                          a.download = 'insync-lanyard-card.png';
+                          a.click();
+                        };
+                        logoImg.onerror = () => {
+                          ctx.font = '18px Arial';
+                          ctx.fillStyle = '#666666';
+                          ctx.textAlign = 'center';
+                          ctx.fillText('insyncprofiles.net', W/2, 1030);
                           const a = document.createElement('a');
                           a.href = canvas.toDataURL('image/png');
                           a.download = 'insync-lanyard-card.png';
