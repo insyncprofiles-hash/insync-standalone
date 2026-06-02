@@ -298,7 +298,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
         ) : (
           <div style={{ width: "40px" }} />
         )}
-        {/* Centre: InSync Profiles logo — always visible on all screen sizes */}
+        {/* Centre: InSync Profiles logo — sits next to hamburger on the left */}
         <a
           href="/"
           style={{
@@ -306,10 +306,8 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             alignItems: "center",
             gap: "8px",
             textDecoration: "none",
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-            pointerEvents: "auto",
+            marginLeft: "4px",
+            flex: 1,
           }}
           aria-label="InSync Profiles — go to home"
         >
@@ -317,7 +315,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             src="/assets/insync-logo-transparent_9e0df532.png"
             alt="InSync Profiles logo"
             aria-hidden="true"
-            style={{ width: "40px", height: "40px", flexShrink: 0, objectFit: "contain" }}
+            style={{ width: "36px", height: "36px", flexShrink: 0, objectFit: "contain" }}
           />
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1px" }}>
             <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 800, color: "#c9a84c", letterSpacing: "0.10em", textTransform: "uppercase", lineHeight: 1 }}>InSync Profiles</span>
