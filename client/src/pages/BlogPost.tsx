@@ -135,7 +135,7 @@ function LanyardCardBenefitsArticle() {
       </div>
 
       <p>
-        A matt black card. A diagonal aurora strip flowing from deep purple to warm gold. A QR code sitting right in the centre. Three words at the bottom: <strong style={{ color: "#f5c842" }}>SUPPORT WORKER</strong>.
+        A matt black card. A diagonal aurora strip flowing from deep purple to warm gold. A QR code sitting right in the centre. Two words at the bottom: <strong style={{ color: "#f5c842" }}>SUPPORT WORKER</strong>.
       </p>
       <p>
         That is all it takes. Support workers wearing the InSync Profiles lanyard card are discovering that the most powerful marketing tool they own is not a Facebook post, not a business card, and not a listing on a platform — it is the thing hanging around their neck.
