@@ -1087,23 +1087,18 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                         ctx.moveTo(50, 718); ctx.lineTo(W-50, 718);
                         ctx.stroke();
 
-                        // Meet me before
-                        ctx.font = 'bold 42px Arial';
+                        // Support Worker label
+                        ctx.font = 'bold 60px Arial';
                         ctx.fillStyle = '#FFFFFF';
-                        ctx.fillText('Meet me before', W/2, 780);
-
-                        // we even speak.
-                        ctx.font = 'bold 70px Arial';
-                        ctx.fillStyle = '#FFD700';
-                        ctx.fillText('we even speak.', W/2, 858);
+                        ctx.fillText('Support Worker', W/2, 820);
 
                         // Brand
                         ctx.font = '30px Arial';
                         ctx.fillStyle = '#BB77FF';
-                        ctx.fillText('InSync Profiles', W/2, 920);
+                        ctx.fillText('InSync Profiles', W/2, 900);
                         ctx.font = '24px Arial';
                         ctx.fillStyle = '#777777';
-                        ctx.fillText('in-syncprofiles.manus.space', W/2, 958);
+                        ctx.fillText('insyncprofiles.net', W/2, 940);
 
                         // Corner brackets
                         const s = 36; const lw = 4;
