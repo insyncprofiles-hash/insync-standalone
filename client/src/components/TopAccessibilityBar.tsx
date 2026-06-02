@@ -59,12 +59,13 @@ interface Props {
   showBack?: boolean;
   backHref?: string;
   backLabel?: string;
+  showHamburger?: boolean;
 }
 
 export const TOP_BAR_HEIGHT = 60; // px — height of the fixed top bar
 export const TOP_BARS_TOTAL = 110; // px — top bar (60px) + access bar (50px) combined offset
 
-export default function TopAccessibilityBar({ onSettingsChange, showBack, backHref = "/", backLabel = "← Back" }: Props) {
+export default function TopAccessibilityBar({ onSettingsChange, showBack, backHref = "/", backLabel = "← Back", showHamburger = true }: Props) {
   const { theme, setThemeId, themes } = useColorTheme();
   const isAurora = theme.id === "aurora";
   const isLight = ['daylight','sage-linen','blush-cream','slate-mint'].includes(theme.id);
@@ -274,25 +275,29 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           color: "#1a2e4a",
         }}
       >
-        {/* Left: hamburger menu button — opens colour theme panel */}
-        <button
-          ref={themeBtnRef}
-          onClick={() => setOpenPanel(p => p === "theme" ? "none" : "theme")}
-          aria-label="Open colour theme menu"
-          aria-expanded={openPanel === "theme"}
-          aria-controls="theme-panel"
-          style={{
-            width: "40px", height: "40px", borderRadius: "10px",
-            background: openPanel === "theme" ? "rgba(74,144,217,0.10)" : "transparent",
-            border: "none", cursor: "pointer",
-            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px",
-            transition: "background 150ms ease-out", flexShrink: 0,
-          }}
-        >
-          <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-          <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-          <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-        </button>
+        {/* Left: hamburger menu button — opens colour theme panel (hidden on demo/client view) */}
+        {showHamburger ? (
+          <button
+            ref={themeBtnRef}
+            onClick={() => setOpenPanel(p => p === "theme" ? "none" : "theme")}
+            aria-label="Open colour theme menu"
+            aria-expanded={openPanel === "theme"}
+            aria-controls="theme-panel"
+            style={{
+              width: "40px", height: "40px", borderRadius: "10px",
+              background: openPanel === "theme" ? "rgba(74,144,217,0.10)" : "transparent",
+              border: "none", cursor: "pointer",
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px",
+              transition: "background 150ms ease-out", flexShrink: 0,
+            }}
+          >
+            <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
+            <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
+            <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
+          </button>
+        ) : (
+          <div style={{ width: "40px" }} />
+        )}
         {/* Centre: InSync Profiles logo — always visible on all screen sizes */}
         <a
           href="/"

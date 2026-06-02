@@ -294,18 +294,8 @@ export default function Landing() {
         }}
         role="navigation"
       >
-        {/* Logo — hidden on mobile (top bar already shows it) */}
-        <div
-          className="hidden-mobile"
-          style={{ alignItems: "center", gap: "12px" }}
-        >
-          <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles logo" aria-hidden="true" style={{ width: "36px", height: "36px", flexShrink: 0, objectFit: "contain" }} />
-          <div>
-            <p style={{ color: C.gold, fontSize: "11px", fontWeight: 800, letterSpacing: "0.10em", textTransform: "uppercase", margin: 0, lineHeight: 1 }}>InSync Profiles</p>
-            <p style={{ color: C.textDim, fontSize: "10px", margin: 0, lineHeight: 1.4, letterSpacing: "0.06em", textTransform: "uppercase" }}>Support Worker Profile</p>
-            <p style={{ color: C.textDim, fontSize: "9px", margin: 0, lineHeight: 1.4, letterSpacing: "0.05em", textTransform: "uppercase", opacity: 0.7 }}>Interactive &amp; Accessible</p>
-          </div>
-        </div>
+        {/* Spacer — logo removed from nav (shown in top bar instead) */}
+        <div style={{ width: "40px" }} />
 
         {/* Desktop nav links — hidden on mobile */}
         <nav aria-label="Page navigation" className="desktop-nav" style={{ display: "flex", gap: "4px", alignItems: "center" }}>
