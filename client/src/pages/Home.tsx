@@ -1019,22 +1019,31 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                       const ctx = canvas.getContext('2d');
                       if (!ctx) return;
 
-                      // Background: dark with diagonal purple-to-pink band
-                      ctx.fillStyle = '#0A0A0A';
+                      // Background: deep dark purple base
+                      ctx.fillStyle = '#0D0A1A';
                       ctx.fillRect(0, 0, W, H);
-                      for (let x = 0; x < W; x++) {
-                        for (let y = 0; y < H; y++) {
-                          const d = (x + y) / (W + H);
-                          if (d > 0.28 && d < 0.58) {
-                            const t = (d - 0.28) / 0.30;
-                            const r = Math.round(90 + t * 130);
-                            const g = Math.round(10 + t * 40);
-                            const b = Math.round(200 - t * 90);
-                            ctx.fillStyle = `rgb(${r},${g},${b})`;
-                            ctx.fillRect(x, y, 1, 1);
-                          }
-                        }
-                      }
+                      // Diagonal purple-to-gold gradient band
+                      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+                      bgGrad.addColorStop(0, '#1A0A3A');
+                      bgGrad.addColorStop(0.4, '#3D1A7A');
+                      bgGrad.addColorStop(0.7, '#5C2DA8');
+                      bgGrad.addColorStop(1, '#2A1560');
+                      ctx.fillStyle = bgGrad;
+                      ctx.fillRect(0, 0, W, H);
+                      // Gold diagonal accent stripe
+                      ctx.save();
+                      ctx.beginPath();
+                      ctx.moveTo(0, H * 0.55);
+                      ctx.lineTo(W * 0.45, 0);
+                      ctx.lineTo(W * 0.65, 0);
+                      ctx.lineTo(0, H * 0.75);
+                      ctx.closePath();
+                      const stripeGrad = ctx.createLinearGradient(0, 0, W, H);
+                      stripeGrad.addColorStop(0, 'rgba(255,215,0,0.18)');
+                      stripeGrad.addColorStop(1, 'rgba(255,215,0,0.04)');
+                      ctx.fillStyle = stripeGrad;
+                      ctx.fill();
+                      ctx.restore();
 
                       // Lanyard hole
                       ctx.beginPath();
@@ -1073,35 +1082,50 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                       const finishCard = () => {
                         const workerLocation = profile.location || '';
 
-                        // Role
-                        ctx.font = 'bold 42px Arial';
+                        // "SUPPORT WORKER" in gold directly under QR (QR ends at ~y=515)
+                        ctx.textAlign = 'center';
+                        ctx.font = 'bold 52px Arial';
                         ctx.fillStyle = '#FFD700';
-                        ctx.fillText('SUPPORT WORKER', W/2, 640);
+                        ctx.fillText('SUPPORT WORKER', W/2, 590);
+
+                        // Gold rule under role
+                        ctx.strokeStyle = '#FFD700';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(80, 615); ctx.lineTo(W-80, 615);
+                        ctx.stroke();
 
                         // Location
-                        ctx.font = '30px Arial';
-                        ctx.fillStyle = '#DDDDDD';
-                        ctx.fillText(workerLocation, W/2, 685);
+                        ctx.font = '28px Arial';
+                        ctx.fillStyle = '#CCAAFF';
+                        ctx.fillText(workerLocation, W/2, 660);
 
                         // Purple rule
                         ctx.strokeStyle = '#9955EE';
-                        ctx.lineWidth = 2;
+                        ctx.lineWidth = 3;
                         ctx.beginPath();
-                        ctx.moveTo(50, 718); ctx.lineTo(W-50, 718);
+                        ctx.moveTo(50, 700); ctx.lineTo(W-50, 700);
                         ctx.stroke();
 
-                        // Support Worker label
-                        ctx.font = 'bold 60px Arial';
+                        // "Support Worker" large white
+                        ctx.font = 'bold 68px Arial';
                         ctx.fillStyle = '#FFFFFF';
-                        ctx.fillText('Support Worker', W/2, 820);
+                        ctx.fillText('Support Worker', W/2, 810);
+
+                        // Purple glow line under it
+                        ctx.strokeStyle = '#BB77FF';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(100, 840); ctx.lineTo(W-100, 840);
+                        ctx.stroke();
 
                         // Brand
-                        ctx.font = '30px Arial';
+                        ctx.font = 'bold 30px Arial';
                         ctx.fillStyle = '#BB77FF';
-                        ctx.fillText('InSync Profiles', W/2, 900);
-                        ctx.font = '24px Arial';
-                        ctx.fillStyle = '#777777';
-                        ctx.fillText('insyncprofiles.net', W/2, 940);
+                        ctx.fillText('InSync Profiles', W/2, 910);
+                        ctx.font = '22px Arial';
+                        ctx.fillStyle = '#888888';
+                        ctx.fillText('insyncprofiles.net', W/2, 950);
 
                         // Corner brackets
                         const s = 36; const lw = 4;
