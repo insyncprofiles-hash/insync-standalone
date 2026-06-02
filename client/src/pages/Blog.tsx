@@ -22,7 +22,7 @@ const C = {
 const POSTS = [
   {
     slug: "lanyard-card-benefits",
-    title: "Your Profile Goes Where You Go: The Surprising Power of the InSync Lanyard Card",
+    title: "From Invisible to Unmissable: Your Lanyard Card Is a Walking Billboard That Turns Every Moment Into a Client Connection",
     excerpt: "A matt black card with a diagonal aurora strip and a QR code. That's it. Yet support workers wearing it are sparking conversations, attracting informed clients, and building a personal brand — without saying a word.",
     date: "June 2026",
     readTime: "4 min read",

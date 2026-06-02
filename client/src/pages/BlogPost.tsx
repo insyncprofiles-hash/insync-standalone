@@ -231,12 +231,12 @@ const ARTICLES: Record<string, {
   content: () => React.ReactElement;
 }> = {
   "lanyard-card-benefits": {
-    title: "Your Profile Goes Where You Go: The Surprising Power of the InSync Lanyard Card",
+    title: "From Invisible to Unmissable: Your Lanyard Card Is a Walking Billboard That Turns Every Moment Into a Client Connection",
     date: "June 2026",
     readTime: "4 min read",
     category: "Tips & Strategy",
     emoji: "🪪",
-    metaDescription: "Discover how the InSync Profiles lanyard card helps NDIS support workers attract informed clients passively — in the community, on errands, and at events — with a single QR code scan.",
+    metaDescription: "Discover how the InSync Profiles lanyard card helps NDIS support workers go from invisible to unmissable — in the community, on errands, and at events — with a single QR code scan.",
     content: LanyardCardBenefitsArticle,
   },
   "sea-of-sameness": {
