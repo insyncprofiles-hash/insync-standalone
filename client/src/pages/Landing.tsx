@@ -297,7 +297,7 @@ export default function Landing() {
         {/* Logo — hidden on mobile (top bar already shows it) */}
         <div
           className="hidden-mobile"
-          style={{ display: "flex", alignItems: "center", gap: "12px" }}
+          style={{ alignItems: "center", gap: "12px" }}
         >
           <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles logo" aria-hidden="true" style={{ width: "36px", height: "36px", flexShrink: 0, objectFit: "contain" }} />
           <div>
@@ -400,7 +400,9 @@ export default function Landing() {
 
       {/* Responsive nav CSS */}
       <style>{`
-        @media (max-width: 640px) {
+        .hidden-mobile { display: flex; }
+        .mobile-menu-btn { display: none; }
+        @media (max-width: 768px) {
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
