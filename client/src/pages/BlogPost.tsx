@@ -121,6 +121,105 @@ function SeaOfSamenessArticle() {
   );
 }
 
+// ── Lanyard Card Benefits Article ──────────────────────────
+function LanyardCardBenefitsArticle() {
+  return (
+    <>
+      <div style={{ textAlign: "center", margin: "0 0 40px" }}>
+        <img
+          src="/assets/lanyard_card_preview.png"
+          alt="InSync Profiles lanyard card — matt black with diagonal aurora strip and QR code"
+          style={{ maxWidth: "320px", width: "100%", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(212,160,23,0.15)" }}
+        />
+        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginTop: "12px", fontStyle: "italic" }}>The InSync Profiles lanyard card — each buyer receives a card with their own unique QR code</p>
+      </div>
+
+      <p>
+        A matt black card. A diagonal aurora strip flowing from deep purple to warm gold. A QR code sitting right in the centre. Three words at the bottom: <strong style={{ color: "#f5c842" }}>SUPPORT WORKER</strong>.
+      </p>
+      <p>
+        That is all it takes. Support workers wearing the InSync Profiles lanyard card are discovering that the most powerful marketing tool they own is not a Facebook post, not a business card, and not a listing on a platform — it is the thing hanging around their neck.
+      </p>
+
+      <h2>In the Local Community</h2>
+      <p>
+        Support workers are out in the community every day — at supermarkets, parks, cafes, transport hubs, and community centres. The lanyard card turns every outing into a passive marketing moment. When a carer, coordinator, or family member notices <em>"SCAN ME. SUPPORT WORKER"</em> on a lanyard, curiosity does the work. A quick scan delivers a full, polished profile instantly — no business card needed, no fumbling for contact details.
+      </p>
+      <p>
+        The design is intentional. The aurora strip catches the eye. The matt black commands attention without being loud. People notice it and ask about it before the worker has said a single word.
+      </p>
+
+      <h2>On Personal Errands</h2>
+      <p>
+        Even off-duty, a support worker running errands is visible in their community. NDIS participants, family members, and support coordinators are everywhere. A professional, eye-catching lanyard card signals credibility and approachability. It opens conversations that would never happen otherwise — someone in a checkout queue, a neighbour, or a local business owner who knows a family looking for support.
+      </p>
+      <p>
+        The card does not require the worker to introduce themselves, pitch their services, or hand over a number. The QR code handles all of that. One scan and the potential client is already reading the worker's profile, watching their intro video, and reviewing their qualifications.
+      </p>
+
+      <h2>At Community Events, Markets &amp; Expos</h2>
+      <p>
+        Events like disability expos, community markets, NDIS information days, and local fairs are high-value environments. A worker wearing their InSync Profile lanyard card stands out immediately. Coordinators and participants actively looking for workers can scan and shortlist on the spot — no forms, no follow-up emails required.
+      </p>
+      <p>
+        In a room full of people handing out paper flyers, a scannable card that links directly to a rich, interactive profile is a completely different category of professional presence.
+      </p>
+
+      <h2>Attracting New Informed Clients</h2>
+      <p>
+        This is perhaps the most powerful benefit. When a potential client or coordinator scans the QR code, they do not just get a name and phone number. They receive a complete picture:
+      </p>
+      <ul>
+        <li><strong>A photo and introduction video</strong> — immediate personal connection before any conversation</li>
+        <li><strong>Qualifications and certifications</strong> — instant trust and credibility verification</li>
+        <li><strong>Communication style and personality</strong> — helps clients assess compatibility upfront</li>
+        <li><strong>AAC board and accessibility features</strong> — shows the worker understands diverse needs</li>
+        <li><strong>Location and availability</strong> — reduces back-and-forth enquiries</li>
+        <li><strong>Direct contact or booking link</strong> — frictionless path from interest to engagement</li>
+      </ul>
+      <p>
+        The result is that every client who reaches out via the QR code is already informed, already interested, and already aligned. Conversion rates improve dramatically because the discovery process has already happened — before the first phone call.
+      </p>
+
+      <h2>Building a Personal Brand Over Time</h2>
+      <p>
+        A support worker who consistently wears their lanyard card builds name recognition in their local area. Over months and years, this compounds. Coordinators remember them. Clients refer them. The worker becomes a known, trusted presence in their community rather than an anonymous entry in a database.
+      </p>
+      <p>
+        The InSync Profiles lanyard card is not just an accessory. It is a statement of professional identity — one that works quietly, consistently, and without any ongoing effort from the worker.
+      </p>
+
+      <blockquote>
+        <p>Your profile goes where you go. Every errand. Every outing. Every event. The QR code is always ready. The conversation can start any time.</p>
+      </blockquote>
+
+      <p>
+        <strong>Ready to get yours?</strong> Every InSync Profiles licence includes a downloadable lanyard card with your unique QR code, ready to print and wear. <a href="/pricing" style={{ color: "#f5c842" }}>View pricing →</a>
+      </p>
+
+      <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {[
+            "NDIS support worker marketing ideas",
+            "How to attract private NDIS clients",
+            "Support worker personal brand Australia",
+            "QR code lanyard for support workers",
+            "NDIS independent worker tips",
+            "How to get more NDIS clients without social media",
+            "Support worker business card alternative",
+            "Digital profile for NDIS workers",
+            "Passive marketing for support workers",
+            "NDIS worker community visibility",
+          ].map(tag => (
+            <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // ── Article metadata registry ────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
@@ -131,6 +230,15 @@ const ARTICLES: Record<string, {
   metaDescription: string;
   content: () => React.ReactElement;
 }> = {
+  "lanyard-card-benefits": {
+    title: "Your Profile Goes Where You Go: The Surprising Power of the InSync Lanyard Card",
+    date: "June 2026",
+    readTime: "4 min read",
+    category: "Tips & Strategy",
+    emoji: "🪪",
+    metaDescription: "Discover how the InSync Profiles lanyard card helps NDIS support workers attract informed clients passively — in the community, on errands, and at events — with a single QR code scan.",
+    content: LanyardCardBenefitsArticle,
+  },
   "sea-of-sameness": {
     title: `Tearing Down the "Sea of Sameness": Why Traditional Social Media Posts Are Failing Australian Support Workers`,
     date: "May 2026",

@@ -21,6 +21,15 @@ const C = {
 
 const POSTS = [
   {
+    slug: "lanyard-card-benefits",
+    title: "Your Profile Goes Where You Go: The Surprising Power of the InSync Lanyard Card",
+    excerpt: "A matt black card with a diagonal aurora strip and a QR code. That's it. Yet support workers wearing it are sparking conversations, attracting informed clients, and building a personal brand — without saying a word.",
+    date: "June 2026",
+    readTime: "4 min read",
+    category: "Tips & Strategy",
+    emoji: "🪪",
+  },
+  {
     slug: "sea-of-sameness",
     title: "Tearing Down the \"Sea of Sameness\": Why Traditional Social Media Posts Are Failing Australian Support Workers",
     excerpt: "Open any Facebook Group, LinkedIn feed, or local community board today, and you will see the exact same thing. Hundreds of support worker posts reading from the exact same script. Here's why that's a problem — and how InSync Profiles is changing the game.",
