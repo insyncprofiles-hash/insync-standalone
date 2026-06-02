@@ -16,7 +16,7 @@ import { useA11y } from "@/hooks/useA11y";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 
 // ── Defaults (same as Home.tsx) ───────────────────────────────
-const DEFAULT_VIDEO = "/assets/pete_james_intro_no_music_c03b3d5f.mp4"; // Pete James demo intro video
+const DEFAULT_VIDEO = "/assets/pete_james_intro_with_music_c9095da0.mp4"; // Pete James demo intro video (with music)
 
 const ALL_AVAILABLE_SERVICES: ServiceItem[] = [
   { id: "personal-care",   icon: "🤲", label: "Personal Care",          selected: false, description: "Personal hygiene & daily routines" },
