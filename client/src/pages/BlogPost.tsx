@@ -127,7 +127,7 @@ function LanyardCardBenefitsArticle() {
     <>
       <div style={{ textAlign: "center", margin: "0 0 40px" }}>
         <img
-          src="/assets/lanyard_card_preview.png"
+          src="/assets/lanyard_card_v2.png"
           alt="InSync Profiles lanyard card — matt black with diagonal aurora strip and QR code"
           style={{ maxWidth: "320px", width: "100%", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(212,160,23,0.15)" }}
         />
