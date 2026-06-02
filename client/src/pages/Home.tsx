@@ -1019,30 +1019,41 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                       const ctx = canvas.getContext('2d');
                       if (!ctx) return;
 
-                      // Background: deep dark purple base
-                      ctx.fillStyle = '#0D0A1A';
+                      // Background: metallic purple-to-gold brushed effect
+                      // Base dark layer
+                      ctx.fillStyle = '#0E0818';
                       ctx.fillRect(0, 0, W, H);
-                      // Diagonal purple-to-gold gradient band
+                      // Main metallic gradient top-left purple to bottom-right gold
                       const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-                      bgGrad.addColorStop(0, '#1A0A3A');
-                      bgGrad.addColorStop(0.4, '#3D1A7A');
-                      bgGrad.addColorStop(0.7, '#5C2DA8');
-                      bgGrad.addColorStop(1, '#2A1560');
+                      bgGrad.addColorStop(0,    '#1A0840');
+                      bgGrad.addColorStop(0.18, '#3B1280');
+                      bgGrad.addColorStop(0.38, '#6B2FBF');
+                      bgGrad.addColorStop(0.52, '#7B3FCC');
+                      bgGrad.addColorStop(0.65, '#8B5E10');
+                      bgGrad.addColorStop(0.80, '#B8820A');
+                      bgGrad.addColorStop(0.92, '#D4A010');
+                      bgGrad.addColorStop(1,    '#C89008');
                       ctx.fillStyle = bgGrad;
                       ctx.fillRect(0, 0, W, H);
-                      // Gold diagonal accent stripe
+                      // Horizontal brushed-metal streaks
                       ctx.save();
-                      ctx.beginPath();
-                      ctx.moveTo(0, H * 0.55);
-                      ctx.lineTo(W * 0.45, 0);
-                      ctx.lineTo(W * 0.65, 0);
-                      ctx.lineTo(0, H * 0.75);
-                      ctx.closePath();
-                      const stripeGrad = ctx.createLinearGradient(0, 0, W, H);
-                      stripeGrad.addColorStop(0, 'rgba(255,215,0,0.18)');
-                      stripeGrad.addColorStop(1, 'rgba(255,215,0,0.04)');
-                      ctx.fillStyle = stripeGrad;
-                      ctx.fill();
+                      for (let i = 0; i < 80; i++) {
+                        const y2 = Math.random() * H;
+                        const alpha = Math.random() * 0.06 + 0.01;
+                        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+                        ctx.fillRect(0, y2, W, Math.random() * 3 + 0.5);
+                      }
+                      ctx.restore();
+                      // Diagonal light sheen
+                      ctx.save();
+                      const sheen = ctx.createLinearGradient(0, 0, W * 0.7, H * 0.7);
+                      sheen.addColorStop(0,    'rgba(255,255,255,0.00)');
+                      sheen.addColorStop(0.35, 'rgba(255,255,255,0.10)');
+                      sheen.addColorStop(0.5,  'rgba(255,255,255,0.18)');
+                      sheen.addColorStop(0.65, 'rgba(255,255,255,0.08)');
+                      sheen.addColorStop(1,    'rgba(255,255,255,0.00)');
+                      ctx.fillStyle = sheen;
+                      ctx.fillRect(0, 0, W, H);
                       ctx.restore();
 
                       // Lanyard hole
