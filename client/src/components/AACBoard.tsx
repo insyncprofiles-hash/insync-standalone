@@ -352,6 +352,41 @@ export default function AACBoard({ profile = {}, onClose }: Props) {
           </div>
         </section>
 
+        {/* ASK THE WORKER */}
+        <section aria-labelledby="ask-heading">
+          <h2
+            id="ask-heading"
+            style={{ color: "#c9a227", fontSize: "12px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}
+          >
+            Ask the Worker
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(160px, 100%), 1fr))",
+              gap: "10px",
+              marginBottom: "28px",
+            }}
+            role="group"
+            aria-label="Ask the worker tiles"
+          >
+            {[
+              { icon: "🎯", label: "Give me an example", color: { bg: "#1a3a6b", border: "#4a90d9", text: "#ffffff" } },
+              { icon: "💡", label: "Why did you choose this work?", color: { bg: "#2d5a27", border: "#6abf5e", text: "#ffffff" } },
+              { icon: "🌟", label: "How would you support my goals?", color: { bg: "#1a5a5a", border: "#4abfbf", text: "#ffffff" } },
+              { icon: "💬", label: "What would you do if I was upset?", color: { bg: "#6b2d1a", border: "#d97a4a", text: "#ffffff" } },
+              { icon: "✊", label: "How do you advocate for me?", color: { bg: "#5a4a00", border: "#d9b84a", text: "#ffffff" } },
+            ].map(tile => (
+              <AACTileButton
+                key={tile.label}
+                tile={tile}
+                spoken={spoken}
+                onTap={() => handleTile(tile.label)}
+              />
+            ))}
+          </div>
+        </section>
+
         {/* CONTACT */}
         {contactTiles.length > 0 && (
           <section aria-labelledby="contact-heading">
