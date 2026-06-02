@@ -273,7 +273,7 @@ export default function Landing() {
   }, []);
 
   return (
-    <div style={{ background: C.bgPage, minHeight: "100vh", fontFamily: "'Outfit', sans-serif", color: C.textBody }}>
+    <div style={{ background: C.bgPage, minHeight: "100vh", fontFamily: "'Outfit', sans-serif", color: C.textBody, maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
       <a href="#main-content" style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}>Skip to main content</a>
 
       {/* ── NAV ── */}
