@@ -7,80 +7,80 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Coordinators page -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/coordinators</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/coordinators</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Pricing -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/pricing</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/pricing</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- How It Works -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/how-to-use</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/how-to-use</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Scenarios -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/scenarios</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/scenarios</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Blog index -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/blog</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/blog</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Blog Article 1: Sea of Sameness -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/blog/sea-of-sameness</loc>
-    <lastmod>2026-05-24T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/blog/sea-of-sameness</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Blog Article 2: How to Get Private NDIS Clients -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/blog/how-to-get-private-ndis-clients</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/blog/how-to-get-private-ndis-clients</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Sample Profile (demo) -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/view?pid=demo</loc>
-    <lastmod>2026-05-25T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/view?pid=demo</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Privacy / Terms -->
   <url>
-    <loc>https://in-syncprofiles.manus.space/privacy</loc>
-    <lastmod>2026-05-24T00:00:00+00:00</lastmod>
+    <loc>https://insyncprofiles.net/privacy</loc>
+    <lastmod>2026-06-03T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
