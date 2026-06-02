@@ -2826,7 +2826,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       {/* ── Brand Footer ─────────────────────────────────────── */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '32px 16px 40px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <img src="/manus-storage/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
+        <img src="/assets/insync-logo-main.png" alt="InSync Profiles" style={{ width: '96px', height: '96px', objectFit: 'contain', borderRadius: '50%' }} />
         <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 800, color: 'rgba(255,255,255,0.65)', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>InSync Profiles</p>
         <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.3)', margin: 0 }}>&copy; {new Date().getFullYear()} InSync Profiles. All rights reserved. &nbsp;·&nbsp; ABN 54 116 010 622</p>
         <a href="/privacy" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', textDecoration: 'underline', marginTop: '2px' }}>Terms of Sale &amp; Refund Policy</a>
