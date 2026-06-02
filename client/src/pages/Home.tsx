@@ -1107,45 +1107,41 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                         ctx.moveTo(50, 700); ctx.lineTo(W-50, 700);
                         ctx.stroke();
 
-                        // "Support Worker" large white
-                        ctx.font = 'bold 68px Arial';
-                        ctx.fillStyle = '#FFFFFF';
-                        ctx.fillText('Support Worker', W/2, 810);
+                        // Logo image in place of white Support Worker text
+                        const logoImg = new Image();
+                        logoImg.onload = () => {
+                          const LOGO_SIZE = 220;
+                          const LOGO_X = (W - LOGO_SIZE) / 2;
+                          const LOGO_Y = 710;
+                          ctx.drawImage(logoImg, LOGO_X, LOGO_Y, LOGO_SIZE, LOGO_SIZE);
 
-                        // Purple glow line under it
-                        ctx.strokeStyle = '#BB77FF';
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        ctx.moveTo(100, 840); ctx.lineTo(W-100, 840);
-                        ctx.stroke();
+                          // insyncprofiles.net grey
+                          ctx.font = '22px Arial';
+                          ctx.fillStyle = '#888888';
+                          ctx.textAlign = 'center';
+                          ctx.fillText('insyncprofiles.net', W/2, 960);
 
-                        // Brand
-                        ctx.font = 'bold 30px Arial';
-                        ctx.fillStyle = '#BB77FF';
-                        ctx.fillText('InSync Profiles', W/2, 910);
-                        ctx.font = '22px Arial';
-                        ctx.fillStyle = '#888888';
-                        ctx.fillText('insyncprofiles.net', W/2, 950);
+                          // Corner brackets
+                          const s = 36; const lw = 4;
+                          ctx.strokeStyle = '#FFD700'; ctx.lineWidth = lw;
+                          [[12,12],[W-12,12],[12,H-12],[W-12,H-12]].forEach(([bpx,bpy]) => {
+                            const dx = bpx < W/2 ? 1 : -1;
+                            const dy = bpy < H/2 ? 1 : -1;
+                            ctx.beginPath(); ctx.moveTo(bpx, bpy); ctx.lineTo(bpx+dx*s, bpy); ctx.stroke();
+                            ctx.beginPath(); ctx.moveTo(bpx, bpy); ctx.lineTo(bpx, bpy+dy*s); ctx.stroke();
+                          });
 
-                        // Corner brackets
-                        const s = 36; const lw = 4;
-                        ctx.strokeStyle = '#FFD700'; ctx.lineWidth = lw;
-                        [[12,12],[W-12,12],[12,H-12],[W-12,H-12]].forEach(([px,py]) => {
-                          const dx = px < W/2 ? 1 : -1;
-                          const dy = py < H/2 ? 1 : -1;
-                          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px+dx*s, py); ctx.stroke();
-                          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py+dy*s); ctx.stroke();
-                        });
+                          // Outer border
+                          ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4;
+                          ctx.strokeRect(6, 6, W-12, H-12);
 
-                        // Outer border
-                        ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 4;
-                        ctx.strokeRect(6, 6, W-12, H-12);
-
-                        // Download
-                        const a = document.createElement('a');
-                        a.href = canvas.toDataURL('image/png');
-                        a.download = `insync-lanyard-card.png`;
-                        a.click();
+                          // Download
+                          const a = document.createElement('a');
+                          a.href = canvas.toDataURL('image/png');
+                          a.download = 'insync-lanyard-card.png';
+                          a.click();
+                        };
+                        logoImg.src = '/assets/insync-logo-main.png';
                       };
 
                       if (svgEl) {
