@@ -959,7 +959,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
 
           {/* QR Code */}
           {(() => {
-            const qrUrl = !isDemo && hostedUrl ? hostedUrl : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://in-syncprofiles.manus.space/pricing');
+            const qrUrl = !isDemo && hostedUrl ? hostedUrl : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
             const qrLabel = !isDemo && hostedUrl ? 'Scan to open this profile' : 'Scan to get your own profile';
             return (
               <div id='demo-overlay-qr' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px 24px', background: 'white', borderRadius: '20px', boxShadow: '0 4px 24px rgba(74,144,217,0.12)', border: '1.5px solid rgba(74,144,217,0.15)' }}>
