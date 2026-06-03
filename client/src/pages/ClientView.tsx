@@ -428,7 +428,7 @@ export default function ClientView() {
     location: "Central Coast, NSW",
     phone: "",
     email: "pete.james@example.com.au",
-    website: "",
+    website: "insyncprofiles.net",
     instagram: "support.with.soul",
     whatsapp: "",
     contactLabel: "Contact",
