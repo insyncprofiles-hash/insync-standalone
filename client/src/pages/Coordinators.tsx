@@ -143,9 +143,9 @@ InSync Profiles is a professional profile tool built specifically for NDIS suppo
 
 As a support coordinator, I can share your profile link directly with participants before the first visit. That means they already know who you are and how you work before you walk through the door.
 
-You can see a sample profile here: https://YOUR_DOMAIN/view?pid=demo
+You can see a sample profile here: https://insyncprofiles.net/view?pid=demo
 
-And find out more or get your own profile at: https://YOUR_DOMAIN
+And find out more or get your own profile at: https://insyncprofiles.net
 
 Worth a look — I think it would really help you connect with the right participants.
 

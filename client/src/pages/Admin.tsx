@@ -344,7 +344,7 @@ export default function Admin() {
                   2. Open <code style={{ background: "rgba(255,255,255,0.08)", padding: "1px 5px", borderRadius: "3px" }}>client/src/lib/licence.ts</code> and add it to <code style={{ background: "rgba(255,255,255,0.08)", padding: "1px 5px", borderRadius: "3px" }}>VALID_KEY_HASHES</code><br />
                   3. Also add a matching entry to <code style={{ background: "rgba(255,255,255,0.08)", padding: "1px 5px", borderRadius: "3px" }}>KEY_REGISTRY</code> in <code style={{ background: "rgba(255,255,255,0.08)", padding: "1px 5px", borderRadius: "3px" }}>Admin.tsx</code><br />
                   4. Redeploy the site (Publish button)<br />
-                  5. Send the plain-text key to the buyer — they enter it at <strong style={{ color: C.gold }}>YOUR_DOMAIN/editor</strong>
+                  5. Send the plain-text key to the buyer — they enter it at <strong style={{ color: C.gold }}>insyncprofiles.net/editor</strong>
                 </p>
               </div>
             </div>

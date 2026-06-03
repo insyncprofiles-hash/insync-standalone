@@ -240,7 +240,7 @@ const FEATURES = [
 
 const STEPS = [
   { num: "01", title: "Purchase your licence",  desc: "Choose Solo, Team (5), or Team (10). One-time payment via PayPal. You'll receive a licence key to activate your profile editor." },
-  { num: "02", title: "Enter your licence key", desc: "Go to YOUR_DOMAIN/editor and enter your licence key. Your profile editor unlocks instantly." },
+  { num: "02", title: "Enter your licence key", desc: "Go to insyncprofiles.net and enter your licence key. Your profile editor unlocks instantly." },
   { num: "03", title: "Fill in your details",   desc: "Add your name, photo, bio, services, availability, credentials, and intro video. Preview updates live." },
   { num: "04", title: "Save & share your link", desc: "Click Save Changes. Your unique profile link is ready to share via email, WhatsApp, or social media." },
 ];
@@ -865,7 +865,7 @@ export default function Landing() {
                   <div style={{ fontSize: "9px", color: "#8888aa" }}>Scan to view</div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: "9px", color: "#8888aa", marginBottom: "6px" }}>{demoIndex === 0 ? "YOUR_DOMAIN/pete-j" : "YOUR_DOMAIN/kira-c"}</div>
+                  <div style={{ fontSize: "9px", color: "#8888aa", marginBottom: "6px" }}>{demoIndex === 0 ? "insyncprofiles.net/pete-j" : "insyncprofiles.net/kira-c"}</div>
                   <div style={{ background: "linear-gradient(135deg, #009488 0%, #007a70 100%)", color: "#fff", fontSize: "11px", fontWeight: 700, padding: "8px 16px", borderRadius: "20px", letterSpacing: "0.04em", display: "inline-block" }}>Message to Begin →</div>
                 </div>
               </div>
@@ -1092,7 +1092,7 @@ export default function Landing() {
                 {/* QR code placeholder */}
                 <div style={{ width: "52px", height: "52px", background: "rgba(255,255,255,0.06)", border: `1px solid ${C.border}`, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px" }}>⬛</div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: "10px", color: C.textDim, marginBottom: "6px" }}>YOUR_DOMAIN/pete-j</div>
+                  <div style={{ fontSize: "10px", color: C.textDim, marginBottom: "6px" }}>insyncprofiles.net/pete-j</div>
                   <div style={{ background: `linear-gradient(135deg, ${C.teal} 0%, #0a9e8a 100%)`, color: "#fff", fontSize: "11px", fontWeight: 700, padding: "7px 16px", borderRadius: "20px", letterSpacing: "0.04em", display: "inline-block" }}>Message to Begin →</div>
                 </div>
               </div>

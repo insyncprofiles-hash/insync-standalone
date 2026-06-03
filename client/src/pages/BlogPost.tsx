@@ -89,7 +89,7 @@ function SeaOfSamenessArticle() {
         The support sector is built on human connection, so why are we still hiring based on flat text posts? Whether you are a worker looking to grow your independent business, or a family searching for the perfect care match, it is time to step out of the sea of sameness.
       </p>
       <p>
-        <strong>👉 Ready to transform how you present yourself online?</strong> Create your unique profile today at <a href="https://YOUR_DOMAIN" style={{ color: "#f5c842" }}>YOUR_DOMAIN</a>.
+        <strong>👉 Ready to transform how you present yourself online?</strong> Create your unique profile today at <a href="https://insyncprofiles.net" style={{ color: "#f5c842" }}>insyncprofiles.net</a>.
       </p>
 
       <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>

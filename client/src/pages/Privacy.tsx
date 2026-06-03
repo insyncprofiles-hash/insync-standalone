@@ -72,9 +72,9 @@ export default function Privacy() {
             <li>🏷️ <strong style={{ color: HEAD }}>InSync Profiles branding must remain</strong> on all templates sold. No reselling rights.</li>
             <li>📧 <strong style={{ color: HEAD }}>PayPal sends us your name and email</strong> for product delivery. It may also be used for future product updates — you can opt out at any time.</li>
             <li>🗄️ <strong style={{ color: HEAD }}>No purchase database exists.</strong> We do not store your purchase details in any database, CRM, or spreadsheet. Your information lives only in the PayPal payment notification email in our inbox.</li>
-            <li>🔑 <strong style={{ color: HEAD }}>You receive a licence key.</strong> Once payment is confirmed, you'll receive a licence key to activate your InSync Profiles profile editor at YOUR_DOMAIN/editor.</li>
+            <li>🔑 <strong style={{ color: HEAD }}>You receive a licence key.</strong> Once payment is confirmed, you'll receive a licence key to activate your InSync Profiles profile editor at insyncprofiles.net/editor.</li>
             <li>🔒 <strong style={{ color: HEAD }}>Your profile data never leaves your browser.</strong> Everything typed into the editor stays on your device only.</li>
-            <li>🗣 <strong style={{ color: HEAD }}>Try before you buy at YOUR_DOMAIN/demo.</strong> The free demo lets you explore the full template — including the AAC communication board, text-to-speech, dyslexia font, high contrast mode, and text size controls — before committing to a purchase.</li>
+            <li>🗣 <strong style={{ color: HEAD }}>Try before you buy at insyncprofiles.net/demo.</strong> The free demo lets you explore the full template — including the AAC communication board, text-to-speech, dyslexia font, high contrast mode, and text size controls — before committing to a purchase.</li>
             <li>🤝 <strong style={{ color: HEAD }}>Client references in your profile require their consent.</strong> This is entirely the buyer's responsibility.</li>
             <li>✅ <strong style={{ color: HEAD }}>We do not sell your data.</strong> Ever. To anyone.</li>
           </ul>
@@ -235,7 +235,7 @@ export default function Privacy() {
               This policy is consistent with the <strong>Australian Consumer Law (Schedule 2, Competition and Consumer Act 2010)</strong>. Digital products that have been accessed or downloaded are not subject to a general right of return, provided the product is as described and functions as represented.
             </p>
             <p className="mt-3">
-              A <strong>free demo</strong> is available at <a href="/demo" style={{ color: GOLD }}>YOUR_DOMAIN/demo</a> prior to purchase so Buyers can evaluate the product before committing. The demo includes the full accessibility suite and a sample profile. By purchasing, the Buyer confirms they have reviewed the demo and understand what they are purchasing.
+              A <strong>free demo</strong> is available at <a href="/demo" style={{ color: GOLD }}>insyncprofiles.net/demo</a> prior to purchase so Buyers can evaluate the product before committing. The demo includes the full accessibility suite and a sample profile. By purchasing, the Buyer confirms they have reviewed the demo and understand what they are purchasing.
             </p>
             <p className="mt-3">Exceptions may be considered at our sole discretion only in cases of:</p>
             <ul className="list-disc pl-5 mt-2 space-y-1">

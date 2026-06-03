@@ -22,7 +22,7 @@ const SECTIONS = [
         icon: "🛒",
         title: "Purchase the Template",
         advantage: "Buy once. Use forever. No subscription.",
-        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at YOUR_DOMAIN/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.`,
+        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at insyncprofiles.net/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.`,
         tip: "Keep your licence key somewhere safe. If you lose it, contact insyncprofiles@gmail.com and we'll help you out.",
         tags: ["One-time purchase", "No app needed", "Works on any device"],
       },

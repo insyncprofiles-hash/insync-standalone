@@ -688,7 +688,7 @@ export default function Pricing() {
               <div style={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
                 <span style={{ fontSize: "20px", flexShrink: 0, marginTop: "2px" }}>🚀</span>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", color: TEXT_BODY, lineHeight: 1.65, margin: 0 }}>
-                  <strong style={{ color: TEXT_HEAD }}>Activate and start building.</strong> Enter your key at YOUR_DOMAIN/editor — your profile editor unlocks instantly. No downloads, no installs.
+                  <strong style={{ color: TEXT_HEAD }}>Activate and start building.</strong> Enter your key at insyncprofiles.net/editor — your profile editor unlocks instantly. No downloads, no installs.
                 </p>
               </div>
               <div style={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
