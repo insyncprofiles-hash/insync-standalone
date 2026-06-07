@@ -706,6 +706,41 @@ export default function ClientView() {
           overflow: "hidden",
           marginBottom: "0",
         }}>
+          {/* ── GET TO KNOW ME — top CTA banner ── */}
+          <div style={{
+            background: "#0a0a0a",
+            padding: "14px 24px",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            gap: "12px",
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            {/* Shimmer sweep */}
+            <style>{`
+              @keyframes shimmerSweep {
+                0% { transform: translateX(-100%) skewX(-15deg); }
+                100% { transform: translateX(350%) skewX(-15deg); }
+              }
+              @media (prefers-reduced-motion: no-preference) {
+                .insync-shimmer { animation: shimmerSweep 2.4s ease-in-out infinite; }
+              }
+            `}</style>
+            <div className="insync-shimmer" style={{
+              position: "absolute", top: 0, left: 0,
+              width: "40%", height: "100%",
+              background: "linear-gradient(90deg, transparent 0%, rgba(240,192,64,0.35) 50%, transparent 100%)",
+              pointerEvents: "none",
+            }} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 600, color: "rgba(240,192,64,0.70)", margin: "2px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>Interactive &amp; Accessible</p>
+            </div>
+            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "6px", background: "#F0C040", borderRadius: "50px", padding: "8px 18px", flexShrink: 0 }}>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 800, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Open Profile</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+
           {/* Header: large circular photo + name/title/location */}
           <div style={{ display: "flex", alignItems: "flex-start", gap: "18px", padding: "28px 24px 16px" }}>
             {/* Large circular photo with gold ring */}
