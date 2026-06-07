@@ -732,7 +732,7 @@ export default function ClientView() {
               pointerEvents: "none",
             }} />
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px" }}>
-              <img src="/assets/accessibility-icon-banner.png" alt="Accessible" style={{ width: "38px", height: "38px", flexShrink: 0, borderRadius: "50%" }} />
+              <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "38px", height: "38px", flexShrink: 0 }} />
               <div>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 600, color: "rgba(240,192,64,0.70)", margin: "2px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>Interactive &amp; Accessible</p>
