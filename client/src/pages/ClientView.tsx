@@ -760,11 +760,7 @@ export default function ClientView() {
                 </p>
               </div>
             </div>
-            {/* Right: OPEN PROFILE button */}
-            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "6px", background: "#F0C040", borderRadius: "50px", padding: "10px 18px", flexShrink: 0, boxShadow: "0 4px 18px rgba(240,192,64,0.55)" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>OPEN PROFILE</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+
           </div>
 
           {/* Header: large circular photo + name/title/location */}
