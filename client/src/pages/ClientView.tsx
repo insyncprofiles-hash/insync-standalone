@@ -735,7 +735,7 @@ export default function ClientView() {
               <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "38px", height: "38px", flexShrink: 0 }} />
               <div>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 600, color: "rgba(240,192,64,0.70)", margin: "2px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>Interactive &amp; Accessible</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 800, color: "#F0C040", margin: "3px 0 0", letterSpacing: "0.12em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7), 0 0 16px rgba(240,192,64,0.4)", display: "flex", alignItems: "center", gap: "5px" }}><span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 6px #F0C040", flexShrink: 0 }} />Interactive &amp; Accessible<span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 6px #F0C040", flexShrink: 0 }} /></p>
               </div>
             </div>
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", background: "#F0C040", borderRadius: "50px", padding: "12px 24px", flexShrink: 0, boxShadow: "0 4px 18px rgba(240,192,64,0.55)" }}>
