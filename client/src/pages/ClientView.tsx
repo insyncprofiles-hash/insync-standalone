@@ -98,7 +98,7 @@ const DEFAULT_EXPERIENCE_GROUPS: ExperienceGroup[] = [
     { id: "catheter", label: "Catheter / Continence Care", checked: false },
     { id: "wound", label: "Wound Management", checked: false },
   ]},
-  { id: "professional-skills", title: "Professional Skills", icon: "🛠", items: [
+  { id: "professional-skills", title: "Specialised Skills", icon: "🛠", items: [
     { id: "safe-transfers", label: "Safe Transfers & Mobility Assistance", checked: false },
     { id: "risk-assessments", label: "Risk Assessments", checked: false },
     { id: "research-advocacy", label: "Research & Advocacy", checked: false },

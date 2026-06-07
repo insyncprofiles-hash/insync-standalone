@@ -159,7 +159,7 @@ const DEFAULT_EXPERIENCE_GROUPS: ExperienceGroup[] = [
     ],
   },
   {
-    id: "professional-skills", title: "Professional Skills", icon: "🛠",
+    id: "professional-skills", title: "Specialised Skills", icon: "🛠",
     items: [
       { id: "safe-transfers", label: "Safe Transfers & Mobility Assistance", checked: false },
       { id: "risk-assessments", label: "Risk Assessments", checked: false },
