@@ -2583,9 +2583,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, color: A.text, margin: 0, marginBottom: "10px" }}>How to add your own video</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {[
-                      { icon: "📱", title: "Record on your phone", desc: "Open your camera app, record 15 seconds, upload to Google Drive or Dropbox, then paste the share link into the Video URL field below." },
+                      { icon: "📱", title: "Record on your phone", desc: "Open your camera app, record 15–30 seconds, then upload to YouTube as Unlisted and paste the link below." },
                       { icon: "🎬", title: "Upload to YouTube (unlisted)", desc: "Upload your video to YouTube as Unlisted. Copy the video URL and paste it below. Clients won't find it by searching — only people with your link can view it." },
-                      { icon: "☁️", title: "Use Google Drive", desc: "Upload to Google Drive, right-click → Share → Anyone with the link → Viewer. Copy the link and paste it below." },
                       { icon: "💡", title: "Example of what to say", desc: "Hey, I'm [name]. I've been doing support work for [X] years and I'm based in [location]. I got into this because [one honest reason — e.g. my sister has a disability and I saw how much the right support changed things for her]. The bit I love most is [one real thing — e.g. the moment someone does something they didn't think they could]. I'm not here to tick boxes. If that sounds like what you're looking for, reach out." },
                       { icon: "🎬", title: "Freeze on camera? Try this instead", desc: "Don't script it. Just answer one question out loud: why do you do this work? Hit record, answer it honestly, stop. That's your video. One take is fine. Imperfect is real." },
                     ].map(({ icon, title, desc }) => (
