@@ -1756,15 +1756,20 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     setSaved(true);
     toast.success("Profile saved!", { description: "Your unique shareable link and QR code are ready in Thread 7." });
     setTimeout(() => setSaved(false), 2500);
-    // Shorten URL for QR code (TinyURL — free, no auth required)
-    fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
-      .then(r => r.text())
-      .then(short => {
-        if (short && short.startsWith('http')) {
-          // Append trailing slash to bypass TinyURL preview page
-          const directUrl = short.endsWith('/') ? short : short + '/';
-          setShortUrl(directUrl);
-          localStorage.setItem("insync_short_url", directUrl);
+    // Shorten URL using Bitly (direct 301 redirect, no preview page)
+    fetch('https://api-ssl.bitly.com/v4/shorten', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer 62209a105a1717c7b05b1fdf28b229b87f49203d',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ long_url: shareUrl }),
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.link && data.link.startsWith('http')) {
+          setShortUrl(data.link);
+          localStorage.setItem("insync_short_url", data.link);
         }
       })
       .catch(() => { /* silently fall back to full URL */ });
