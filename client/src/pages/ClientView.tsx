@@ -726,9 +726,9 @@ export default function ClientView() {
           {/* ── GET TO KNOW ME — top CTA banner ── */}
           <div style={{
             background: "#0a0a0a",
-            padding: "14px 24px",
+            padding: "12px 16px",
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            gap: "12px",
+            gap: "10px",
             position: "relative",
             overflow: "hidden",
           }}>
@@ -748,16 +748,22 @@ export default function ClientView() {
               background: "linear-gradient(90deg, transparent 0%, rgba(240,192,64,0.35) 50%, transparent 100%)",
               pointerEvents: "none",
             }} />
-            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px" }}>
-              <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "38px", height: "38px", flexShrink: 0 }} />
-              <div>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 800, color: "#F0C040", margin: "3px 0 0", letterSpacing: "0.12em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7), 0 0 16px rgba(240,192,64,0.4)", display: "flex", alignItems: "center", gap: "5px" }}><span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 6px #F0C040", flexShrink: 0 }} />Interactive &amp; Accessible<span style={{ display: "inline-block", width: "6px", height: "6px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 6px #F0C040", flexShrink: 0 }} /></p>
+            {/* Left: icon + text — all on one row, no wrapping */}
+            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: 1 }}>
+              <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "34px", height: "34px", flexShrink: 0 }} />
+              <div style={{ minWidth: 0 }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>GET TO KNOW ME</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 800, color: "#F0C040", margin: "2px 0 0", letterSpacing: "0.10em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7)", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
+                  <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
+                  Interactive &amp; Accessible
+                  <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
+                </p>
               </div>
             </div>
-            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", background: "#F0C040", borderRadius: "50px", padding: "12px 24px", flexShrink: 0, boxShadow: "0 4px 18px rgba(240,192,64,0.55)" }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Open Profile</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            {/* Right: OPEN PROFILE button */}
+            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "6px", background: "#F0C040", borderRadius: "50px", padding: "10px 18px", flexShrink: 0, boxShadow: "0 4px 18px rgba(240,192,64,0.55)" }}>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>OPEN PROFILE</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
 
