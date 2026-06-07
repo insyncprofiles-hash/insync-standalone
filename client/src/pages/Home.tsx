@@ -535,10 +535,10 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
           {!isDemo && hostedUrl && (
             <button
               onClick={() => {
-                navigator.clipboard.writeText(hostedUrl).then(() => {
+                navigator.clipboard.writeText(shortUrl || hostedUrl).then(() => {
                   import('sonner').then(({ toast }) => toast.success('Profile link copied!', { description: 'Paste it in an email or WhatsApp to share.' }));
                 }).catch(() => {
-                  import('sonner').then(({ toast }) => toast.info('Copy this link', { description: hostedUrl }));
+                  import('sonner').then(({ toast }) => toast.info('Copy this link', { description: shortUrl || hostedUrl }));
                 });
               }}
               style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 14px', borderRadius: '99px', background: 'linear-gradient(135deg,#4a90d9,#d4a820)', border: 'none', color: '#fff', fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap', letterSpacing: '0.03em' }}
@@ -2671,7 +2671,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
             <ThreadConnector height={32} />
             {/* ══ CLIENT VIEW SAMPLE BUTTON ══ */}
             {showDemoClientView && (
-              <DemoClientViewOverlay profile={profile} onClose={() => setShowDemoClientView(false)} videoUrl={personalVideoUrl} isDemo={isDemo} hostedUrl={hostedUrl} />
+              <DemoClientViewOverlay profile={profile} onClose={() => setShowDemoClientView(false)} videoUrl={personalVideoUrl} isDemo={isDemo} hostedUrl={hostedUrl} shortUrl={shortUrl} />
             )}
             <div
               style={{
@@ -2795,10 +2795,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textMid,
                         wordBreak: "break-all", lineHeight: 1.4,
                       }}>
-                        {hostedUrl}
+                        {shortUrl || hostedUrl}
                       </div>
                       <button
-                        onClick={() => { navigator.clipboard.writeText(hostedUrl); toast.success("Link copied!", { description: "Share this link with your client or paste it into an email." }); }}
+                        onClick={() => { navigator.clipboard.writeText(shortUrl || hostedUrl); toast.success("Link copied!", { description: "Share this link with your client or paste it into an email." }); }}
                         style={{ flexShrink: 0, padding: "10px 14px", borderRadius: "10px", background: A.gold, border: "none", cursor: "pointer", fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 700, color: "#1a2e1e" }}
                         aria-label="Copy unique profile link"
                       >Copy</button>
