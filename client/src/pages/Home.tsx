@@ -2534,29 +2534,28 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
                 {/* Video URL input */}
                 <div style={{ marginTop: "14px" }}>
-                  <label style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 600, color: A.textDim, display: "block", marginBottom: "6px" }}>Paste your video link here (YouTube, Google Drive, Dropbox, etc.)</label>
+                  <label style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 600, color: A.textDim, display: "block", marginBottom: "6px" }}>Intro video link <span style={{ fontWeight: 400, opacity: 0.7 }}>(YouTube recommended)</span></label>
                   <input
                     style={{ ...THREAD_INPUT, width: "100%" }}
                     value={personalVideoUrl && !personalVideoUrl.startsWith("/manus-storage") ? personalVideoUrl : ""}
                     onChange={e => {
-                    const raw = e.target.value || null;
-                    const normalised = raw ? normaliseVideoUrl(raw) : null;
-                    setPersonalVideoUrl(normalised);
-                    if (!isDemo) saveDraft(profile, normalised);
-                  }}
+                      const raw = e.target.value || null;
+                      const normalised = raw ? normaliseVideoUrl(raw) : null;
+                      setPersonalVideoUrl(normalised);
+                      if (!isDemo) saveDraft(profile, normalised);
+                    }}
                     placeholder="https://youtu.be/your-video-id"
                     aria-label="Video URL"
                   />
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, margin: "5px 0 0", lineHeight: 1.5 }}>
+                    Upload your video to YouTube as <strong>Unlisted</strong>, then paste the link here. YouTube is the most reliable option — works on every device, never expires.
+                  </p>
                   {personalVideoUrl && !personalVideoUrl.startsWith("/manus-storage") && (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "6px" }}>
                       {(personalVideoUrl.includes('youtu.be') || personalVideoUrl.includes('youtube.com')) ? (
                         <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ YouTube link detected — will embed inline for clients</span>
-                      ) : personalVideoUrl.includes('drive.google.com') ? (
-                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ Google Drive link detected — converted to preview format</span>
-                      ) : personalVideoUrl.includes('dropbox.com') ? (
-                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ Dropbox link detected — converted to direct format</span>
                       ) : (
-                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim }}>Direct video file or other link</span>
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim }}>Link added — YouTube is recommended for best results</span>
                       )}
                       <button
                         onClick={() => setPersonalVideoUrl(null)}
