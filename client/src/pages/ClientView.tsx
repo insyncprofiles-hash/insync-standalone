@@ -538,6 +538,23 @@ export default function ClientView() {
     return url.includes('youtu.be') || url.includes('youtube.com');
   }
 
+  function isIframeUrl(url: string): boolean {
+    return isYouTubeUrl(url) || url.includes('drive.google.com') || url.includes('dropbox.com');
+  }
+
+  function toEmbedUrlFull(url: string): string {
+    // Google Drive: normalise to /preview
+    if (url.includes('drive.google.com')) {
+      try {
+        const u = new URL(url);
+        const match = u.pathname.match(/\/file\/d\/([^/]+)/);
+        if (match) return `https://drive.google.com/file/d/${match[1]}/preview`;
+      } catch {}
+      return url;
+    }
+    return toEmbedUrl(url);
+  }
+
   // Video URL — read from stored profile (pid) or direct ?video= param, fallback to default demo
   const videoUrl = React.useMemo(() => {
     const params = new URLSearchParams(window.location.search);
@@ -762,9 +779,9 @@ export default function ClientView() {
               padding: "3px",
               background: "linear-gradient(135deg, #ff6b9d, #ffd93d, #6bcb77, #4d96ff, #c77dff)",
             }}>
-              {videoUrl && isYouTubeUrl(videoUrl) ? (
+              {videoUrl && isIframeUrl(videoUrl) ? (
                 <iframe
-                  src={toEmbedUrl(videoUrl)}
+                  src={toEmbedUrlFull(videoUrl)}
                   title={`${profile.name} intro video`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

@@ -745,6 +745,9 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
               );
             }
             const isYT = effectiveVideoUrl.includes('youtu.be') || effectiveVideoUrl.includes('youtube.com');
+            const isGDrive = effectiveVideoUrl.includes('drive.google.com');
+            const isDropbox = effectiveVideoUrl.includes('dropbox.com');
+            const useIframe = isYT || isGDrive || isDropbox;
             const toEmbed = (url: string) => {
               try {
                 const u = new URL(url);
@@ -753,13 +756,15 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
                   const v = u.searchParams.get('v');
                   if (v) return `https://www.youtube.com/embed/${v}`;
                 }
+                // Google Drive preview URL — already normalised by normaliseVideoUrl()
+                if (u.hostname === 'drive.google.com') return url;
               } catch {}
               return url;
             };
             return (
               <div style={{ padding: '0 20px 16px' }}>
                 <div style={{ borderRadius: '16px', overflow: 'hidden', padding: '3px', background: 'linear-gradient(135deg, #ff6b9d, #ffd93d, #6bcb77, #4d96ff, #c77dff)' }}>
-                  {isYT ? (
+                  {useIframe ? (
                     <iframe src={toEmbed(effectiveVideoUrl)} title={`${profile.name} intro video`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ width: '100%', aspectRatio: '16/9', display: 'block', borderRadius: '14px', border: 'none' }} />
                   ) : (
                     <video src={effectiveVideoUrl} controls playsInline style={{ width: '100%', display: 'block', borderRadius: '14px', background: '#000' }} aria-label={`${profile.name} intro video`} />
@@ -1461,15 +1466,65 @@ function FieldRow({ label, htmlFor, tooltip, children }: { label: string; htmlFo
   );
 }
 
+// ── Draft persistence helpers ────────────────────────────────
+const DRAFT_KEY = "insync_draft_profile";
+const DRAFT_VIDEO_KEY = "insync_draft_video";
+
+function saveDraft(profile: ProfileData, videoUrl: string | null) {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(profile));
+    if (videoUrl) localStorage.setItem(DRAFT_VIDEO_KEY, videoUrl);
+    else localStorage.removeItem(DRAFT_VIDEO_KEY);
+  } catch {}
+}
+
+function loadDraft(): { profile: ProfileData | null; videoUrl: string | null } {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    const videoUrl = localStorage.getItem(DRAFT_VIDEO_KEY);
+    if (!raw) return { profile: null, videoUrl: null };
+    const parsed = JSON.parse(raw) as ProfileData;
+    return { profile: parsed, videoUrl };
+  } catch {
+    return { profile: null, videoUrl: null };
+  }
+}
+
+// ── Google Drive / Dropbox URL normaliser ─────────────────────
+function normaliseVideoUrl(url: string): string {
+  try {
+    const u = new URL(url.trim());
+    // Google Drive: https://drive.google.com/file/d/FILE_ID/view?...
+    if (u.hostname === 'drive.google.com') {
+      const match = u.pathname.match(/\/file\/d\/([^/]+)/);
+      if (match) {
+        return `https://drive.google.com/file/d/${match[1]}/preview`;
+      }
+    }
+    // Dropbox: change dl=0 to dl=1 for direct link
+    if (u.hostname.includes('dropbox.com')) {
+      u.searchParams.set('raw', '1');
+      u.searchParams.delete('dl');
+      return u.toString();
+    }
+  } catch {}
+  return url.trim();
+}
+
 export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   const urlOverrides = loadProfileFromURL();
+
+  // Restore draft from localStorage if no URL overrides (i.e. editor opened fresh)
+  const draft = !urlOverrides ? loadDraft() : { profile: null, videoUrl: null };
+
   const [profile, setProfile] = useState<ProfileData>({
     ...DEFAULT_PROFILE,
+    ...(draft.profile ?? {}),
     ...(urlOverrides ?? {}),
   });
   const [activeNav, setActiveNav] = useState("home");
   const [rightTab, setRightTab] = useState<RightTab>("profile");
-  const [personalVideoUrl, setPersonalVideoUrl] = useState<string | null>(null);
+  const [personalVideoUrl, setPersonalVideoUrl] = useState<string | null>(draft.videoUrl ?? null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const [langInput, setLangInput] = useState("");
   const [showLangDropdown, setShowLangDropdown] = useState(false);
@@ -1525,8 +1580,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   }, [isDemo]);
 
   const updateProfile = useCallback((updates: Partial<ProfileData>) => {
-    setProfile(prev => ({ ...prev, ...updates }));
-  }, []);
+    setProfile(prev => {
+      const next = { ...prev, ...updates };
+      if (!isDemo) saveDraft(next, personalVideoUrl);
+      return next;
+    });
+  }, [isDemo, personalVideoUrl]);
 
   const toggleService = useCallback((id: string) => {
     setProfile(prev => ({
@@ -2479,7 +2538,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <input
                     style={{ ...THREAD_INPUT, width: "100%" }}
                     value={personalVideoUrl && !personalVideoUrl.startsWith("/manus-storage") ? personalVideoUrl : ""}
-                    onChange={e => setPersonalVideoUrl(e.target.value || null)}
+                    onChange={e => {
+                    const raw = e.target.value || null;
+                    const normalised = raw ? normaliseVideoUrl(raw) : null;
+                    setPersonalVideoUrl(normalised);
+                    if (!isDemo) saveDraft(profile, normalised);
+                  }}
                     placeholder="https://youtu.be/your-video-id"
                     aria-label="Video URL"
                   />
@@ -2487,6 +2551,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "6px" }}>
                       {(personalVideoUrl.includes('youtu.be') || personalVideoUrl.includes('youtube.com')) ? (
                         <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ YouTube link detected — will embed inline for clients</span>
+                      ) : personalVideoUrl.includes('drive.google.com') ? (
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ Google Drive link detected — converted to preview format</span>
+                      ) : personalVideoUrl.includes('dropbox.com') ? (
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#4caf50" }}>✅ Dropbox link detected — converted to direct format</span>
                       ) : (
                         <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim }}>Direct video file or other link</span>
                       )}
