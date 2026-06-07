@@ -873,31 +873,6 @@ export default function ClientView() {
             </p>
           </div>
 
-          {/* CTA button — blue-to-gold gradient pill, matching reference */}
-          <div style={{ padding: "0 24px 20px" }}>
-            <button
-              onClick={handleCTA}
-              style={{
-                width: "100%", padding: "18px 24px",
-                background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
-                border: "none", borderRadius: "50px", cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
-                boxShadow: `0 6px 24px ${P.accent}55`,
-                transform: "scale(1)", transition: "transform 0.16s cubic-bezier(0.23,1,0.32,1)",
-              }}
-              onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
-              onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
-              aria-label={`${profile.ctaText} — contact ${profile.name}`}
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="white" opacity="0.95" aria-hidden="true">
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-              </svg>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, letterSpacing: "0.10em", color: "white", textTransform: "uppercase" }}>
-                {profile.ctaText}
-              </span>
-            </button>
-          </div>
-
           {/* Badges — 2-column grid, light border, matching reference */}
           {profile.badges.length > 0 && (
             <div style={{ padding: "0 20px 16px" }}>
