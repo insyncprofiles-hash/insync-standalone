@@ -731,9 +731,12 @@ export default function ClientView() {
               background: "linear-gradient(90deg, transparent 0%, rgba(240,192,64,0.35) 50%, transparent 100%)",
               pointerEvents: "none",
             }} />
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 600, color: "rgba(240,192,64,0.70)", margin: "2px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>Interactive &amp; Accessible</p>
+            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px" }}>
+              <img src="/assets/accessibility-icon-banner.png" alt="Accessible" style={{ width: "38px", height: "38px", flexShrink: 0, borderRadius: "50%" }} />
+              <div>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 600, color: "rgba(240,192,64,0.70)", margin: "2px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>Interactive &amp; Accessible</p>
+              </div>
             </div>
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", background: "#F0C040", borderRadius: "50px", padding: "12px 24px", flexShrink: 0, boxShadow: "0 4px 18px rgba(240,192,64,0.55)" }}>
               <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Open Profile</span>
