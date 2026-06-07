@@ -2407,50 +2407,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 </FieldRow>
               </div>
 
-              {/* Languages */}
-              <FieldRow label="Languages Spoken">
-                <div style={{ position: "relative", overflow: "visible" }}>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "7px", marginBottom: "8px" }}>
-                    {profile.languages.map(lang => (
-                      <span key={lang} style={{ display: "flex", alignItems: "center", gap: "4px", padding: "5px 12px", borderRadius: "20px", background: "rgba(60,200,100,0.15)", color: A.green, border: "1px solid rgba(60,200,100,0.35)", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 600 }}>
-                        {lang}
-                        <button onClick={() => removeLanguage(lang)} style={{ background: "none", border: "none", color: A.green, cursor: "pointer", fontSize: "14px", lineHeight: 1, padding: "0 0 0 2px" }} aria-label={`Remove ${lang}`}>×</button>
-                      </span>
-                    ))}
-                    <button onClick={() => setShowLangDropdown(v => !v)}
-                      style={{ width: "30px", height: "30px", borderRadius: "50%", background: "rgba(60,200,100,0.15)", border: "1px solid rgba(60,200,100,0.35)", color: A.green, cursor: "pointer", fontSize: "18px", lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center" }}
-                      aria-label="Add language" aria-expanded={showLangDropdown}
-                    >+</button>
-                  </div>
-                  {showLangDropdown && (
-                    <div style={{ position: "absolute", zIndex: 9999, top: "100%", left: 0, right: 0, background: A.card2, border: `1px solid ${A.border}`, borderRadius: "12px", backdropFilter: "blur(20px)", overflow: "hidden", boxShadow: "0 8px 32px oklch(0 0 0 / 40%)" }}>
-                      <input autoFocus value={langInput} onChange={e => setLangInput(e.target.value)} placeholder="Search language..." style={{ ...THREAD_INPUT, borderRadius: "12px 12px 0 0", borderBottom: `1px solid ${A.border}` }} />
-                      <div style={{ maxHeight: "160px", overflowY: "auto" }}>
-                        {filteredLangs.map(lang => (
-                          <button key={lang} onClick={() => addLanguage(lang)}
-                            style={{ width: "100%", textAlign: "left", padding: "10px 16px", background: "transparent", border: "none", color: A.text, fontFamily: "'Outfit', sans-serif", fontSize: "14px", cursor: "pointer" }}
-                            onMouseEnter={e => (e.currentTarget.style.background = "rgba(60,200,100,0.12)")}
-                            onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                          >{lang}</button>
-                        ))}
-                        {langInput.trim() &&
-                          !ALL_LANGUAGES.some(l => l.toLowerCase() === langInput.toLowerCase().trim()) &&
-                          !profile.languages.includes(langInput.trim()) && (
-                          <button
-                            onClick={() => { addLanguage(langInput.trim()); setLangInput(""); setShowLangDropdown(false); }}
-                            style={{ width: "100%", textAlign: "left", padding: "10px 16px", background: "transparent", border: "none", borderTop: `1px solid ${A.border}`, color: A.green, fontFamily: "'Outfit', sans-serif", fontSize: "14px", cursor: "pointer", fontWeight: 600 }}
-                            onMouseEnter={e => (e.currentTarget.style.background = "rgba(60,200,100,0.12)")}
-                            onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                          >+ Add "{langInput.trim()}"</button>
-                        )}
-                        {filteredLangs.length === 0 && !langInput.trim() && (
-                          <p style={{ padding: "10px 16px", color: A.textMid, fontFamily: "'Outfit', sans-serif", fontSize: "13px", margin: 0 }}>Type to search or add a language…</p>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </FieldRow>
             </Section>
 
             <ThreadConnector height={32} />
