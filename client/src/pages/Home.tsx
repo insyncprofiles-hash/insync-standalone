@@ -2750,7 +2750,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 </div>
               </div>
             )}
-            {/* hidden section to keep counter correct */
+            {/* hidden section to keep counter correct */}
             <div style={{ display: "none" }} aria-hidden="true">
             <Section icon="📤" title="Share & Distribute" id="section-share">
               {/* ══ SAVE BUTTON ══ */}
