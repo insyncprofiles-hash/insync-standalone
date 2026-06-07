@@ -2900,7 +2900,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               <div style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)", borderRadius: "16px", border: "1px solid rgba(77,150,255,0.2)", padding: "18px" }}>
                 <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#4d96ff" }}>📤 Send to Client</p>
                 <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, lineHeight: 1.6 }}>
-                  {hostedUrl ? "Share your profile link with a client via email or WhatsApp." : "Save your profile first to generate your shareable link."}
+                  {hostedUrl ? `Share your profile link with a client via email or WhatsApp.${shortUrl ? " (Short link ready ✓)" : ""}` : "Save your profile first to generate your shareable link."}
                 </p>
                 {!hostedUrl && (
                   <div style={{ padding: "12px", borderRadius: "10px", background: "rgba(255,180,0,0.10)", border: "1px solid rgba(255,180,0,0.25)", marginBottom: "12px", fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: A.textMid, textAlign: "center" as const }}>
@@ -2913,7 +2913,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                       if (!hostedUrl) return;
                       const subject = encodeURIComponent(`Meet ${profile.name || "Your Support Worker"} — InSync Profiles Profile`);
                       const body = encodeURIComponent(
-                        `Hi there,\n\nI'd like to introduce you to ${profile.name || "your support worker"}${profile.title ? `, ${profile.title}` : ""}${profile.location ? ` based in ${profile.location}` : ""}.\n\nYou can view their full profile, including services, availability, and how to get in touch, by clicking the link below:\n\n${hostedUrl}\n\nThe profile includes accessibility tools and a "Message to Begin" button so you can reach out directly.\n\nWarm regards,\n${profile.name || "Your Support Worker"}`
+                        `Hi there,\n\nI'd like to introduce you to ${profile.name || "your support worker"}${profile.title ? `, ${profile.title}` : ""}${profile.location ? ` based in ${profile.location}` : ""}.\n\nYou can view their full profile, including services, availability, and how to get in touch, by clicking the link below:\n\n${shortUrl || hostedUrl}\n\nThe profile includes accessibility tools and a "Message to Begin" button so you can reach out directly.\n\nWarm regards,\n${profile.name || "Your Support Worker"}`
                       );
                       window.location.href = `mailto:?subject=${subject}&body=${body}`;
                     }}
@@ -2931,7 +2931,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <button
                     onClick={() => {
                       if (!hostedUrl) return;
-                      const msg = encodeURIComponent(`Hi! I'd like to share my support worker profile with you. You can view my services, availability, and how to get in touch here: ${hostedUrl}`);
+                      const msg = encodeURIComponent(`Hi! I'd like to share my support worker profile with you. You can view my services, availability, and how to get in touch here: ${shortUrl || hostedUrl}`);
                       window.open(`https://wa.me/?text=${msg}`, "_blank");
                     }}
                     disabled={!hostedUrl}
@@ -2963,7 +2963,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                           navigator.share({
                             title: `${profile.name || "Support Worker"} — InSync Profiles Profile`,
                             text: profile.tagline || `Check out ${profile.name || "this support worker"}'s profile`,
-                            url: hostedUrl,
+                            url: shortUrl || hostedUrl,
                           }).catch(() => {});
                         }}
                         style={{
@@ -2979,7 +2979,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     )}
                     {/* WhatsApp */}
                     <button
-                      onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Hi! Check out ${profile.name || "my"} support worker profile: ${hostedUrl}`)}`, "_blank")}
+                      onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Hi! Check out ${profile.name || "my"} support worker profile: ${shortUrl || hostedUrl}`)}`, "_blank")}
                       style={{
                         flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none",
                         background: "linear-gradient(135deg, #25d366, #128c7e)",
@@ -2992,7 +2992,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     >💬 WhatsApp</button>
                     {/* Facebook */}
                     <button
-                      onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(hostedUrl)}`, "_blank")}
+                      onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shortUrl || hostedUrl)}`, "_blank")}
                       style={{
                         flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none",
                         background: "linear-gradient(135deg, #1877f2, #0d5dbf)",
