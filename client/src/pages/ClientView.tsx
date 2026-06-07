@@ -538,6 +538,23 @@ export default function ClientView() {
     return url.includes('youtu.be') || url.includes('youtube.com');
   }
 
+  function getYouTubeId(url: string): string | null {
+    try {
+      const u = new URL(url);
+      if (u.hostname === 'youtu.be') return u.pathname.slice(1).split('?')[0] || null;
+      if (u.hostname.includes('youtube.com')) {
+        const v = u.searchParams.get('v');
+        if (v) return v;
+        const parts = u.pathname.split('/');
+        const shortIdx = parts.indexOf('shorts');
+        if (shortIdx !== -1 && parts[shortIdx + 1]) return parts[shortIdx + 1];
+        const embedIdx = parts.indexOf('embed');
+        if (embedIdx !== -1 && parts[embedIdx + 1]) return parts[embedIdx + 1];
+      }
+    } catch {}
+    return null;
+  }
+
   function isIframeUrl(url: string): boolean {
     return isYouTubeUrl(url) || url.includes('drive.google.com') || url.includes('dropbox.com');
   }
@@ -818,13 +835,60 @@ export default function ClientView() {
               background: "linear-gradient(135deg, #ff6b9d, #ffd93d, #6bcb77, #4d96ff, #c77dff)",
             }}>
               {videoUrl && isIframeUrl(videoUrl) ? (
-                <iframe
-                  src={toEmbedUrlFull(videoUrl)}
-                  title={`${profile.name} intro video`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{ width: "100%", aspectRatio: "16/9", display: "block", borderRadius: "14px", border: "none" }}
-                />
+                (() => {
+                  const ytId = isYouTubeUrl(videoUrl) ? getYouTubeId(videoUrl) : null;
+                  const [playing, setPlaying] = React.useState(false);
+                  if (ytId && !playing) {
+                    return (
+                      <div
+                        onClick={() => setPlaying(true)}
+                        style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "14px", overflow: "hidden", cursor: "pointer", background: "#000" }}
+                        role="button"
+                        aria-label={`Play ${profile.name} intro video`}
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`}
+                          alt={`${profile.name} intro video thumbnail`}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                        />
+                        {/* Dark overlay */}
+                        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.25)" }} />
+                        {/* Play button */}
+                        <div style={{
+                          position: "absolute", top: "50%", left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          width: "64px", height: "64px", borderRadius: "50%",
+                          background: "rgba(240,192,64,0.95)",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          boxShadow: "0 4px 24px rgba(0,0,0,0.45), 0 0 0 4px rgba(240,192,64,0.3)",
+                        }}>
+                          <svg width="26" height="26" viewBox="0 0 24 24" fill="#0a0a0a">
+                            <polygon points="8,5 19,12 8,19" />
+                          </svg>
+                        </div>
+                        {/* Label */}
+                        <div style={{
+                          position: "absolute", bottom: "10px", left: "50%",
+                          transform: "translateX(-50%)",
+                          background: "rgba(0,0,0,0.65)",
+                          borderRadius: "20px", padding: "4px 14px",
+                          fontFamily: "'Outfit', sans-serif", fontSize: "11px",
+                          fontWeight: 700, color: "#F0C040", letterSpacing: "0.06em",
+                          whiteSpace: "nowrap",
+                        }}>▶ WATCH INTRO</div>
+                      </div>
+                    );
+                  }
+                  return (
+                    <iframe
+                      src={playing ? toEmbedUrlFull(videoUrl) + "?autoplay=1" : toEmbedUrlFull(videoUrl)}
+                      title={`${profile.name} intro video`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      style={{ width: "100%", aspectRatio: "16/9", display: "block", borderRadius: "14px", border: "none" }}
+                    />
+                  );
+                })()
               ) : videoUrl ? (
                 <video
                   src={videoUrl}
