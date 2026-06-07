@@ -426,7 +426,7 @@ function DemoThreadSection({ num, icon, title, subtitle, children }: { num: numb
 }
 
 const DEFAULT_DEMO_VIDEO = "/manus-storage/sw_final_video_new_music_46a119c4.mp4";
-function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }: { profile: ProfileData; onClose: () => void; videoUrl?: string | null; isDemo?: boolean; hostedUrl?: string | null }) {
+function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, shortUrl }: { profile: ProfileData; onClose: () => void; videoUrl?: string | null; isDemo?: boolean; hostedUrl?: string | null; shortUrl?: string }) {
   // Block right-click, text selection, and keyboard copy shortcuts
   React.useEffect(() => {
     const blockCtxMenu = (e: MouseEvent) => e.preventDefault();
