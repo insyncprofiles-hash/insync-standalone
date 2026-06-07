@@ -1760,8 +1760,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       .then(r => r.text())
       .then(short => {
         if (short && short.startsWith('http')) {
-          setShortUrl(short);
-          localStorage.setItem("insync_short_url", short);
+          // Append trailing slash to bypass TinyURL preview page
+          const directUrl = short.endsWith('/') ? short : short + '/';
+          setShortUrl(directUrl);
+          localStorage.setItem("insync_short_url", directUrl);
         }
       })
       .catch(() => { /* silently fall back to full URL */ });
