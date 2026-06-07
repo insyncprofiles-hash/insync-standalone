@@ -1053,33 +1053,41 @@ export default function ClientView() {
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", color: P.textDim, margin: 0 }}>No services listed.</p>
             )}
           </div>
-          {/* Vehicle Details — shown when transport or community access is selected */}
-          {profile.services.some((s: { id: string; selected: boolean }) => s.selected && s.id === "transport") && (
-            <div style={{ marginTop: "16px", padding: "14px", background: "rgba(100,160,255,0.06)", border: "1px solid rgba(100,160,255,0.18)", borderRadius: "14px" }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: P.accent, marginBottom: "12px" }}>🚗 Vehicle Details</p>
-              {([
-                { key: "vehicleType", label: "Vehicle Type" },
-                { key: "wheelchairAccess", label: "Wheelchair Accessibility" },
-                { key: "entryHeight", label: "Entry Height & Clearance" },
-                { key: "weightCapacity", label: "Weight Capacity" },
-              ] as { key: keyof typeof profile.vehicleOptions; label: string }[]).map(({ key, label }) => {
-                const checked = profile.vehicleOptions[key].filter((i: { checked: boolean; label: string }) => i.checked);
-                if (checked.length === 0) return null;
-                return (
-                  <div key={key} style={{ marginBottom: "10px" }}>
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 600, color: P.textDim, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                      {checked.map((item: { label: string }) => (
-                        <span key={item.label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", background: `${P.accent}18`, border: `1px solid ${P.accent}40`, color: P.textMid }}>
-                          {item.label}
-                        </span>
-                      ))}
+          {/* Vehicle Details — shown when transport is selected */}
+          {profile.services.some((s: { id: string; selected: boolean }) => s.selected && s.id === "transport") && (() => {
+            const vehicleCats = [
+              { key: "vehicleType" as keyof typeof profile.vehicleOptions, label: "Vehicle Type" },
+              { key: "wheelchairAccess" as keyof typeof profile.vehicleOptions, label: "Wheelchair Accessibility" },
+              { key: "entryHeight" as keyof typeof profile.vehicleOptions, label: "Entry Height & Clearance" },
+              { key: "weightCapacity" as keyof typeof profile.vehicleOptions, label: "Weight Capacity" },
+            ];
+            const hasAnyChecked = vehicleCats.some(({ key }) =>
+              (profile.vehicleOptions[key] || []).some((i: { checked: boolean }) => i.checked)
+            );
+            return (
+              <div style={{ marginTop: "16px", padding: "14px", background: "rgba(100,160,255,0.06)", border: "1px solid rgba(100,160,255,0.18)", borderRadius: "14px" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: P.accent, marginBottom: "12px" }}>🚗 Vehicle Details</p>
+                {hasAnyChecked ? vehicleCats.map(({ key, label }) => {
+                  const checked = (profile.vehicleOptions[key] || []).filter((i: { checked: boolean; label: string }) => i.checked);
+                  if (checked.length === 0) return null;
+                  return (
+                    <div key={key} style={{ marginBottom: "10px" }}>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 600, color: P.textDim, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                        {checked.map((item: { label: string }) => (
+                          <span key={item.label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 600, padding: "4px 10px", borderRadius: "20px", background: `${P.accent}18`, border: `1px solid ${P.accent}40`, color: P.textMid }}>
+                            {item.label}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                  );
+                }) : (
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: P.textDim, margin: 0 }}>Transport is available — contact me for vehicle details.</p>
+                )}
+              </div>
+            );
+          })()}
         </ThreadSection>
         {/* ── Thread connector + Experience ────────────────── */}
         {checkedExperience.length > 0 && (
