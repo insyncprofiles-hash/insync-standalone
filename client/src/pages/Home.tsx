@@ -1243,102 +1243,170 @@ function LanyardPreview({ profile, qrSelector }: { profile: ProfileData; qrSelec
   React.useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const W = 280, H = 420;
+    const W = 560, H = 840;
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Background
-    ctx.fillStyle = '#0A0A0A';
+    // ── MATT BLACK BASE ──
+    ctx.fillStyle = '#121212';
     ctx.fillRect(0, 0, W, H);
-    // Diagonal band
-    for (let x = 0; x < W; x++) {
-      for (let y = 0; y < H; y++) {
-        const d = (x + y) / (W + H);
-        if (d > 0.28 && d < 0.58) {
-          const t = (d - 0.28) / 0.30;
-          const r = Math.round(90 + t * 130);
-          const g = Math.round(10 + t * 40);
-          const b = Math.round(200 - t * 90);
-          ctx.fillStyle = `rgb(${r},${g},${b})`;
-          ctx.fillRect(x, y, 1, 1);
-        }
-      }
-    }
 
-    // Outer border
-    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
-    ctx.strokeRect(3, 3, W - 6, H - 6);
-
-    // Corner brackets
-    const s = 14;
-    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
-    [[4,4],[W-4,4],[4,H-4],[W-4,H-4]].forEach(([px,py]) => {
-      const dx = px < W/2 ? 1 : -1;
-      const dy = py < H/2 ? 1 : -1;
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px+dx*s, py); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py+dy*s); ctx.stroke();
-    });
-
-    // Lanyard hole
+    // ── DIAGONAL AURORA STRIP (purple → gold) ──
+    ctx.save();
+    const STRIP_TOP_Y = 200;
+    const STRIP_BOT_Y = 850;
+    const STRIP_W = 320;
     ctx.beginPath();
-    ctx.arc(W/2, 14, 9, 0, Math.PI*2);
-    ctx.fillStyle = '#111111'; ctx.fill();
-    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.moveTo(W, STRIP_TOP_Y);
+    ctx.lineTo(W, STRIP_TOP_Y + STRIP_W);
+    ctx.lineTo(0, STRIP_BOT_Y + STRIP_W);
+    ctx.lineTo(0, STRIP_BOT_Y);
+    ctx.closePath();
+    ctx.clip();
+    const auroraGrad = ctx.createLinearGradient(W, STRIP_TOP_Y, 0, STRIP_BOT_Y + STRIP_W);
+    auroraGrad.addColorStop(0,    '#C8960A');
+    auroraGrad.addColorStop(0.18, '#9A6A10');
+    auroraGrad.addColorStop(0.38, '#7B4A8A');
+    auroraGrad.addColorStop(0.55, '#5C2DA8');
+    auroraGrad.addColorStop(0.72, '#3D1A7A');
+    auroraGrad.addColorStop(1,    '#1A0840');
+    ctx.fillStyle = auroraGrad;
+    ctx.fillRect(0, 0, W, H);
+    // Brushed metal streaks
+    for (let i = 0; i < 120; i++) {
+      const t = Math.random();
+      const yL = STRIP_BOT_Y + t * STRIP_W;
+      const yR = STRIP_TOP_Y + t * STRIP_W;
+      const alpha = (Math.random() * 0.07 + 0.01).toFixed(3);
+      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+      ctx.lineWidth = Math.random() * 1.5 + 0.3;
+      ctx.beginPath(); ctx.moveTo(0, yL); ctx.lineTo(W, yR); ctx.stroke();
+    }
+    // Diagonal sheen highlight
+    const sheenGrad = ctx.createLinearGradient(W * 0.3, 0, W * 0.7, H);
+    sheenGrad.addColorStop(0,   'rgba(255,255,255,0)');
+    sheenGrad.addColorStop(0.4, 'rgba(255,255,255,0.13)');
+    sheenGrad.addColorStop(0.5, 'rgba(255,255,255,0.22)');
+    sheenGrad.addColorStop(0.6, 'rgba(255,255,255,0.10)');
+    sheenGrad.addColorStop(1,   'rgba(255,255,255,0)');
+    ctx.fillStyle = sheenGrad;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
 
-    // QR area
-    const QR_SIZE = 172;
-    const QR_X = (W - QR_SIZE) / 2;
-    const QR_Y = 30;
-    ctx.fillStyle = '#F5F0E8';
-    ctx.fillRect(QR_X, QR_Y, QR_SIZE, QR_SIZE);
-    ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
-    ctx.strokeRect(QR_X - 4, QR_Y - 4, QR_SIZE + 8, QR_SIZE + 8);
-
-    const drawText = () => {
-      ctx.textAlign = 'center';
-      // SUPPORT WORKER gold
-      ctx.font = 'bold 13px Arial';
-      ctx.fillStyle = '#FFD700';
-      ctx.fillText('SUPPORT WORKER', W/2, 222);
-      // Location
-      ctx.font = '10px Arial';
-      ctx.fillStyle = '#DDDDDD';
-      ctx.fillText(profile.location || '', W/2, 238);
-      // Rule
-      ctx.strokeStyle = '#9955EE'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(20, 250); ctx.lineTo(W-20, 250); ctx.stroke();
-      // Support Worker white
-      ctx.font = 'bold 20px Arial';
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillText('Support Worker', W/2, 300);
-      // Brand
-      ctx.font = '11px Arial';
-      ctx.fillStyle = '#BB77FF';
-      ctx.fillText('InSync Profiles', W/2, 330);
-      // URL
-      ctx.font = '9px Arial';
-      ctx.fillStyle = '#777777';
-      ctx.fillText('insyncprofiles.net', W/2, 348);
+    // ── ROUNDED RECT HELPER ──
+    const roundRect = (rx: number, ry: number, rw: number, rh: number, r: number) => {
+      ctx.beginPath();
+      ctx.moveTo(rx + r, ry);
+      ctx.lineTo(rx + rw - r, ry);
+      ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + r);
+      ctx.lineTo(rx + rw, ry + rh - r);
+      ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - r, ry + rh);
+      ctx.lineTo(rx + r, ry + rh);
+      ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - r);
+      ctx.lineTo(rx, ry + r);
+      ctx.quadraticCurveTo(rx, ry, rx + r, ry);
+      ctx.closePath();
     };
 
-    // Try to render QR from SVG
-    const svgEl = document.querySelector(qrSelector) as SVGSVGElement | null;
-    if (svgEl) {
-      const serializer = new XMLSerializer();
-      const svgStr = serializer.serializeToString(svgEl);
-      const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-      const url = URL.createObjectURL(blob);
-      const qrImg = new Image();
-      qrImg.onload = () => {
-        ctx.drawImage(qrImg, QR_X, QR_Y, QR_SIZE, QR_SIZE);
-        URL.revokeObjectURL(url);
-        drawText();
-      };
-      qrImg.src = url;
-    } else {
-      drawText();
-    }
+    // ── SCAN ME pill (top-left dark rounded rect) ──
+    const PILL_PAD = 28;
+    const SCAN_X = 30, SCAN_Y = 60, SCAN_W = 380, SCAN_H = 230;
+    ctx.save();
+    roundRect(SCAN_X, SCAN_Y, SCAN_W, SCAN_H, 32);
+    ctx.fillStyle = 'rgba(14,14,14,0.88)';
+    ctx.fill();
+    ctx.restore();
+    // SCAN ME. text — large gold serif-style
+    ctx.font = 'bold 110px Georgia, serif';
+    ctx.fillStyle = '#D4A017';
+    ctx.textAlign = 'left';
+    ctx.fillText('SCAN', SCAN_X + PILL_PAD, SCAN_Y + 115);
+    ctx.fillText('ME.', SCAN_X + PILL_PAD, SCAN_Y + 220);
+
+    // ── LANYARD HOLE ──
+    ctx.beginPath();
+    ctx.arc(W/2, 30, 20, 0, Math.PI*2);
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fill();
+    ctx.strokeStyle = '#D4A017';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // ── QR CODE ──
+    const QR_SIZE = 320;
+    const QR_X = (W - QR_SIZE) / 2;
+    const QR_Y = 360;
+
+    const finishCard = () => {
+      // ── SUPPORT WORKER pill (bottom dark rounded rect) ──
+      const SW_X = 30, SW_Y = 760, SW_W = W - 60, SW_H = 220;
+      ctx.save();
+      roundRect(SW_X, SW_Y, SW_W, SW_H, 32);
+      ctx.fillStyle = 'rgba(14,14,14,0.88)';
+      ctx.fill();
+      ctx.restore();
+      ctx.font = 'bold 96px Georgia, serif';
+      ctx.fillStyle = '#D4A017';
+      ctx.textAlign = 'center';
+      ctx.fillText('SUPPORT', W/2, SW_Y + 105);
+      ctx.fillText('WORKER', W/2, SW_Y + 200);
+    };
+
+    const drawRest = (qrDataUrl?: string) => {
+      if (qrDataUrl) {
+        const qrImg = new Image();
+        qrImg.onload = () => {
+          // White QR background
+          ctx.save();
+          roundRect(QR_X - 12, QR_Y - 12, QR_SIZE + 24, QR_SIZE + 24, 16);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fill();
+          ctx.restore();
+          ctx.drawImage(qrImg, QR_X, QR_Y, QR_SIZE, QR_SIZE);
+          // Gold corner scan brackets
+          const bs = 38, bw = 5;
+          ctx.strokeStyle = '#D4A017'; ctx.lineWidth = bw;
+          [[QR_X-16,QR_Y-16],[QR_X+QR_SIZE+16,QR_Y-16],[QR_X-16,QR_Y+QR_SIZE+16],[QR_X+QR_SIZE+16,QR_Y+QR_SIZE+16]].forEach(([bx,by],idx) => {
+            const dx = idx % 2 === 0 ? 1 : -1;
+            const dy = idx < 2 ? 1 : -1;
+            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + dx*bs, by); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx, by + dy*bs); ctx.stroke();
+          });
+          finishCard();
+        };
+        qrImg.src = qrDataUrl;
+      } else {
+        finishCard();
+      }
+    };
+
+    // Try to render QR from SVG in DOM — retry once after 200ms to handle async render
+    const tryRenderQR = () => {
+      const svgEl = document.querySelector(qrSelector) as SVGSVGElement | null;
+      if (svgEl) {
+        const serializer = new XMLSerializer();
+        const svgStr = serializer.serializeToString(svgEl);
+        const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const tmpImg = new Image();
+        tmpImg.onload = () => {
+          const tmpCanvas = document.createElement('canvas');
+          tmpCanvas.width = 370; tmpCanvas.height = 370;
+          const tmpCtx = tmpCanvas.getContext('2d');
+          if (tmpCtx) { tmpCtx.fillStyle='#FFFFFF'; tmpCtx.fillRect(0,0,370,370); tmpCtx.drawImage(tmpImg,0,0,370,370); }
+          URL.revokeObjectURL(url);
+          drawRest(tmpCanvas.toDataURL('image/png'));
+        };
+        tmpImg.onerror = () => { URL.revokeObjectURL(url); drawRest(); };
+        tmpImg.src = url;
+      } else {
+        drawRest();
+      }
+    };
+    // Small delay to ensure QR SVG is painted before we serialise it
+    const timer = setTimeout(tryRenderQR, 150);
+    return () => clearTimeout(timer);
   }, [profile.location, qrSelector]);
 
   return (
