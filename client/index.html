@@ -226,6 +226,31 @@
           var ogUrl = document.querySelector('meta[property="og:url"]');
           if (ogUrl) ogUrl.setAttribute('content', page.canonical);
         }
+        // /view page: inject worker name, title, photo into OG tags for Facebook post cards
+        if (path === '/view') {
+          var params = new URLSearchParams(window.location.search);
+          var workerName = params.get('name') || 'Support Worker';
+          var workerTitle = params.get('title') || 'NDIS Support Worker';
+          var workerPhoto = params.get('photo') || '';
+          var workerLocation = params.get('location') || 'Australia';
+          var viewTitle = workerName + ' — ' + workerTitle + ' | InSync Profiles';
+          var viewDesc = 'View ' + workerName + '\u2019s interactive support worker profile. Services, credentials, availability and communication style — all in one accessible link. ' + workerLocation + '.';
+          document.title = viewTitle;
+          var vDesc = document.querySelector('meta[name="description"]');
+          if (vDesc) vDesc.setAttribute('content', viewDesc);
+          var vOgTitle = document.querySelector('meta[property="og:title"]');
+          if (vOgTitle) vOgTitle.setAttribute('content', viewTitle);
+          var vOgDesc = document.querySelector('meta[property="og:description"]');
+          if (vOgDesc) vOgDesc.setAttribute('content', viewDesc);
+          var vOgUrl = document.querySelector('meta[property="og:url"]');
+          if (vOgUrl) vOgUrl.setAttribute('content', 'https://insyncprofiles.net/view' + window.location.search);
+          if (workerPhoto) {
+            var vOgImage = document.querySelector('meta[property="og:image"]');
+            if (vOgImage) vOgImage.setAttribute('content', workerPhoto);
+            var vOgImageAlt = document.querySelector('meta[property="og:image:alt"]');
+            if (vOgImageAlt) vOgImageAlt.setAttribute('content', workerName + ' — Support Worker Profile');
+          }
+        }
       })();
     </script>
 
