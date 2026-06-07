@@ -2657,7 +2657,32 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   : 'See exactly how your profile looks to clients and coordinators.'}
               </p>
               <button
-                onClick={() => setShowDemoClientView(true)}
+                onClick={() => {
+                  if (isDemo) {
+                    setShowDemoClientView(true);
+                  } else {
+                    // Build the full encoded URL and open the real /view page
+                    const fullUrl = encodeProfileToURLWithSkin(profile, personalVideoUrl, activeSkinId);
+                    let previewLink = fullUrl;
+                    if (profile.profileImage) {
+                      try {
+                        let pid = profileId;
+                        if (!pid) {
+                          pid = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+                          setProfileId(pid);
+                          localStorage.setItem("insync_profile_id", pid);
+                        }
+                        localStorage.setItem(`insync_profile_image_${pid}`, profile.profileImage);
+                        const urlObj = new URL(fullUrl);
+                        urlObj.searchParams.set("pid", pid);
+                        previewLink = urlObj.toString();
+                      } catch {
+                        // fall back to full URL without pid
+                      }
+                    }
+                    window.open(previewLink, "_blank");
+                  }
+                }}
                 style={{
                   padding: "14px 32px",
                   borderRadius: "99px",
@@ -2671,12 +2696,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   boxShadow: `0 6px 24px ${A.gold}55`,
                   transition: "all 0.2s cubic-bezier(0.23,1,0.32,1)",
                 }}
-                aria-label={isDemo ? 'Open client view sample demo' : 'Preview your profile'}
+                aria-label={isDemo ? 'Open client view sample demo' : 'Open client view'}
               >
-                {isDemo ? '👁️ Open Client View Sample' : '👁️ Preview Your Profile'}
+                {isDemo ? '👁️ Open Client View Sample' : '👁️ Open Client View'}
               </button>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, marginTop: "12px" }}>
-                {isDemo ? 'Demo only · watermarked · contact details hidden' : 'Live preview — exactly what your clients see.'}
+                {isDemo ? 'Demo only · watermarked · contact details hidden' : 'Opens in a new tab — exactly what your clients see.'}
               </p>
             </div>
             {/* ── Share to Social Media — below Preview card ── */}
