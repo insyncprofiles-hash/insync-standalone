@@ -735,9 +735,9 @@ export default function ClientView() {
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.04em", textTransform: "uppercase" }}>Get to Know Me</p>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 600, color: "rgba(240,192,64,0.70)", margin: "2px 0 0", letterSpacing: "0.08em", textTransform: "uppercase" }}>Interactive &amp; Accessible</p>
             </div>
-            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "6px", background: "#F0C040", borderRadius: "50px", padding: "8px 18px", flexShrink: 0 }}>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 800, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Open Profile</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", background: "#F0C040", borderRadius: "50px", padding: "12px 24px", flexShrink: 0, boxShadow: "0 4px 18px rgba(240,192,64,0.55)" }}>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Open Profile</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#0a0a0a" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
 
