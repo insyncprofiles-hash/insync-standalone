@@ -741,6 +741,33 @@ export default function ClientView() {
             </div>
           </div>
 
+          {/* ── Colour-coded badge strip ── */}
+          {(() => {
+            const profSkillGroup = profile.experienceGroups.find(g => g.id === 'professional-skills');
+            const checkedSkills = profSkillGroup ? profSkillGroup.items.filter(i => i.checked) : [];
+            const skillLabel = checkedSkills.length > 0
+              ? checkedSkills.slice(0, 2).map(s => s.label).join(' · ')
+              : null;
+            const selectedSvcLabels = profile.services.filter(s => s.selected).slice(0, 2).map(s => s.label).join(' · ');
+            const badgeList = [
+              profile.location ? { icon: '📍', text: profile.location, bg: '#0D6E63', border: '#0A5750', color: '#fff' } : null,
+              selectedSvcLabels ? { icon: '⚙', text: selectedSvcLabels, bg: '#4A1F8A', border: '#3A1870', color: '#fff' } : null,
+              profile.yearsExperience ? { icon: '★', text: profile.yearsExperience, bg: '#8A6200', border: '#6E4E00', color: '#fff' } : null,
+              skillLabel ? { icon: '🛠', text: skillLabel, bg: '#1A4A7A', border: '#153B62', color: '#fff' } : null,
+            ].filter(Boolean) as { icon: string; text: string; bg: string; border: string; color: string }[];
+            if (badgeList.length === 0) return null;
+            return (
+              <div style={{ padding: '0 20px 14px', display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+                {badgeList.map(b => (
+                  <span key={b.bg} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '5px 12px', borderRadius: '99px', background: b.bg, border: `1.5px solid ${b.border}`, color: b.color, fontFamily: "'Outfit', sans-serif", fontSize: '11px', fontWeight: 700, letterSpacing: '0.02em', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <span style={{ fontSize: '12px' }}>{b.icon}</span>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.text}</span>
+                  </span>
+                ))}
+              </div>
+            );
+          })()}
+
           {/* Service circles — pastel bg, larger, matching reference */}
           {selectedServices.length > 0 && (
             <div style={{ padding: "8px 20px 20px" }}>

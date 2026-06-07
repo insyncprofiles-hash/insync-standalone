@@ -52,6 +52,7 @@ export interface ProfileData {
   languages: string[];
   vehicleOptions: VehicleOptions;
   showUpStyle: { communicate: string[]; connect: string[]; presence: string[] };
+  yearsExperience: string;
 }
 
 export interface ServiceItem {
@@ -248,6 +249,7 @@ const DEFAULT_PROFILE: ProfileData = {
   languages: DEFAULT_LANGUAGES,
   vehicleOptions: DEFAULT_VEHICLE_OPTIONS,
   showUpStyle: { communicate: [], connect: [], presence: [] },
+  yearsExperience: "",
 };
 
 // ── URL param helpers ─────────────────────────────────────────
@@ -293,6 +295,7 @@ function encodeProfileToURL(profile: ProfileData, videoUrl?: string | null): str
   if (profile.showUpStyle.communicate.length > 0) params.set("susCom", profile.showUpStyle.communicate.join(","));
   if (profile.showUpStyle.connect.length > 0) params.set("susCon", profile.showUpStyle.connect.join(","));
   if (profile.showUpStyle.presence.length > 0) params.set("susPre", profile.showUpStyle.presence.join(","));
+  if (profile.yearsExperience) params.set("yrsExp", profile.yearsExperience);
   return `${window.location.origin}/view?${params.toString()}`;
 }
 function encodeProfileToURLWithSkin(profile: ProfileData, videoUrl?: string | null, skinId?: string): string {
@@ -346,6 +349,7 @@ function loadProfileFromURL(): Partial<ProfileData> | null {
       presence: susPre ? susPre.split(",").filter(Boolean) : [],
     };
   }
+  if (params.get("yrsExp")) overrides.yearsExperience = params.get("yrsExp")!;
   return overrides;
 }
 
@@ -712,6 +716,33 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl }
               {profile.location && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '14px', color: '#5a6a8a', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}><svg width='14' height='14' viewBox='0 0 24 24' fill='#e74c3c' aria-hidden='true'><path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/></svg>{profile.location}</p>}
             </div>
           </div>
+
+          {/* ── Colour-coded badge strip ── */}
+          {(() => {
+            const profSkillGroup = profile.experienceGroups.find(g => g.id === 'professional-skills');
+            const checkedSkills = profSkillGroup ? profSkillGroup.items.filter(i => i.checked) : [];
+            const skillLabel = checkedSkills.length > 0
+              ? checkedSkills.slice(0, 2).map(s => s.label).join(' · ')
+              : null;
+            const selectedSvcLabels = profile.services.filter(s => s.selected).slice(0, 2).map(s => s.label).join(' · ');
+            const badges = [
+              profile.location ? { icon: '📍', text: profile.location, bg: '#0D6E63', border: '#0A5750', color: '#fff' } : null,
+              selectedSvcLabels ? { icon: '⚙', text: selectedSvcLabels, bg: '#4A1F8A', border: '#3A1870', color: '#fff' } : null,
+              profile.yearsExperience ? { icon: '★', text: profile.yearsExperience, bg: '#8A6200', border: '#6E4E00', color: '#fff' } : null,
+              skillLabel ? { icon: '🛠', text: skillLabel, bg: '#1A4A7A', border: '#153B62', color: '#fff' } : null,
+            ].filter(Boolean) as { icon: string; text: string; bg: string; border: string; color: string }[];
+            if (badges.length === 0) return null;
+            return (
+              <div style={{ padding: '0 20px 14px', display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+                {badges.map(b => (
+                  <span key={b.text} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '5px 12px', borderRadius: '99px', background: b.bg, border: `1.5px solid ${b.border}`, color: b.color, fontFamily: "'Outfit', sans-serif", fontSize: '11px', fontWeight: 700, letterSpacing: '0.02em', whiteSpace: 'nowrap', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <span style={{ fontSize: '12px' }}>{b.icon}</span>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.text}</span>
+                  </span>
+                ))}
+              </div>
+            );
+          })()}
 
           {/* Service circles */}
           {selectedServices.length > 0 && (
@@ -2134,9 +2165,26 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 </FieldRow>
               </div>
 
-              <FieldRow label="Location" htmlFor="h-location">
-                <input id="h-location" style={THREAD_INPUT} value={profile.location} onChange={e => updateProfile({ location: e.target.value })} placeholder="City, State" />
-              </FieldRow>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
+                <FieldRow label="Location / Service Area" htmlFor="h-location">
+                  <input id="h-location" style={THREAD_INPUT} value={profile.location} onChange={e => updateProfile({ location: e.target.value })} placeholder="City, State" />
+                </FieldRow>
+                <FieldRow label="Years of Experience" htmlFor="h-yrsexp">
+                  <select
+                    id="h-yrsexp"
+                    style={{ ...THREAD_INPUT, cursor: "pointer" }}
+                    value={profile.yearsExperience}
+                    onChange={e => updateProfile({ yearsExperience: e.target.value })}
+                  >
+                    <option value="">Select years</option>
+                    <option value="Less than 1 year">Less than 1 year</option>
+                    <option value="1–2 years">1–2 years</option>
+                    <option value="3–5 years">3–5 years</option>
+                    <option value="6–10 years">6–10 years</option>
+                    <option value="10+ years">10+ years</option>
+                  </select>
+                </FieldRow>
+              </div>
 
               <FieldRow label="Tagline" htmlFor="h-tagline">
                 <input id="h-tagline" style={THREAD_INPUT} value={profile.tagline} onChange={e => updateProfile({ tagline: e.target.value })} placeholder="I get it. I see you. I'm here." />
