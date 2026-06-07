@@ -2716,7 +2716,41 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 {isDemo ? 'Demo only · watermarked · contact details hidden' : 'Live preview — exactly what your clients see.'}
               </p>
             </div>
-            {/* hidden section to keep counter correct */}
+            {/* ── Share to Social Media — below Preview card ── */}
+            {hostedUrl && (
+              <div style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)", borderRadius: "16px", border: "1px solid rgba(255,100,180,0.25)", padding: "18px", marginBottom: "16px" }}>
+                <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#e040a0" }}>📲 Share to Social Media</p>
+                <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, lineHeight: 1.6 }}>
+                  Share your profile link directly to WhatsApp, Instagram, Facebook, or any app on your device in one tap.
+                </p>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  {typeof navigator !== "undefined" && navigator.share && (
+                    <button
+                      onClick={() => {
+                        navigator.share({
+                          title: `${profile.name || "Support Worker"} — InSync Profiles Profile`,
+                          text: profile.tagline || `Check out ${profile.name || "this support worker"}'s profile`,
+                          url: shortUrl || hostedUrl,
+                        }).catch(() => {});
+                      }}
+                      style={{ flex: 1, minWidth: "140px", padding: "13px", borderRadius: "12px", border: "none", background: "linear-gradient(135deg, #e040a0, #ff6bcb)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(224,64,160,0.35)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
+                      aria-label="Share profile via device share sheet"
+                    >📲 Share via Device</button>
+                  )}
+                  <button
+                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Hi! Check out ${profile.name || "my"} support worker profile: ${shortUrl || hostedUrl}`)}`, "_blank")}
+                    style={{ flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none", background: "linear-gradient(135deg, #25d366, #128c7e)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(37,211,102,0.35)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
+                    aria-label="Share profile via WhatsApp"
+                  >💬 WhatsApp</button>
+                  <button
+                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shortUrl || hostedUrl)}`, "_blank")}
+                    style={{ flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none", background: "linear-gradient(135deg, #1877f2, #0d5dbf)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(24,119,242,0.35)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
+                    aria-label="Share profile on Facebook"
+                  >📘 Facebook</button>
+                </div>
+              </div>
+            )}
+            {/* hidden section to keep counter correct */
             <div style={{ display: "none" }} aria-hidden="true">
             <Section icon="📤" title="Share & Distribute" id="section-share">
               {/* ══ SAVE BUTTON ══ */}
@@ -3107,25 +3141,26 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
             bottom: isMobile ? '80px' : '28px',
             right: '18px',
             zIndex: 9980,
-            padding: '14px 28px',
+            padding: isMobile ? '16px 32px' : '18px 40px',
             borderRadius: '99px',
             background: saved
               ? 'linear-gradient(135deg, #2ecc71 0%, oklch(0.55 0.18 145) 100%)'
-              : `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
-            border: 'none',
+              : `linear-gradient(135deg, ${A.gold} 0%, oklch(0.62 0.22 55) 100%)`,
+            border: saved ? 'none' : '2.5px solid oklch(0.85 0.18 75)',
             color: 'oklch(0.08 0.05 155)',
             fontFamily: "'Outfit', sans-serif",
-            fontSize: '15px',
-            fontWeight: 800,
+            fontSize: isMobile ? '16px' : '18px',
+            fontWeight: 900,
             cursor: 'pointer',
             boxShadow: saved
-              ? '0 6px 32px rgba(46,204,113,0.5)'
-              : `0 6px 32px ${A.gold}66`,
+              ? '0 8px 36px rgba(46,204,113,0.55)'
+              : `0 8px 40px ${A.gold}88, 0 0 0 4px ${A.gold}22`,
             transition: 'all 0.25s cubic-bezier(0.23,1,0.32,1)',
-            letterSpacing: '0.04em',
+            letterSpacing: '0.06em',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
+            gap: '10px',
+            textTransform: 'uppercase',
           }}
           onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.96)')}
           onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
