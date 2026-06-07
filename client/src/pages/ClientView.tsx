@@ -1054,7 +1054,7 @@ export default function ClientView() {
             )}
           </div>
           {/* Vehicle Details — shown when transport or community access is selected */}
-          {profile.services.some((s: { id: string; selected: boolean }) => s.selected && (s.id === "transport" || s.id === "community")) && (
+          {profile.services.some((s: { id: string; selected: boolean }) => s.selected && s.id === "transport") && (
             <div style={{ marginTop: "16px", padding: "14px", background: "rgba(100,160,255,0.06)", border: "1px solid rgba(100,160,255,0.18)", borderRadius: "14px" }}>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: P.accent, marginBottom: "12px" }}>🚗 Vehicle Details</p>
               {([

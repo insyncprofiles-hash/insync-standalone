@@ -2277,7 +2277,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                             })()}
 
               {/* ── Vehicle Details (shown when transport or community access selected) ── */}
-              {profile.services.some(s => s.selected && (s.id === "transport" || s.id === "community")) && (
+              {profile.services.some(s => s.selected && s.id === "transport") && (
                 <div style={{ marginTop: "20px", padding: "16px", background: "rgba(100,160,255,0.06)", border: "1px solid rgba(100,160,255,0.18)", borderRadius: "14px" }}>
                   <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: A.gold, marginBottom: "14px", display: "flex", alignItems: "center", gap: "6px" }}>🚗 Vehicle Details</p>
                   {([
