@@ -2057,44 +2057,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: A.gold, margin: "0 0 3px" }}>{profile.title || "Support Worker"}</p>
             {profile.location && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, margin: 0 }}>📍 {profile.location}</p>}
           </div>
-          {/* Post to Social Media button */}
-          <button
-            onClick={() => {
-              const url = encodeProfileToURL(profile);
-              if (navigator.share) {
-                navigator.share({ title: `${profile.name} — Support Worker Profile`, text: profile.tagline || "Check out my support worker profile", url }).catch(() => {});
-              } else {
-                navigator.clipboard.writeText(url).then(() => toast.success("Profile link copied — paste it into your social media post!"));
-              }
-            }}
-            style={{
-              flexShrink: 0,
-              padding: "10px 16px",
-              borderRadius: "14px",
-              background: `linear-gradient(135deg, #4a9fd4 0%, ${A.gold} 100%)`,
-              border: "none",
-              color: "#fff",
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: "12px",
-              fontWeight: 700,
-              cursor: "pointer",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "4px",
-              boxShadow: `0 4px 16px ${A.gold}44`,
-              transition: "transform 0.15s, box-shadow 0.15s",
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.04)"; e.currentTarget.style.boxShadow = `0 6px 24px ${A.gold}66`; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = `0 4px 16px ${A.gold}44`; }}
-            aria-label="Post profile to social media"
-          >
-            <span style={{ fontSize: "18px" }}>📲</span>
-            <span>Post to</span>
-            <span>Social Media</span>
-          </button>
+
         </div>
 
         {/* Only show editor sections if not client view */}
