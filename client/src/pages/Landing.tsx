@@ -1157,7 +1157,7 @@ export default function Landing() {
             </div>
             {/* Copy */}
             <div>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: C.gold, marginBottom: "16px" }}>✦ Your profile goes where you go</p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: C.gold, marginBottom: "16px" }}>✦ Because the right match changes everything</p>
               <h2
                 id="expo-heading"
                 style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(30px, 4vw, 48px)", fontWeight: 700, lineHeight: 1.15, marginBottom: "24px" }}
