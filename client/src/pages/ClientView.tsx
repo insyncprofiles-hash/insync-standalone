@@ -638,7 +638,7 @@ export default function ClientView() {
       filter: a11yStyle.filter,
     }}>
       {/* ── Read Aloud — vibrant solid contrast button at very top ─── */}
-      <div data-no-print="true" style={{ padding: "12px 16px 0", maxWidth: "480px", margin: "0 auto" }}>
+      <div data-no-print="true" style={{ padding: "12px 16px 0", maxWidth: "680px", margin: "0 auto" }}>
         <button
           onClick={handleReadAloud}
           style={{
@@ -713,7 +713,7 @@ export default function ClientView() {
         animation: "shimmerDrift 8s ease-in-out infinite",
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "480px", margin: "0 auto", padding: "24px 16px 60px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "680px", margin: "0 auto", padding: "24px 16px 60px" }}>
 
         {/* ── Post Card — theme-aware gradient card ─── */}
         <div style={{
@@ -1250,13 +1250,13 @@ export default function ClientView() {
           <p style={{
             fontFamily: "'Outfit', sans-serif", fontSize: '11px', lineHeight: '1.6',
             color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(0,0,0,0.38)',
-            margin: '0 auto', maxWidth: '520px', textAlign: 'center', padding: '0 16px',
+            margin: '0 auto', maxWidth: '680px', textAlign: 'center', padding: '0 16px',
           }}>
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '11px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
             The information presented in this profile is self-reported and has not been independently verified. InSync Profiles makes no representation as to the accuracy, completeness, or currency of any skills, experience, qualifications, credentials, or other claims contained herein. It is the sole responsibility of the recipient or any appointing party to verify all profile content directly with the individual or through their nominated professional references and registrations.
           </p>
           {/* Brand footer */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', paddingTop: '16px', borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)', width: '100%', maxWidth: '520px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', paddingTop: '16px', borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)', width: '100%', maxWidth: '680px' }}>
             <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 800, color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>InSync Profiles</p>
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)', margin: 0 }}>&copy; {new Date().getFullYear()} InSync Profiles. All rights reserved. &nbsp;·&nbsp; ABN 54 116 010 622</p>
