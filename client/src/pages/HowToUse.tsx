@@ -22,9 +22,9 @@ const SECTIONS = [
         icon: "🛒",
         title: "Purchase the Template",
         advantage: "Buy once. Use forever. No subscription.",
-        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at insyncprofiles.net/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.`,
-        tip: "Keep your licence key somewhere safe. If you lose it, contact insyncprofiles@gmail.com and we'll help you out.",
-        tags: ["One-time purchase", "No app needed", "Works on any device"],
+        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at in-syncprofiles.manus.space/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.\n\nYour licence key works on as many devices as you like. Enter the same key on your phone, tablet, laptop, and work computer — all at the same time if you want. There is no device limit.\n\nIf you get a new phone or switch computers, just open in-syncprofiles.manus.space/editor on the new device and enter your key again. Your editor is always there.`,
+        tip: "Keep your licence key somewhere safe — save it in your Notes app or email it to yourself. If you lose it, contact insyncprofiles@gmail.com and we'll help you out.",
+        tags: ["One-time purchase", "No app needed", "Works on any device", "Unlimited devices"],
       },
       {
         number: "02",
@@ -157,6 +157,15 @@ const SECTIONS = [
         detail: `Your profile automatically generates a unique QR code. Find it in Thread 7 (Sharing) inside your editor.\n\nThe QR code encodes your full shareable profile link. Anyone who scans it with a smartphone camera is taken directly to your profile — no app needed, no login, no typing.\n\nWhere to use your QR code:\n\n📋 Resume & job applications — print it in the top corner of your CV so employers can scan and see your full profile instantly\n🪪 ID badge or lanyard card — clients scan when you arrive, before you've even said hello\n📱 WhatsApp & email signature — add it as an image so every message includes a tap-to-view profile link\n🖨 Printed flyers & brochures — hand out at community expos, disability events, and provider open days\n🏢 Provider noticeboards — post a printed card with your QR so coordinators can find you without a referral\n📲 Social media bio — Instagram, Facebook, LinkedIn: post the QR image so followers can scan it directly\n🎤 Presentations & info sessions — project your QR code so the whole room can scan at once\n🏷 Business cards — the most modern, accessible business card you can hand someone\n🏠 Home entry — some workers laminate their QR card and leave it with the client household so family members can always access the worker's profile\n📧 Email newsletters — embed the QR image in provider newsletters to introduce yourself to new participants`,
         tip: "Download your QR code as a PNG from the editor (Thread 7 → Download QR). Print it at A6 size for flyers, or paste it into a Word document to add to your CV.",
         tags: ["Instant scan", "No app needed", "Print-ready PNG", "Works offline"],
+      },
+      {
+        number: "13b",
+        icon: "📲",
+        title: "Generate Your Social Media Card",
+        advantage: "A professionally designed card that earns trust at first glance — built around what NDIS participants actually say they need to see.",
+        detail: `Research into NDIS participant communities consistently shows that trust is the number one factor when choosing a support worker — yet most worker posts look identical and tell participants nothing about the actual person.\n\nThe InSync Social Card is designed to fix this. It shows:\n\n📍 Your suburb and service area — prominently, in a gold badge at the top. Participants filter by location first. Make it impossible to miss.\n\n✅ Who you work with — not generic NDIS line items, but the actual disability types and support needs you have experience with (e.g. Autism, Mental Health, Community Participation). Participants see their own world reflected back at them instantly.\n\n▶️ A play button — signals that a 15-second video introduction is waiting on your profile. This creates curiosity and gets the click.\n\n🪪 Your name, title, and tagline — in your own words, large and human. Not a service description.\n\nWhen a participant or their family taps the card on Facebook or Instagram, they are taken directly to your unique InSync profile page — where your video introduction plays and they can explore your full profile.\n\nHow to generate your card:\n\n1. Go to Thread 7 (Share & Distribute) in your editor\n2. Scroll to the "📲 Social Media Card" section\n3. Click “Generate Social Card”\n4. Wait a few seconds while your card is created from your current profile details\n5. Preview it in the editor — it shows your photo, location badge, specialty checklist, and play button\n6. Click “⬇️ Download PNG” to save it to your device\n7. Post the PNG image directly to Facebook, Instagram, or LinkedIn\n\nThe card regenerates every time you click Generate, so it always reflects your latest profile. Update your location, specialties, or photo — then regenerate to get a fresh card.`,
+        tip: "When posting on Facebook, attach the PNG as a photo (not a link). This gives you full control over how it looks in the feed and avoids Facebook’s link preview compression. Add your shareable profile link in the post caption so participants can tap through to your full profile.",
+        tags: ["Trust-first design", "Location prominent", "Specialty checklist", "Video play button", "Download PNG"],
       },
       {
         number: "14",
