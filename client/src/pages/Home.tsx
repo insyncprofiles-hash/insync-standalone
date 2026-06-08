@@ -1854,10 +1854,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       // ── Background ───────────────────────────────────────────────────────
       if (photoImg) {
-        // Draw photo full-bleed, cropped to card
+        // Draw photo full-bleed, cropped — face on left side
         const scale = Math.max(W / photoImg.width, H / photoImg.height);
         const sw = W / scale, sh = H / scale;
-        const sx = (photoImg.width - sw) / 2, sy = 0;
+        // Shift crop origin to left 20% so face stays left
+        const sx = (photoImg.width - sw) * 0.2, sy = 0;
         ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, W, H);
       } else {
         const grad = ctx.createLinearGradient(0, 0, W, H);
@@ -1917,27 +1918,34 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       // ── "Looking for support that understands:" + checklist ──────────────
       if (specialties.length > 0) {
-        const rx = 490, ry = 130;
+        const rx = 540, ry = 130;
         ctx.shadowColor = "rgba(0,0,0,0.8)";
         ctx.shadowBlur = 8;
-        ctx.font = "bold 26px 'Outfit', sans-serif";
+        ctx.font = "bold 24px 'Outfit', sans-serif";
         ctx.fillStyle = WHITE;
         ctx.fillText("Looking for support", rx, ry);
-        ctx.fillText("that understands:", rx, ry + 34);
+        ctx.fillText("that understands:", rx, ry + 30);
         ctx.shadowBlur = 0;
 
+        // Max width for label text before truncation
+        const maxLabelW = W - rx - 36 - 16;
         specialties.forEach((label, i) => {
-          const ly = ry + 80 + i * 54;
+          const ly = ry + 72 + i * 50;
           // Gold checkmark
           ctx.shadowColor = "rgba(0,0,0,0.6)";
           ctx.shadowBlur = 4;
-          ctx.font = "bold 28px sans-serif";
+          ctx.font = "bold 26px sans-serif";
           ctx.fillStyle = GOLD;
           ctx.fillText("✓", rx, ly);
-          // Label
-          ctx.font = "bold 26px 'Outfit', sans-serif";
+          // Label — truncate if too wide
+          ctx.font = "bold 24px 'Outfit', sans-serif";
           ctx.fillStyle = WHITE;
-          ctx.fillText(label, rx + 36, ly);
+          let lbl = label;
+          while (ctx.measureText(lbl).width > maxLabelW && lbl.length > 4) {
+            lbl = lbl.slice(0, -1);
+          }
+          if (lbl !== label) lbl = lbl.trimEnd() + "…";
+          ctx.fillText(lbl, rx + 32, ly);
           ctx.shadowBlur = 0;
         });
       }
