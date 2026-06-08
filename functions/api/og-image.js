@@ -205,7 +205,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 30%, #fff5d8 60%, #ffd8e8 80%, #ffe8c8 100%)",
+          background: "linear-gradient(180deg, #dbeeff 0%, #e8d8ff 25%, #fff5d8 55%, #ffd8e8 80%, #ffe8c8 100%)",
           paddingTop: 36,
           paddingBottom: 32,
           paddingLeft: 44,
