@@ -19493,8 +19493,7 @@ var Resvg2 = class extends Resvg {
 // ../../node_modules/@vercel/og/dist/index.edge.js
 import resvg_wasm from "./resvg.wasm";
 import yoga_wasm from "./yoga.wasm";
-// .bin files can't be statically imported in CF Pages Functions — fetch at runtime instead
-const fallbackFontPromise = fetch("https://insyncprofiles.net/noto-font.ttf").then(r => r.arrayBuffer());
+// .bin files can't be statically imported in CF Pages Functions — fetch inside handler
 var initializedResvg = initWasm(resvg_wasm);
 var initializedYoga = xn2(yoga_wasm).then((yoga) => Ku(yoga));
 var _a3;
@@ -19507,7 +19506,8 @@ var ImageResponse = class {
         try {
           await initializedYoga;
           await initializedResvg;
-          const fontData = await fallbackFontPromise;
+          // Fetch font inside handler (global fetch() is not allowed in CF Workers)
+          const fontData = await fetch("https://insyncprofiles.net/noto-font.ttf").then(r => r.arrayBuffer());
           const fonts = [
             {
               name: "sans serif",
