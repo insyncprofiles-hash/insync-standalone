@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import helmet from "helmet";
 import wallRouter from "./wall.js";
 import ogRouter from "./og-image.js";
+import { generateSocialCard } from "./cardGenerator.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,6 +56,40 @@ async function startServer() {
   app.use(express.json());
   app.use("/api/deck", wallRouter);
   app.use("/api/og-image", ogRouter);
+
+  // ── Social card generation endpoint ──────────────────────────────────────
+  // POST /api/generate-card
+  // Body: { name, title, location, tagline, photoUrl, specialties }
+  // Returns: { cardDataUrl } — base64 PNG data URL returned directly (no storage)
+  app.post("/api/generate-card", async (req, res) => {
+    try {
+      const { name, title, location, tagline, photoUrl, specialties } = req.body as {
+        name?: string;
+        title?: string;
+        location?: string;
+        tagline?: string;
+        photoUrl?: string;
+        specialties?: string;
+      };
+      if (!name) {
+        res.status(400).json({ error: "name is required" });
+        return;
+      }
+      const pngBuffer = await generateSocialCard({
+        name: name || "",
+        title: title || "Support Worker",
+        location: location || "",
+        tagline: tagline || "",
+        photoUrl: photoUrl || null,
+        specialties: specialties || "",
+      });
+      const base64 = pngBuffer.toString("base64");
+      res.json({ cardDataUrl: `data:image/png;base64,${base64}` });
+    } catch (err) {
+      console.error("Card generation error:", err);
+      res.status(500).json({ error: "Card generation failed", detail: String(err) });
+    }
+  });
 
   // Serve static files from dist/public in production
   const staticPath =

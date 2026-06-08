@@ -1628,6 +1628,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   const [downloadReady, setDownloadReady] = useState(false);
   const [expandedServiceId, setExpandedServiceId] = useState<string | null>(null);
   const [clientPreview, setClientPreview] = useState(false);
+  const [cardDataUrl, setCardDataUrl] = useState<string | null>(null);
+  const [cardGenerating, setCardGenerating] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isClientView = !!urlOverrides;
 
@@ -1811,6 +1813,41 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     navigator.clipboard.writeText(url).then(() => {
       toast.success("Shareable profile link copied!", { description: "Send this link to clients or support coordinators." });
     });
+  };
+
+  const handleGenerateCard = async () => {
+    if (cardGenerating) return;
+    setCardGenerating(true);
+    try {
+      const specialties = (profile.experienceGroups || [])
+        .flatMap(g => g.items.filter(i => i.checked).map(i => i.label))
+        .concat(profile.services.filter(s => s.selected).map(s => s.label))
+        .slice(0, 5)
+        .join(",");
+      const resp = await fetch("/api/generate-card", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: profile.name,
+          title: profile.title,
+          location: profile.location,
+          tagline: profile.tagline,
+          photoUrl: profile.profileImage && profile.profileImage.startsWith("http") ? profile.profileImage : null,
+          specialties,
+        }),
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({})) as { error?: string };
+        throw new Error(err.error || `HTTP ${resp.status}`);
+      }
+      const { cardDataUrl: url } = await resp.json() as { cardDataUrl: string };
+      setCardDataUrl(url);
+      toast.success("Social card generated!", { description: "Download the PNG and post it on Facebook, Instagram, or LinkedIn." });
+    } catch (err) {
+      toast.error("Card generation failed", { description: String(err) });
+    } finally {
+      setCardGenerating(false);
+    }
   };
 
   const handleDownloadProfile = () => {
@@ -3116,7 +3153,87 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     >📘 Facebook</button>
                   </div>
                 </div>
-              )}
+                            )}
+
+              {/* ── Social Media Card ── */}
+              <div style={{ marginTop: "20px", background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)", borderRadius: "16px", border: `1px solid ${A.gold}33`, padding: "18px" }}>
+                <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: A.gold }}>📲 Social Media Card</p>
+                <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, lineHeight: 1.6 }}>
+                  Generate a trust-first card showing your location, who you work with, and a play button for your video intro. Download the PNG and post it directly to Facebook or Instagram.
+                </p>
+                <button
+                  onClick={handleGenerateCard}
+                  disabled={cardGenerating || !profile.name}
+                  style={{
+                    width: "100%", padding: "14px", borderRadius: "12px", border: "none",
+                    background: cardGenerating
+                      ? `${A.gold}44`
+                      : `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
+                    color: "#1a2e1e",
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    cursor: cardGenerating || !profile.name ? "not-allowed" : "pointer",
+                    boxShadow: cardGenerating ? "none" : `0 4px 20px ${A.gold}55`,
+                    transition: "all 0.2s",
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                    marginBottom: "16px",
+                  }}
+                  aria-label="Generate social media card"
+                >
+                  {cardGenerating ? (
+                    <>⏳ Generating your card…</>
+                  ) : (
+                    <>
+                      <span style={{ fontSize: "18px" }}>🎤</span>
+                      {cardDataUrl ? "Regenerate Social Card" : "Generate Social Card"}
+                    </>
+                  )}
+                </button>
+                {cardDataUrl && !cardGenerating && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                    <div style={{ borderRadius: "12px", overflow: "hidden", border: `1.5px solid ${A.gold}44`, boxShadow: `0 4px 24px ${A.gold}22` }}>
+                      <img src={cardDataUrl} alt="Your social media card preview" style={{ width: "100%", display: "block" }} />
+                    </div>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <a
+                        href={cardDataUrl}
+                        download={`${(profile.name || "insync").replace(/\s+/g, "-").toLowerCase()}-social-card.png`}
+                        style={{
+                          flex: 1, padding: "13px", borderRadius: "12px",
+                          background: `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
+                          color: "#1a2e1e", fontFamily: "'Outfit', sans-serif",
+                          fontSize: "14px", fontWeight: 700, textDecoration: "none",
+                          display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
+                          boxShadow: `0 4px 16px ${A.gold}44`,
+                        }}
+                        aria-label="Download social card as PNG"
+                      >⬇️ Download PNG</a>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(window.location.origin + "/view?" + new URLSearchParams({ name: profile.name, title: profile.title || "", location: profile.location || "", tagline: profile.tagline || "" }).toString())
+                            .then(() => toast.success("Profile link copied!", { description: "Paste it in your social post caption so participants can tap through." }));
+                        }}
+                        style={{
+                          flex: 1, padding: "13px", borderRadius: "12px",
+                          background: `${A.gold}18`, border: `1px solid ${A.gold}55`,
+                          color: A.gold, fontFamily: "'Outfit', sans-serif",
+                          fontSize: "14px", fontWeight: 700, cursor: "pointer",
+                        }}
+                        aria-label="Copy profile link to clipboard"
+                      >🔗 Copy Profile Link</button>
+                    </div>
+                    <p style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, lineHeight: 1.5, textAlign: "center" as const }}>
+                      Tip: On Facebook, attach the PNG as a photo (not a link) for best quality. Add your profile link in the caption.
+                    </p>
+                  </div>
+                )}
+                {!profile.name && (
+                  <p style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, textAlign: "center" as const }}>
+                    Add your name in the Identity section above to generate your card.
+                  </p>
+                )}
+              </div>
 
             </Section>
           </>
