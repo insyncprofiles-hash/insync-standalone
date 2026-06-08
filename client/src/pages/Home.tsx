@@ -1979,7 +1979,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.shadowBlur = 0;
 
       // ── Bottom white panel ───────────────────────────────────────────────
-      const panelH = profile.tagline ? 230 : 180;
+      const panelH = profile.tagline ? 270 : 180;
       roundRect(0, H - panelH, W, panelH, 0);
       ctx.fillStyle = "rgba(255,255,255,0.95)";
       ctx.fill();
@@ -1996,16 +1996,34 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.font = "bold 26px 'Outfit', sans-serif";
       ctx.fillStyle = PURPLE;
       ctx.fillText(profile.title || "Support Worker", 36, py + 96);
-      // Tagline
+      // Tagline — word-wrapped
       if (profile.tagline) {
         ctx.font = "italic 22px 'Outfit', sans-serif";
         ctx.fillStyle = "#333333";
-        const tq = profile.tagline.slice(0, 90);
-        ctx.fillText(tq, 36, py + 134);
-        // Underline
+        const maxTW = W - 72;
+        const words = profile.tagline.split(" ");
+        const lines: string[] = [];
+        let cur = "";
+        for (const word of words) {
+          const test = cur ? cur + " " + word : word;
+          if (ctx.measureText(test).width > maxTW) {
+            if (cur) lines.push(cur);
+            cur = word;
+          } else {
+            cur = test;
+          }
+        }
+        if (cur) lines.push(cur);
+        const lineH = 28;
+        lines.slice(0, 3).forEach((line, i) => {
+          ctx.fillText(line, 36, py + 134 + i * lineH);
+        });
+        // Underline under last line
+        const lastLine = lines.slice(0, 3).at(-1) || "";
+        const lastY = py + 134 + (Math.min(lines.length, 3) - 1) * lineH + 8;
         ctx.beginPath();
-        ctx.moveTo(36, py + 142);
-        ctx.lineTo(Math.min(36 + ctx.measureText(tq).width, W - 36), py + 142);
+        ctx.moveTo(36, lastY);
+        ctx.lineTo(Math.min(36 + ctx.measureText(lastLine).width, W - 36), lastY);
         ctx.strokeStyle = PURPLE;
         ctx.lineWidth = 3;
         ctx.stroke();
