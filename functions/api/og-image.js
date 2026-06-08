@@ -208,30 +208,37 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
         },
       },
 
-        // ── Photo + Info row (photo left, name/title/location/chips right) ──
-        h("div", { style: { display: "flex", alignItems: "flex-start", gap: 32, flexShrink: 0 } },
-          photoEl,
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 10, flex: 1 } },
-            h("div", { style: { fontSize: 52, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.05 } }, name),
-            h("div", { style: { fontSize: 14, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4 } }, title.toUpperCase()),
-            location
-              ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 14, color: "#555", marginTop: 2 } },
-                  h("span", { style: { color: "#E57373", fontWeight: 700, fontSize: 16 } }, "-"),
-                  h("span", {}, location),
-                )
-              : null,
-            // Service chips as vertical list
-            services.length > 0
-              ? h("div", {
-                  style: {
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 8,
-                    marginTop: 12,
-                  },
-                }, ...chips)
-              : null,
+        // ── Main content row: left col (photo + name/title/location) | right col (chips) ──
+        h("div", { style: { display: "flex", alignItems: "flex-start", gap: 36, flexShrink: 0 } },
+
+          // Left column: photo stacked above name/title/location
+          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 14, flexShrink: 0 } },
+            photoEl,
+            h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" } },
+              h("div", { style: { fontSize: 40, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.05 } }, name),
+              h("div", { style: { fontSize: 13, fontWeight: 700, color: "#2dd4bf", letterSpacing: 3 } }, title.toUpperCase()),
+              location
+                ? h("div", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 13, color: "#555" } },
+                    h("span", { style: { color: "#E57373", fontWeight: 700 } }, "-"),
+                    h("span", {}, location),
+                  )
+                : null,
+            ),
           ),
+
+          // Right column: service chips as vertical list
+          services.length > 0
+            ? h("div", {
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 10,
+                  flex: 1,
+                  justifyContent: "center",
+                  alignSelf: "center",
+                },
+              }, ...chips)
+            : null,
         ),
 
         // ── Tagline ───────────────────────────────────────────────────────
