@@ -53,7 +53,7 @@ function h(type, props, ...children) {
 
 function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
   // ── Photo element ─────────────────────────────────────────────────────────
-  const PHOTO_SIZE = 150;
+  const PHOTO_SIZE = 190;
   const photoEl = photoDataUrl
     ? h("div", {
         style: {
@@ -205,12 +205,12 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          background: "linear-gradient(180deg, #dbeeff 0%, #e8d8ff 25%, #fff5d8 55%, #ffd8e8 80%, #ffe8c8 100%)",
-          paddingTop: 36,
+          background: "linear-gradient(180deg, #e8d8ff 0%, #c8d8ff 30%, #c8f0e8 70%, #d8ffe8 100%)",
+          paddingTop: 32,
           paddingBottom: 32,
           paddingLeft: 44,
           paddingRight: 44,
-          gap: 0,
+          gap: 28,
           justifyContent: "space-between",
         },
       },
@@ -219,15 +219,15 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
         h("div", { style: { display: "flex", alignItems: "center", gap: 40, flexShrink: 0 } },
 
           // Left column: photo stacked above name/title/location
-          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 18, flexShrink: 0, width: 220 } },
+          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 16, flexShrink: 0, width: 240 } },
             photoEl,
-            h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center" } },
-              h("div", { style: { fontSize: 44, fontWeight: 800, color: "#1a2a4a", lineHeight: 1.05 } }, name),
-              h("div", { style: { fontSize: 14, fontWeight: 700, color: "#2dd4bf", letterSpacing: 3 } }, title.toUpperCase()),
+            h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" } },
+              h("div", { style: { fontSize: 52, fontWeight: 900, color: "#1a1a3a", lineHeight: 1.0 } }, name),
+              h("div", { style: { fontSize: 15, fontWeight: 800, color: "#0e9488", letterSpacing: 4, marginTop: 4 } }, title.toUpperCase()),
               location
-                ? h("div", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 14, color: "#555", marginTop: 2 } },
-                    h("span", { style: { color: "#E57373", fontWeight: 700 } }, "-"),
-                    h("span", {}, location),
+                ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 15, color: "#333", marginTop: 4 } },
+                    h("span", { style: { color: "#7C3AED", fontWeight: 800, fontSize: 18 } }, "\u25CF"),
+                    h("span", { style: { fontWeight: 600 } }, location),
                   )
                 : null,
             ),
