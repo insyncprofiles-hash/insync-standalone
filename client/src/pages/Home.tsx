@@ -1868,14 +1868,14 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillRect(0, 0, W, H);
       }
 
-      // ── Dark overlay (right side — text area, left face stays clear) ────────
-      const overlayR = ctx.createLinearGradient(0, 0, W, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");    // left: clear for face
-      overlayR.addColorStop(0.42, "rgba(0,0,0,0.0)"); // keep clear
-      overlayR.addColorStop(0.58, "rgba(0,0,0,0.60)"); // fade starts
-      overlayR.addColorStop(1, "rgba(0,0,0,0.82)");   // right: dark for text
+      // ── Dark overlay — RIGHT HALF ONLY, left stays fully clear ────────────
+      // Draw overlay only on the right 50% of the card
+      const overlayR = ctx.createLinearGradient(W * 0.45, 0, W, 0);
+      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");    // edge of right panel: transparent
+      overlayR.addColorStop(0.25, "rgba(0,0,0,0.70)"); // quickly goes dark
+      overlayR.addColorStop(1, "rgba(0,0,0,0.85)");   // fully dark on far right
       ctx.fillStyle = overlayR;
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillRect(W * 0.45, 0, W * 0.55, H); // only paint the right 55%
 
       // Bottom gradient for panel readability
       const overlayB = ctx.createLinearGradient(0, H - 380, 0, H);
