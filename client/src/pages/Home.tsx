@@ -1932,26 +1932,44 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillText("that understands:", rx, ry + 30);
         ctx.shadowBlur = 0;
 
-        // Max width for label text before truncation
-        const maxLabelW = W - 490 - 20;
-        specialties.forEach((label, i) => {
-          const ly = ry + 72 + i * 50;
-          // Gold checkmark
+        // Word-wrap each label within the right panel
+        const maxLabelW = W - rx - 32 - 16; // available width after checkmark
+        const lblFont = "bold 24px 'Outfit', sans-serif";
+        let checkY = ry + 72;
+        specialties.forEach((label) => {
+          // Split label into wrapped lines
+          const words = label.split(" ");
+          const wrappedLines: string[] = [];
+          let cur = "";
+          ctx.font = lblFont;
+          for (const word of words) {
+            const test = cur ? cur + " " + word : word;
+            if (ctx.measureText(test).width > maxLabelW) {
+              if (cur) wrappedLines.push(cur);
+              cur = word;
+            } else {
+              cur = test;
+            }
+          }
+          if (cur) wrappedLines.push(cur);
+
+          // Gold checkmark on first line
           ctx.shadowColor = "rgba(0,0,0,0.6)";
           ctx.shadowBlur = 4;
           ctx.font = "bold 26px sans-serif";
           ctx.fillStyle = GOLD;
-          ctx.fillText("✓", rx, ly);
-          // Label — truncate if too wide
-          ctx.font = "bold 24px 'Outfit', sans-serif";
+          ctx.fillText("✓", rx, checkY);
+
+          // Draw each wrapped line
+          ctx.font = lblFont;
           ctx.fillStyle = WHITE;
-          let lbl = label;
-          while (ctx.measureText(lbl).width > maxLabelW && lbl.length > 4) {
-            lbl = lbl.slice(0, -1);
-          }
-          if (lbl !== label) lbl = lbl.trimEnd() + "…";
-          ctx.fillText(lbl, rx + 32, ly);
+          wrappedLines.forEach((line, li) => {
+            ctx.fillText(line, rx + 32, checkY + li * 28);
+          });
           ctx.shadowBlur = 0;
+
+          // Advance Y by number of lines rendered
+          checkY += Math.max(wrappedLines.length, 1) * 28 + 14;
         });
       }
 
