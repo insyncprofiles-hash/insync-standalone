@@ -2371,7 +2371,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 </FieldRow>
               ))}
               {/* Languages */}
-              <FieldRow label="Languages Spoken">
+              <FieldRow label="Languages">
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "8px" }}>
                   {profile.languages.map(lang => (
                     <span
