@@ -1854,11 +1854,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       // ── Background ───────────────────────────────────────────────────────
       if (photoImg) {
-        // Draw photo full-bleed, cropped from left edge so face is on left
+        // Draw photo full-bleed — crop from centre-left so face slides to left of canvas
         const scale = Math.max(W / photoImg.width, H / photoImg.height);
         const sw = W / scale, sh = H / scale;
-        // sx = 0 means we start from the left edge of the photo
-        const sx = 0, sy = 0;
+        // Use 30% offset to push face toward left side of canvas
+        const sx = (photoImg.width - sw) * 0.3, sy = 0;
         ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, W, H);
       } else {
         const grad = ctx.createLinearGradient(0, 0, W, H);
