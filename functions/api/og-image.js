@@ -551,7 +551,13 @@ export async function onRequest(context) {
       services, badges,
     });
 
-    return new ImageResponse(card, { width: 900, height: 1125 });
+    const imgResponse = new ImageResponse(card, { width: 900, height: 1125 });
+    // Await the body to surface any stream-level render errors
+    const bodyBytes = await imgResponse.arrayBuffer();
+    return new Response(bodyBytes, {
+      status: 200,
+      headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=3600" },
+    });
   } catch (err) {
     console.error("OG image generation failed:", err?.message || err);
     return Response.redirect("https://insyncprofiles.net/og-image.png", 302);

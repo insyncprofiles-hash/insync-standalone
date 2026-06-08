@@ -19504,20 +19504,25 @@ var ImageResponse = class {
   constructor(element, options = {}) {
     const result = new ReadableStream({
       async start(controller) {
-        await initializedYoga;
-        await initializedResvg;
-        const fontData = await fallbackFontPromise;
-        const fonts = [
-          {
-            name: "sans serif",
-            data: fontData,
-            weight: 700,
-            style: "normal"
-          }
-        ];
-        const result2 = await render(Bu, resvg_wasm_exports, options, fonts, element);
-        controller.enqueue(result2);
-        controller.close();
+        try {
+          await initializedYoga;
+          await initializedResvg;
+          const fontData = await fallbackFontPromise;
+          const fonts = [
+            {
+              name: "sans serif",
+              data: fontData,
+              weight: 700,
+              style: "normal"
+            }
+          ];
+          const result2 = await render(Bu, resvg_wasm_exports, options, fonts, element);
+          controller.enqueue(result2);
+          controller.close();
+        } catch (streamErr) {
+          console.error("[og-image] stream render error:", streamErr?.message || streamErr);
+          controller.error(streamErr);
+        }
       }
     });
     return new Response(result, {
