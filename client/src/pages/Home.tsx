@@ -1868,14 +1868,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillRect(0, 0, W, H);
       }
 
-      // ── Dark overlay — RIGHT HALF ONLY, left stays fully clear ────────────
-      // Draw overlay only on the right 50% of the card
-      const overlayR = ctx.createLinearGradient(W * 0.45, 0, W, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");    // edge of right panel: transparent
-      overlayR.addColorStop(0.25, "rgba(0,0,0,0.70)"); // quickly goes dark
-      overlayR.addColorStop(1, "rgba(0,0,0,0.85)");   // fully dark on far right
+      // ── Dark overlay — LEFT HALF ONLY, right stays fully clear for face ─────
+      const overlayR = ctx.createLinearGradient(0, 0, W * 0.55, 0);
+      overlayR.addColorStop(0, "rgba(0,0,0,0.85)");   // far left: fully dark
+      overlayR.addColorStop(0.75, "rgba(0,0,0,0.70)"); // still dark
+      overlayR.addColorStop(1, "rgba(0,0,0,0.0)");    // fades to clear at 55%
       ctx.fillStyle = overlayR;
-      ctx.fillRect(W * 0.45, 0, W * 0.55, H); // only paint the right 55%
+      ctx.fillRect(0, 0, W * 0.55, H); // only paint the left 55%
 
       // Bottom gradient for panel readability
       const overlayB = ctx.createLinearGradient(0, H - 380, 0, H);
@@ -1899,13 +1898,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.closePath();
       };
 
-      // ── Location badge (top-RIGHT) ───────────────────────────────────────
+      // ── Location badge (top-LEFT) ───────────────────────────────────────
       if (profile.location) {
         const loc = profile.location.toUpperCase();
         ctx.font = "bold 22px 'Outfit', sans-serif";
         const locW = ctx.measureText(loc).width;
-        const badgeW = Math.min(locW + 56, 420), badgeH = 52;
-        const bx = W - badgeW - 36, by = 36;
+        const badgeW = Math.min(locW + 56, 400), badgeH = 52;
+        const bx = 36, by = 36;
         roundRect(bx, by, badgeW, badgeH, 14);
         ctx.fillStyle = GOLD;
         ctx.fill();
@@ -1921,9 +1920,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillText(locTxt, bx + 40, by + 34);
       }
 
-      // ── "Looking for support that understands:" + checklist (RIGHT side) ───────
+      // ── "Looking for support that understands:" + checklist (LEFT side) ───────
       if (specialties.length > 0) {
-        const rx = 490, ry = 130;
+        const rx = 36, ry = 130;
         ctx.shadowColor = "rgba(0,0,0,0.8)";
         ctx.shadowBlur = 8;
         ctx.font = "bold 24px 'Outfit', sans-serif";
@@ -1932,8 +1931,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillText("that understands:", rx, ry + 30);
         ctx.shadowBlur = 0;
 
-        // Word-wrap each label within the right panel
-        const maxLabelW = W - rx - 32 - 16; // available width after checkmark
+        // Word-wrap each label within the left panel (max ~420px)
+        const maxLabelW = 400;
         const lblFont = "bold 24px 'Outfit', sans-serif";
         let checkY = ry + 72;
         specialties.forEach((label) => {
@@ -1973,8 +1972,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         });
       }
 
-      // ── Play button (centre-left, above panel) ───────────────────────────
-      const pbx = 240, pby = H - 380 - 75;
+      // ── Play button (left side, above panel) ────────────────────────────
+      const pbx = 150, pby = H - 380 - 75;
       // Outer circle
       ctx.beginPath();
       ctx.arc(pbx, pby, 75, 0, Math.PI * 2);
@@ -1997,8 +1996,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.shadowBlur = 6;
       ctx.font = "italic bold 21px 'Outfit', sans-serif";
       ctx.fillStyle = WHITE;
-      ctx.fillText("← Tap to watch my", W - 265, H - 380);
-      ctx.fillText("15 second introduction!", W - 265, H - 354);
+      ctx.fillText("Tap to watch my intro →", 36, H - 380);
+      ctx.fillText("15 second introduction!", 36, H - 354);
       ctx.shadowBlur = 0;
 
       // ── Bottom white panel ───────────────────────────────────────────────
