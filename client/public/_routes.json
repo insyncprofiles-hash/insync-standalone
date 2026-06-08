@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "include": ["/view", "/view/*", "/api/og-image", "/api/og-image/*"],
+  "include": ["/view", "/view/*", "/api/og-image", "/api/og-image/*", "/api/generate-card", "/api/generate-card/*"],
   "exclude": []
 }
