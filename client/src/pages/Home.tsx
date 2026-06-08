@@ -2323,7 +2323,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 {
                   key: "communicate" as const,
                   label: "How I Communicate",
-                  chips: ["Direct & clear","Gentle & patient","Visual cues","AAC-friendly","Written prompts","Humour & lightness","Simple language","Non-verbal aware"],
+                  chips: ["Direct & clear","Gentle & patient","Visual cues","AAC-friendly","Auslan","Written prompts","Humour & lightness","Simple language","Non-verbal aware"],
                 },
                 {
                   key: "connect" as const,
@@ -2572,7 +2572,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 ))}
                 {/* Quick-add suggestions */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "8px" }}>
-                  {["NDIS Worker Check", "Police Check", "Working With Children Check", "First Aid Certified", "Mental Health First Aid", "Auslan Interpreter", "Public Liability Insurance", "Professional Indemnity Insurance"].filter(s => !profile.badges.includes(s)).map(suggestion => (
+                  {["NDIS Worker Check", "Police Check", "Working With Children Check", "First Aid Certified", "Mental Health First Aid", "Public Liability Insurance", "Professional Indemnity Insurance"].filter(s => !profile.badges.includes(s)).map(suggestion => (
                     <button key={suggestion} onClick={() => updateProfile({ badges: [...profile.badges, suggestion] })}
                       style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 600, color: A.gold, background: "rgba(210,175,80,0.07)", border: `1px solid ${A.gold}44`, borderRadius: "20px", padding: "4px 10px", cursor: "pointer", whiteSpace: "nowrap" }}
                     >+ {suggestion}</button>
