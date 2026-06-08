@@ -88,33 +88,39 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
         },
       }, "\u{1F464}");
 
-  // ── Text-only service chips (vertical list) ─────────────────────────────
-  const chips = services.slice(0, 5).map(s =>
-    h("div", {
+  // ── Text-only service chips — cycling blue / green / gold ──────────────────
+  const CHIP_PALETTE = [
+    { border: "#1E88E5", bg: "rgba(30,136,229,0.12)", text: "#1565C0" },  // blue
+    { border: "#2E7D32", bg: "rgba(46,125,50,0.12)",  text: "#1B5E20" },  // green
+    { border: "#D4A017", bg: "rgba(212,160,23,0.12)", text: "#7B5800" },  // gold
+  ];
+  const chips = services.slice(0, 5).map((s, i) => {
+    const p = CHIP_PALETTE[i % 3];
+    return h("div", {
       style: {
         display: "flex",
         alignItems: "center",
-        background: s.bg || "#F0F0F0",
-        borderRadius: 20,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 16,
-        paddingRight: 16,
-        borderWidth: 1.5,
+        background: p.bg,
+        borderRadius: 22,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderWidth: 2,
         borderStyle: "solid",
-        borderColor: s.color || "#ccc",
+        borderColor: p.border,
       },
     },
       h("div", {
         style: {
-          fontSize: 14,
-          color: s.color || "#333",
+          fontSize: 15,
+          color: p.text,
           fontWeight: 700,
-          letterSpacing: 0.2,
+          letterSpacing: 0.3,
         },
       }, s.label),
-    )
-  );
+    );
+  });
 
   return h("div", {
     style: {
