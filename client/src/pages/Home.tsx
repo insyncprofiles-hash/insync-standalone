@@ -1619,6 +1619,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   const [shortUrl, setShortUrl] = useState<string>(() => {
     const stored = localStorage.getItem("insync_short_url") || "";
     // Keep bit.ly and tinyurl links; clear anything else that looks stale
+    // Ensure TinyURL links have trailing slash to bypass preview page
+    if (stored.includes('tinyurl.com') && !stored.endsWith('/')) {
+      const fixed = stored + '/';
+      localStorage.setItem("insync_short_url", fixed);
+      return fixed;
+    }
     return stored;
   });
   const [downloadReady, setDownloadReady] = useState(false);
@@ -1787,9 +1793,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
           .then(r => r.text())
           .then(tiny => {
             if (tiny && tiny.startsWith('http')) {
-              setShortUrl(tiny);
-              localStorage.setItem("insync_short_url", tiny);
-              toast.success("Short link ready!", { description: tiny });
+              // Append trailing slash to bypass TinyURL preview page
+              const directTiny = tiny.endsWith('/') ? tiny : tiny + '/';
+              setShortUrl(directTiny);
+              localStorage.setItem("insync_short_url", directTiny);
+              toast.success("Short link ready!", { description: directTiny });
             } else {
               throw new Error('Invalid TinyURL response');
             }
