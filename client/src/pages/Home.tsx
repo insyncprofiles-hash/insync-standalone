@@ -2746,13 +2746,17 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 {hostedUrl ? (
                   <>
                     {/* Link display */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px", marginTop: "8px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: shortUrl ? "14px" : "4px", marginTop: "8px" }}>
                       <div style={{
                         flex: 1, padding: "10px 12px", borderRadius: "10px",
                         background: isDark ? "rgba(255,255,255,0.07)" : "rgba(240,248,255,0.9)",
-                        border: `1.5px solid ${A.gold}44`,
-                        fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textMid,
-                        wordBreak: "break-all", lineHeight: 1.4,
+                        border: `1.5px solid ${shortUrl ? A.gold : A.gold + "44"}`,
+                        fontFamily: "'Outfit', sans-serif",
+                        fontSize: shortUrl ? "15px" : "11px",
+                        fontWeight: shortUrl ? 700 : 400,
+                        color: shortUrl ? A.text : A.textDim,
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                        lineHeight: 1.4,
                       }}>
                         {shortUrl || hostedUrl}
                       </div>
@@ -2762,6 +2766,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         aria-label="Copy unique profile link"
                       >Copy</button>
                     </div>
+                    {!shortUrl && (
+                      <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, lineHeight: 1.5 }}>
+                        ⏳ Generating short link… click <strong>Save Changes</strong> again to get your <strong>bit.ly/…</strong> link.
+                      </p>
+                    )}
                     {/* QR Code */}
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                       <div id="insync-share-qr" style={{ background: "#ffffff", borderRadius: "12px", padding: "10px", boxShadow: `0 4px 20px ${A.gold}44` }}>
