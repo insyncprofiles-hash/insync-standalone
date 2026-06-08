@@ -75,7 +75,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
   const W = 900;
   const H = 1125;
 
-  // ── Service chips (simplified for CF CPU budget) ───────────────────────────
+  // ── Service chips (small emoji to stay under CF CPU budget) ─────────────────
   const serviceChips = services.slice(0, 5).map(s =>
     h("div", {
       style: {
@@ -88,19 +88,19 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
     },
       h("div", {
         style: {
-          width: 86,
-          height: 86,
-          borderRadius: 43,
+          width: 82,
+          height: 82,
+          borderRadius: 41,
           background: s.bg || "#F5F5F5",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 40,
+          fontSize: 32,
         },
       }, s.emoji),
       h("div", {
         style: {
-          fontSize: 13,
+          fontSize: 12,
           color: "#333",
           textAlign: "center",
           fontWeight: 600,
@@ -137,7 +137,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           paddingRight: 13,
         },
       },
-        h("span", { style: { fontSize: 20, flexShrink: 0 } }, BADGE_ICON[label] || "✓"),
+        h("span", { style: { fontSize: 16, flexShrink: 0 } }, BADGE_ICON[label] || "✓"),
         h("span", { style: { fontSize: 13, color: "#222", fontWeight: 600, flex: 1, lineHeight: 1.3 } }, label),
         h("span", { style: { fontSize: 17, color: checkColors[idx] || "#4CAF50", flexShrink: 0 } }, checkSymbols[idx] || "✓"),
       );
