@@ -1762,7 +1762,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     setSaved(true);
     toast.success("Profile saved!", { description: "Your unique shareable link and QR code are ready in Thread 7." });
     setTimeout(() => setSaved(false), 2500);
-    // Shorten URL using Bitly (direct 301 redirect, no preview page)
+    // Shorten URL using Bitly
     fetch('https://api-ssl.bitly.com/v4/shorten', {
       method: 'POST',
       headers: {
@@ -1771,14 +1771,35 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       },
       body: JSON.stringify({ long_url: shareUrl }),
     })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`Bitly ${r.status}`);
+        return r.json();
+      })
       .then(data => {
         if (data && data.link && data.link.startsWith('http')) {
           setShortUrl(data.link);
           localStorage.setItem("insync_short_url", data.link);
+          toast.success("Short link ready!", { description: data.link });
+        } else {
+          throw new Error('No link in response');
         }
       })
-      .catch(() => { /* silently fall back to full URL */ });
+      .catch((err) => {
+        console.warn('Bitly shortening failed:', err);
+        // Fallback: use TinyURL which has no auth requirement
+        fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
+          .then(r => r.text())
+          .then(tiny => {
+            if (tiny && tiny.startsWith('http')) {
+              setShortUrl(tiny);
+              localStorage.setItem("insync_short_url", tiny);
+              toast.success("Short link ready!", { description: tiny });
+            }
+          })
+          .catch(() => {
+            toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
+          });
+      });
   };
 
   const handleShareProfile = () => {
