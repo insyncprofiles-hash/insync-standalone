@@ -1819,28 +1819,192 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     if (cardGenerating) return;
     setCardGenerating(true);
     try {
+      // ── Collect specialties ──────────────────────────────────────────────
       const specialties = (profile.experienceGroups || [])
         .flatMap(g => g.items.filter(i => i.checked).map(i => i.label))
         .concat(profile.services.filter(s => s.selected).map(s => s.label))
-        .slice(0, 5)
-        .join(",");
-      const resp = await fetch("/api/generate-card", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: profile.name,
-          title: profile.title,
-          location: profile.location,
-          tagline: profile.tagline,
-          photoUrl: profile.profileImage && profile.profileImage.startsWith("http") ? profile.profileImage : null,
-          specialties,
-        }),
-      });
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({})) as { error?: string };
-        throw new Error(err.error || `HTTP ${resp.status}`);
+        .slice(0, 5);
+
+      // ── Canvas dimensions ────────────────────────────────────────────────
+      const W = 900, H = 1125;
+      const canvas = document.createElement("canvas");
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext("2d")!;
+
+      const GOLD = "#F5C842";
+      const NAVY = "#1a1a2e";
+      const WHITE = "#FFFFFF";
+      const PURPLE = "#6B21A8";
+
+      // ── Load photo (if available) ────────────────────────────────────────
+      let photoImg: HTMLImageElement | null = null;
+      const photoSrc = profile.profileImage && profile.profileImage.startsWith("http") ? profile.profileImage : null;
+      if (photoSrc) {
+        try {
+          photoImg = await new Promise<HTMLImageElement>((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            setTimeout(() => reject(new Error("timeout")), 6000);
+            img.src = photoSrc;
+          });
+        } catch { photoImg = null; }
       }
-      const { cardDataUrl: url } = await resp.json() as { cardDataUrl: string };
+
+      // ── Background ───────────────────────────────────────────────────────
+      if (photoImg) {
+        // Draw photo full-bleed, cropped to card
+        const scale = Math.max(W / photoImg.width, H / photoImg.height);
+        const sw = W / scale, sh = H / scale;
+        const sx = (photoImg.width - sw) / 2, sy = 0;
+        ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, W, H);
+      } else {
+        const grad = ctx.createLinearGradient(0, 0, W, H);
+        grad.addColorStop(0, NAVY);
+        grad.addColorStop(1, "#2d1b69");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      // ── Dark overlay (right side + bottom) ──────────────────────────────
+      const overlayR = ctx.createLinearGradient(0, 0, W, 0);
+      overlayR.addColorStop(0, "rgba(0,0,0,0.05)");
+      overlayR.addColorStop(0.45, "rgba(0,0,0,0.70)");
+      overlayR.addColorStop(1, "rgba(0,0,0,0.82)");
+      ctx.fillStyle = overlayR;
+      ctx.fillRect(0, 0, W, H);
+
+      const overlayB = ctx.createLinearGradient(0, H - 340, 0, H);
+      overlayB.addColorStop(0, "rgba(0,0,0,0)");
+      overlayB.addColorStop(1, "rgba(0,0,0,0.85)");
+      ctx.fillStyle = overlayB;
+      ctx.fillRect(0, H - 340, W, 340);
+
+      // ── Helper: rounded rect ─────────────────────────────────────────────
+      const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.arcTo(x + w, y, x + w, y + r, r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+        ctx.lineTo(x + r, y + h);
+        ctx.arcTo(x, y + h, x, y + h - r, r);
+        ctx.lineTo(x, y + r);
+        ctx.arcTo(x, y, x + r, y, r);
+        ctx.closePath();
+      };
+
+      // ── Location badge (top-right) ───────────────────────────────────────
+      if (profile.location) {
+        const loc = profile.location.toUpperCase();
+        ctx.font = "bold 22px 'Outfit', sans-serif";
+        const locW = ctx.measureText(loc).width;
+        const badgeW = locW + 56, badgeH = 52;
+        const bx = W - badgeW - 36, by = 36;
+        roundRect(bx, by, badgeW, badgeH, 14);
+        ctx.fillStyle = GOLD;
+        ctx.fill();
+        // Pin emoji
+        ctx.font = "22px sans-serif";
+        ctx.fillText("📍", bx + 12, by + 34);
+        // Location text
+        ctx.font = "bold 20px 'Outfit', sans-serif";
+        ctx.fillStyle = NAVY;
+        ctx.fillText(loc, bx + 40, by + 34);
+      }
+
+      // ── "Looking for support that understands:" + checklist ──────────────
+      if (specialties.length > 0) {
+        const rx = 490, ry = 130;
+        ctx.shadowColor = "rgba(0,0,0,0.8)";
+        ctx.shadowBlur = 8;
+        ctx.font = "bold 26px 'Outfit', sans-serif";
+        ctx.fillStyle = WHITE;
+        ctx.fillText("Looking for support", rx, ry);
+        ctx.fillText("that understands:", rx, ry + 34);
+        ctx.shadowBlur = 0;
+
+        specialties.forEach((label, i) => {
+          const ly = ry + 80 + i * 54;
+          // Gold checkmark
+          ctx.shadowColor = "rgba(0,0,0,0.6)";
+          ctx.shadowBlur = 4;
+          ctx.font = "bold 28px sans-serif";
+          ctx.fillStyle = GOLD;
+          ctx.fillText("✓", rx, ly);
+          // Label
+          ctx.font = "bold 26px 'Outfit', sans-serif";
+          ctx.fillStyle = WHITE;
+          ctx.fillText(label, rx + 36, ly);
+          ctx.shadowBlur = 0;
+        });
+      }
+
+      // ── Play button (centred lower) ──────────────────────────────────────
+      const pbx = 370 + 75, pby = H - 270 - 75;
+      // Outer circle
+      ctx.beginPath();
+      ctx.arc(pbx, pby, 75, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      ctx.fill();
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = GOLD;
+      ctx.stroke();
+      // Triangle
+      ctx.beginPath();
+      ctx.moveTo(pbx - 22, pby - 32);
+      ctx.lineTo(pbx - 22, pby + 32);
+      ctx.lineTo(pbx + 36, pby);
+      ctx.closePath();
+      ctx.fillStyle = NAVY;
+      ctx.fill();
+
+      // ── "Tap to watch" callout ───────────────────────────────────────────
+      ctx.shadowColor = "rgba(0,0,0,0.8)";
+      ctx.shadowBlur = 6;
+      ctx.font = "italic bold 21px 'Outfit', sans-serif";
+      ctx.fillStyle = WHITE;
+      ctx.fillText("← Tap to watch my", W - 260, H - 270);
+      ctx.fillText("15 second introduction!", W - 260, H - 244);
+      ctx.shadowBlur = 0;
+
+      // ── Bottom white panel ───────────────────────────────────────────────
+      const panelH = profile.tagline ? 230 : 180;
+      roundRect(0, H - panelH, W, panelH, 0);
+      ctx.fillStyle = "rgba(255,255,255,0.95)";
+      ctx.fill();
+      // Rounded top corners
+      roundRect(0, H - panelH, W, panelH, 24);
+      ctx.fill();
+
+      const py = H - panelH + 28;
+      // Name
+      ctx.font = "900 68px 'Outfit', sans-serif";
+      ctx.fillStyle = NAVY;
+      ctx.fillText(profile.name.toUpperCase(), 36, py + 60);
+      // Title
+      ctx.font = "bold 26px 'Outfit', sans-serif";
+      ctx.fillStyle = PURPLE;
+      ctx.fillText(profile.title || "Support Worker", 36, py + 96);
+      // Tagline
+      if (profile.tagline) {
+        ctx.font = "italic 22px 'Outfit', sans-serif";
+        ctx.fillStyle = "#333333";
+        const tq = profile.tagline.slice(0, 90);
+        ctx.fillText(tq, 36, py + 134);
+        // Underline
+        ctx.beginPath();
+        ctx.moveTo(36, py + 142);
+        ctx.lineTo(Math.min(36 + ctx.measureText(tq).width, W - 36), py + 142);
+        ctx.strokeStyle = PURPLE;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      // ── Export as PNG ────────────────────────────────────────────────────
+      const url = canvas.toDataURL("image/png");
       setCardDataUrl(url);
       toast.success("Social card generated!", { description: "Download the PNG and post it on Facebook, Instagram, or LinkedIn." });
     } catch (err) {
