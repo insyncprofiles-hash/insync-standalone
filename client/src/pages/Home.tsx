@@ -1854,11 +1854,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       // ── Background ───────────────────────────────────────────────────────
       if (photoImg) {
-        // Draw photo full-bleed, cropped — face on left side
+        // Draw photo full-bleed, cropped — face on RIGHT side
         const scale = Math.max(W / photoImg.width, H / photoImg.height);
         const sw = W / scale, sh = H / scale;
-        // Shift crop origin to left 20% so face stays left
-        const sx = (photoImg.width - sw) * 0.2, sy = 0;
+        // Shift crop origin to right 80% so face shows on right half
+        const sx = (photoImg.width - sw) * 0.8, sy = 0;
         ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, W, H);
       } else {
         const grad = ctx.createLinearGradient(0, 0, W, H);
@@ -1868,12 +1868,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillRect(0, 0, W, H);
       }
 
-      // ── Dark overlay (right side only — preserve face on left) ────────────
+      // ── Dark overlay (LEFT side — preserve face on right) ──────────────
       const overlayR = ctx.createLinearGradient(0, 0, W, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");   // left: fully clear
-      overlayR.addColorStop(0.52, "rgba(0,0,0,0.0)"); // clear until past face
-      overlayR.addColorStop(0.65, "rgba(0,0,0,0.60)"); // fade starts
-      overlayR.addColorStop(1, "rgba(0,0,0,0.82)");
+      overlayR.addColorStop(0, "rgba(0,0,0,0.82)");   // left: dark for text
+      overlayR.addColorStop(0.40, "rgba(0,0,0,0.65)"); // fade
+      overlayR.addColorStop(0.55, "rgba(0,0,0,0.15)"); // transition
+      overlayR.addColorStop(1, "rgba(0,0,0,0.0)");     // right: clear face
       ctx.fillStyle = overlayR;
       ctx.fillRect(0, 0, W, H);
 
@@ -1899,13 +1899,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.closePath();
       };
 
-      // ── Location badge (top-right) ───────────────────────────────────────
+      // ── Location badge (top-LEFT) ───────────────────────────────────────
       if (profile.location) {
         const loc = profile.location.toUpperCase();
         ctx.font = "bold 22px 'Outfit', sans-serif";
         const locW = ctx.measureText(loc).width;
-        const badgeW = locW + 56, badgeH = 52;
-        const bx = W - badgeW - 36, by = 36;
+        const badgeW = Math.min(locW + 56, 420), badgeH = 52;
+        const bx = 36, by = 36;
         roundRect(bx, by, badgeW, badgeH, 14);
         ctx.fillStyle = GOLD;
         ctx.fill();
@@ -1915,12 +1915,16 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         // Location text
         ctx.font = "bold 20px 'Outfit', sans-serif";
         ctx.fillStyle = NAVY;
-        ctx.fillText(loc, bx + 40, by + 34);
+        // Truncate if needed
+        let locTxt = loc;
+        while (ctx.measureText(locTxt).width > badgeW - 56 && locTxt.length > 4) locTxt = locTxt.slice(0, -1);
+        if (locTxt !== loc) locTxt = locTxt.trimEnd() + "…";
+        ctx.fillText(locTxt, bx + 40, by + 34);
       }
 
-      // ── "Looking for support that understands:" + checklist ──────────────
+      // ── "Looking for support that understands:" + checklist (LEFT side) ───────
       if (specialties.length > 0) {
-        const rx = 540, ry = 130;
+        const rx = 36, ry = 130;
         ctx.shadowColor = "rgba(0,0,0,0.8)";
         ctx.shadowBlur = 8;
         ctx.font = "bold 24px 'Outfit', sans-serif";
@@ -1929,8 +1933,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillText("that understands:", rx, ry + 30);
         ctx.shadowBlur = 0;
 
-        // Max width for label text before truncation
-        const maxLabelW = W - rx - 36 - 16;
+        // Max width for label text before truncation (left panel = 460px wide)
+        const maxLabelW = 420;
         specialties.forEach((label, i) => {
           const ly = ry + 72 + i * 50;
           // Gold checkmark
@@ -1952,8 +1956,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         });
       }
 
-      // ── Play button (moved up) ───────────────────────────────────────────
-      const pbx = 370 + 75, pby = H - 380 - 75;
+      // ── Play button (left side, above panel) ──────────────────────────────
+      const pbx = 75 + 75, pby = H - 380 - 75;
       // Outer circle
       ctx.beginPath();
       ctx.arc(pbx, pby, 75, 0, Math.PI * 2);
@@ -1976,8 +1980,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.shadowBlur = 6;
       ctx.font = "italic bold 21px 'Outfit', sans-serif";
       ctx.fillStyle = WHITE;
-      ctx.fillText("← Tap to watch my", W - 265, H - 380);
-      ctx.fillText("15 second introduction!", W - 265, H - 354);
+      ctx.fillText("Tap to watch my →", 36, H - 380);
+      ctx.fillText("15 second introduction!", 36, H - 354);
       ctx.shadowBlur = 0;
 
       // ── Bottom white panel ───────────────────────────────────────────────
