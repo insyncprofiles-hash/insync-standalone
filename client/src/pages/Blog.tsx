@@ -21,15 +21,6 @@ const C = {
 
 const POSTS = [
   {
-    slug: "ndis-cuts-support-workers",
-    title: "When Every Hour Counts: What the NDIS Cuts Mean for Support Workers Who Want to Be Chosen",
-    excerpt: "The government just cut billions from the NDIS. Plans are shrinking. Hours are being reduced. When participants can't afford to get a match wrong, the support workers who are visible, known, and accessible are the ones being chosen.",
-    date: "June 2026",
-    readTime: "4 min read",
-    category: "Industry Insights",
-    emoji: "✊",
-  },
-  {
     slug: "lanyard-card-benefits",
     title: "From Invisible to Unmissable: Your Lanyard Card Is a Walking Billboard That Turns Every Moment Into a Client Connection",
     excerpt: "A matt black card with a diagonal aurora strip and a QR code. That's it. Yet support workers wearing it are sparking conversations, attracting informed clients, and building a personal brand — without saying a word.",

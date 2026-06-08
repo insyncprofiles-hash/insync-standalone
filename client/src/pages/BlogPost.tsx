@@ -220,74 +220,6 @@ function LanyardCardBenefitsArticle() {
   );
 }
 
-function NdisCutsArticle() {
-  return (
-    <>
-      <p>
-        The government just cut billions from the NDIS. Plans are shrinking. Hours are being reduced. And participants — already navigating a system that was never easy — are now being asked to do more with less.
-      </p>
-      <p>
-        When funding is tight, participants can't afford to take a chance on someone they know nothing about. Every support hour matters. Every match matters. A bad fit doesn't just waste money — it costs trust, stability, and sometimes safety.
-      </p>
-      <p>
-        That's the reality support workers are walking into right now.
-      </p>
-      <h2>The Hidden Cost of Being Unknown</h2>
-      <p>
-        Most support workers are invisible before the first conversation. A name. A phone number. Maybe a three-line bio in a coordinator's spreadsheet. That's it.
-      </p>
-      <p>
-        In a well-funded environment, participants could afford to take a chance — trial a few workers, find the right fit over time. In a cut environment, that luxury is gone. Coordinators and families are making faster, more careful decisions. They're choosing workers they can already see, already understand, already trust — before any conversation happens.
-      </p>
-      <p>
-        If you're invisible, you're not being chosen.
-      </p>
-      <h2>What an InSync Profile Changes</h2>
-      <p>
-        An InSync Profile gives a participant everything they need to decide <em>yes, this is my person</em> before a single phone call is made.
-      </p>
-      <p>
-        They can see how you communicate. They can hear your voice in a 15-second intro video. They can read your experience areas, your values, your availability. They can use the AAC board to ask a question without having to type or speak. They can adjust the text size, switch to high contrast, or turn on text-to-speech — because the profile was built to work for them, not just for you.
-      </p>
-      <p>
-        That's not a small thing. That's a support worker saying: <em>I thought about you before we even met.</em>
-      </p>
-      <h2>In a Funding Crisis, That Signal Matters More Than Ever</h2>
-      <p>
-        When participants have less to spend, they spend it on workers who feel safe, known, and right. An InSync Profile doesn't just make you visible — it makes you the kind of worker a participant can confidently choose, even when they can't afford to get it wrong.
-      </p>
-      <p>
-        The NDIS cuts are real. The pressure on participants is real. But so is the opportunity for support workers who are willing to show up differently — not with more credentials or a longer resume, but with genuine visibility and a profile that puts the participant first.
-      </p>
-      <blockquote>
-        <p>A support worker built InSync Profiles. Because we know what it's like to be invisible — just a name on a spreadsheet handed to a stranger. That's not good enough. Not now. Not ever.</p>
-      </blockquote>
-      <p>
-        <strong>Ready to show up differently?</strong> <a href="/pricing" style={{ color: "#f5c842" }}>View pricing →</a>
-      </p>
-      <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
-        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-          {[
-            "NDIS budget cuts 2026 support workers",
-            "NDIS funding cuts impact participants",
-            "Support worker visibility NDIS",
-            "How to stand out as an NDIS support worker",
-            "NDIS participant choice support worker",
-            "Digital profile NDIS worker Australia",
-            "NDIS cuts what support workers can do",
-            "Accessible support worker profile",
-            "NDIS independent support worker tips",
-            "Support worker personal brand Australia",
-          ].map(tag => (
-            <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
-          ))}
-        </div>
-      </div>
-    </>
-  );
-}
-
 // ── Article metadata registry ────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
@@ -306,15 +238,6 @@ const ARTICLES: Record<string, {
     emoji: "🪪",
     metaDescription: "Discover how the InSync Profiles lanyard card helps NDIS support workers go from invisible to unmissable — in the community, on errands, and at events — with a single QR code scan.",
     content: LanyardCardBenefitsArticle,
-  },
-  "ndis-cuts-support-workers": {
-    title: "When Every Hour Counts: What the NDIS Cuts Mean for Support Workers Who Want to Be Chosen",
-    date: "June 2026",
-    readTime: "4 min read",
-    category: "Industry Insights",
-    emoji: "✊",
-    metaDescription: "The 2026 NDIS budget cuts are making participants more selective. Here's why support workers with an InSync Profile are the ones being chosen — and what visibility means when funding is tight.",
-    content: NdisCutsArticle,
   },
   "sea-of-sameness": {
     title: `Tearing Down the "Sea of Sameness": Why Traditional Social Media Posts Are Failing Australian Support Workers`,
