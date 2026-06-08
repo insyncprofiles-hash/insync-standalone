@@ -13,8 +13,8 @@ export default function ThemeSwitcher() {
     <div
       style={{
         position: "fixed",
-        bottom: "80px",
-        right: "20px",
+        top: "16px",
+        right: "16px",
         zIndex: 9998,
         display: "flex",
         flexDirection: "column",
