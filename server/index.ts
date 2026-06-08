@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import helmet from "helmet";
 import wallRouter from "./wall.js";
+import ogRouter from "./og-image.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,6 +54,7 @@ async function startServer() {
   // Support Deck API routes
   app.use(express.json());
   app.use("/api/deck", wallRouter);
+  app.use("/api/og-image", ogRouter);
 
   // Serve static files from dist/public in production
   const staticPath =
@@ -60,6 +62,77 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
   app.use(express.static(staticPath));
+
+  // Server-side OG meta injection for /view — Facebook scraper doesn't run JS
+  app.get("/view", async (req, res) => {
+    try {
+      const q = req.query as Record<string, string>;
+      const name = q.name || "Support Worker";
+      const title = q.title || "NDIS Support Worker";
+      const location = q.location || "Australia";
+      const tagline = q.tagline || "";
+
+      // Build the og-image URL with all profile params forwarded
+      const ogParams = new URLSearchParams(req.query as Record<string, string>).toString();
+      const ogImageUrl = `https://insyncprofiles.net/api/og-image?${ogParams}`;
+      const pageTitle = `${name} — ${title} | InSync Profiles`;
+      const pageDesc = tagline
+        ? `${tagline.slice(0, 150)} — View ${name}'s full interactive support worker profile.`
+        : `View ${name}'s interactive support worker profile. Services, credentials, availability and communication style. ${location}.`;
+
+      const fs2 = await import("fs");
+      let html = fs2.default.readFileSync(path.join(staticPath, "index.html"), "utf-8");
+
+      // Replace OG tags with profile-specific values
+      html = html
+        .replace(
+          /<meta property="og:title" content="[^"]*" \/>/,
+          `<meta property="og:title" content="${pageTitle.replace(/"/g, "&quot;")}" />`
+        )
+        .replace(
+          /<meta property="og:description" content="[^"]*" \/>/,
+          `<meta property="og:description" content="${pageDesc.replace(/"/g, "&quot;")}" />`
+        )
+        .replace(
+          /<meta property="og:url" content="[^"]*" \/>/,
+          `<meta property="og:url" content="https://insyncprofiles.net/view?${ogParams}" />`
+        )
+        .replace(
+          /<meta property="og:image" content="[^"]*" \/>/,
+          `<meta property="og:image" content="${ogImageUrl}" />`
+        )
+        .replace(
+          /<meta property="og:image:width" content="[^"]*" \/>/,
+          `<meta property="og:image:width" content="900" />`
+        )
+        .replace(
+          /<meta property="og:image:height" content="[^"]*" \/>/,
+          `<meta property="og:image:height" content="1125" />`
+        )
+        .replace(
+          /<meta property="og:image:alt" content="[^"]*" \/>/,
+          `<meta property="og:image:alt" content="${name} — Support Worker Profile | InSync Profiles" />`
+        )
+        .replace(
+          /<meta name="twitter:title" content="[^"]*" \/>/,
+          `<meta name="twitter:title" content="${pageTitle.replace(/"/g, "&quot;")}" />`
+        )
+        .replace(
+          /<meta name="twitter:description" content="[^"]*" \/>/,
+          `<meta name="twitter:description" content="${pageDesc.replace(/"/g, "&quot;")}" />`
+        )
+        .replace(
+          /<meta name="twitter:image" content="[^"]*" \/>/,
+          `<meta name="twitter:image" content="${ogImageUrl}" />`
+        );
+
+      res.setHeader("Content-Type", "text/html");
+      res.send(html);
+    } catch (err) {
+      console.error("OG meta injection error:", err);
+      res.sendFile(path.join(staticPath, "index.html"));
+    }
+  });
 
   // Handle client-side routing - serve index.html for all routes
   app.get("*", (_req, res) => {
