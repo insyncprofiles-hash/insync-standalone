@@ -51,7 +51,7 @@ function h(type, props, ...children) {
   };
 }
 
-function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
+function buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, services }) {
   // ── Photo element ─────────────────────────────────────────────────────────
   const PHOTO_SIZE = 190;
   const photoEl = photoDataUrl
@@ -161,22 +161,24 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
       },
         // Left: icon + title
         h("div", { style: { display: "flex", alignItems: "center", gap: 14 } },
-          h("div", {
-            style: {
-              width: 52,
-              height: 52,
-              borderRadius: 26,
-              borderWidth: 2,
-              borderStyle: "solid",
-              borderColor: "#F5C842",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 26,
-              flexShrink: 0,
-              color: "#F5C842",
-            },
-          }, "\u267F"),
+          iconDataUrl
+            ? h("img", { src: iconDataUrl, width: 58, height: 58, style: { objectFit: "contain", flexShrink: 0 } })
+            : h("div", {
+                style: {
+                  width: 58,
+                  height: 58,
+                  borderRadius: 29,
+                  borderWidth: 2,
+                  borderStyle: "solid",
+                  borderColor: "#F5C842",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 28,
+                  flexShrink: 0,
+                  color: "#F5C842",
+                },
+              }, "\u267F"),
           h("div", { style: { display: "flex", flexDirection: "column", gap: 3 } },
             h("div", { style: { color: "#F5C842", fontSize: 30, fontWeight: 800, letterSpacing: 1 } }, "GET TO KNOW ME"),
             h("div", { style: { color: "#aaaaaa", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "\u2022 INTERACTIVE & ACCESSIBLE \u2022"),
@@ -313,9 +315,10 @@ export async function onRequest(context) {
     .map(s => SERVICE_MAP[s.trim()] || { color: "#7E57C2", bg: "#EDE7F6", label: s.trim() });
 
   const photoDataUrl = photoUrl ? await fetchAsBase64(photoUrl) : null;
+  const iconDataUrl = await fetchAsBase64(`${url.origin}/accessibility-icon.png`);
 
   try {
-    const card = buildCard({ name, title, location, tagline, photoDataUrl, services });
+    const card = buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, services });
     const imgResponse = new ImageResponse(card, { width: 900, height: 900 });
     const bodyBytes = await imgResponse.arrayBuffer();
     return new Response(bodyBytes, {
