@@ -969,7 +969,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
 
           {/* QR Code */}
           {(() => {
-            const qrUrl = !isDemo && (shortUrl || hostedUrl) ? (shortUrl || hostedUrl) : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
+            const qrUrl = !isDemo && hostedUrl ? hostedUrl : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
             const qrLabel = !isDemo && hostedUrl ? 'Scan to open this profile' : 'Scan to get your own profile';
             return (
               <div id='demo-overlay-qr' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px 24px', background: 'white', borderRadius: '20px', boxShadow: '0 4px 24px rgba(74,144,217,0.12)', border: '1.5px solid rgba(74,144,217,0.15)' }}>
@@ -2781,7 +2781,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                       <div id="insync-share-qr" style={{ background: "#ffffff", borderRadius: "12px", padding: "10px", boxShadow: `0 4px 20px ${A.gold}44` }}>
                         <QRCodeSVG
-                          value={shortUrl || hostedUrl}
+                          value={hostedUrl}
                           size={160}
                           bgColor="#ffffff"
                           fgColor="#1a2e1e"
