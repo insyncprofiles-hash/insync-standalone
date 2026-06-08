@@ -78,7 +78,7 @@ export interface ExperienceGroup {
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const DEFAULT_LANGUAGES = ["English"];
-const ALL_LANGUAGES = ["English", "Mandarin", "Cantonese", "Arabic", "Vietnamese", "Greek", "Italian", "Hindi", "Punjabi", "Spanish", "Filipino", "Korean", "Auslan", "Turkish", "Portuguese"];
+const ALL_LANGUAGES = ["Arabic", "Auslan", "Cantonese", "English", "Filipino", "Greek", "Hindi", "Italian", "Korean", "Mandarin", "Portuguese", "Punjabi", "Spanish", "Turkish", "Vietnamese"];
 
 const DEFAULT_EXPERIENCE_GROUPS: ExperienceGroup[] = [
   {
