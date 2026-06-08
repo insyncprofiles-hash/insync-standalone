@@ -1868,13 +1868,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillRect(0, 0, W, H);
       }
 
-      // ── Dark overlay — LEFT 42% only, hard stop so face is fully clear ──────
-      const overlayR = ctx.createLinearGradient(0, 0, W * 0.42, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.88)");   // far left: fully dark
-      overlayR.addColorStop(0.80, "rgba(0,0,0,0.80)"); // still dark
+      // ── Dark overlay — LEFT 38% only, narrow strip ──────────────────────
+      const overlayR = ctx.createLinearGradient(0, 0, W * 0.38, 0);
+      overlayR.addColorStop(0, "rgba(0,0,0,0.90)");   // far left: fully dark
+      overlayR.addColorStop(0.70, "rgba(0,0,0,0.82)"); // still dark
       overlayR.addColorStop(1, "rgba(0,0,0,0.0)");    // fades to clear at edge
       ctx.fillStyle = overlayR;
-      ctx.fillRect(0, 0, W * 0.42, H); // only paint the left 42%
+      ctx.fillRect(0, 0, W * 0.38, H); // only paint the left 38%
 
       // Bottom gradient for panel readability
       const overlayB = ctx.createLinearGradient(0, H - 380, 0, H);
@@ -1920,23 +1920,29 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillText(locTxt, bx + 40, by + 34);
       }
 
-      // ── "Looking for support that understands:" + checklist (LEFT side) ───────
+      // ── "Looking for support that understands:" + checklist (LEFT side, narrow) ───
       if (specialties.length > 0) {
-        const rx = 36, ry = 130;
+        const rx = 28, ry = 130;
+        const panelTextW = W * 0.38 - 56;
         ctx.shadowColor = "rgba(0,0,0,0.8)";
         ctx.shadowBlur = 8;
-        ctx.font = "bold 24px 'Outfit', sans-serif";
+        ctx.font = "bold 19px 'Outfit', sans-serif";
         ctx.fillStyle = WHITE;
-        ctx.fillText("Looking for support", rx, ry);
-        ctx.fillText("that understands:", rx, ry + 30);
+        // Wrap heading into narrow column
+        const hWords = "Looking for support that understands:".split(" ");
+        const hLines: string[] = []; let hCur = "";
+        for (const w of hWords) {
+          const t = hCur ? hCur + " " + w : w;
+          if (ctx.measureText(t).width > panelTextW) { if (hCur) hLines.push(hCur); hCur = w; } else hCur = t;
+        }
+        if (hCur) hLines.push(hCur);
+        hLines.forEach((l, i) => ctx.fillText(l, rx, ry + i * 24));
         ctx.shadowBlur = 0;
 
-        // Word-wrap each label within the left panel (max ~420px)
-        const maxLabelW = 400;
-        const lblFont = "bold 24px 'Outfit', sans-serif";
-        let checkY = ry + 72;
+        const maxLabelW = panelTextW - 28;
+        const lblFont = "bold 19px 'Outfit', sans-serif";
+        let checkY = ry + hLines.length * 24 + 16;
         specialties.forEach((label) => {
-          // Split label into wrapped lines
           const words = label.split(" ");
           const wrappedLines: string[] = [];
           let cur = "";
@@ -1952,28 +1958,24 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
           }
           if (cur) wrappedLines.push(cur);
 
-          // Gold checkmark on first line
           ctx.shadowColor = "rgba(0,0,0,0.6)";
           ctx.shadowBlur = 4;
-          ctx.font = "bold 26px sans-serif";
+          ctx.font = "bold 21px sans-serif";
           ctx.fillStyle = GOLD;
           ctx.fillText("✓", rx, checkY);
 
-          // Draw each wrapped line
           ctx.font = lblFont;
           ctx.fillStyle = WHITE;
           wrappedLines.forEach((line, li) => {
-            ctx.fillText(line, rx + 32, checkY + li * 28);
+            ctx.fillText(line, rx + 26, checkY + li * 24);
           });
           ctx.shadowBlur = 0;
-
-          // Advance Y by number of lines rendered
-          checkY += Math.max(wrappedLines.length, 1) * 28 + 14;
+          checkY += Math.max(wrappedLines.length, 1) * 24 + 12;
         });
       }
 
-      // ── Play button (left side, above panel) ────────────────────────────
-      const pbx = 150, pby = H - 380 - 75;
+      // ── Play button (bottom centre, above panel) ─────────────────────────
+      const pbx = W / 2, pby = H - 380 - 80;
       // Outer circle
       ctx.beginPath();
       ctx.arc(pbx, pby, 75, 0, Math.PI * 2);
@@ -1995,10 +1997,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.shadowColor = "rgba(0,0,0,0.8)";
       ctx.shadowBlur = 6;
       ctx.font = "italic bold 21px 'Outfit', sans-serif";
-      ctx.fillStyle = WHITE;
-      // Position Tap to watch text to the right of the play button
-      ctx.fillText("Tap to watch my", pbx + 90, H - 420);
-      ctx.fillText("15 sec intro! →", pbx + 90, H - 392);
+      ctx.fillStyle = GOLD;
+      ctx.textAlign = "center";
+      ctx.fillText("Tap to watch my 15 sec intro!", pbx, H - 295);
+      ctx.textAlign = "left";
       ctx.shadowBlur = 0;
 
       // ── Bottom white panel ───────────────────────────────────────────────
