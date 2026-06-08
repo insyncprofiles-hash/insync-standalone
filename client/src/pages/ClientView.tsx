@@ -969,27 +969,7 @@ export default function ClientView() {
             </div>
           )}
 
-          {/* Languages — pill row on main card */}
-          {profile.languages && profile.languages.length > 0 && (
-            <div style={{ padding: "0 20px 16px" }}>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700,
-                letterSpacing: "0.10em", textTransform: "uppercase",
-                color: "#2ecc71", margin: "0 0 8px",
-              }}>🌐 Languages</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                {profile.languages.map(lang => (
-                  <span key={lang} style={{
-                    fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 600,
-                    padding: "5px 12px", borderRadius: "20px",
-                    background: "rgba(46,204,113,0.12)",
-                    border: "1.5px solid rgba(46,204,113,0.35)",
-                    color: "#1a7a40",
-                  }}>{lang}</span>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Languages removed from credentials card — shown in Identity thread instead */}
 
 
         </div>
