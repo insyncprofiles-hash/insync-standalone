@@ -489,7 +489,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
   const checkedExperience = (profile.experienceGroups || []).flatMap(g => g.items.filter(i => i.checked).map(i => ({ group: g.title, label: i.label })));
   const hasShowUp = profile.showUpStyle && (profile.showUpStyle.communicate?.length > 0 || profile.showUpStyle.connect?.length > 0 || profile.showUpStyle.presence?.length > 0);
   const PASTEL_BG = ['#fce4ec','#e3f2fd','#e8f5e9','#fff3e0','#fef9e7'];
-  const BADGE_ICONS: Record<string, string> = { 'NDIS Worker Screened': '🛡', 'First Aid Certified': '⭐', 'Mental Health Support': '🤍', 'Working With Children Check': '🧒', 'Police Check': '🔍', 'NDIS Worker Check': '✅', '5+ Years Experience': '👥', 'Mental Health First Aid': '🤍', 'Public Liability Insurance': '📋', 'Professional Indemnity Insurance': '🔒' };
+  const BADGE_ICONS: Record<string, string> = { 'NDIS Worker Screened': '🛡', 'First Aid Certified': '⭐', 'Mental Health Support': '🤍', 'Working With Children Check': '🧒', 'Police Check': '🔍', 'NDIS Worker Check': '✅', '5+ Years Experience': '👥', 'Mental Health First Aid': '🤍', 'Public Liability Insurance': '📋', 'Professional Indemnity Insurance': '🔒', 'Auslan Interpreter': '🤟' };
   let threadNum = 0;
 
   return (
@@ -2572,7 +2572,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 ))}
                 {/* Quick-add suggestions */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "8px" }}>
-                  {["NDIS Worker Check", "Police Check", "Working With Children Check", "First Aid Certified", "Mental Health First Aid", "Public Liability Insurance", "Professional Indemnity Insurance"].filter(s => !profile.badges.includes(s)).map(suggestion => (
+                  {["NDIS Worker Check", "Police Check", "Working With Children Check", "First Aid Certified", "Mental Health First Aid", "Auslan Interpreter", "Public Liability Insurance", "Professional Indemnity Insurance"].filter(s => !profile.badges.includes(s)).map(suggestion => (
                     <button key={suggestion} onClick={() => updateProfile({ badges: [...profile.badges, suggestion] })}
                       style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 600, color: A.gold, background: "rgba(210,175,80,0.07)", border: `1px solid ${A.gold}44`, borderRadius: "20px", padding: "4px 10px", cursor: "pointer", whiteSpace: "nowrap" }}
                     >+ {suggestion}</button>

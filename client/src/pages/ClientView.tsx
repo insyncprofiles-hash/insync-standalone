@@ -122,6 +122,7 @@ const BADGE_ICONS: Record<string, string> = {
   "Mental Health First Aid": "🤍",
   "Public Liability Insurance": "📋",
   "Professional Indemnity Insurance": "🔒",
+  "Auslan Interpreter": "🤟",
 };
 
 // ── Load profile from URL params ──────────────────────────────
