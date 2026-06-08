@@ -559,7 +559,16 @@ export async function onRequest(context) {
       headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=3600" },
     });
   } catch (err) {
-    console.error("OG image generation failed:", err?.message || err);
+    const errMsg = err?.message || String(err);
+    const errStack = err?.stack || '';
+    console.error("OG image generation failed:", errMsg);
+    // Debug mode: return error as text when debug=1 param is present
+    if (q.debug === '1') {
+      return new Response(`ERROR: ${errMsg}\n\nSTACK:\n${errStack}`, {
+        status: 500,
+        headers: { 'Content-Type': 'text/plain' },
+      });
+    }
     return Response.redirect("https://insyncprofiles.net/og-image.png", 302);
   }
 }
