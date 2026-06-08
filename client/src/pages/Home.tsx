@@ -2699,6 +2699,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
             <ThreadConnector height={32} />
             {/* ══ SAVE & SHARE SECTION ══ */}
             <Section icon="💾" title="Save & Share" id="section-share">
+              {/* ── Instruction tip ── */}
+              <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: A.textMid, lineHeight: 1.6, textAlign: "center" }}>
+                ✏️ Fill in your details above, then tap <strong style={{ color: A.text }}>Save Changes</strong> to generate your unique shareable profile link and QR code.
+              </p>
               {/* ══ SAVE BUTTON ══ */}
               <button
                 onClick={handleSaveChanges}
