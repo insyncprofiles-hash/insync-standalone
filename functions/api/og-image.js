@@ -1,16 +1,16 @@
 /**
  * Cloudflare Pages Function: /api/og-image
- * Trust-first card matching reference design:
- *   - Full-bleed photo background (left ~60%)
- *   - Location badge top-right (gold, bold)
- *   - "Looking for support that understands:" checklist right side
- *   - Large centred play button with "Tap to watch my 15 second introduction!" callout
+ * Trust-first card:
+ *   - Full-bleed photo background, face visible on right
+ *   - Narrow dark overlay LEFT side only (~38%)
+ *   - Location badge top-left (gold)
+ *   - "Looking for support that understands:" checklist on left
+ *   - Play button bottom-centre with gold CTA "Click Link to meet me."
  *   - White panel bottom: name (huge bold navy), title (purple), tagline (italic)
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
 
-// Specialty labels — participant-facing language
 const SPECIALTY_MAP = {
   "autism":         "Autism",
   "neurodiversity": "Neurodiversity",
@@ -74,34 +74,32 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
   const W = 900;
   const H = 900;
 
-  // ── Checklist items ─────────────────────────────────────────────────────────
+  // Checklist items — left side, white text, gold checkmark
   const checkItems = specialties.slice(0, 5).map(label =>
     h("div", {
       style: {
         display: "flex",
         alignItems: "flex-start",
-        gap: 12,
-        marginBottom: 4,
+        gap: 10,
+        marginBottom: 6,
       },
     },
-      // Gold checkmark
       h("div", {
         style: {
           color: "#F5C842",
-          fontSize: 32,
+          fontSize: 26,
           fontWeight: 900,
-          lineHeight: 1.1,
+          lineHeight: 1.2,
           flexShrink: 0,
-          marginTop: 0,
         },
       }, "\u2714"),
       h("div", {
         style: {
-          fontSize: 28,
+          fontSize: 26,
           fontWeight: 700,
           color: "#FFFFFF",
           lineHeight: 1.3,
-          textShadow: "0 1px 6px rgba(0,0,0,0.8)",
+          textShadow: "0 1px 6px rgba(0,0,0,0.9)",
         },
       }, label),
     )
@@ -145,15 +143,15 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
           },
         }),
 
-    // ── DARK GRADIENT OVERLAY — right side for text readability ─────────────
+    // ── NARROW DARK OVERLAY — LEFT 38% only ─────────────────────────────────
     h("div", {
       style: {
         position: "absolute",
         top: 0,
         left: 0,
-        width: W,
+        width: Math.round(W * 0.38),
         height: H,
-        background: "linear-gradient(to right, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.88) 100%)",
+        background: "linear-gradient(to right, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.82) 70%, rgba(0,0,0,0.0) 100%)",
       },
     }),
 
@@ -164,41 +162,34 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
         bottom: 0,
         left: 0,
         width: W,
-        height: 260,
-        background: "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.97) 60%, rgba(255,255,255,0) 100%)",
+        height: 300,
+        background: "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.97) 55%, rgba(255,255,255,0) 100%)",
       },
     }),
 
-    // ── LOCATION BADGE — top right ───────────────────────────────────────────
+    // ── LOCATION BADGE — top LEFT ────────────────────────────────────────────
     location
       ? h("div", {
           style: {
             position: "absolute",
             top: 28,
-            right: 28,
+            left: 28,
             display: "flex",
             alignItems: "center",
-            gap: 10,
+            gap: 8,
             background: "#F5C842",
             borderRadius: 14,
-            paddingTop: 12,
-            paddingBottom: 12,
-            paddingLeft: 18,
-            paddingRight: 22,
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingLeft: 14,
+            paddingRight: 18,
             maxWidth: 320,
           },
         },
-          // Pin icon
+          h("div", { style: { fontSize: 20, lineHeight: 1, flexShrink: 0 } }, "\uD83D\uDCCD"),
           h("div", {
             style: {
-              fontSize: 24,
-              lineHeight: 1,
-              flexShrink: 0,
-            },
-          }, "\uD83D\uDCCD"),
-          h("div", {
-            style: {
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: 900,
               color: "#1a1a2e",
               lineHeight: 1.2,
@@ -209,54 +200,45 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
         )
       : null,
 
-    // ── RIGHT COLUMN: checklist + play button ────────────────────────────────
+    // ── LEFT COLUMN: heading + checklist ────────────────────────────────────
     h("div", {
       style: {
         position: "absolute",
-        top: 100,
-        right: 28,
-        width: 360,
+        top: 110,
+        left: 24,
+        width: 316,
         display: "flex",
         flexDirection: "column",
         gap: 0,
       },
     },
-
-      // "Looking for support that understands:" heading
       h("div", {
         style: {
-          fontSize: 27,
+          fontSize: 22,
           fontWeight: 700,
           color: "#FFFFFF",
-          lineHeight: 1.3,
-          marginBottom: 18,
-          textShadow: "0 1px 6px rgba(0,0,0,0.8)",
+          lineHeight: 1.35,
+          marginBottom: 16,
+          textShadow: "0 1px 6px rgba(0,0,0,0.9)",
         },
       }, "Looking for support\nthat understands:"),
-
-      // Checklist
       h("div", {
-        style: {
-          display: "flex",
-          flexDirection: "column",
-          gap: 6,
-        },
+        style: { display: "flex", flexDirection: "column", gap: 4 },
       }, ...checkItems),
-
     ),
 
-    // ── PLAY BUTTON — centred, overlapping photo/panel boundary ─────────────
+    // ── PLAY BUTTON — bottom centre above panel ──────────────────────────────
     h("div", {
       style: {
         position: "absolute",
-        bottom: 215,
+        bottom: 260,
         left: "50%",
-        marginLeft: -70,
-        width: 140,
-        height: 140,
-        borderRadius: 70,
+        marginLeft: -65,
+        width: 130,
+        height: 130,
+        borderRadius: 65,
         background: "rgba(255,255,255,0.92)",
-        borderWidth: 6,
+        borderWidth: 5,
         borderStyle: "solid",
         borderColor: "#F5C842",
         display: "flex",
@@ -266,39 +248,30 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
     },
       h("div", {
         style: {
-      color: "#1a1a2e",
-        fontSize: 56,
-        fontWeight: 900,
-        marginLeft: 8,
-        lineHeight: 1,
+          color: "#1a1a2e",
+          fontSize: 50,
+          fontWeight: 900,
+          marginLeft: 8,
+          lineHeight: 1,
         },
       }, "\u25B6"),
     ),
 
-    // ── "Tap to watch" callout arrow ─────────────────────────────────────────
+    // ── GOLD CTA — centred below play button ─────────────────────────────────
     h("div", {
       style: {
         position: "absolute",
-        bottom: 238,
-        right: 40,
-        width: 220,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        gap: 0,
+        bottom: 228,
+        left: 0,
+        width: W,
+        textAlign: "center",
+        fontSize: 22,
+        fontWeight: 700,
+        fontStyle: "italic",
+        color: "#F5C842",
+        textShadow: "0 1px 6px rgba(0,0,0,0.9)",
       },
-    },
-      h("div", {
-        style: {
-          fontSize: 22,
-          fontWeight: 700,
-          color: "#FFFFFF",
-          fontStyle: "italic",
-          lineHeight: 1.35,
-          textShadow: "0 1px 6px rgba(0,0,0,0.8)",
-        },
-      }, "\u2190 Tap to watch my 15 second introduction!"),
-    ),
+    }, "Click Link to meet me."),
 
     // ── BOTTOM WHITE PANEL ───────────────────────────────────────────────────
     h("div", {
@@ -309,41 +282,35 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
         width: W,
         display: "flex",
         flexDirection: "column",
-        paddingTop: 20,
-        paddingBottom: 28,
-        paddingLeft: 36,
-        paddingRight: 36,
+        paddingTop: 18,
+        paddingBottom: 24,
+        paddingLeft: 32,
+        paddingRight: 32,
         gap: 4,
       },
     },
-
-      // Name — huge, bold, navy
       h("div", {
         style: {
-          fontSize: 72,
+          fontSize: 68,
           fontWeight: 900,
           color: "#1a1a2e",
           lineHeight: 1.0,
           letterSpacing: -1,
         },
       }, name.toUpperCase()),
-
-      // Title — purple
       h("div", {
         style: {
-          fontSize: 26,
+          fontSize: 24,
           fontWeight: 700,
           color: "#6B21A8",
           lineHeight: 1.2,
           marginTop: 4,
         },
       }, title),
-
-      // Tagline — italic, dark, with gold underline accent
       tagline
         ? h("div", {
             style: {
-              fontSize: 22,
+              fontSize: 20,
               fontStyle: "italic",
               color: "#333",
               lineHeight: 1.4,
@@ -352,11 +319,10 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
               borderBottomStyle: "solid",
               borderBottomColor: "#6B21A8",
               paddingBottom: 4,
-              maxWidth: 600,
+              maxWidth: 580,
             },
           }, tagline.slice(0, 100))
         : null,
-
     ),
 
   );
@@ -373,7 +339,6 @@ export async function onRequest(context) {
   const photoUrl    = q.photo    || "";
   const servicesRaw = q.services || "";
 
-  // Map keys to human-readable specialty labels
   const specialties = servicesRaw.split(",").filter(Boolean).slice(0, 5)
     .map(s => SPECIALTY_MAP[s.trim()] || s.trim());
 
