@@ -1,21 +1,6 @@
 /**
  * Cloudflare Pages Function: /api/og-image
- *
  * Generates a dynamic PNG profile card matching the Jordan Mitchell reference design.
- * Uses @cloudflare/pages-plugin-vercel-og (bundled ImageResponse with satori + resvg-wasm).
- *
- * SATORI SUPPORTED CSS:
- * - display: flex only (no grid, no block)
- * - flexDirection, alignItems, justifyContent, gap, flex, flexShrink, flexWrap
- * - width, height, minWidth, minHeight, maxWidth, maxHeight
- * - paddingTop/Bottom/Left/Right, marginTop/Bottom/Left/Right (no shorthand)
- * - background (solid, linear-gradient), color, opacity
- * - fontSize, fontWeight, fontStyle, letterSpacing, lineHeight, textAlign
- * - borderRadius, borderWidth, borderStyle, borderColor
- * - overflow: hidden
- * - position: absolute/relative, top, left, right, bottom
- * - objectFit: cover/contain (on img elements)
- * NOT supported: boxShadow, textShadow, backgroundClip, transform (limited)
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
@@ -36,8 +21,8 @@ const SERVICE_MAP = {
 };
 
 const BADGE_ICON = {
-  "NDIS Worker Check":                "🛡️",
-  "NDIS Worker Screened":             "🛡️",
+  "NDIS Worker Check":                "🛡",
+  "NDIS Worker Screened":             "🛡",
   "First Aid Certified":              "🚑",
   "Police Check":                     "🔍",
   "Working With Children Check":      "🧒",
@@ -58,11 +43,8 @@ function getYouTubeId(url) {
 async function fetchAsBase64(url) {
   try {
     const res = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; InSyncProfiles/1.0)",
-        "Accept": "image/png,image/jpeg,image/*,*/*",
-      },
-      signal: AbortSignal.timeout(5000),
+      headers: { "User-Agent": "Mozilla/5.0", "Accept": "image/*,*/*" },
+      signal: AbortSignal.timeout(4000),
     });
     if (!res.ok) return null;
     const buf = await res.arrayBuffer();
@@ -78,7 +60,6 @@ async function fetchAsBase64(url) {
   }
 }
 
-// Minimal h() helper — builds satori-compatible element trees
 function h(type, props, ...children) {
   const flat = children.flat(Infinity).filter(c => c !== null && c !== undefined && c !== false);
   return {
@@ -94,27 +75,27 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
   const W = 900;
   const H = 1125;
 
-  // ── Service chips ──────────────────────────────────────────────────────────
+  // ── Service chips (simplified for CF CPU budget) ───────────────────────────
   const serviceChips = services.slice(0, 5).map(s =>
     h("div", {
       style: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 10,
+        gap: 8,
         flex: 1,
       },
     },
       h("div", {
         style: {
-          width: 90,
-          height: 90,
-          borderRadius: 45,
+          width: 86,
+          height: 86,
+          borderRadius: 43,
           background: s.bg || "#F5F5F5",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 42,
+          fontSize: 40,
         },
       }, s.emoji),
       h("div", {
@@ -129,16 +110,14 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
     )
   );
 
-  // ── Badge rows ─────────────────────────────────────────────────────────────
+  // ── Badge rows (simplified — no nested border elements, just flat rows) ────
   const badgeList = badges.slice(0, 6);
   const badgeRows = [];
   for (let i = 0; i < badgeList.length; i += 2) {
     const left = badgeList[i];
     const right = badgeList[i + 1];
-
-    // Alternate accent: first badge green checkmark, second gold star
-    const makeCheck = (idx) => idx % 2 === 0 ? "✔" : "★";
-    const makeColor = (idx) => idx % 2 === 0 ? "#4CAF50" : "#F5C842";
+    const checkColors = ["#4CAF50", "#F5C842", "#4CAF50", "#F5C842", "#4CAF50", "#F5C842"];
+    const checkSymbols = ["✓", "★", "✓", "★", "✓", "★"];
 
     const makeBadge = (label, idx) =>
       h("div", {
@@ -147,20 +126,20 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           alignItems: "center",
           flex: 1,
           gap: 10,
-          background: "white",
+          background: "rgba(255,255,255,0.85)",
           borderRadius: 10,
-          borderWidth: 1.5,
+          borderWidth: 1,
           borderStyle: "solid",
           borderColor: "#E0E0E0",
-          paddingTop: 12,
-          paddingBottom: 12,
-          paddingLeft: 14,
-          paddingRight: 14,
+          paddingTop: 11,
+          paddingBottom: 11,
+          paddingLeft: 13,
+          paddingRight: 13,
         },
       },
-        h("span", { style: { fontSize: 22, flexShrink: 0 } }, BADGE_ICON[label] || "✔"),
+        h("span", { style: { fontSize: 20, flexShrink: 0 } }, BADGE_ICON[label] || "✓"),
         h("span", { style: { fontSize: 13, color: "#222", fontWeight: 600, flex: 1, lineHeight: 1.3 } }, label),
-        h("span", { style: { fontSize: 18, color: makeColor(idx), flexShrink: 0 } }, makeCheck(idx)),
+        h("span", { style: { fontSize: 17, color: checkColors[idx] || "#4CAF50", flexShrink: 0 } }, checkSymbols[idx] || "✓"),
       );
 
     badgeRows.push(
@@ -186,12 +165,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           flexShrink: 0,
         },
       },
-        h("img", {
-          src: photoDataUrl,
-          width: 170,
-          height: 170,
-          style: { objectFit: "cover" },
-        })
+        h("img", { src: photoDataUrl, width: 170, height: 170, style: { objectFit: "cover" } })
       )
     : h("div", {
         style: {
@@ -218,65 +192,52 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           position: "relative",
           borderRadius: 14,
           overflow: "hidden",
-          height: 200,
+          height: 195,
           flexShrink: 0,
           borderWidth: 3,
           borderStyle: "solid",
           borderColor: "#A78BFA",
         },
       },
-        h("img", {
-          src: thumbDataUrl,
-          width: W - 60,
-          height: 200,
-          style: { objectFit: "cover", width: "100%", height: "100%" },
-        }),
-        // Dark overlay with play button
+        h("img", { src: thumbDataUrl, width: W - 60, height: 195, style: { objectFit: "cover", width: "100%", height: "100%" } }),
         h("div", {
           style: {
             position: "absolute",
             top: 0, left: 0, right: 0, bottom: 0,
-            background: "rgba(0,0,0,0.3)",
+            background: "rgba(0,0,0,0.28)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           },
         },
-          h("div", {
-            style: {
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-            },
-          },
+          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10 } },
             h("div", {
               style: {
-                width: 68,
-                height: 68,
-                borderRadius: 34,
+                width: 64,
+                height: 64,
+                borderRadius: 32,
                 background: "#F5C842",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 28,
+                fontSize: 26,
                 color: "#1a1a1a",
                 fontWeight: 700,
               },
             }, "▶"),
             h("div", {
               style: {
-                background: "rgba(0,0,0,0.75)",
+                background: "rgba(0,0,0,0.72)",
                 borderRadius: 20,
                 paddingTop: 6,
                 paddingBottom: 6,
-                paddingLeft: 20,
-                paddingRight: 20,
+                paddingLeft: 18,
+                paddingRight: 18,
                 display: "flex",
                 alignItems: "center",
               },
             },
-              h("span", { style: { fontSize: 14, color: "#F5C842", fontWeight: 700, letterSpacing: 1 } }, "▶ WATCH INTRO"),
+              h("span", { style: { fontSize: 13, color: "#F5C842", fontWeight: 700, letterSpacing: 1 } }, "▶ WATCH INTRO"),
             ),
           )
         )
@@ -303,7 +264,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
             textAlign: "center",
             lineHeight: 1.6,
           },
-        }, `"${tagline.slice(0, 140)}${tagline.length > 140 ? "…" : ""}"`),
+        }, `"${tagline.slice(0, 140)}${tagline.length > 140 ? "…" : ""}"`)
       )
     : null;
 
@@ -315,10 +276,9 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
       width: W,
       height: H,
       fontFamily: "sans serif",
-      background: "#D8D8D8",
+      background: "#D0D0D0",
     },
   },
-    // Inner white card with rounded corners
     h("div", {
       style: {
         display: "flex",
@@ -348,7 +308,6 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           flexShrink: 0,
         },
       },
-        // Left: accessibility icon + title stack
         h("div", { style: { display: "flex", alignItems: "center", gap: 14 } },
           h("div", {
             style: {
@@ -366,25 +325,10 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
             },
           }, "♿"),
           h("div", { style: { display: "flex", flexDirection: "column", gap: 4 } },
-            h("div", {
-              style: {
-                color: "#F5C842",
-                fontSize: 28,
-                fontWeight: 800,
-                letterSpacing: 1,
-              },
-            }, "GET TO KNOW ME"),
-            h("div", {
-              style: {
-                color: "#aaaaaa",
-                fontSize: 11,
-                letterSpacing: 3,
-                fontWeight: 600,
-              },
-            }, "• INTERACTIVE & ACCESSIBLE •"),
+            h("div", { style: { color: "#F5C842", fontSize: 28, fontWeight: 800, letterSpacing: 1 } }, "GET TO KNOW ME"),
+            h("div", { style: { color: "#aaaaaa", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "• INTERACTIVE & ACCESSIBLE •"),
           ),
         ),
-        // Right: OPEN PROFILE button
         h("div", {
           style: {
             background: "#F5C842",
@@ -400,14 +344,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
             borderColor: "#C8920A",
           },
         },
-          h("div", {
-            style: {
-              color: "#0a0a0a",
-              fontSize: 17,
-              fontWeight: 800,
-              letterSpacing: 0.5,
-            },
-          }, "OPEN PROFILE ▶"),
+          h("div", { style: { color: "#0a0a0a", fontSize: 17, fontWeight: 800, letterSpacing: 0.5 } }, "OPEN PROFILE ▶"),
         ),
       ),
 
@@ -419,44 +356,21 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           flex: 1,
           background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 30%, #fff5d8 60%, #ffd8e8 80%, #ffe8c8 100%)",
           paddingTop: 24,
-          paddingBottom: 20,
+          paddingBottom: 24,
           paddingLeft: 30,
           paddingRight: 30,
-          gap: 18,
+          gap: 0,
+          justifyContent: "space-between",
         },
       },
         // ── Name row ─────────────────────────────────────────────────────────
         h("div", { style: { display: "flex", alignItems: "center", gap: 28, flexShrink: 0 } },
           photoEl,
           h("div", { style: { display: "flex", flexDirection: "column", gap: 6 } },
-            h("div", {
-              style: {
-                fontSize: 52,
-                fontWeight: 700,
-                color: "#1a2a4a",
-                lineHeight: 1.1,
-              },
-            }, name),
-            h("div", {
-              style: {
-                fontSize: 15,
-                fontWeight: 700,
-                color: "#2dd4bf",
-                letterSpacing: 4,
-                marginTop: 2,
-              },
-            }, title.toUpperCase()),
+            h("div", { style: { fontSize: 52, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.1 } }, name),
+            h("div", { style: { fontSize: 15, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4, marginTop: 2 } }, title.toUpperCase()),
             location
-              ? h("div", {
-                  style: {
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    fontSize: 15,
-                    color: "#555",
-                    marginTop: 6,
-                  },
-                },
+              ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 15, color: "#555", marginTop: 6 } },
                   h("span", { style: { fontSize: 18 } }, "📍"),
                   h("span", {}, location),
                 )
@@ -466,15 +380,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
 
         // ── Services row ─────────────────────────────────────────────────────
         services.length > 0
-          ? h("div", {
-              style: {
-                display: "flex",
-                justifyContent: "space-around",
-                flexShrink: 0,
-                paddingTop: 4,
-                paddingBottom: 4,
-              },
-            }, ...serviceChips)
+          ? h("div", { style: { display: "flex", justifyContent: "space-around", flexShrink: 0 } }, ...serviceChips)
           : null,
 
         // ── Video thumbnail ───────────────────────────────────────────────────
@@ -483,37 +389,17 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
         // ── Tagline ───────────────────────────────────────────────────────────
         taglineEl,
 
-        // ── Credentials header ────────────────────────────────────────────────
+        // ── Credentials section ────────────────────────────────────────────────
         badges.length > 0
-          ? h("div", {
-              style: {
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                flexShrink: 0,
-              },
-            },
-              h("span", { style: { fontSize: 22 } }, "🏅"),
-              h("span", {
-                style: {
-                  fontSize: 16,
-                  color: "#1a2a4a",
-                  fontWeight: 800,
-                  letterSpacing: 1,
-                },
-              }, "CREDENTIALS & BADGES"),
-              h("span", {
-                style: {
-                  fontSize: 13,
-                  color: "#888",
-                  fontStyle: "italic",
-                },
-              }, "(Self-Reported)"),
+          ? h("div", { style: { display: "flex", flexDirection: "column", gap: 10, flexShrink: 0 } },
+              h("div", { style: { display: "flex", alignItems: "center", gap: 10 } },
+                h("span", { style: { fontSize: 22 } }, "🏅"),
+                h("span", { style: { fontSize: 16, color: "#1a2a4a", fontWeight: 800, letterSpacing: 1 } }, "CREDENTIALS & BADGES"),
+                h("span", { style: { fontSize: 13, color: "#888", fontStyle: "italic" } }, "(Self-Reported)"),
+              ),
+              ...badgeRows,
             )
           : null,
-
-        // ── Badge rows ────────────────────────────────────────────────────────
-        ...badgeRows,
       ),
     ),
   );
@@ -542,22 +428,14 @@ export async function onRequest(context) {
     videoUrl
       ? (async () => {
           const ytId = getYouTubeId(videoUrl);
-          return ytId
-            ? fetchAsBase64(`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`)
-            : null;
+          return ytId ? fetchAsBase64(`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`) : null;
         })()
       : Promise.resolve(null),
   ]);
 
   try {
-    const card = buildCard({
-      name, title, location, tagline,
-      photoDataUrl, thumbDataUrl,
-      services, badges,
-    });
-
+    const card = buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl, services, badges });
     const imgResponse = new ImageResponse(card, { width: 900, height: 1125 });
-    // Await the body to surface any stream-level render errors
     const bodyBytes = await imgResponse.arrayBuffer();
     return new Response(bodyBytes, {
       status: 200,
@@ -565,11 +443,9 @@ export async function onRequest(context) {
     });
   } catch (err) {
     const errMsg = err?.message || String(err);
-    const errStack = err?.stack || '';
     console.error("OG image generation failed:", errMsg);
-    // Debug mode: return error as text when debug=1 param is present
     if (q.debug === '1') {
-      return new Response(`ERROR: ${errMsg}\n\nSTACK:\n${errStack}`, {
+      return new Response(`ERROR: ${errMsg}\n\nSTACK:\n${err?.stack || ''}`, {
         status: 500,
         headers: { 'Content-Type': 'text/plain' },
       });
