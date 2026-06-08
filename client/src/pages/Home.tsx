@@ -2370,6 +2370,42 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   </div>
                 </FieldRow>
               ))}
+              {/* Languages */}
+              <FieldRow label="Languages Spoken">
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "8px" }}>
+                  {profile.languages.map(lang => (
+                    <span
+                      key={lang}
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "6px",
+                        padding: "6px 12px", borderRadius: "20px",
+                        background: `${A.gold}22`, border: `1.5px solid ${A.gold}55`,
+                        color: A.goldLight, fontFamily: "'Outfit', sans-serif",
+                        fontSize: "12px", fontWeight: 600,
+                      }}
+                    >
+                      🌐 {lang}
+                      <button
+                        onClick={() => removeLanguage(lang)}
+                        style={{ background: "none", border: "none", cursor: "pointer", color: A.textDim, fontSize: "14px", lineHeight: 1, padding: 0 }}
+                        aria-label={`Remove ${lang}`}
+                      >×</button>
+                    </span>
+                  ))}
+                </div>
+                <div style={{ position: "relative" }}>
+                  <select
+                    style={{ ...THREAD_INPUT, cursor: "pointer" }}
+                    value=""
+                    onChange={e => { if (e.target.value) addLanguage(e.target.value); }}
+                  >
+                    <option value="">+ Add a language…</option>
+                    {ALL_LANGUAGES.filter(l => !profile.languages.includes(l)).map(l => (
+                      <option key={l} value={l}>{l}</option>
+                    ))}
+                  </select>
+                </div>
+              </FieldRow>
             </Section>
 
             <ThreadConnector height={32} />
