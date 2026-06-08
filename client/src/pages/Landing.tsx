@@ -247,7 +247,7 @@ const STEPS = [
 
 export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // Demo carousel: 0 = Pete James, 1 = Kira Chen
+  // Demo carousel: 0 = Pete James, 1 = Sophie Langford
   const [demoIndex, setDemoIndex] = useState(0);
   // Thread animation: tracks which threads have been revealed
   const [visibleThreads, setVisibleThreads] = useState<number[]>([]);
@@ -620,14 +620,14 @@ export default function Landing() {
                 </div>
                 <button
                   onClick={() => { setDemoIndex(1); setVisibleThreads([]); setTimeout(() => [0,1,2,3,4].forEach(i => setTimeout(() => setVisibleThreads(p => p.includes(i) ? p : [...p, i]), 200 + i * 180)), 50); }}
-                  aria-label="View Kira Chen sample profile"
+                  aria-label="View Sophie Langford sample profile"
                   style={{ background: demoIndex === 1 ? "rgba(45,212,191,0.25)" : "rgba(255,255,255,0.06)", border: demoIndex === 1 ? "1.5px solid #2dd4bf" : "1.5px solid rgba(255,255,255,0.15)", borderRadius: "50%", width: "28px", height: "28px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", transition: "all 200ms" }}
                 >▶</button>
               </div>
               {/* Dot indicators */}
               <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
                 {[0, 1].map(i => (
-                  <button key={i} onClick={() => { setDemoIndex(i); setVisibleThreads([]); setTimeout(() => [0,1,2,3,4].forEach(j => setTimeout(() => setVisibleThreads(p => p.includes(j) ? p : [...p, j]), 200 + j * 180)), 50); }} aria-label={i === 0 ? "Pete James" : "Kira Chen"} style={{ width: demoIndex === i ? "20px" : "8px", height: "8px", borderRadius: "4px", background: demoIndex === i ? "#2dd4bf" : "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", transition: "all 250ms cubic-bezier(0.23,1,0.32,1)", padding: 0 }} />
+                  <button key={i} onClick={() => { setDemoIndex(i); setVisibleThreads([]); setTimeout(() => [0,1,2,3,4].forEach(j => setTimeout(() => setVisibleThreads(p => p.includes(j) ? p : [...p, j]), 200 + j * 180)), 50); }} aria-label={i === 0 ? "Pete James" : "Sophie Langford"} style={{ width: demoIndex === i ? "20px" : "8px", height: "8px", borderRadius: "4px", background: demoIndex === i ? "#2dd4bf" : "rgba(255,255,255,0.25)", border: "none", cursor: "pointer", transition: "all 250ms cubic-bezier(0.23,1,0.32,1)", padding: 0 }} />
                 ))}
               </div>
             <style>{`
@@ -717,22 +717,22 @@ export default function Landing() {
               {/* Header row — real photo */}
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "16px" }}>
                 <img
-                  src={demoIndex === 0 ? "/assets/pete_james_headshot_c42b5c10.png" : "/assets/kira_chen_headshot_70b4d1ab.png"}
-                  alt={demoIndex === 0 ? "Pete James — support worker profile photo, Central Coast NSW" : "Kira Chen — support worker profile photo, Oakland NSW"}
+                  src={demoIndex === 0 ? "/assets/pete_james_headshot_c42b5c10.png" : "/assets/sophie_langford_headshot.png"}
+                  alt={demoIndex === 0 ? "Pete James — support worker profile photo, Central Coast NSW" : "Sophie Langford — support worker profile photo, Melbourne VIC"}
                   draggable={false}
                   onContextMenu={e => e.preventDefault()}
                   style={{ width: "68px", height: "68px", borderRadius: "50%", objectFit: "cover", border: demoIndex === 0 ? "2.5px solid #7c9fd4" : "2.5px solid #e879a0", flexShrink: 0, pointerEvents: "none", transition: "border-color 300ms" }}
                 />
                 <div>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "21px", fontWeight: 700, color: "#1a2040", lineHeight: 1.1 }}>{demoIndex === 0 ? "Pete James" : "Kira Chen"}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "21px", fontWeight: 700, color: "#1a2040", lineHeight: 1.1 }}>{demoIndex === 0 ? "Pete James" : "Sophie Langford"}</div>
                   <div style={{ fontSize: "11px", fontWeight: 700, color: demoIndex === 0 ? "#4a6fa8" : "#c026d3", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "3px" }}>Support Worker</div>
-                  <div style={{ fontSize: "11px", color: "#7a7aaa", marginTop: "2px" }}>📍 {demoIndex === 0 ? "Central Coast, NSW" : "Oakland, NSW"}</div>
+                  <div style={{ fontSize: "11px", color: "#7a7aaa", marginTop: "2px" }}>📍 {demoIndex === 0 ? "Central Coast, NSW" : "Melbourne, VIC"}</div>
                 </div>
               </div>
 
               {/* Bio */}
               <p style={{ fontSize: "12px", color: "#2a2a4a", lineHeight: 1.7, marginBottom: "14px", borderLeft: demoIndex === 0 ? "2px solid rgba(147,100,200,0.45)" : "2px solid rgba(192,38,211,0.45)", paddingLeft: "10px", fontStyle: "italic" }}>
-                {demoIndex === 0 ? "Active sourcing & advocacy for accessible, inclusive activities. Real support delivered, every time." : "Good support starts with curiosity — not assumptions. Neurodiversity is my superpower, and yours."}
+                {demoIndex === 0 ? "Active sourcing & advocacy for accessible, inclusive activities. Real support delivered, every time." : "I get it. I see you. I'm here. Compassionate support tailored to your unique journey."}
               </p>
 
               {/* Thread divider */}
@@ -747,7 +747,7 @@ export default function Landing() {
                 { num: 5, icon: "📅", label: "Availability", color: "#e67e22", chips: ["Mon","Tue","Wed","Thu","Fri"] },
                 { num: 7, icon: "🛡", label: "Credentials",  color: "#f59e0b", chips: ["✓ NDIS Worker Check", "✓ First Aid", "✓ Police Check"] },
               ] : [
-                { num: 1, icon: "🧶", label: "Identity",     color: "#c026d3", chips: ["Kira Chen", "Oakland NSW", "4 yrs experience"] },
+                { num: 1, icon: "🧶", label: "Identity",     color: "#c026d3", chips: ["Sophie Langford", "Melbourne VIC", "6 yrs experience"] },
                 { num: 2, icon: "🧩", label: "Services",     color: "#0891b2", chips: ["Emotional Support", "Community Access", "Mental Wellbeing", "Creative Arts"] },
                 { num: 5, icon: "📅", label: "Availability", color: "#16a34a", chips: ["Mon","Tue","Wed","Thu","Fri","Sat"] },
                 { num: 7, icon: "🛡", label: "Credentials",  color: "#f59e0b", chips: ["✓ NDIS Worker Check", "✓ First Aid", "✓ Police Check", "✓ Working with Children"] },
@@ -865,7 +865,7 @@ export default function Landing() {
                   <div style={{ fontSize: "9px", color: "#8888aa" }}>Scan to view</div>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: "9px", color: "#8888aa", marginBottom: "6px" }}>{demoIndex === 0 ? "insyncprofiles.net/pete-j" : "insyncprofiles.net/kira-c"}</div>
+                  <div style={{ fontSize: "9px", color: "#8888aa", marginBottom: "6px" }}>{demoIndex === 0 ? "insyncprofiles.net/pete-j" : "insyncprofiles.net/sophie-l"}</div>
                   <div style={{ background: "linear-gradient(135deg, #009488 0%, #007a70 100%)", color: "#fff", fontSize: "11px", fontWeight: 700, padding: "8px 16px", borderRadius: "20px", letterSpacing: "0.04em", display: "inline-block" }}>Message to Begin →</div>
                 </div>
               </div>
