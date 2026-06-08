@@ -200,25 +200,26 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           flexDirection: "column",
           flex: 1,
           background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 30%, #fff5d8 60%, #ffd8e8 80%, #ffe8c8 100%)",
-          paddingTop: 40,
-          paddingBottom: 36,
+          paddingTop: 36,
+          paddingBottom: 32,
           paddingLeft: 44,
           paddingRight: 44,
+          gap: 0,
           justifyContent: "space-between",
         },
       },
 
         // ── Main content row: left col (photo + name/title/location) | right col (chips) ──
-        h("div", { style: { display: "flex", alignItems: "flex-start", gap: 36, flexShrink: 0 } },
+        h("div", { style: { display: "flex", alignItems: "center", gap: 40, flexShrink: 0 } },
 
           // Left column: photo stacked above name/title/location
-          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 14, flexShrink: 0 } },
+          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 18, flexShrink: 0, width: 220 } },
             photoEl,
-            h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" } },
-              h("div", { style: { fontSize: 40, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.05 } }, name),
-              h("div", { style: { fontSize: 13, fontWeight: 700, color: "#2dd4bf", letterSpacing: 3 } }, title.toUpperCase()),
+            h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center" } },
+              h("div", { style: { fontSize: 44, fontWeight: 800, color: "#1a2a4a", lineHeight: 1.05 } }, name),
+              h("div", { style: { fontSize: 14, fontWeight: 700, color: "#2dd4bf", letterSpacing: 3 } }, title.toUpperCase()),
               location
-                ? h("div", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 13, color: "#555" } },
+                ? h("div", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 14, color: "#555", marginTop: 2 } },
                     h("span", { style: { color: "#E57373", fontWeight: 700 } }, "-"),
                     h("span", {}, location),
                   )
@@ -232,10 +233,8 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
                 style: {
                   display: "flex",
                   flexDirection: "column",
-                  gap: 10,
+                  gap: 12,
                   flex: 1,
-                  justifyContent: "center",
-                  alignSelf: "center",
                 },
               }, ...chips)
             : null,
