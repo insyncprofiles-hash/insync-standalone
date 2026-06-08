@@ -2702,9 +2702,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 </div>
               </div>
             )}
-            {/* hidden section to keep counter correct */}
-            <div style={{ display: "none" }} aria-hidden="true">
-            <Section icon="📤" title="Share & Distribute" id="section-share">
+            <ThreadConnector height={32} />
+            {/* ══ SAVE & SHARE SECTION ══ */}
+            <Section icon="💾" title="Save & Share" id="section-share">
               {/* ══ SAVE BUTTON ══ */}
               <button
                 onClick={handleSaveChanges}
@@ -2960,8 +2960,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               )}
 
             </Section>
-
-            </div>{/* end hidden share section */}
           </>
         )}
 
