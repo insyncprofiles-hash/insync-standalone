@@ -2842,6 +2842,118 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         ⬇️ Download QR as Image
                       </button>
                     </div>
+
+                    {/* ── Lanyard Card ── */}
+                    <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                      <LanyardPreview profile={profile} qrSelector='#insync-share-qr svg' />
+                      <button
+                        onClick={() => {
+                          const W = 700, H = 1050;
+                          const canvas = document.createElement('canvas');
+                          canvas.width = W; canvas.height = H;
+                          const ctx = canvas.getContext('2d');
+                          if (!ctx) return;
+                          ctx.fillStyle = '#121212';
+                          ctx.fillRect(0, 0, W, H);
+                          ctx.save();
+                          const STRIP_TOP_Y = 200, STRIP_BOT_Y = 850, STRIP_W = 320;
+                          ctx.beginPath();
+                          ctx.moveTo(W, STRIP_TOP_Y); ctx.lineTo(W, STRIP_TOP_Y + STRIP_W);
+                          ctx.lineTo(0, STRIP_BOT_Y + STRIP_W); ctx.lineTo(0, STRIP_BOT_Y);
+                          ctx.closePath(); ctx.clip();
+                          const auroraGrad = ctx.createLinearGradient(W, STRIP_TOP_Y, 0, STRIP_BOT_Y + STRIP_W);
+                          auroraGrad.addColorStop(0, '#C8960A'); auroraGrad.addColorStop(0.18, '#9A6A10');
+                          auroraGrad.addColorStop(0.38, '#7B4A8A'); auroraGrad.addColorStop(0.55, '#5C2DA8');
+                          auroraGrad.addColorStop(0.72, '#3D1A7A'); auroraGrad.addColorStop(1, '#1A0840');
+                          ctx.fillStyle = auroraGrad; ctx.fillRect(0, 0, W, H);
+                          for (let i = 0; i < 120; i++) {
+                            const t = Math.random();
+                            const yL = STRIP_BOT_Y + t * STRIP_W, yR = STRIP_TOP_Y + t * STRIP_W;
+                            ctx.strokeStyle = `rgba(255,255,255,${(Math.random()*0.07+0.01).toFixed(3)})`;
+                            ctx.lineWidth = Math.random()*1.5+0.3;
+                            ctx.beginPath(); ctx.moveTo(0,yL); ctx.lineTo(W,yR); ctx.stroke();
+                          }
+                          const sheenGrad = ctx.createLinearGradient(W*0.3,0,W*0.7,H);
+                          sheenGrad.addColorStop(0,'rgba(255,255,255,0)'); sheenGrad.addColorStop(0.4,'rgba(255,255,255,0.13)');
+                          sheenGrad.addColorStop(0.5,'rgba(255,255,255,0.22)'); sheenGrad.addColorStop(0.6,'rgba(255,255,255,0.10)');
+                          sheenGrad.addColorStop(1,'rgba(255,255,255,0)');
+                          ctx.fillStyle = sheenGrad; ctx.fillRect(0,0,W,H); ctx.restore();
+                          const roundRect = (rx:number,ry:number,rw:number,rh:number,r:number) => {
+                            ctx.beginPath(); ctx.moveTo(rx+r,ry); ctx.lineTo(rx+rw-r,ry);
+                            ctx.quadraticCurveTo(rx+rw,ry,rx+rw,ry+r); ctx.lineTo(rx+rw,ry+rh-r);
+                            ctx.quadraticCurveTo(rx+rw,ry+rh,rx+rw-r,ry+rh); ctx.lineTo(rx+r,ry+rh);
+                            ctx.quadraticCurveTo(rx,ry+rh,rx,ry+rh-r); ctx.lineTo(rx,ry+r);
+                            ctx.quadraticCurveTo(rx,ry,rx+r,ry); ctx.closePath();
+                          };
+                          const SCAN_X=30,SCAN_Y=60,SCAN_W=380,SCAN_H=230;
+                          ctx.save(); roundRect(SCAN_X,SCAN_Y,SCAN_W,SCAN_H,32);
+                          ctx.fillStyle='rgba(14,14,14,0.88)'; ctx.fill(); ctx.restore();
+                          ctx.font='bold 110px Georgia,serif'; ctx.fillStyle='#D4A017'; ctx.textAlign='left';
+                          ctx.fillText('SCAN',SCAN_X+28,SCAN_Y+115); ctx.fillText('ME.',SCAN_X+28,SCAN_Y+220);
+                          ctx.beginPath(); ctx.arc(W/2,30,20,0,Math.PI*2);
+                          ctx.fillStyle='#0a0a0a'; ctx.fill();
+                          ctx.strokeStyle='#D4A017'; ctx.lineWidth=3; ctx.stroke();
+                          const svgEl = document.querySelector('#insync-share-qr svg') as SVGSVGElement|null;
+                          const QR_SIZE=320, QR_X=(W-QR_SIZE)/2, QR_Y=360;
+                          const drawRest = (qrDataUrl?:string) => {
+                            if (qrDataUrl) {
+                              const qrImg = new Image();
+                              qrImg.onload = () => {
+                                ctx.save(); roundRect(QR_X-12,QR_Y-12,QR_SIZE+24,QR_SIZE+24,16);
+                                ctx.fillStyle='#FFFFFF'; ctx.fill(); ctx.restore();
+                                ctx.drawImage(qrImg,QR_X,QR_Y,QR_SIZE,QR_SIZE);
+                                const bs=38,bw=5; ctx.strokeStyle='#D4A017'; ctx.lineWidth=bw;
+                                [[QR_X-16,QR_Y-16],[QR_X+QR_SIZE+16,QR_Y-16],[QR_X-16,QR_Y+QR_SIZE+16],[QR_X+QR_SIZE+16,QR_Y+QR_SIZE+16]].forEach(([bx,by],idx)=>{
+                                  const dx=idx%2===0?1:-1, dy=idx<2?1:-1;
+                                  ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(bx+dx*bs,by); ctx.stroke();
+                                  ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(bx,by+dy*bs); ctx.stroke();
+                                }); finishCard();
+                              }; qrImg.src=qrDataUrl;
+                            } else { finishCard(); }
+                          };
+                          const finishCard = () => {
+                            const SW_X=30,SW_Y=760,SW_W=W-60,SW_H=220;
+                            ctx.save(); roundRect(SW_X,SW_Y,SW_W,SW_H,32);
+                            ctx.fillStyle='rgba(14,14,14,0.88)'; ctx.fill(); ctx.restore();
+                            ctx.font='bold 96px Georgia,serif'; ctx.fillStyle='#D4A017'; ctx.textAlign='center';
+                            ctx.fillText('SUPPORT',W/2,SW_Y+105); ctx.fillText('WORKER',W/2,SW_Y+200);
+                            const logoImg = new Image();
+                            logoImg.onload = () => {
+                              ctx.drawImage(logoImg,W/2-40,1000,80,80);
+                              ctx.font='18px Arial'; ctx.fillStyle='#666666'; ctx.textAlign='center';
+                              ctx.fillText('insyncprofiles.net',W/2,1030);
+                              const a=document.createElement('a'); a.href=canvas.toDataURL('image/png');
+                              a.download='insync-lanyard-card.png'; a.click();
+                            };
+                            logoImg.onerror = () => {
+                              ctx.font='18px Arial'; ctx.fillStyle='#666666'; ctx.textAlign='center';
+                              ctx.fillText('insyncprofiles.net',W/2,1030);
+                              const a=document.createElement('a'); a.href=canvas.toDataURL('image/png');
+                              a.download='insync-lanyard-card.png'; a.click();
+                            };
+                            logoImg.src='/assets/insync-logo-main.png';
+                          };
+                          if (svgEl) {
+                            const serializer=new XMLSerializer();
+                            const svgStr=serializer.serializeToString(svgEl);
+                            const blob=new Blob([svgStr],{type:'image/svg+xml'});
+                            const url=URL.createObjectURL(blob);
+                            const tmpImg=new Image();
+                            tmpImg.onload=()=>{
+                              const tmpCanvas=document.createElement('canvas');
+                              tmpCanvas.width=370; tmpCanvas.height=370;
+                              const tmpCtx=tmpCanvas.getContext('2d');
+                              if(tmpCtx){tmpCtx.fillStyle='#F5F0E8';tmpCtx.fillRect(0,0,370,370);tmpCtx.drawImage(tmpImg,0,0,370,370);}
+                              URL.revokeObjectURL(url); drawRest(tmpCanvas.toDataURL('image/png'));
+                            }; tmpImg.src=url;
+                          } else { drawRest(); }
+                        }}
+                        style={{ padding: '9px 22px', borderRadius: '99px', background: 'linear-gradient(135deg,#6B21A8,#FFD700)', border: 'none', color: '#fff', fontFamily: "'Outfit',sans-serif", fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        aria-label="Download personalised lanyard card as PNG"
+                      >
+                        🪪 Download Lanyard Card
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <div style={{ padding: "16px 0 4px", textAlign: "center" }}>
