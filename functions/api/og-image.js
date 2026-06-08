@@ -205,7 +205,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          background: "linear-gradient(180deg, #e8d8ff 0%, #c8d8ff 30%, #c8f0e8 70%, #d8ffe8 100%)",
+          background: "linear-gradient(180deg, #dbeeff 0%, #c8d8ff 35%, #fff0c0 70%, #ffe8a0 100%)",
           paddingTop: 32,
           paddingBottom: 32,
           paddingLeft: 44,
@@ -226,7 +226,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
               h("div", { style: { fontSize: 15, fontWeight: 800, color: "#0e9488", letterSpacing: 4, marginTop: 4 } }, title.toUpperCase()),
               location
                 ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 15, color: "#333", marginTop: 4 } },
-                    h("span", { style: { color: "#7C3AED", fontWeight: 800, fontSize: 18 } }, "\u25CF"),
+                    h("span", { style: { color: "#1E88E5", fontWeight: 800, fontSize: 18 } }, "-"),
                     h("span", { style: { fontWeight: 600 } }, location),
                   )
                 : null,
