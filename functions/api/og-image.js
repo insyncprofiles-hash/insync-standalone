@@ -1,23 +1,43 @@
 /**
  * Cloudflare Pages Function: /api/og-image
- * Simplified profile card: banner + name/title/location + services (text chips) + tagline + CTA
+ * Trust-first profile card:
+ *   - Video thumbnail feel (photo + play button overlay)
+ *   - Suburb/service area PROMINENT
+ *   - Specialty tags (disability types) in bold contrasting colours
+ *   - Name + tagline as primary trust signals
+ *   - Single CTA in banner only
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
 
-const SERVICE_MAP = {
-  "personal-care":  { color: "#E57373", bg: "#FFF3E0", label: "Personal Care" },
-  "emotional":      { color: "#66BB6A", bg: "#E8F5E9", label: "Emotional Support" },
-  "community":      { color: "#7E57C2", bg: "#EDE7F6", label: "Community Access" },
-  "mental":         { color: "#42A5F5", bg: "#E3F2FD", label: "Mental Wellbeing" },
-  "daily-living":   { color: "#FFA726", bg: "#FFF8E1", label: "Daily Living" },
-  "transport":      { color: "#29B6F6", bg: "#E1F5FE", label: "Transport" },
-  "social-skills":  { color: "#AB47BC", bg: "#F3E5F5", label: "Social Skills" },
-  "therapy-assist": { color: "#EC407A", bg: "#FCE4EC", label: "Therapy Assist" },
-  "behaviour":      { color: "#5C6BC0", bg: "#E8EAF6", label: "Behaviour Support" },
-  "domestic":       { color: "#66BB6A", bg: "#F1F8E9", label: "Domestic Assist" },
-  "overnight":      { color: "#5C6BC0", bg: "#E8EAF6", label: "Overnight Support" },
-  "high-care":      { color: "#EC407A", bg: "#FCE4EC", label: "High Care" },
+// Specialty tags — disability types participants recognise instantly
+// Mapped from the "services" param for now; workers will choose these in the builder
+const SPECIALTY_MAP = {
+  "autism":         { label: "AUTISM",           bg: "#1565C0", text: "#FFFFFF" },
+  "mental-health":  { label: "MENTAL HEALTH",    bg: "#6A1B9A", text: "#FFFFFF" },
+  "psychosocial":   { label: "PSYCHOSOCIAL",     bg: "#6A1B9A", text: "#FFFFFF" },
+  "physical":       { label: "PHYSICAL",         bg: "#1B5E20", text: "#FFFFFF" },
+  "complex":        { label: "COMPLEX NEEDS",    bg: "#B71C1C", text: "#FFFFFF" },
+  "intellectual":   { label: "INTELLECTUAL",     bg: "#E65100", text: "#FFFFFF" },
+  "acquired-brain": { label: "ACQUIRED BRAIN",   bg: "#4A148C", text: "#FFFFFF" },
+  "non-verbal":     { label: "NON-VERBAL",       bg: "#004D40", text: "#FFFFFF" },
+  "school-leaver":  { label: "SCHOOL LEAVERS",   bg: "#1A237E", text: "#FFFFFF" },
+  "aged-care":      { label: "AGED CARE",        bg: "#37474F", text: "#FFFFFF" },
+  "dementia":       { label: "DEMENTIA",         bg: "#4E342E", text: "#FFFFFF" },
+  "sensory":        { label: "SENSORY",          bg: "#006064", text: "#FFFFFF" },
+  // Legacy service keys mapped to specialty tags
+  "personal-care":  { label: "PERSONAL CARE",   bg: "#C62828", text: "#FFFFFF" },
+  "community":      { label: "COMMUNITY",        bg: "#1565C0", text: "#FFFFFF" },
+  "daily-living":   { label: "DAILY LIVING",     bg: "#E65100", text: "#FFFFFF" },
+  "transport":      { label: "TRANSPORT",        bg: "#0277BD", text: "#FFFFFF" },
+  "social-skills":  { label: "SOCIAL SKILLS",   bg: "#6A1B9A", text: "#FFFFFF" },
+  "therapy-assist": { label: "THERAPY ASSIST",  bg: "#880E4F", text: "#FFFFFF" },
+  "behaviour":      { label: "BEHAVIOUR",        bg: "#1A237E", text: "#FFFFFF" },
+  "domestic":       { label: "DOMESTIC",         bg: "#1B5E20", text: "#FFFFFF" },
+  "overnight":      { label: "OVERNIGHT",        bg: "#263238", text: "#FFFFFF" },
+  "high-care":      { label: "HIGH CARE",        bg: "#B71C1C", text: "#FFFFFF" },
+  "emotional":      { label: "EMOTIONAL SUPPORT",bg: "#1B5E20", text: "#FFFFFF" },
+  "mental":         { label: "MENTAL HEALTH",    bg: "#6A1B9A", text: "#FFFFFF" },
 };
 
 async function fetchAsBase64(url) {
@@ -51,76 +71,93 @@ function h(type, props, ...children) {
   };
 }
 
-function buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, services }) {
-  // ── Photo element ─────────────────────────────────────────────────────────
-  const PHOTO_SIZE = 190;
-  const photoEl = photoDataUrl
-    ? h("div", {
-        style: {
-          width: PHOTO_SIZE,
-          height: PHOTO_SIZE,
-          borderRadius: PHOTO_SIZE / 2,
-          borderWidth: 5,
-          borderStyle: "solid",
-          borderColor: "#D4A017",
-          overflow: "hidden",
-          display: "flex",
-          flexShrink: 0,
-        },
-      },
-        h("img", { src: photoDataUrl, width: PHOTO_SIZE, height: PHOTO_SIZE, style: { objectFit: "cover", objectPosition: "center top" } })
-      )
-    : h("div", {
-        style: {
-          width: PHOTO_SIZE,
-          height: PHOTO_SIZE,
-          borderRadius: PHOTO_SIZE / 2,
-          borderWidth: 5,
-          borderStyle: "solid",
-          borderColor: "#D4A017",
-          background: "#c8d8e8",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 64,
-          flexShrink: 0,
-          color: "#5a7a9a",
-        },
-      }, "\u{1F464}");
+function buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, tags }) {
+  const PHOTO_SIZE = 220;
 
-  // ── Text-only service chips — cycling blue / green / gold ──────────────────
-  const CHIP_PALETTE = [
-    { border: "#1E88E5", bg: "rgba(30,136,229,0.12)", text: "#1565C0" },  // blue
-    { border: "#2E7D32", bg: "rgba(46,125,50,0.12)",  text: "#1B5E20" },  // green
-    { border: "#D4A017", bg: "rgba(212,160,23,0.12)", text: "#7B5800" },  // gold
-  ];
-  const chips = services.slice(0, 5).map((s, i) => {
-    const p = CHIP_PALETTE[i % 3];
-    return h("div", {
+  // ── Photo with play button overlay ──────────────────────────────────────────
+  const photoEl = h("div", {
+    style: {
+      position: "relative",
+      width: PHOTO_SIZE,
+      height: PHOTO_SIZE,
+      borderRadius: PHOTO_SIZE / 2,
+      borderWidth: 6,
+      borderStyle: "solid",
+      borderColor: "#F5C842",
+      overflow: "hidden",
+      display: "flex",
+      flexShrink: 0,
+    },
+  },
+    photoDataUrl
+      ? h("img", {
+          src: photoDataUrl,
+          width: PHOTO_SIZE,
+          height: PHOTO_SIZE,
+          style: { objectFit: "cover", objectPosition: "center top" },
+        })
+      : h("div", {
+          style: {
+            width: PHOTO_SIZE,
+            height: PHOTO_SIZE,
+            background: "#c8d8e8",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 80,
+            color: "#5a7a9a",
+          },
+        }, "\u{1F464}"),
+    // Play button overlay — signals "this person has a video intro"
+    h("div", {
       style: {
+        position: "absolute",
+        bottom: 10,
+        right: 10,
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        background: "rgba(0,0,0,0.72)",
         display: "flex",
         alignItems: "center",
-        background: p.bg,
-        borderRadius: 16,
-        paddingTop: 6,
-        paddingBottom: 6,
-        paddingLeft: 18,
-        paddingRight: 18,
-        borderWidth: 2,
-        borderStyle: "solid",
-        borderColor: p.border,
+        justifyContent: "center",
       },
     },
       h("div", {
         style: {
-          fontSize: 15,
-          color: p.text,
-          fontWeight: 700,
-          letterSpacing: 0.3,
+          color: "#F5C842",
+          fontSize: 20,
+          fontWeight: 900,
+          marginLeft: 3,
         },
-      }, s.label),
-    );
-  });
+      }, "\u25B6"),
+    ),
+  );
+
+  // ── Specialty tags — bold, high contrast, immediately scannable ─────────────
+  const tagEls = tags.slice(0, 4).map(tag =>
+    h("div", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        background: tag.bg,
+        borderRadius: 8,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 18,
+        paddingRight: 18,
+      },
+    },
+      h("div", {
+        style: {
+          fontSize: 17,
+          color: tag.text,
+          fontWeight: 900,
+          letterSpacing: 1.2,
+        },
+      }, tag.label),
+    )
+  );
 
   return h("div", {
     style: {
@@ -129,171 +166,207 @@ function buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, 
       width: 900,
       height: 900,
       fontFamily: "sans-serif",
-      background: "#D0D0D0",
+      background: "#1a1a2e",
     },
   },
-    // Outer card with rounded corners
+    // Outer card
     h("div", {
       style: {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        margin: 18,
-        borderRadius: 28,
+        margin: 16,
+        borderRadius: 24,
         overflow: "hidden",
         background: "white",
       },
     },
 
-      // ── TOP BANNER ────────────────────────────────────────────────────────
+      // ── TOP BANNER ──────────────────────────────────────────────────────────
       h("div", {
         style: {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           background: "#0a0a0a",
-          paddingTop: 22,
-          paddingBottom: 22,
-          paddingLeft: 30,
-          paddingRight: 30,
+          paddingTop: 20,
+          paddingBottom: 20,
+          paddingLeft: 28,
+          paddingRight: 28,
           flexShrink: 0,
         },
       },
-        // Left: icon + title
         h("div", { style: { display: "flex", alignItems: "center", gap: 14 } },
           iconDataUrl
-            ? h("img", { src: iconDataUrl, width: 58, height: 58, style: { objectFit: "contain", flexShrink: 0 } })
-            : h("div", {
-                style: {
-                  width: 58,
-                  height: 58,
-                  borderRadius: 29,
-                  borderWidth: 2,
-                  borderStyle: "solid",
-                  borderColor: "#F5C842",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 28,
-                  flexShrink: 0,
-                  color: "#F5C842",
-                },
-              }, "\u267F"),
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 3 } },
-            h("div", { style: { color: "#F5C842", fontSize: 30, fontWeight: 800, letterSpacing: 1 } }, "GET TO KNOW ME"),
-            h("div", { style: { color: "#aaaaaa", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "\u2022 INTERACTIVE & ACCESSIBLE \u2022"),
+            ? h("img", { src: iconDataUrl, width: 52, height: 52, style: { objectFit: "contain", flexShrink: 0 } })
+            : null,
+          h("div", { style: { display: "flex", flexDirection: "column", gap: 2 } },
+            h("div", { style: { color: "#F5C842", fontSize: 26, fontWeight: 900, letterSpacing: 1 } }, "GET TO KNOW ME"),
+            h("div", { style: { color: "#888", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "\u2022 INTERACTIVE & ACCESSIBLE \u2022"),
           ),
         ),
-        // Right: CTA button
         h("div", {
           style: {
             background: "#F5C842",
             borderRadius: 50,
-            paddingTop: 14,
-            paddingBottom: 14,
-            paddingLeft: 28,
-            paddingRight: 28,
+            paddingTop: 12,
+            paddingBottom: 12,
+            paddingLeft: 24,
+            paddingRight: 24,
             display: "flex",
             alignItems: "center",
           },
         },
-          h("div", { style: { color: "#0a0a0a", fontSize: 18, fontWeight: 800, letterSpacing: 0.5 } }, "OPEN PROFILE \u25B6"),
+          h("div", { style: { color: "#0a0a0a", fontSize: 16, fontWeight: 900, letterSpacing: 0.5 } }, "OPEN PROFILE \u25B6"),
         ),
       ),
 
-      // ── GRADIENT BODY ─────────────────────────────────────────────────────
+      // ── BODY ────────────────────────────────────────────────────────────────
       h("div", {
         style: {
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          background: "linear-gradient(180deg, #dbeeff 0%, #c8d8ff 35%, #fff0c0 70%, #ffe8a0 100%)",
-          paddingTop: 32,
+          background: "linear-gradient(160deg, #0f2044 0%, #1a1060 40%, #2d1b00 100%)",
+          paddingTop: 36,
           paddingBottom: 32,
           paddingLeft: 44,
           paddingRight: 44,
-          gap: 28,
-          justifyContent: "space-between",
         },
       },
 
-        // ── Main content row: left col (photo + name/title/location) | right col (chips) ──
-        h("div", { style: { display: "flex", alignItems: "center", gap: 40, flexShrink: 0 } },
+        // ── Row: photo left | identity right ──────────────────────────────────
+        h("div", {
+          style: {
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 36,
+            flexShrink: 0,
+          },
+        },
 
-          // Left column: photo stacked above name/title/location
-          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 16, flexShrink: 0, width: 240 } },
-            photoEl,
-            h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textAlign: "center" } },
-              h("div", { style: { fontSize: 52, fontWeight: 900, color: "#1a1a3a", lineHeight: 1.0 } }, name),
-              h("div", { style: { fontSize: 15, fontWeight: 800, color: "#0e9488", letterSpacing: 4, marginTop: 4 } }, title.toUpperCase()),
-              location
-                ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 15, color: "#333", marginTop: 4 } },
-                    h("span", { style: { color: "#1E88E5", fontWeight: 800, fontSize: 18 } }, "-"),
-                    h("span", { style: { fontWeight: 600 } }, location),
-                  )
-                : null,
-            ),
-          ),
+          // Photo
+          photoEl,
 
-          // Right column: service chips as vertical list
-          services.length > 0
-            ? h("div", {
-                style: {
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                  flex: 1,
+          // Identity column
+          h("div", {
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: 10,
+              flex: 1,
+              paddingTop: 8,
+            },
+          },
+            // Name — largest, most dominant
+            h("div", {
+              style: {
+                fontSize: 64,
+                fontWeight: 900,
+                color: "#FFFFFF",
+                lineHeight: 1.0,
+                letterSpacing: -1,
+              },
+            }, name),
+
+            // Title — teal, spaced caps
+            h("div", {
+              style: {
+                fontSize: 16,
+                fontWeight: 800,
+                color: "#2DD4BF",
+                letterSpacing: 4,
+                marginTop: 4,
+              },
+            }, title.toUpperCase()),
+
+            // Location — PROMINENT, gold, large
+            location
+              ? h("div", {
+                  style: {
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginTop: 6,
+                  },
                 },
-              }, ...chips)
-            : null,
+                  h("div", {
+                    style: {
+                      background: "#F5C842",
+                      borderRadius: 6,
+                      paddingTop: 6,
+                      paddingBottom: 6,
+                      paddingLeft: 14,
+                      paddingRight: 14,
+                      display: "flex",
+                      alignItems: "center",
+                    },
+                  },
+                    h("div", {
+                      style: {
+                        fontSize: 17,
+                        fontWeight: 900,
+                        color: "#0a0a0a",
+                        letterSpacing: 0.5,
+                      },
+                    }, location),
+                  ),
+                )
+              : null,
+
+            // Specialty tags row
+            tags.length > 0
+              ? h("div", {
+                  style: {
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 8,
+                    marginTop: 10,
+                  },
+                }, ...tagEls)
+              : null,
+          ),
         ),
 
-        // ── Tagline ───────────────────────────────────────────────────────
+        // ── Tagline — their own words, the trust signal ─────────────────────
         tagline
           ? h("div", {
               style: {
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                flexDirection: "column",
+                marginTop: 32,
+                paddingTop: 24,
+                paddingBottom: 24,
+                paddingLeft: 28,
+                paddingRight: 28,
+                borderRadius: 14,
+                background: "rgba(255,255,255,0.08)",
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderColor: "rgba(245,200,66,0.3)",
                 flexShrink: 0,
               },
             },
               h("div", {
                 style: {
-                  fontSize: 20,
-                  color: "#444",
-                  fontStyle: "italic",
-                  textAlign: "center",
-                  lineHeight: 1.6,
+                  fontSize: 13,
+                  color: "#F5C842",
+                  fontWeight: 800,
+                  letterSpacing: 3,
+                  marginBottom: 10,
                 },
-              }, `"${tagline.slice(0, 160)}${tagline.length > 160 ? "\u2026" : ""}"`)
+              }, "IN THEIR OWN WORDS"),
+              h("div", {
+                style: {
+                  fontSize: 22,
+                  color: "#F0F0F0",
+                  fontStyle: "italic",
+                  lineHeight: 1.5,
+                },
+              }, `"${tagline.slice(0, 140)}${tagline.length > 140 ? "\u2026" : ""}"`)
             )
           : null,
-
-        // ── Bottom CTA bar ────────────────────────────────────────────────
-        h("div", {
-          style: {
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          },
-        },
-          h("div", {
-            style: {
-              background: "#F5C842",
-              borderRadius: 50,
-              paddingTop: 18,
-              paddingBottom: 18,
-              paddingLeft: 60,
-              paddingRight: 60,
-              display: "flex",
-              alignItems: "center",
-            },
-          },
-            h("div", { style: { color: "#0a0a0a", fontSize: 22, fontWeight: 800, letterSpacing: 1 } }, "OPEN PROFILE \u25B6"),
-          ),
-        ),
 
       ),
     ),
@@ -311,14 +384,15 @@ export async function onRequest(context) {
   const photoUrl = q.photo    || "";
   const servicesRaw = q.services || "";
 
-  const services = servicesRaw.split(",").filter(Boolean).slice(0, 5)
-    .map(s => SERVICE_MAP[s.trim()] || { color: "#7E57C2", bg: "#EDE7F6", label: s.trim() });
+  // Map service/specialty keys to tag objects
+  const tags = servicesRaw.split(",").filter(Boolean).slice(0, 4)
+    .map(s => SPECIALTY_MAP[s.trim()] || { label: s.trim().toUpperCase(), bg: "#1a237e", text: "#FFFFFF" });
 
   const photoDataUrl = photoUrl ? await fetchAsBase64(photoUrl) : null;
   const iconDataUrl = await fetchAsBase64(`${url.origin}/accessibility-icon.png`);
 
   try {
-    const card = buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, services });
+    const card = buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, tags });
     const imgResponse = new ImageResponse(card, { width: 900, height: 900 });
     const bodyBytes = await imgResponse.arrayBuffer();
     return new Response(bodyBytes, {
