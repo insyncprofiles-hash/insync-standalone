@@ -1178,7 +1178,9 @@ export default function ClientView() {
                 {profile.website && (
                   <a href={profile.website.startsWith('http') ? profile.website : `https://${profile.website}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
                     <span style={{ fontSize: "18px" }}>🌐</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", color: P.accent }}>Professional Web Link</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", color: P.accent, wordBreak: "break-all" }}>
+                      {profile.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
+                    </span>
                   </a>
                 )}
               </div>
