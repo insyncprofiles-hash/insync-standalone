@@ -1,23 +1,23 @@
 /**
  * Cloudflare Pages Function: /api/og-image
- * Simplified profile card: banner + name/title/location + services + tagline + CTA
+ * Simplified profile card: banner + name/title/location + services (text chips) + tagline + CTA
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
 
 const SERVICE_MAP = {
-  "personal-care":  { symbol: "\u2665", color: "#E57373", label: "Personal Care",     bg: "#FFF3E0" },
-  "emotional":      { symbol: "\u2665", color: "#66BB6A", label: "Emotional Support", bg: "#E8F5E9" },
-  "community":      { symbol: "\u25B6", color: "#7E57C2", label: "Community Access",  bg: "#EDE7F6" },
-  "mental":         { symbol: "\u2665", color: "#42A5F5", label: "Mental Wellbeing",  bg: "#E3F2FD" },
-  "daily-living":   { symbol: "\u25B6", color: "#FFA726", label: "Daily Living",      bg: "#FFF8E1" },
-  "transport":      { symbol: "\u25B6", color: "#29B6F6", label: "Transport",         bg: "#E3F2FD" },
-  "social-skills":  { symbol: "\u2665", color: "#AB47BC", label: "Social Skills",     bg: "#F3E5F5" },
-  "therapy-assist": { symbol: "\u2665", color: "#EC407A", label: "Therapy Assist",    bg: "#FCE4EC" },
-  "behaviour":      { symbol: "\u25B6", color: "#5C6BC0", label: "Behaviour Support", bg: "#E8EAF6" },
-  "domestic":       { symbol: "\u25B6", color: "#66BB6A", label: "Domestic Assist",   bg: "#F1F8E9" },
-  "overnight":      { symbol: "\u2665", color: "#5C6BC0", label: "Overnight Support", bg: "#E8EAF6" },
-  "high-care":      { symbol: "\u2665", color: "#EC407A", label: "High Care",         bg: "#FCE4EC" },
+  "personal-care":  { color: "#E57373", bg: "#FFF3E0", label: "Personal Care" },
+  "emotional":      { color: "#66BB6A", bg: "#E8F5E9", label: "Emotional Support" },
+  "community":      { color: "#7E57C2", bg: "#EDE7F6", label: "Community Access" },
+  "mental":         { color: "#42A5F5", bg: "#E3F2FD", label: "Mental Wellbeing" },
+  "daily-living":   { color: "#FFA726", bg: "#FFF8E1", label: "Daily Living" },
+  "transport":      { color: "#29B6F6", bg: "#E1F5FE", label: "Transport" },
+  "social-skills":  { color: "#AB47BC", bg: "#F3E5F5", label: "Social Skills" },
+  "therapy-assist": { color: "#EC407A", bg: "#FCE4EC", label: "Therapy Assist" },
+  "behaviour":      { color: "#5C6BC0", bg: "#E8EAF6", label: "Behaviour Support" },
+  "domestic":       { color: "#66BB6A", bg: "#F1F8E9", label: "Domestic Assist" },
+  "overnight":      { color: "#5C6BC0", bg: "#E8EAF6", label: "Overnight Support" },
+  "high-care":      { color: "#EC407A", bg: "#FCE4EC", label: "High Care" },
 };
 
 async function fetchAsBase64(url) {
@@ -53,12 +53,13 @@ function h(type, props, ...children) {
 
 function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
   // ── Photo element ─────────────────────────────────────────────────────────
+  const PHOTO_SIZE = 150;
   const photoEl = photoDataUrl
     ? h("div", {
         style: {
-          width: 160,
-          height: 160,
-          borderRadius: 80,
+          width: PHOTO_SIZE,
+          height: PHOTO_SIZE,
+          borderRadius: PHOTO_SIZE / 2,
           borderWidth: 5,
           borderStyle: "solid",
           borderColor: "#D4A017",
@@ -67,13 +68,13 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           flexShrink: 0,
         },
       },
-        h("img", { src: photoDataUrl, width: 160, height: 160, style: { objectFit: "cover" } })
+        h("img", { src: photoDataUrl, width: PHOTO_SIZE, height: PHOTO_SIZE, style: { objectFit: "cover", objectPosition: "center top" } })
       )
     : h("div", {
         style: {
-          width: 160,
-          height: 160,
-          borderRadius: 80,
+          width: PHOTO_SIZE,
+          height: PHOTO_SIZE,
+          borderRadius: PHOTO_SIZE / 2,
           borderWidth: 5,
           borderStyle: "solid",
           borderColor: "#D4A017",
@@ -81,44 +82,37 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 72,
+          fontSize: 64,
           flexShrink: 0,
           color: "#5a7a9a",
         },
       }, "\u{1F464}");
 
-  // ── Service chips ─────────────────────────────────────────────────────────
+  // ── Text-only service chips ───────────────────────────────────────────────
   const chips = services.slice(0, 5).map(s =>
     h("div", {
       style: {
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
-        gap: 10,
-        flex: 1,
+        justifyContent: "center",
+        background: s.bg || "#F0F0F0",
+        borderRadius: 24,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        borderWidth: 1.5,
+        borderStyle: "solid",
+        borderColor: s.color || "#ccc",
       },
     },
       h("div", {
         style: {
-          width: 90,
-          height: 90,
-          borderRadius: 45,
-          background: s.bg || "#F5F5F5",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 38,
-          color: s.color || "#555",
+          fontSize: 15,
+          color: s.color || "#333",
           fontWeight: 700,
-        },
-      }, s.symbol || "\u25CF"),
-      h("div", {
-        style: {
-          fontSize: 14,
-          color: "#333",
+          letterSpacing: 0.3,
           textAlign: "center",
-          fontWeight: 600,
-          lineHeight: 1.3,
         },
       }, s.label),
     )
@@ -154,8 +148,8 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           alignItems: "center",
           justifyContent: "space-between",
           background: "#0a0a0a",
-          paddingTop: 20,
-          paddingBottom: 20,
+          paddingTop: 22,
+          paddingBottom: 22,
           paddingLeft: 30,
           paddingRight: 30,
           flexShrink: 0,
@@ -208,10 +202,10 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
           flexDirection: "column",
           flex: 1,
           background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 30%, #fff5d8 60%, #ffd8e8 80%, #ffe8c8 100%)",
-          paddingTop: 36,
+          paddingTop: 40,
           paddingBottom: 36,
-          paddingLeft: 40,
-          paddingRight: 40,
+          paddingLeft: 44,
+          paddingRight: 44,
           justifyContent: "space-between",
         },
       },
@@ -219,21 +213,29 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
         // ── Name row ─────────────────────────────────────────────────────
         h("div", { style: { display: "flex", alignItems: "center", gap: 32, flexShrink: 0 } },
           photoEl,
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 8 } },
-            h("div", { style: { fontSize: 58, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.1 } }, name),
-            h("div", { style: { fontSize: 16, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4 } }, title.toUpperCase()),
+          h("div", { style: { display: "flex", flexDirection: "column", gap: 10 } },
+            h("div", { style: { fontSize: 56, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.05 } }, name),
+            h("div", { style: { fontSize: 15, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4 } }, title.toUpperCase()),
             location
-              ? h("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 16, color: "#555", marginTop: 4 } },
-                  h("span", { style: { color: "#E57373", fontWeight: 700 } }, "-"),
+              ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 15, color: "#555", marginTop: 2 } },
+                  h("span", { style: { color: "#E57373", fontWeight: 700, fontSize: 18 } }, "-"),
                   h("span", {}, location),
                 )
               : null,
           ),
         ),
 
-        // ── Services row ─────────────────────────────────────────────────
+        // ── Services row (text chips) ─────────────────────────────────────
         services.length > 0
-          ? h("div", { style: { display: "flex", justifyContent: "space-around", flexShrink: 0 } }, ...chips)
+          ? h("div", {
+              style: {
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 10,
+                justifyContent: "center",
+                flexShrink: 0,
+              },
+            }, ...chips)
           : null,
 
         // ── Tagline ───────────────────────────────────────────────────────
@@ -277,7 +279,6 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
               paddingRight: 60,
               display: "flex",
               alignItems: "center",
-              gap: 12,
             },
           },
             h("div", { style: { color: "#0a0a0a", fontSize: 22, fontWeight: 800, letterSpacing: 1 } }, "OPEN PROFILE \u25B6"),
@@ -301,7 +302,7 @@ export async function onRequest(context) {
   const servicesRaw = q.services || "";
 
   const services = servicesRaw.split(",").filter(Boolean).slice(0, 5)
-    .map(s => SERVICE_MAP[s.trim()] || { symbol: "\u25CF", color: "#888", label: s.trim(), bg: "#F5F5F5" });
+    .map(s => SERVICE_MAP[s.trim()] || { color: "#7E57C2", bg: "#EDE7F6", label: s.trim() });
 
   const photoDataUrl = photoUrl ? await fetchAsBase64(photoUrl) : null;
 
