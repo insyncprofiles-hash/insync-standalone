@@ -4,19 +4,18 @@
  * Generates a dynamic PNG profile card matching the Jordan Mitchell reference design.
  * Uses @cloudflare/pages-plugin-vercel-og (bundled ImageResponse with satori + resvg-wasm).
  *
- * IMPORTANT: Only use satori-supported CSS properties:
- * - display: flex (only layout mode)
+ * SATORI SUPPORTED CSS:
+ * - display: flex only (no grid, no block)
  * - flexDirection, alignItems, justifyContent, gap, flex, flexShrink, flexWrap
  * - width, height, minWidth, minHeight, maxWidth, maxHeight
- * - padding, margin (no shorthand with 4 values - use paddingTop etc.)
- * - background, color, fontSize, fontWeight, fontStyle, letterSpacing, lineHeight
- * - borderRadius, border, borderWidth, borderColor, borderStyle
+ * - paddingTop/Bottom/Left/Right, marginTop/Bottom/Left/Right (no shorthand)
+ * - background (solid, linear-gradient), color, opacity
+ * - fontSize, fontWeight, fontStyle, letterSpacing, lineHeight, textAlign
+ * - borderRadius, borderWidth, borderStyle, borderColor
  * - overflow: hidden
  * - position: absolute/relative, top, left, right, bottom
- * - objectFit: cover/contain
- * - textAlign, textDecoration
- * - opacity
- * NOT supported: boxShadow, backgroundClip, textShadow, transform (limited)
+ * - objectFit: cover/contain (on img elements)
+ * NOT supported: boxShadow, textShadow, backgroundClip, transform (limited)
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
@@ -63,6 +62,7 @@ async function fetchAsBase64(url) {
         "User-Agent": "Mozilla/5.0 (compatible; InSyncProfiles/1.0)",
         "Accept": "image/png,image/jpeg,image/*,*/*",
       },
+      signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) return null;
     const buf = await res.arrayBuffer();
@@ -101,20 +101,20 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 8,
-        width: 148,
+        gap: 10,
+        flex: 1,
       },
     },
       h("div", {
         style: {
-          width: 80,
-          height: 80,
-          borderRadius: 40,
+          width: 90,
+          height: 90,
+          borderRadius: 45,
           background: s.bg || "#F5F5F5",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 38,
+          fontSize: 42,
         },
       }, s.emoji),
       h("div", {
@@ -124,7 +124,6 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           textAlign: "center",
           fontWeight: 600,
           lineHeight: 1.3,
-          maxWidth: 130,
         },
       }, s.label),
     )
@@ -137,7 +136,11 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
     const left = badgeList[i];
     const right = badgeList[i + 1];
 
-    const makeBadge = (label, accentColor) =>
+    // Alternate accent: first badge green checkmark, second gold star
+    const makeCheck = (idx) => idx % 2 === 0 ? "✔" : "★";
+    const makeColor = (idx) => idx % 2 === 0 ? "#4CAF50" : "#F5C842";
+
+    const makeBadge = (label, idx) =>
       h("div", {
         style: {
           display: "flex",
@@ -149,21 +152,21 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           borderWidth: 1.5,
           borderStyle: "solid",
           borderColor: "#E0E0E0",
-          paddingTop: 10,
-          paddingBottom: 10,
+          paddingTop: 12,
+          paddingBottom: 12,
           paddingLeft: 14,
           paddingRight: 14,
         },
       },
-        h("span", { style: { fontSize: 20, flexShrink: 0 } }, BADGE_ICON[label] || "✔"),
-        h("span", { style: { fontSize: 12, color: "#222", fontWeight: 600, flex: 1 } }, label),
-        h("span", { style: { fontSize: 16, color: accentColor || "#4CAF50", flexShrink: 0 } }, accentColor === "#F5C842" ? "★" : "✔"),
+        h("span", { style: { fontSize: 22, flexShrink: 0 } }, BADGE_ICON[label] || "✔"),
+        h("span", { style: { fontSize: 13, color: "#222", fontWeight: 600, flex: 1, lineHeight: 1.3 } }, label),
+        h("span", { style: { fontSize: 18, color: makeColor(idx), flexShrink: 0 } }, makeCheck(idx)),
       );
 
     badgeRows.push(
       h("div", { style: { display: "flex", gap: 10, flexShrink: 0 } },
-        makeBadge(left, "#4CAF50"),
-        right ? makeBadge(right, "#F5C842") : h("div", { style: { flex: 1 } }),
+        makeBadge(left, i),
+        right ? makeBadge(right, i + 1) : h("div", { style: { flex: 1 } }),
       )
     );
   }
@@ -172,9 +175,9 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
   const photoEl = photoDataUrl
     ? h("div", {
         style: {
-          width: 160,
-          height: 160,
-          borderRadius: 80,
+          width: 170,
+          height: 170,
+          borderRadius: 85,
           borderWidth: 5,
           borderStyle: "solid",
           borderColor: "#D4A017",
@@ -185,24 +188,24 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
       },
         h("img", {
           src: photoDataUrl,
-          width: 160,
-          height: 160,
+          width: 170,
+          height: 170,
           style: { objectFit: "cover" },
         })
       )
     : h("div", {
         style: {
-          width: 160,
-          height: 160,
-          borderRadius: 80,
+          width: 170,
+          height: 170,
+          borderRadius: 85,
           borderWidth: 5,
           borderStyle: "solid",
           borderColor: "#D4A017",
-          background: "#d0d0d0",
+          background: "#c8d8e8",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 70,
+          fontSize: 80,
           flexShrink: 0,
         },
       }, "👤");
@@ -215,7 +218,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           position: "relative",
           borderRadius: 14,
           overflow: "hidden",
-          height: 190,
+          height: 200,
           flexShrink: 0,
           borderWidth: 3,
           borderStyle: "solid",
@@ -224,8 +227,8 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
       },
         h("img", {
           src: thumbDataUrl,
-          width: W - 64,
-          height: 190,
+          width: W - 60,
+          height: 200,
           style: { objectFit: "cover", width: "100%", height: "100%" },
         }),
         // Dark overlay with play button
@@ -233,7 +236,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           style: {
             position: "absolute",
             top: 0, left: 0, right: 0, bottom: 0,
-            background: "rgba(0,0,0,0.28)",
+            background: "rgba(0,0,0,0.3)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -249,31 +252,31 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           },
             h("div", {
               style: {
-                width: 64,
-                height: 64,
-                borderRadius: 32,
+                width: 68,
+                height: 68,
+                borderRadius: 34,
                 background: "#F5C842",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 26,
+                fontSize: 28,
                 color: "#1a1a1a",
                 fontWeight: 700,
               },
             }, "▶"),
             h("div", {
               style: {
-                background: "rgba(0,0,0,0.72)",
+                background: "rgba(0,0,0,0.75)",
                 borderRadius: 20,
-                paddingTop: 5,
-                paddingBottom: 5,
-                paddingLeft: 18,
-                paddingRight: 18,
+                paddingTop: 6,
+                paddingBottom: 6,
+                paddingLeft: 20,
+                paddingRight: 20,
                 display: "flex",
                 alignItems: "center",
               },
             },
-              h("span", { style: { fontSize: 13, color: "#F5C842", fontWeight: 700 } }, "▶ WATCH INTRO"),
+              h("span", { style: { fontSize: 14, color: "#F5C842", fontWeight: 700, letterSpacing: 1 } }, "▶ WATCH INTRO"),
             ),
           )
         )
@@ -285,21 +288,22 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
     ? h("div", {
         style: {
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          paddingLeft: 20,
-          paddingRight: 20,
+          justifyContent: "center",
+          paddingLeft: 10,
+          paddingRight: 10,
+          flexShrink: 0,
         },
       },
         h("div", {
           style: {
-            fontSize: 16,
+            fontSize: 17,
             color: "#444",
             fontStyle: "italic",
             textAlign: "center",
-            lineHeight: 1.5,
+            lineHeight: 1.6,
           },
-        }, `"${tagline.slice(0, 120)}${tagline.length > 120 ? "…" : ""}"`),
+        }, `"${tagline.slice(0, 140)}${tagline.length > 140 ? "…" : ""}"`),
       )
     : null;
 
@@ -311,20 +315,20 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
       width: W,
       height: H,
       fontFamily: "sans serif",
-      background: "#E8E8E8",
+      background: "#D8D8D8",
     },
   },
-    // Inner card (simulated with margin + rounded corners)
+    // Inner white card with rounded corners
     h("div", {
       style: {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        marginTop: 14,
-        marginBottom: 14,
-        marginLeft: 14,
-        marginRight: 14,
-        borderRadius: 22,
+        marginTop: 16,
+        marginBottom: 16,
+        marginLeft: 16,
+        marginRight: 16,
+        borderRadius: 24,
         overflow: "hidden",
         background: "white",
       },
@@ -336,43 +340,43 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           alignItems: "center",
           justifyContent: "space-between",
           background: "#0a0a0a",
-          paddingTop: 16,
-          paddingBottom: 16,
+          paddingTop: 18,
+          paddingBottom: 18,
           paddingLeft: 28,
           paddingRight: 28,
-          height: 96,
+          height: 100,
           flexShrink: 0,
         },
       },
         // Left: accessibility icon + title stack
-        h("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
+        h("div", { style: { display: "flex", alignItems: "center", gap: 14 } },
           h("div", {
             style: {
-              width: 46,
-              height: 46,
-              borderRadius: 23,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
               borderWidth: 2,
               borderStyle: "solid",
               borderColor: "#F5C842",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 22,
+              fontSize: 24,
               flexShrink: 0,
             },
           }, "♿"),
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 3 } },
+          h("div", { style: { display: "flex", flexDirection: "column", gap: 4 } },
             h("div", {
               style: {
                 color: "#F5C842",
-                fontSize: 26,
+                fontSize: 28,
                 fontWeight: 800,
                 letterSpacing: 1,
               },
             }, "GET TO KNOW ME"),
             h("div", {
               style: {
-                color: "#bbbbbb",
+                color: "#aaaaaa",
                 fontSize: 11,
                 letterSpacing: 3,
                 fontWeight: 600,
@@ -385,10 +389,10 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           style: {
             background: "#F5C842",
             borderRadius: 50,
-            paddingTop: 12,
-            paddingBottom: 12,
-            paddingLeft: 24,
-            paddingRight: 24,
+            paddingTop: 14,
+            paddingBottom: 14,
+            paddingLeft: 26,
+            paddingRight: 26,
             display: "flex",
             alignItems: "center",
             borderWidth: 2,
@@ -399,7 +403,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           h("div", {
             style: {
               color: "#0a0a0a",
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: 800,
               letterSpacing: 0.5,
             },
@@ -413,21 +417,21 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           display: "flex",
           flexDirection: "column",
           flex: 1,
-          background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 25%, #fff5d8 55%, #ffd8e8 80%, #ffe8c8 100%)",
-          paddingTop: 22,
-          paddingBottom: 18,
+          background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 30%, #fff5d8 60%, #ffd8e8 80%, #ffe8c8 100%)",
+          paddingTop: 24,
+          paddingBottom: 20,
           paddingLeft: 30,
           paddingRight: 30,
-          gap: 16,
+          gap: 18,
         },
       },
         // ── Name row ─────────────────────────────────────────────────────────
-        h("div", { style: { display: "flex", alignItems: "center", gap: 26, flexShrink: 0 } },
+        h("div", { style: { display: "flex", alignItems: "center", gap: 28, flexShrink: 0 } },
           photoEl,
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 5 } },
+          h("div", { style: { display: "flex", flexDirection: "column", gap: 6 } },
             h("div", {
               style: {
-                fontSize: 50,
+                fontSize: 52,
                 fontWeight: 700,
                 color: "#1a2a4a",
                 lineHeight: 1.1,
@@ -435,7 +439,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
             }, name),
             h("div", {
               style: {
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: 700,
                 color: "#2dd4bf",
                 letterSpacing: 4,
@@ -447,13 +451,13 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
                   style: {
                     display: "flex",
                     alignItems: "center",
-                    gap: 5,
-                    fontSize: 14,
+                    gap: 6,
+                    fontSize: 15,
                     color: "#555",
-                    marginTop: 4,
+                    marginTop: 6,
                   },
                 },
-                  h("span", { style: { fontSize: 17 } }, "📍"),
+                  h("span", { style: { fontSize: 18 } }, "📍"),
                   h("span", {}, location),
                 )
               : null,
@@ -465,9 +469,10 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
           ? h("div", {
               style: {
                 display: "flex",
-                justifyContent: "center",
-                gap: 12,
+                justifyContent: "space-around",
                 flexShrink: 0,
+                paddingTop: 4,
+                paddingBottom: 4,
               },
             }, ...serviceChips)
           : null,
@@ -488,10 +493,10 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
                 flexShrink: 0,
               },
             },
-              h("span", { style: { fontSize: 20 } }, "🏅"),
+              h("span", { style: { fontSize: 22 } }, "🏅"),
               h("span", {
                 style: {
-                  fontSize: 15,
+                  fontSize: 16,
                   color: "#1a2a4a",
                   fontWeight: 800,
                   letterSpacing: 1,
@@ -499,7 +504,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
               }, "CREDENTIALS & BADGES"),
               h("span", {
                 style: {
-                  fontSize: 12,
+                  fontSize: 13,
                   color: "#888",
                   fontStyle: "italic",
                 },
