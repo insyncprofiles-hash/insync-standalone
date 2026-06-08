@@ -1868,13 +1868,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillRect(0, 0, W, H);
       }
 
-      // ── Dark overlay — LEFT HALF ONLY, right stays fully clear for face ─────
-      const overlayR = ctx.createLinearGradient(0, 0, W * 0.55, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.85)");   // far left: fully dark
-      overlayR.addColorStop(0.75, "rgba(0,0,0,0.70)"); // still dark
-      overlayR.addColorStop(1, "rgba(0,0,0,0.0)");    // fades to clear at 55%
+      // ── Dark overlay — LEFT 42% only, hard stop so face is fully clear ──────
+      const overlayR = ctx.createLinearGradient(0, 0, W * 0.42, 0);
+      overlayR.addColorStop(0, "rgba(0,0,0,0.88)");   // far left: fully dark
+      overlayR.addColorStop(0.80, "rgba(0,0,0,0.80)"); // still dark
+      overlayR.addColorStop(1, "rgba(0,0,0,0.0)");    // fades to clear at edge
       ctx.fillStyle = overlayR;
-      ctx.fillRect(0, 0, W * 0.55, H); // only paint the left 55%
+      ctx.fillRect(0, 0, W * 0.42, H); // only paint the left 42%
 
       // Bottom gradient for panel readability
       const overlayB = ctx.createLinearGradient(0, H - 380, 0, H);
@@ -1996,8 +1996,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.shadowBlur = 6;
       ctx.font = "italic bold 21px 'Outfit', sans-serif";
       ctx.fillStyle = WHITE;
-      ctx.fillText("Tap to watch my intro →", 36, H - 380);
-      ctx.fillText("15 second introduction!", 36, H - 354);
+      // Position Tap to watch text to the right of the play button
+      ctx.fillText("Tap to watch my", pbx + 90, H - 420);
+      ctx.fillText("15 sec intro! →", pbx + 90, H - 392);
       ctx.shadowBlur = 0;
 
       // ── Bottom white panel ───────────────────────────────────────────────
