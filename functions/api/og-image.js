@@ -88,19 +88,20 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
       h("div", {
         style: {
           color: "#F5C842",
-          fontSize: 28,
+          fontSize: 32,
           fontWeight: 900,
-          lineHeight: 1.2,
+          lineHeight: 1.1,
           flexShrink: 0,
-          marginTop: 2,
+          marginTop: 0,
         },
       }, "\u2714"),
       h("div", {
         style: {
-          fontSize: 26,
+          fontSize: 28,
           fontWeight: 700,
           color: "#FFFFFF",
           lineHeight: 1.3,
+          textShadow: "0 1px 6px rgba(0,0,0,0.8)",
         },
       }, label),
     )
@@ -152,7 +153,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
         left: 0,
         width: W,
         height: H,
-        background: "linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 42%, rgba(0,0,0,0.82) 100%)",
+        background: "linear-gradient(to right, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.88) 100%)",
       },
     }),
 
@@ -224,11 +225,12 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
       // "Looking for support that understands:" heading
       h("div", {
         style: {
-          fontSize: 26,
+          fontSize: 27,
           fontWeight: 700,
           color: "#FFFFFF",
           lineHeight: 1.3,
-          marginBottom: 16,
+          marginBottom: 18,
+          textShadow: "0 1px 6px rgba(0,0,0,0.8)",
         },
       }, "Looking for support\nthat understands:"),
 
@@ -264,11 +266,11 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
     },
       h("div", {
         style: {
-          color: "#1a1a2e",
-          fontSize: 52,
-          fontWeight: 900,
-          marginLeft: 10,
-          lineHeight: 1,
+      color: "#1a1a2e",
+        fontSize: 56,
+        fontWeight: 900,
+        marginLeft: 8,
+        lineHeight: 1,
         },
       }, "\u25B6"),
     ),
@@ -277,25 +279,25 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
     h("div", {
       style: {
         position: "absolute",
-        bottom: 230,
-        left: "50%",
-        marginLeft: 80,
+        bottom: 238,
+        right: 40,
+        width: 220,
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: 2,
+        gap: 0,
       },
     },
       h("div", {
         style: {
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: 700,
           color: "#FFFFFF",
           fontStyle: "italic",
-          lineHeight: 1.3,
-          textShadow: "0 1px 4px rgba(0,0,0,0.6)",
+          lineHeight: 1.35,
+          textShadow: "0 1px 6px rgba(0,0,0,0.8)",
         },
-      }, "\u2190 Tap to watch my\n    15 second introduction!"),
+      }, "\u2190 Tap to watch my 15 second introduction!"),
     ),
 
     // ── BOTTOM WHITE PANEL ───────────────────────────────────────────────────
