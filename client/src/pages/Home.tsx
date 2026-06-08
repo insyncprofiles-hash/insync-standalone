@@ -1868,19 +1868,21 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.fillRect(0, 0, W, H);
       }
 
-      // ── Dark overlay (right side + bottom) ──────────────────────────────
+      // ── Dark overlay (right side only — preserve face on left) ────────────
       const overlayR = ctx.createLinearGradient(0, 0, W, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.05)");
-      overlayR.addColorStop(0.45, "rgba(0,0,0,0.70)");
+      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");   // left: fully clear
+      overlayR.addColorStop(0.52, "rgba(0,0,0,0.0)"); // clear until past face
+      overlayR.addColorStop(0.65, "rgba(0,0,0,0.60)"); // fade starts
       overlayR.addColorStop(1, "rgba(0,0,0,0.82)");
       ctx.fillStyle = overlayR;
       ctx.fillRect(0, 0, W, H);
 
-      const overlayB = ctx.createLinearGradient(0, H - 340, 0, H);
+      // Bottom gradient for panel readability
+      const overlayB = ctx.createLinearGradient(0, H - 380, 0, H);
       overlayB.addColorStop(0, "rgba(0,0,0,0)");
-      overlayB.addColorStop(1, "rgba(0,0,0,0.85)");
+      overlayB.addColorStop(1, "rgba(0,0,0,0.75)");
       ctx.fillStyle = overlayB;
-      ctx.fillRect(0, H - 340, W, 340);
+      ctx.fillRect(0, H - 380, W, 380);
 
       // ── Helper: rounded rect ─────────────────────────────────────────────
       const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
@@ -1950,8 +1952,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         });
       }
 
-      // ── Play button (centred lower) ──────────────────────────────────────
-      const pbx = 370 + 75, pby = H - 270 - 75;
+      // ── Play button (moved up) ───────────────────────────────────────────
+      const pbx = 370 + 75, pby = H - 380 - 75;
       // Outer circle
       ctx.beginPath();
       ctx.arc(pbx, pby, 75, 0, Math.PI * 2);
@@ -1969,13 +1971,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       ctx.fillStyle = NAVY;
       ctx.fill();
 
-      // ── "Tap to watch" callout ───────────────────────────────────────────
+      // ── "Tap to watch" callout (moved up to match play button) ────────────
       ctx.shadowColor = "rgba(0,0,0,0.8)";
       ctx.shadowBlur = 6;
       ctx.font = "italic bold 21px 'Outfit', sans-serif";
       ctx.fillStyle = WHITE;
-      ctx.fillText("← Tap to watch my", W - 260, H - 270);
-      ctx.fillText("15 second introduction!", W - 260, H - 244);
+      ctx.fillText("← Tap to watch my", W - 265, H - 380);
+      ctx.fillText("15 second introduction!", W - 265, H - 354);
       ctx.shadowBlur = 0;
 
       // ── Bottom white panel ───────────────────────────────────────────────
