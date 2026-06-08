@@ -10,14 +10,14 @@ const SERVICE_MAP = {
   "emotional":      { symbol: "\u2665", color: "#66BB6A", label: "Emotional Support", bg: "#E8F5E9" },
   "community":      { symbol: "\u25B6", color: "#7E57C2", label: "Community Access",  bg: "#EDE7F6" },
   "mental":         { symbol: "\u2665", color: "#42A5F5", label: "Mental Wellbeing",  bg: "#E3F2FD" },
-  "daily-living":   { symbol: "\u25C6", color: "#FFA726", label: "Daily Living",      bg: "#FFF8E1" },
+  "daily-living":   { symbol: "\u25B6", color: "#FFA726", label: "Daily Living",      bg: "#FFF8E1" },
   "transport":      { symbol: "\u25B6", color: "#29B6F6", label: "Transport",         bg: "#E3F2FD" },
-  "social-skills":  { symbol: "\u25C6", color: "#AB47BC", label: "Social Skills",     bg: "#F3E5F5" },
-  "therapy-assist": { symbol: "\u25C6", color: "#EC407A", label: "Therapy Assist",    bg: "#FCE4EC" },
-  "behaviour":      { symbol: "\u25C6", color: "#5C6BC0", label: "Behaviour Support", bg: "#E8EAF6" },
-  "domestic":       { symbol: "\u25C6", color: "#66BB6A", label: "Domestic Assist",   bg: "#F1F8E9" },
-  "overnight":      { symbol: "\u25C6", color: "#5C6BC0", label: "Overnight Support", bg: "#E8EAF6" },
-  "high-care":      { symbol: "+",      color: "#EC407A", label: "High Care",         bg: "#FCE4EC" },
+  "social-skills":  { symbol: "\u2665", color: "#AB47BC", label: "Social Skills",     bg: "#F3E5F5" },
+  "therapy-assist": { symbol: "\u2665", color: "#EC407A", label: "Therapy Assist",    bg: "#FCE4EC" },
+  "behaviour":      { symbol: "\u25B6", color: "#5C6BC0", label: "Behaviour Support", bg: "#E8EAF6" },
+  "domestic":       { symbol: "\u25B6", color: "#66BB6A", label: "Domestic Assist",   bg: "#F1F8E9" },
+  "overnight":      { symbol: "\u2665", color: "#5C6BC0", label: "Overnight Support", bg: "#E8EAF6" },
+  "high-care":      { symbol: "\u2665", color: "#EC407A", label: "High Care",         bg: "#FCE4EC" },
 };
 
 async function fetchAsBase64(url) {
@@ -224,7 +224,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
             h("div", { style: { fontSize: 16, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4 } }, title.toUpperCase()),
             location
               ? h("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 16, color: "#555", marginTop: 4 } },
-                  h("span", { style: { color: "#E57373", fontWeight: 700 } }, "\u25B6"),
+                  h("span", { style: { color: "#E57373", fontWeight: 700 } }, "-"),
                   h("span", {}, location),
                 )
               : null,
