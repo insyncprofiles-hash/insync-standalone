@@ -1,43 +1,42 @@
 /**
  * Cloudflare Pages Function: /api/og-image
- * Trust-first profile card:
- *   - Video thumbnail feel (photo + play button overlay)
- *   - Suburb/service area PROMINENT
- *   - Specialty tags (disability types) in bold contrasting colours
- *   - Name + tagline as primary trust signals
- *   - Single CTA in banner only
+ * Trust-first card matching reference design:
+ *   - Full-bleed photo background (left ~60%)
+ *   - Location badge top-right (gold, bold)
+ *   - "Looking for support that understands:" checklist right side
+ *   - Large centred play button with "Tap to watch my 15 second introduction!" callout
+ *   - White panel bottom: name (huge bold navy), title (purple), tagline (italic)
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
 
-// Specialty tags — disability types participants recognise instantly
-// Mapped from the "services" param for now; workers will choose these in the builder
+// Specialty labels — participant-facing language
 const SPECIALTY_MAP = {
-  "autism":         { label: "AUTISM",           bg: "#1565C0", text: "#FFFFFF" },
-  "mental-health":  { label: "MENTAL HEALTH",    bg: "#6A1B9A", text: "#FFFFFF" },
-  "psychosocial":   { label: "PSYCHOSOCIAL",     bg: "#6A1B9A", text: "#FFFFFF" },
-  "physical":       { label: "PHYSICAL",         bg: "#1B5E20", text: "#FFFFFF" },
-  "complex":        { label: "COMPLEX NEEDS",    bg: "#B71C1C", text: "#FFFFFF" },
-  "intellectual":   { label: "INTELLECTUAL",     bg: "#E65100", text: "#FFFFFF" },
-  "acquired-brain": { label: "ACQUIRED BRAIN",   bg: "#4A148C", text: "#FFFFFF" },
-  "non-verbal":     { label: "NON-VERBAL",       bg: "#004D40", text: "#FFFFFF" },
-  "school-leaver":  { label: "SCHOOL LEAVERS",   bg: "#1A237E", text: "#FFFFFF" },
-  "aged-care":      { label: "AGED CARE",        bg: "#37474F", text: "#FFFFFF" },
-  "dementia":       { label: "DEMENTIA",         bg: "#4E342E", text: "#FFFFFF" },
-  "sensory":        { label: "SENSORY",          bg: "#006064", text: "#FFFFFF" },
-  // Legacy service keys mapped to specialty tags
-  "personal-care":  { label: "PERSONAL CARE",   bg: "#C62828", text: "#FFFFFF" },
-  "community":      { label: "COMMUNITY",        bg: "#1565C0", text: "#FFFFFF" },
-  "daily-living":   { label: "DAILY LIVING",     bg: "#E65100", text: "#FFFFFF" },
-  "transport":      { label: "TRANSPORT",        bg: "#0277BD", text: "#FFFFFF" },
-  "social-skills":  { label: "SOCIAL SKILLS",   bg: "#6A1B9A", text: "#FFFFFF" },
-  "therapy-assist": { label: "THERAPY ASSIST",  bg: "#880E4F", text: "#FFFFFF" },
-  "behaviour":      { label: "BEHAVIOUR",        bg: "#1A237E", text: "#FFFFFF" },
-  "domestic":       { label: "DOMESTIC",         bg: "#1B5E20", text: "#FFFFFF" },
-  "overnight":      { label: "OVERNIGHT",        bg: "#263238", text: "#FFFFFF" },
-  "high-care":      { label: "HIGH CARE",        bg: "#B71C1C", text: "#FFFFFF" },
-  "emotional":      { label: "EMOTIONAL SUPPORT",bg: "#1B5E20", text: "#FFFFFF" },
-  "mental":         { label: "MENTAL HEALTH",    bg: "#6A1B9A", text: "#FFFFFF" },
+  "autism":         "Autism",
+  "neurodiversity": "Neurodiversity",
+  "mental-health":  "Mental Health",
+  "mental":         "Mental Health",
+  "psychosocial":   "Psychosocial Recovery",
+  "physical":       "Physical Disability",
+  "complex":        "Complex Needs",
+  "intellectual":   "Intellectual Disability",
+  "acquired-brain": "Acquired Brain Injury",
+  "non-verbal":     "Non-Verbal Communication",
+  "school-leaver":  "School Leavers",
+  "aged-care":      "Aged Care",
+  "dementia":       "Dementia",
+  "sensory":        "Sensory Processing",
+  "community":      "Community Participation",
+  "daily-living":   "Daily Living",
+  "personal-care":  "Personal Care",
+  "transport":      "Transport",
+  "social-skills":  "Social Skills",
+  "therapy-assist": "Therapy Assist",
+  "behaviour":      "Behaviour Support",
+  "domestic":       "Domestic Assistance",
+  "overnight":      "Overnight Support",
+  "high-care":      "High Care",
+  "emotional":      "Emotional Support",
 };
 
 async function fetchAsBase64(url) {
@@ -71,91 +70,39 @@ function h(type, props, ...children) {
   };
 }
 
-function buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, tags }) {
-  const PHOTO_SIZE = 220;
+function buildCard({ name, title, location, tagline, photoDataUrl, specialties }) {
+  const W = 900;
+  const H = 900;
 
-  // ── Photo with play button overlay ──────────────────────────────────────────
-  const photoEl = h("div", {
-    style: {
-      position: "relative",
-      width: PHOTO_SIZE,
-      height: PHOTO_SIZE,
-      borderRadius: PHOTO_SIZE / 2,
-      borderWidth: 6,
-      borderStyle: "solid",
-      borderColor: "#F5C842",
-      overflow: "hidden",
-      display: "flex",
-      flexShrink: 0,
-    },
-  },
-    photoDataUrl
-      ? h("img", {
-          src: photoDataUrl,
-          width: PHOTO_SIZE,
-          height: PHOTO_SIZE,
-          style: { objectFit: "cover", objectPosition: "center top" },
-        })
-      : h("div", {
-          style: {
-            width: PHOTO_SIZE,
-            height: PHOTO_SIZE,
-            background: "#c8d8e8",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 80,
-            color: "#5a7a9a",
-          },
-        }, "\u{1F464}"),
-    // Play button overlay — signals "this person has a video intro"
+  // ── Checklist items ─────────────────────────────────────────────────────────
+  const checkItems = specialties.slice(0, 5).map(label =>
     h("div", {
       style: {
-        position: "absolute",
-        bottom: 10,
-        right: 10,
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        background: "rgba(0,0,0,0.72)",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: "flex-start",
+        gap: 12,
+        marginBottom: 4,
       },
     },
+      // Gold checkmark
       h("div", {
         style: {
           color: "#F5C842",
-          fontSize: 20,
+          fontSize: 28,
           fontWeight: 900,
-          marginLeft: 3,
+          lineHeight: 1.2,
+          flexShrink: 0,
+          marginTop: 2,
         },
-      }, "\u25B6"),
-    ),
-  );
-
-  // ── Specialty tags — bold, high contrast, immediately scannable ─────────────
-  const tagEls = tags.slice(0, 4).map(tag =>
-    h("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        background: tag.bg,
-        borderRadius: 8,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 18,
-        paddingRight: 18,
-      },
-    },
+      }, "\u2714"),
       h("div", {
         style: {
-          fontSize: 17,
-          color: tag.text,
-          fontWeight: 900,
-          letterSpacing: 1.2,
+          fontSize: 26,
+          fontWeight: 700,
+          color: "#FFFFFF",
+          lineHeight: 1.3,
         },
-      }, tag.label),
+      }, label),
     )
   );
 
@@ -163,213 +110,253 @@ function buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, 
     style: {
       display: "flex",
       flexDirection: "column",
-      width: 900,
-      height: 900,
+      width: W,
+      height: H,
       fontFamily: "sans-serif",
-      background: "#1a1a2e",
+      position: "relative",
+      background: "#111",
+      overflow: "hidden",
     },
   },
-    // Outer card
+
+    // ── FULL-BLEED PHOTO BACKGROUND ──────────────────────────────────────────
+    photoDataUrl
+      ? h("img", {
+          src: photoDataUrl,
+          style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: W,
+            height: H,
+            objectFit: "cover",
+            objectPosition: "center top",
+          },
+        })
+      : h("div", {
+          style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: W,
+            height: H,
+            background: "linear-gradient(135deg, #2d1b69 0%, #11998e 100%)",
+          },
+        }),
+
+    // ── DARK GRADIENT OVERLAY — right side for text readability ─────────────
     h("div", {
       style: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: W,
+        height: H,
+        background: "linear-gradient(to right, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 42%, rgba(0,0,0,0.82) 100%)",
+      },
+    }),
+
+    // ── BOTTOM FADE for white panel ──────────────────────────────────────────
+    h("div", {
+      style: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        width: W,
+        height: 260,
+        background: "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.97) 60%, rgba(255,255,255,0) 100%)",
+      },
+    }),
+
+    // ── LOCATION BADGE — top right ───────────────────────────────────────────
+    location
+      ? h("div", {
+          style: {
+            position: "absolute",
+            top: 28,
+            right: 28,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            background: "#F5C842",
+            borderRadius: 14,
+            paddingTop: 12,
+            paddingBottom: 12,
+            paddingLeft: 18,
+            paddingRight: 22,
+            maxWidth: 320,
+          },
+        },
+          // Pin icon
+          h("div", {
+            style: {
+              fontSize: 24,
+              lineHeight: 1,
+              flexShrink: 0,
+            },
+          }, "\uD83D\uDCCD"),
+          h("div", {
+            style: {
+              fontSize: 20,
+              fontWeight: 900,
+              color: "#1a1a2e",
+              lineHeight: 1.2,
+              letterSpacing: 0.5,
+              textTransform: "uppercase",
+            },
+          }, location.toUpperCase()),
+        )
+      : null,
+
+    // ── RIGHT COLUMN: checklist + play button ────────────────────────────────
+    h("div", {
+      style: {
+        position: "absolute",
+        top: 100,
+        right: 28,
+        width: 360,
         display: "flex",
         flexDirection: "column",
-        flex: 1,
-        margin: 16,
-        borderRadius: 24,
-        overflow: "hidden",
-        background: "white",
+        gap: 0,
       },
     },
 
-      // ── TOP BANNER ──────────────────────────────────────────────────────────
+      // "Looking for support that understands:" heading
       h("div", {
         style: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          background: "#0a0a0a",
-          paddingTop: 20,
-          paddingBottom: 20,
-          paddingLeft: 28,
-          paddingRight: 28,
-          flexShrink: 0,
+          fontSize: 26,
+          fontWeight: 700,
+          color: "#FFFFFF",
+          lineHeight: 1.3,
+          marginBottom: 16,
         },
-      },
-        h("div", { style: { display: "flex", alignItems: "center", gap: 14 } },
-          iconDataUrl
-            ? h("img", { src: iconDataUrl, width: 52, height: 52, style: { objectFit: "contain", flexShrink: 0 } })
-            : null,
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 2 } },
-            h("div", { style: { color: "#F5C842", fontSize: 26, fontWeight: 900, letterSpacing: 1 } }, "GET TO KNOW ME"),
-            h("div", { style: { color: "#888", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "\u2022 INTERACTIVE & ACCESSIBLE \u2022"),
-          ),
-        ),
-        h("div", {
-          style: {
-            background: "#F5C842",
-            borderRadius: 50,
-            paddingTop: 12,
-            paddingBottom: 12,
-            paddingLeft: 24,
-            paddingRight: 24,
-            display: "flex",
-            alignItems: "center",
-          },
-        },
-          h("div", { style: { color: "#0a0a0a", fontSize: 16, fontWeight: 900, letterSpacing: 0.5 } }, "OPEN PROFILE \u25B6"),
-        ),
-      ),
+      }, "Looking for support\nthat understands:"),
 
-      // ── BODY ────────────────────────────────────────────────────────────────
+      // Checklist
       h("div", {
         style: {
           display: "flex",
           flexDirection: "column",
-          flex: 1,
-          background: "linear-gradient(160deg, #0f2044 0%, #1a1060 40%, #2d1b00 100%)",
-          paddingTop: 36,
-          paddingBottom: 32,
-          paddingLeft: 44,
-          paddingRight: 44,
+          gap: 6,
         },
-      },
+      }, ...checkItems),
 
-        // ── Row: photo left | identity right ──────────────────────────────────
-        h("div", {
-          style: {
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 36,
-            flexShrink: 0,
-          },
-        },
-
-          // Photo
-          photoEl,
-
-          // Identity column
-          h("div", {
-            style: {
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: 10,
-              flex: 1,
-              paddingTop: 8,
-            },
-          },
-            // Name — largest, most dominant
-            h("div", {
-              style: {
-                fontSize: 64,
-                fontWeight: 900,
-                color: "#FFFFFF",
-                lineHeight: 1.0,
-                letterSpacing: -1,
-              },
-            }, name),
-
-            // Title — teal, spaced caps
-            h("div", {
-              style: {
-                fontSize: 16,
-                fontWeight: 800,
-                color: "#2DD4BF",
-                letterSpacing: 4,
-                marginTop: 4,
-              },
-            }, title.toUpperCase()),
-
-            // Location — PROMINENT, gold, large
-            location
-              ? h("div", {
-                  style: {
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    marginTop: 6,
-                  },
-                },
-                  h("div", {
-                    style: {
-                      background: "#F5C842",
-                      borderRadius: 6,
-                      paddingTop: 6,
-                      paddingBottom: 6,
-                      paddingLeft: 14,
-                      paddingRight: 14,
-                      display: "flex",
-                      alignItems: "center",
-                    },
-                  },
-                    h("div", {
-                      style: {
-                        fontSize: 17,
-                        fontWeight: 900,
-                        color: "#0a0a0a",
-                        letterSpacing: 0.5,
-                      },
-                    }, location),
-                  ),
-                )
-              : null,
-
-            // Specialty tags row
-            tags.length > 0
-              ? h("div", {
-                  style: {
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 8,
-                    marginTop: 10,
-                  },
-                }, ...tagEls)
-              : null,
-          ),
-        ),
-
-        // ── Tagline — their own words, the trust signal ─────────────────────
-        tagline
-          ? h("div", {
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                marginTop: 32,
-                paddingTop: 24,
-                paddingBottom: 24,
-                paddingLeft: 28,
-                paddingRight: 28,
-                borderRadius: 14,
-                background: "rgba(255,255,255,0.08)",
-                borderWidth: 1,
-                borderStyle: "solid",
-                borderColor: "rgba(245,200,66,0.3)",
-                flexShrink: 0,
-              },
-            },
-              h("div", {
-                style: {
-                  fontSize: 13,
-                  color: "#F5C842",
-                  fontWeight: 800,
-                  letterSpacing: 3,
-                  marginBottom: 10,
-                },
-              }, "IN THEIR OWN WORDS"),
-              h("div", {
-                style: {
-                  fontSize: 22,
-                  color: "#F0F0F0",
-                  fontStyle: "italic",
-                  lineHeight: 1.5,
-                },
-              }, `"${tagline.slice(0, 140)}${tagline.length > 140 ? "\u2026" : ""}"`)
-            )
-          : null,
-
-      ),
     ),
+
+    // ── PLAY BUTTON — centred, overlapping photo/panel boundary ─────────────
+    h("div", {
+      style: {
+        position: "absolute",
+        bottom: 215,
+        left: "50%",
+        marginLeft: -70,
+        width: 140,
+        height: 140,
+        borderRadius: 70,
+        background: "rgba(255,255,255,0.92)",
+        borderWidth: 6,
+        borderStyle: "solid",
+        borderColor: "#F5C842",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+    },
+      h("div", {
+        style: {
+          color: "#1a1a2e",
+          fontSize: 52,
+          fontWeight: 900,
+          marginLeft: 10,
+          lineHeight: 1,
+        },
+      }, "\u25B6"),
+    ),
+
+    // ── "Tap to watch" callout arrow ─────────────────────────────────────────
+    h("div", {
+      style: {
+        position: "absolute",
+        bottom: 230,
+        left: "50%",
+        marginLeft: 80,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 2,
+      },
+    },
+      h("div", {
+        style: {
+          fontSize: 20,
+          fontWeight: 700,
+          color: "#FFFFFF",
+          fontStyle: "italic",
+          lineHeight: 1.3,
+          textShadow: "0 1px 4px rgba(0,0,0,0.6)",
+        },
+      }, "\u2190 Tap to watch my\n    15 second introduction!"),
+    ),
+
+    // ── BOTTOM WHITE PANEL ───────────────────────────────────────────────────
+    h("div", {
+      style: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        width: W,
+        display: "flex",
+        flexDirection: "column",
+        paddingTop: 20,
+        paddingBottom: 28,
+        paddingLeft: 36,
+        paddingRight: 36,
+        gap: 4,
+      },
+    },
+
+      // Name — huge, bold, navy
+      h("div", {
+        style: {
+          fontSize: 72,
+          fontWeight: 900,
+          color: "#1a1a2e",
+          lineHeight: 1.0,
+          letterSpacing: -1,
+        },
+      }, name.toUpperCase()),
+
+      // Title — purple
+      h("div", {
+        style: {
+          fontSize: 26,
+          fontWeight: 700,
+          color: "#6B21A8",
+          lineHeight: 1.2,
+          marginTop: 4,
+        },
+      }, title),
+
+      // Tagline — italic, dark, with gold underline accent
+      tagline
+        ? h("div", {
+            style: {
+              fontSize: 22,
+              fontStyle: "italic",
+              color: "#333",
+              lineHeight: 1.4,
+              marginTop: 6,
+              borderBottomWidth: 3,
+              borderBottomStyle: "solid",
+              borderBottomColor: "#6B21A8",
+              paddingBottom: 4,
+              maxWidth: 600,
+            },
+          }, tagline.slice(0, 100))
+        : null,
+
+    ),
+
   );
 }
 
@@ -377,22 +364,21 @@ export async function onRequest(context) {
   const url = new URL(context.request.url);
   const q = Object.fromEntries(url.searchParams.entries());
 
-  const name     = q.name     || "Support Worker";
-  const title    = q.title    || "Support Worker";
-  const location = q.location || "";
-  const tagline  = q.tagline  || "";
-  const photoUrl = q.photo    || "";
+  const name        = q.name     || "Support Worker";
+  const title       = q.title    || "Support Worker";
+  const location    = q.location || "";
+  const tagline     = q.tagline  || "";
+  const photoUrl    = q.photo    || "";
   const servicesRaw = q.services || "";
 
-  // Map service/specialty keys to tag objects
-  const tags = servicesRaw.split(",").filter(Boolean).slice(0, 4)
-    .map(s => SPECIALTY_MAP[s.trim()] || { label: s.trim().toUpperCase(), bg: "#1a237e", text: "#FFFFFF" });
+  // Map keys to human-readable specialty labels
+  const specialties = servicesRaw.split(",").filter(Boolean).slice(0, 5)
+    .map(s => SPECIALTY_MAP[s.trim()] || s.trim());
 
   const photoDataUrl = photoUrl ? await fetchAsBase64(photoUrl) : null;
-  const iconDataUrl = await fetchAsBase64(`${url.origin}/accessibility-icon.png`);
 
   try {
-    const card = buildCard({ name, title, location, tagline, photoDataUrl, iconDataUrl, tags });
+    const card = buildCard({ name, title, location, tagline, photoDataUrl, specialties });
     const imgResponse = new ImageResponse(card, { width: 900, height: 900 });
     const bodyBytes = await imgResponse.arrayBuffer();
     return new Response(bodyBytes, {
