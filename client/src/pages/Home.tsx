@@ -1617,7 +1617,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     return localStorage.getItem("insync_hosted_url") || "";
   });
   const [shortUrl, setShortUrl] = useState<string>(() => {
-    return localStorage.getItem("insync_short_url") || "";
+    const stored = localStorage.getItem("insync_short_url") || "";
+    // Clear any old TinyURL links — we now use Bitly
+    if (stored.includes("tinyurl.com")) {
+      localStorage.removeItem("insync_short_url");
+      return "";
+    }
+    return stored;
   });
   const [downloadReady, setDownloadReady] = useState(false);
   const [expandedServiceId, setExpandedServiceId] = useState<string | null>(null);
@@ -2668,40 +2674,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 {isDemo ? 'Demo only · watermarked · contact details hidden' : 'Opens in a new tab — exactly what your clients see.'}
               </p>
             </div>
-            {/* ── Share to Social Media — below Preview card ── */}
-            {hostedUrl && (
-              <div style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)", borderRadius: "16px", border: "1px solid rgba(255,100,180,0.25)", padding: "18px", marginBottom: "16px" }}>
-                <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: "#e040a0" }}>📲 Share to Social Media</p>
-                <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, lineHeight: 1.6 }}>
-                  Share your profile link directly to WhatsApp, Instagram, Facebook, or any app on your device in one tap.
-                </p>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  {typeof navigator !== "undefined" && navigator.share && (
-                    <button
-                      onClick={() => {
-                        navigator.share({
-                          title: `${profile.name || "Support Worker"} — InSync Profiles Profile`,
-                          text: profile.tagline || `Check out ${profile.name || "this support worker"}'s profile`,
-                          url: shortUrl || hostedUrl,
-                        }).catch(() => {});
-                      }}
-                      style={{ flex: 1, minWidth: "140px", padding: "13px", borderRadius: "12px", border: "none", background: "linear-gradient(135deg, #e040a0, #ff6bcb)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(224,64,160,0.35)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
-                      aria-label="Share profile via device share sheet"
-                    >📲 Share via Device</button>
-                  )}
-                  <button
-                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Hi! Check out ${profile.name || "my"} support worker profile: ${shortUrl || hostedUrl}`)}`, "_blank")}
-                    style={{ flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none", background: "linear-gradient(135deg, #25d366, #128c7e)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(37,211,102,0.35)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
-                    aria-label="Share profile via WhatsApp"
-                  >💬 WhatsApp</button>
-                  <button
-                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shortUrl || hostedUrl)}`, "_blank")}
-                    style={{ flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none", background: "linear-gradient(135deg, #1877f2, #0d5dbf)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 16px rgba(24,119,242,0.35)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
-                    aria-label="Share profile on Facebook"
-                  >📘 Facebook</button>
-                </div>
-              </div>
-            )}
+
             <ThreadConnector height={32} />
             {/* ══ SAVE & SHARE SECTION ══ */}
             <Section icon="💾" title="Save & Share" id="section-share">
