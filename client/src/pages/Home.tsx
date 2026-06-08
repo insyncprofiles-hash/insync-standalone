@@ -227,24 +227,24 @@ const DEFAULT_VEHICLE_OPTIONS: VehicleOptions = {
 };
 
 const DEFAULT_PROFILE: ProfileData = {
-  name: "Sophie Langford",
-  title: "Support Worker",
-  tagline: "I get it. I see you. I'm here.",
-  bio: "Compassionate support tailored to your unique journey. Here to help you live life on your terms.",
-  location: "Melbourne, Australia",
+  name: "",
+  title: "",
+  tagline: "",
+  bio: "",
+  location: "",
   phone: "",
   email: "",
   website: "",
-  instagram: "support.with.soul",
+  instagram: "",
   whatsapp: "",
   contactLabel: "Contact",
   profileImage: null,
   services: DEFAULT_SERVICES,
-  badges: ["NDIS Worker Check", "First Aid Certified", "Mental Health Support", "Working With Children Check", "Public Liability Insurance", "Professional Indemnity Insurance"],
+  badges: [],
   ctaText: "MESSAGE TO BEGIN",
   accentColor: "gold",
   experienceGroups: DEFAULT_EXPERIENCE_GROUPS,
-  availability: { Mon: true, Tue: true, Wed: true, Thu: true, Fri: true, Sat: false, Sun: false },
+  availability: { Mon: false, Tue: false, Wed: false, Thu: false, Fri: false, Sat: false, Sun: false },
   availFrom: "9:00 AM",
   availTo: "5:00 PM",
   languages: DEFAULT_LANGUAGES,
@@ -1585,11 +1585,9 @@ function normaliseVideoUrl(url: string): string {
 }
 
 export default function Home({ isDemo = false }: { isDemo?: boolean }) {
-  const urlOverrides = loadProfileFromURL();
-
-  // Restore draft from localStorage if no URL overrides (i.e. editor opened fresh)
-  const draft = !urlOverrides ? loadDraft() : { profile: null, videoUrl: null };
-
+    const urlOverrides = loadProfileFromURL();
+  // Restore draft from localStorage only in editor mode (not demo — demo always starts blank)
+  const draft = (!urlOverrides && !isDemo) ? loadDraft() : { profile: null, videoUrl: null };
   const [profile, setProfile] = useState<ProfileData>({
     ...DEFAULT_PROFILE,
     ...(draft.profile ?? {}),
