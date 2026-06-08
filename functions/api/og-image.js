@@ -1,44 +1,24 @@
 /**
  * Cloudflare Pages Function: /api/og-image
- * Generates a dynamic PNG profile card matching the Jordan Mitchell reference design.
+ * Simplified profile card: banner + name/title/location + services + tagline + CTA
  */
 
 import { ImageResponse } from "./vercel-og-bundle.js";
 
 const SERVICE_MAP = {
-  "personal-care":   { symbol: "\u2665", color: "#E57373", label: "Personal Care",       bg: "#FFF3E0" },
-  "emotional":       { symbol: "\u2665", color: "#66BB6A", label: "Emotional Support",   bg: "#E8F5E9" },
-  "community":       { symbol: "\u25CF", color: "#7E57C2", label: "Community Access",    bg: "#EDE7F6" },
-  "mental":          { symbol: "\u25CF", color: "#42A5F5", label: "Mental Wellbeing",    bg: "#E3F2FD" },
-  "daily-living":    { symbol: "\u25A0", color: "#FFA726", label: "Daily Living",        bg: "#FFF8E1" },
-  "transport":       { symbol: "\u25B6", color: "#29B6F6", label: "Transport",           bg: "#E3F2FD" },
-  "social-skills":   { symbol: "\u25C6", color: "#AB47BC", label: "Social Skills",       bg: "#F3E5F5" },
-  "therapy-assist":  { symbol: "\u2605", color: "#EC407A", label: "Therapy Assist",      bg: "#FCE4EC" },
-  "behaviour":       { symbol: "\u25CF", color: "#5C6BC0", label: "Behaviour Support",   bg: "#E8EAF6" },
-  "domestic":        { symbol: "\u25A0", color: "#66BB6A", label: "Domestic Assist",     bg: "#F1F8E9" },
-  "overnight":       { symbol: "\u2605", color: "#5C6BC0", label: "Overnight Support",   bg: "#E8EAF6" },
-  "high-care":       { symbol: "+",      color: "#EC407A", label: "High Care",           bg: "#FCE4EC" },
+  "personal-care":  { symbol: "\u2665", color: "#E57373", label: "Personal Care",     bg: "#FFF3E0" },
+  "emotional":      { symbol: "\u2665", color: "#66BB6A", label: "Emotional Support", bg: "#E8F5E9" },
+  "community":      { symbol: "\u25CF", color: "#7E57C2", label: "Community Access",  bg: "#EDE7F6" },
+  "mental":         { symbol: "\u25CF", color: "#42A5F5", label: "Mental Wellbeing",  bg: "#E3F2FD" },
+  "daily-living":   { symbol: "\u25A0", color: "#FFA726", label: "Daily Living",      bg: "#FFF8E1" },
+  "transport":      { symbol: "\u25B6", color: "#29B6F6", label: "Transport",         bg: "#E3F2FD" },
+  "social-skills":  { symbol: "\u25C6", color: "#AB47BC", label: "Social Skills",     bg: "#F3E5F5" },
+  "therapy-assist": { symbol: "\u2605", color: "#EC407A", label: "Therapy Assist",    bg: "#FCE4EC" },
+  "behaviour":      { symbol: "\u25CF", color: "#5C6BC0", label: "Behaviour Support", bg: "#E8EAF6" },
+  "domestic":       { symbol: "\u25A0", color: "#66BB6A", label: "Domestic Assist",   bg: "#F1F8E9" },
+  "overnight":      { symbol: "\u2605", color: "#5C6BC0", label: "Overnight Support", bg: "#E8EAF6" },
+  "high-care":      { symbol: "+",      color: "#EC407A", label: "High Care",         bg: "#FCE4EC" },
 };
-
-const BADGE_ICON = {
-  "NDIS Worker Check":                { s: "\u25CF", c: "#1565C0" },
-  "NDIS Worker Screened":             { s: "\u25CF", c: "#1565C0" },
-  "First Aid Certified":              { s: "+",      c: "#C62828" },
-  "Police Check":                     { s: "\u25CF", c: "#37474F" },
-  "Working With Children Check":      { s: "\u2605", c: "#F57F17" },
-  "Mental Health Support":            { s: "\u2665", c: "#6A1B9A" },
-  "Mental Health First Aid":          { s: "\u2665", c: "#6A1B9A" },
-  "Public Liability Insurance":       { s: "\u25A0", c: "#2E7D32" },
-  "Professional Indemnity Insurance": { s: "\u25C6", c: "#1B5E20" },
-  "Certificate III":                  { s: "\u25CF", c: "#E65100" },
-  "Certificate IV":                   { s: "\u25CF", c: "#BF360C" },
-};
-
-function getYouTubeId(url) {
-  if (!url) return null;
-  const match = url.match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
-  return match ? match[1] : null;
-}
 
 async function fetchAsBase64(url) {
   try {
@@ -71,38 +51,70 @@ function h(type, props, ...children) {
   };
 }
 
-function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl, services, badges }) {
-  const W = 900;
-  const H = 1125;
+function buildCard({ name, title, location, tagline, photoDataUrl, services }) {
+  // ── Photo element ─────────────────────────────────────────────────────────
+  const photoEl = photoDataUrl
+    ? h("div", {
+        style: {
+          width: 160,
+          height: 160,
+          borderRadius: 80,
+          borderWidth: 5,
+          borderStyle: "solid",
+          borderColor: "#D4A017",
+          overflow: "hidden",
+          display: "flex",
+          flexShrink: 0,
+        },
+      },
+        h("img", { src: photoDataUrl, width: 160, height: 160, style: { objectFit: "cover" } })
+      )
+    : h("div", {
+        style: {
+          width: 160,
+          height: 160,
+          borderRadius: 80,
+          borderWidth: 5,
+          borderStyle: "solid",
+          borderColor: "#D4A017",
+          background: "#c8d8e8",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 72,
+          flexShrink: 0,
+          color: "#5a7a9a",
+        },
+      }, "\u{1F464}");
 
-  // ── Service chips (small emoji to stay under CF CPU budget) ─────────────────
-  const serviceChips = services.slice(0, 5).map(s =>
+  // ── Service chips ─────────────────────────────────────────────────────────
+  const chips = services.slice(0, 5).map(s =>
     h("div", {
       style: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 8,
+        gap: 10,
         flex: 1,
       },
     },
       h("div", {
         style: {
-          width: 82,
-          height: 82,
-          borderRadius: 41,
+          width: 90,
+          height: 90,
+          borderRadius: 45,
           background: s.bg || "#F5F5F5",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          fontSize: 38,
           color: s.color || "#555",
           fontWeight: 700,
-          fontSize: 36,
         },
-      }, s.symbol || "•"),
+      }, s.symbol || "\u25CF"),
       h("div", {
         style: {
-          fontSize: 12,
+          fontSize: 14,
           color: "#333",
           textAlign: "center",
           fontWeight: 600,
@@ -112,296 +124,166 @@ function buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl,
     )
   );
 
-  // ── Badge rows (simplified — no nested border elements, just flat rows) ────
-  const badgeList = badges.slice(0, 6);
-  const badgeRows = [];
-  for (let i = 0; i < badgeList.length; i += 2) {
-    const left = badgeList[i];
-    const right = badgeList[i + 1];
-    const checkColors = ["#4CAF50", "#F5C842", "#4CAF50", "#F5C842", "#4CAF50", "#F5C842"];
-    const checkSymbols = ["✓", "★", "✓", "★", "✓", "★"];
-
-    const makeBadge = (label, idx) =>
-      h("div", {
-        style: {
-          display: "flex",
-          alignItems: "center",
-          flex: 1,
-          gap: 10,
-          background: "rgba(255,255,255,0.85)",
-          borderRadius: 10,
-          borderWidth: 1,
-          borderStyle: "solid",
-          borderColor: "#E0E0E0",
-          paddingTop: 11,
-          paddingBottom: 11,
-          paddingLeft: 13,
-          paddingRight: 13,
-        },
-      },
-        h("span", { style: { fontSize: 18, flexShrink: 0, color: (BADGE_ICON[label] || {}).c || "#555", fontWeight: 700 } }, (BADGE_ICON[label] || {}).s || "\u25C9"),
-        h("span", { style: { fontSize: 13, color: "#222", fontWeight: 600, flex: 1, lineHeight: 1.3 } }, label),
-        h("span", { style: { fontSize: 17, color: checkColors[idx] || "#4CAF50", flexShrink: 0 } }, checkSymbols[idx] || "✓"),
-      );
-
-    badgeRows.push(
-      h("div", { style: { display: "flex", gap: 10, flexShrink: 0 } },
-        makeBadge(left, i),
-        right ? makeBadge(right, i + 1) : h("div", { style: { flex: 1 } }),
-      )
-    );
-  }
-
-  // ── Photo ──────────────────────────────────────────────────────────────────
-  const photoEl = photoDataUrl
-    ? h("div", {
-        style: {
-          width: 170,
-          height: 170,
-          borderRadius: 85,
-          borderWidth: 5,
-          borderStyle: "solid",
-          borderColor: "#D4A017",
-          overflow: "hidden",
-          display: "flex",
-          flexShrink: 0,
-        },
-      },
-        h("img", { src: photoDataUrl, width: 170, height: 170, style: { objectFit: "cover" } })
-      )
-    : h("div", {
-        style: {
-          width: 170,
-          height: 170,
-          borderRadius: 85,
-          borderWidth: 5,
-          borderStyle: "solid",
-          borderColor: "#D4A017",
-          background: "#c8d8e8",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 80,
-          flexShrink: 0,
-        },
-      }, "👤");
-
-  // ── Video thumbnail ────────────────────────────────────────────────────────
-  const videoEl = thumbDataUrl
-    ? h("div", {
-        style: {
-          display: "flex",
-          position: "relative",
-          borderRadius: 14,
-          overflow: "hidden",
-          height: 195,
-          flexShrink: 0,
-          borderWidth: 3,
-          borderStyle: "solid",
-          borderColor: "#A78BFA",
-        },
-      },
-        h("img", { src: thumbDataUrl, width: W - 60, height: 195, style: { objectFit: "cover", width: "100%", height: "100%" } }),
-        h("div", {
-          style: {
-            position: "absolute",
-            top: 0, left: 0, right: 0, bottom: 0,
-            background: "rgba(0,0,0,0.28)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-        },
-          h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 10 } },
-            h("div", {
-              style: {
-                width: 64,
-                height: 64,
-                borderRadius: 32,
-                background: "#F5C842",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 26,
-                color: "#1a1a1a",
-                fontWeight: 700,
-              },
-            }, "▶"),
-            h("div", {
-              style: {
-                background: "rgba(0,0,0,0.72)",
-                borderRadius: 20,
-                paddingTop: 6,
-                paddingBottom: 6,
-                paddingLeft: 18,
-                paddingRight: 18,
-                display: "flex",
-                alignItems: "center",
-              },
-            },
-              h("span", { style: { fontSize: 13, color: "#F5C842", fontWeight: 700, letterSpacing: 1 } }, "▶ WATCH INTRO"),
-            ),
-          )
-        )
-      )
-    : null;
-
-  // ── Tagline ────────────────────────────────────────────────────────────────
-  const taglineEl = tagline
-    ? h("div", {
-        style: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          paddingLeft: 10,
-          paddingRight: 10,
-          flexShrink: 0,
-        },
-      },
-        h("div", {
-          style: {
-            fontSize: 17,
-            color: "#444",
-            fontStyle: "italic",
-            textAlign: "center",
-            lineHeight: 1.6,
-          },
-        }, `"${tagline.slice(0, 140)}${tagline.length > 140 ? "…" : ""}"`)
-      )
-    : null;
-
-  // ── Full card ──────────────────────────────────────────────────────────────
   return h("div", {
     style: {
       display: "flex",
       flexDirection: "column",
-      width: W,
-      height: H,
-      fontFamily: "sans serif",
+      width: 900,
+      height: 900,
+      fontFamily: "sans-serif",
       background: "#D0D0D0",
     },
   },
+    // Outer card with rounded corners
     h("div", {
       style: {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        marginTop: 16,
-        marginBottom: 16,
-        marginLeft: 16,
-        marginRight: 16,
-        borderRadius: 24,
+        margin: 18,
+        borderRadius: 28,
         overflow: "hidden",
         background: "white",
       },
     },
-      // ── TOP BANNER ─────────────────────────────────────────────────────────
+
+      // ── TOP BANNER ────────────────────────────────────────────────────────
       h("div", {
         style: {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           background: "#0a0a0a",
-          paddingTop: 18,
-          paddingBottom: 18,
-          paddingLeft: 28,
-          paddingRight: 28,
-          height: 100,
+          paddingTop: 20,
+          paddingBottom: 20,
+          paddingLeft: 30,
+          paddingRight: 30,
           flexShrink: 0,
         },
       },
+        // Left: icon + title
         h("div", { style: { display: "flex", alignItems: "center", gap: 14 } },
           h("div", {
             style: {
-              width: 50,
-              height: 50,
-              borderRadius: 25,
+              width: 52,
+              height: 52,
+              borderRadius: 26,
               borderWidth: 2,
               borderStyle: "solid",
               borderColor: "#F5C842",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 24,
+              fontSize: 26,
               flexShrink: 0,
+              color: "#F5C842",
             },
-          }, "♿"),
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 4 } },
-            h("div", { style: { color: "#F5C842", fontSize: 28, fontWeight: 800, letterSpacing: 1 } }, "GET TO KNOW ME"),
-            h("div", { style: { color: "#aaaaaa", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "• INTERACTIVE & ACCESSIBLE •"),
+          }, "\u267F"),
+          h("div", { style: { display: "flex", flexDirection: "column", gap: 3 } },
+            h("div", { style: { color: "#F5C842", fontSize: 30, fontWeight: 800, letterSpacing: 1 } }, "GET TO KNOW ME"),
+            h("div", { style: { color: "#aaaaaa", fontSize: 11, letterSpacing: 3, fontWeight: 600 } }, "\u2022 INTERACTIVE & ACCESSIBLE \u2022"),
           ),
         ),
+        // Right: CTA button
         h("div", {
           style: {
             background: "#F5C842",
             borderRadius: 50,
             paddingTop: 14,
             paddingBottom: 14,
-            paddingLeft: 26,
-            paddingRight: 26,
+            paddingLeft: 28,
+            paddingRight: 28,
             display: "flex",
             alignItems: "center",
-            borderWidth: 2,
-            borderStyle: "solid",
-            borderColor: "#C8920A",
           },
         },
-          h("div", { style: { color: "#0a0a0a", fontSize: 17, fontWeight: 800, letterSpacing: 0.5 } }, "OPEN PROFILE ▶"),
+          h("div", { style: { color: "#0a0a0a", fontSize: 18, fontWeight: 800, letterSpacing: 0.5 } }, "OPEN PROFILE \u25B6"),
         ),
       ),
 
-      // ── GRADIENT BODY ───────────────────────────────────────────────────────
+      // ── GRADIENT BODY ─────────────────────────────────────────────────────
       h("div", {
         style: {
           display: "flex",
           flexDirection: "column",
           flex: 1,
           background: "linear-gradient(135deg, #dbeeff 0%, #e8d8ff 30%, #fff5d8 60%, #ffd8e8 80%, #ffe8c8 100%)",
-          paddingTop: 24,
-          paddingBottom: 24,
-          paddingLeft: 30,
-          paddingRight: 30,
-          gap: 0,
+          paddingTop: 36,
+          paddingBottom: 36,
+          paddingLeft: 40,
+          paddingRight: 40,
           justifyContent: "space-between",
         },
       },
-        // ── Name row ─────────────────────────────────────────────────────────
-        h("div", { style: { display: "flex", alignItems: "center", gap: 28, flexShrink: 0 } },
+
+        // ── Name row ─────────────────────────────────────────────────────
+        h("div", { style: { display: "flex", alignItems: "center", gap: 32, flexShrink: 0 } },
           photoEl,
-          h("div", { style: { display: "flex", flexDirection: "column", gap: 6 } },
-            h("div", { style: { fontSize: 52, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.1 } }, name),
-            h("div", { style: { fontSize: 15, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4, marginTop: 2 } }, title.toUpperCase()),
+          h("div", { style: { display: "flex", flexDirection: "column", gap: 8 } },
+            h("div", { style: { fontSize: 58, fontWeight: 700, color: "#1a2a4a", lineHeight: 1.1 } }, name),
+            h("div", { style: { fontSize: 16, fontWeight: 700, color: "#2dd4bf", letterSpacing: 4 } }, title.toUpperCase()),
             location
-              ? h("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 15, color: "#555", marginTop: 6 } },
-                  h("span", { style: { fontSize: 18 } }, "📍"),
+              ? h("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 16, color: "#555", marginTop: 4 } },
+                  h("span", { style: { color: "#E57373", fontWeight: 700 } }, "\u25CF"),
                   h("span", {}, location),
                 )
               : null,
           ),
         ),
 
-        // ── Services row ─────────────────────────────────────────────────────
+        // ── Services row ─────────────────────────────────────────────────
         services.length > 0
-          ? h("div", { style: { display: "flex", justifyContent: "space-around", flexShrink: 0 } }, ...serviceChips)
+          ? h("div", { style: { display: "flex", justifyContent: "space-around", flexShrink: 0 } }, ...chips)
           : null,
 
-        // ── Video thumbnail ───────────────────────────────────────────────────
-        videoEl,
-
-        // ── Tagline ───────────────────────────────────────────────────────────
-        taglineEl,
-
-        // ── Credentials section ────────────────────────────────────────────────
-        badges.length > 0
-          ? h("div", { style: { display: "flex", flexDirection: "column", gap: 10, flexShrink: 0 } },
-              h("div", { style: { display: "flex", alignItems: "center", gap: 10 } },
-                h("span", { style: { fontSize: 22 } }, "🏅"),
-                h("span", { style: { fontSize: 16, color: "#1a2a4a", fontWeight: 800, letterSpacing: 1 } }, "CREDENTIALS & BADGES"),
-                h("span", { style: { fontSize: 13, color: "#888", fontStyle: "italic" } }, "(Self-Reported)"),
-              ),
-              ...badgeRows,
+        // ── Tagline ───────────────────────────────────────────────────────
+        tagline
+          ? h("div", {
+              style: {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              },
+            },
+              h("div", {
+                style: {
+                  fontSize: 20,
+                  color: "#444",
+                  fontStyle: "italic",
+                  textAlign: "center",
+                  lineHeight: 1.6,
+                },
+              }, `"${tagline.slice(0, 160)}${tagline.length > 160 ? "\u2026" : ""}"`)
             )
           : null,
+
+        // ── Bottom CTA bar ────────────────────────────────────────────────
+        h("div", {
+          style: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          },
+        },
+          h("div", {
+            style: {
+              background: "#F5C842",
+              borderRadius: 50,
+              paddingTop: 18,
+              paddingBottom: 18,
+              paddingLeft: 60,
+              paddingRight: 60,
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+            },
+          },
+            h("div", { style: { color: "#0a0a0a", fontSize: 22, fontWeight: 800, letterSpacing: 1 } }, "OPEN PROFILE \u25B6"),
+          ),
+        ),
+
       ),
     ),
   );
@@ -416,28 +298,16 @@ export async function onRequest(context) {
   const location = q.location || "";
   const tagline  = q.tagline  || "";
   const photoUrl = q.photo    || "";
-  const videoUrl = q.video    || "";
   const servicesRaw = q.services || "";
-  const badgesRaw   = q.badges   || "";
 
   const services = servicesRaw.split(",").filter(Boolean).slice(0, 5)
-    .map(s => SERVICE_MAP[s.trim()] || { emoji: "✨", label: s.trim(), bg: "#F5F5F5" });
+    .map(s => SERVICE_MAP[s.trim()] || { symbol: "\u25CF", color: "#888", label: s.trim(), bg: "#F5F5F5" });
 
-  const badges = badgesRaw.split("|").filter(Boolean).slice(0, 6);
-
-  const [photoDataUrl, thumbDataUrl] = await Promise.all([
-    photoUrl ? fetchAsBase64(photoUrl) : Promise.resolve(null),
-    videoUrl
-      ? (async () => {
-          const ytId = getYouTubeId(videoUrl);
-          return ytId ? fetchAsBase64(`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`) : null;
-        })()
-      : Promise.resolve(null),
-  ]);
+  const photoDataUrl = photoUrl ? await fetchAsBase64(photoUrl) : null;
 
   try {
-    const card = buildCard({ name, title, location, tagline, photoDataUrl, thumbDataUrl, services, badges });
-    const imgResponse = new ImageResponse(card, { width: 900, height: 1125 });
+    const card = buildCard({ name, title, location, tagline, photoDataUrl, services });
+    const imgResponse = new ImageResponse(card, { width: 900, height: 900 });
     const bodyBytes = await imgResponse.arrayBuffer();
     return new Response(bodyBytes, {
       status: 200,
@@ -446,10 +316,10 @@ export async function onRequest(context) {
   } catch (err) {
     const errMsg = err?.message || String(err);
     console.error("OG image generation failed:", errMsg);
-    if (q.debug === '1') {
-      return new Response(`ERROR: ${errMsg}\n\nSTACK:\n${err?.stack || ''}`, {
+    if (q.debug === "1") {
+      return new Response(`ERROR: ${errMsg}\n\nSTACK:\n${err?.stack || ""}`, {
         status: 500,
-        headers: { 'Content-Type': 'text/plain' },
+        headers: { "Content-Type": "text/plain" },
       });
     }
     return Response.redirect("https://insyncprofiles.net/og-image.png", 302);
