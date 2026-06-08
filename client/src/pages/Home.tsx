@@ -969,7 +969,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
 
           {/* QR Code */}
           {(() => {
-            const qrUrl = !isDemo && hostedUrl ? hostedUrl : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
+            const qrUrl = !isDemo && (shortUrl || hostedUrl) ? (shortUrl || hostedUrl) : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
             const qrLabel = !isDemo && hostedUrl ? 'Scan to open this profile' : 'Scan to get your own profile';
             return (
               <div id='demo-overlay-qr' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px 24px', background: 'white', borderRadius: '20px', boxShadow: '0 4px 24px rgba(74,144,217,0.12)', border: '1.5px solid rgba(74,144,217,0.15)' }}>
@@ -1618,11 +1618,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   });
   const [shortUrl, setShortUrl] = useState<string>(() => {
     const stored = localStorage.getItem("insync_short_url") || "";
-    // Clear any old Bitly links (bit.ly) — we now use TinyURL
-    if (stored.includes("bit.ly")) {
-      localStorage.removeItem("insync_short_url");
-      return "";
-    }
+    // Keep bit.ly and tinyurl links; clear anything else that looks stale
     return stored;
   });
   const [downloadReady, setDownloadReady] = useState(false);
@@ -1762,24 +1758,45 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     setSaved(true);
     toast.success("Profile saved!", { description: "Your unique shareable link and QR code are ready in Thread 7." });
     setTimeout(() => setSaved(false), 2500);
-    // Shorten URL using TinyURL (free, unlimited, no auth, direct 301 redirect — no preview page)
-    fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
+    // Shorten URL using Bitly (primary), TinyURL as fallback
+    fetch('https://api-ssl.bitly.com/v4/shorten', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer 62209a105a1717c7b05b1fdf28b229b87f49203d',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ long_url: shareUrl }),
+    })
       .then(r => {
-        if (!r.ok) throw new Error(`TinyURL ${r.status}`);
-        return r.text();
+        if (!r.ok) throw new Error(`Bitly ${r.status}`);
+        return r.json();
       })
-      .then(tiny => {
-        if (tiny && tiny.startsWith('http')) {
-          setShortUrl(tiny);
-          localStorage.setItem("insync_short_url", tiny);
-          toast.success("Short link ready!", { description: tiny });
+      .then(data => {
+        if (data && data.link && data.link.startsWith('http')) {
+          setShortUrl(data.link);
+          localStorage.setItem("insync_short_url", data.link);
+          toast.success("Short link ready!", { description: data.link });
         } else {
-          throw new Error('Invalid response');
+          throw new Error('No link in response');
         }
       })
       .catch((err) => {
-        console.warn('TinyURL shortening failed:', err);
-        toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
+        console.warn('Bitly shortening failed, trying TinyURL fallback:', err);
+        // Fallback: TinyURL (free, unlimited, no auth)
+        fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
+          .then(r => r.text())
+          .then(tiny => {
+            if (tiny && tiny.startsWith('http')) {
+              setShortUrl(tiny);
+              localStorage.setItem("insync_short_url", tiny);
+              toast.success("Short link ready!", { description: tiny });
+            } else {
+              throw new Error('Invalid TinyURL response');
+            }
+          })
+          .catch(() => {
+            toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
+          });
       });
   };
 
@@ -2781,7 +2798,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                       <div id="insync-share-qr" style={{ background: "#ffffff", borderRadius: "12px", padding: "10px", boxShadow: `0 4px 20px ${A.gold}44` }}>
                         <QRCodeSVG
-                          value={hostedUrl}
+                          value={shortUrl || hostedUrl}
                           size={160}
                           bgColor="#ffffff"
                           fgColor="#1a2e1e"
