@@ -118,7 +118,7 @@ export default function LicenceGate({ children }: LicenceGateProps) {
             value={key}
             onChange={e => { setKey(e.target.value.toUpperCase()); setError(""); }}
             onKeyDown={e => e.key === "Enter" && handleActivate()}
-            placeholder="ISP-XXXX-XXXX-XXXX"
+            placeholder="e.g. SKI20267823 or SKI-2026-7823"
             autoComplete="off"
             spellCheck={false}
             style={{
