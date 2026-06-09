@@ -165,7 +165,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
           lineHeight: 1.3, marginBottom: 14,
           textShadow: "0 2px 8px rgba(0,0,0,0.8)",
         },
-      }, "Looking for support\nthat understands:"),
+      }, "Support that\nunderstands:"),
       ...checks.map(label =>
         h("div", {
           style: {

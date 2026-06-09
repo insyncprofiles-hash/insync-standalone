@@ -221,7 +221,7 @@ function buildCard({ name, title, location, tagline, photoDataUrl, specialties }
           marginBottom: 16,
           textShadow: "0 1px 6px rgba(0,0,0,0.9)",
         },
-      }, "Looking for support\nthat understands:"),
+      }, "Support that\nunderstands:"),
       h("div", {
         style: { display: "flex", flexDirection: "column", gap: 4 },
       }, ...checkItems),
