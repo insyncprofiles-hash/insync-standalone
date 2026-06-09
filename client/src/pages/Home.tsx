@@ -2032,12 +2032,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       }
 
       // ── 7. QR CODE — right side of panel ─────────────────────────────────
-      const profileUrl = window.location.origin + "/view?" + new URLSearchParams({
+      // Use short link when available for a cleaner, easier-to-scan QR code
+      const profileUrl = shortUrl || hostedUrl || (window.location.origin + "/view?" + new URLSearchParams({
         name: profile.name,
         title: profile.title || "",
         location: profile.location || "",
         tagline: profile.tagline || "",
-      }).toString();
+      }).toString());
       try {
         const QRCode = await import("qrcode");
         const qrDataUrl: string = await (QRCode as any).toDataURL(profileUrl, {
