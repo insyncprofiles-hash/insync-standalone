@@ -1017,7 +1017,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                   </button>
                 )}
                 {!isDemo && hostedUrl && (
-                  <LanyardPreview profile={profile} qrSelector='#demo-overlay-qr svg' />
+                  <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl} />
                 )}
                 {!isDemo && hostedUrl && (
                   <button
@@ -1117,8 +1117,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                       ctx.lineWidth = 3;
                       ctx.stroke();
 
-                      // ── QR CODE — draw from existing SVG ──
-                      const svgEl = document.querySelector('#demo-overlay-qr svg') as SVGSVGElement | null;
+                      // ── QR CODE — generate directly from buyer's profile URL ──
                       const QR_SIZE = 320;
                       const QR_X = (W - QR_SIZE) / 2;
                       const QR_Y = 360;
@@ -1192,21 +1191,12 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                         logoImg.src = '/assets/insync-logo-main.png';
                       };
 
-                      if (svgEl) {
-                        const serializer = new XMLSerializer();
-                        const svgStr = serializer.serializeToString(svgEl);
-                        const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-                        const url = URL.createObjectURL(blob);
-                        const tmpImg = new Image();
-                        tmpImg.onload = () => {
-                          const tmpCanvas = document.createElement('canvas');
-                          tmpCanvas.width = 370; tmpCanvas.height = 370;
-                          const tmpCtx = tmpCanvas.getContext('2d');
-                          if (tmpCtx) { tmpCtx.fillStyle='#F5F0E8'; tmpCtx.fillRect(0,0,370,370); tmpCtx.drawImage(tmpImg,0,0,370,370); }
-                          URL.revokeObjectURL(url);
-                          drawRest(tmpCanvas.toDataURL('image/png'));
-                        };
-                        tmpImg.src = url;
+                      const overlayQrUrl = shortUrl || hostedUrl;
+                      if (overlayQrUrl) {
+                        import('qrcode').then(QRCode => {
+                          QRCode.default.toDataURL(overlayQrUrl, { width: 370, margin: 1, color: { dark: '#000000', light: '#FFFFFF' } })
+                            .then(drawRest).catch(() => drawRest());
+                        }).catch(() => drawRest());
                       } else {
                         drawRest();
                       }
@@ -1242,7 +1232,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
 }
 
 // ── Lanyard Card Preview ─────────────────────────────────────
-function LanyardPreview({ profile, qrSelector }: { profile: ProfileData; qrSelector: string }) {
+function LanyardPreview({ profile, profileUrl }: { profile: ProfileData; profileUrl: string }) {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   React.useEffect(() => {
@@ -1386,33 +1376,18 @@ function LanyardPreview({ profile, qrSelector }: { profile: ProfileData; qrSelec
       }
     };
 
-    // Try to render QR from SVG in DOM — retry once after 200ms to handle async render
-    const tryRenderQR = () => {
-      const svgEl = document.querySelector(qrSelector) as SVGSVGElement | null;
-      if (svgEl) {
-        const serializer = new XMLSerializer();
-        const svgStr = serializer.serializeToString(svgEl);
-        const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(blob);
-        const tmpImg = new Image();
-        tmpImg.onload = () => {
-          const tmpCanvas = document.createElement('canvas');
-          tmpCanvas.width = 370; tmpCanvas.height = 370;
-          const tmpCtx = tmpCanvas.getContext('2d');
-          if (tmpCtx) { tmpCtx.fillStyle='#FFFFFF'; tmpCtx.fillRect(0,0,370,370); tmpCtx.drawImage(tmpImg,0,0,370,370); }
-          URL.revokeObjectURL(url);
-          drawRest(tmpCanvas.toDataURL('image/png'));
-        };
-        tmpImg.onerror = () => { URL.revokeObjectURL(url); drawRest(); };
-        tmpImg.src = url;
-      } else {
-        drawRest();
-      }
-    };
-    // Small delay to ensure QR SVG is painted before we serialise it
-    const timer = setTimeout(tryRenderQR, 150);
-    return () => clearTimeout(timer);
-  }, [profile.location, qrSelector]);
+    // Generate QR directly from profileUrl using qrcode library — no DOM dependency
+    if (profileUrl) {
+      import('qrcode').then(QRCode => {
+        QRCode.default.toDataURL(profileUrl, { width: 370, margin: 1, color: { dark: '#000000', light: '#FFFFFF' } })
+          .then(drawRest)
+          .catch(() => drawRest());
+      }).catch(() => drawRest());
+    } else {
+      drawRest();
+    }
+    // No cleanup needed — async but canvas ref is stable
+  }, [profileUrl]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', marginTop: '8px' }}>
@@ -3192,7 +3167,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
                     {/* ── Lanyard Card ── */}
                     <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                      <LanyardPreview profile={profile} qrSelector='#insync-share-qr svg' />
+                      <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl} />
                       <button
                         onClick={() => {
                           const W = 700, H = 1050;
@@ -3240,7 +3215,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                           ctx.beginPath(); ctx.arc(W/2,30,20,0,Math.PI*2);
                           ctx.fillStyle='#0a0a0a'; ctx.fill();
                           ctx.strokeStyle='#D4A017'; ctx.lineWidth=3; ctx.stroke();
-                          const svgEl = document.querySelector('#insync-share-qr svg') as SVGSVGElement|null;
                           const QR_SIZE=320, QR_X=(W-QR_SIZE)/2, QR_Y=360;
                           const drawRest = (qrDataUrl?:string) => {
                             if (qrDataUrl) {
@@ -3280,19 +3254,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                             };
                             logoImg.src='/assets/insync-logo-main.png';
                           };
-                          if (svgEl) {
-                            const serializer=new XMLSerializer();
-                            const svgStr=serializer.serializeToString(svgEl);
-                            const blob=new Blob([svgStr],{type:'image/svg+xml'});
-                            const url=URL.createObjectURL(blob);
-                            const tmpImg=new Image();
-                            tmpImg.onload=()=>{
-                              const tmpCanvas=document.createElement('canvas');
-                              tmpCanvas.width=370; tmpCanvas.height=370;
-                              const tmpCtx=tmpCanvas.getContext('2d');
-                              if(tmpCtx){tmpCtx.fillStyle='#F5F0E8';tmpCtx.fillRect(0,0,370,370);tmpCtx.drawImage(tmpImg,0,0,370,370);}
-                              URL.revokeObjectURL(url); drawRest(tmpCanvas.toDataURL('image/png'));
-                            }; tmpImg.src=url;
+                          // Generate QR directly from buyer's profile URL — no DOM dependency
+                          const lanyardQrUrl = shortUrl || hostedUrl;
+                          if (lanyardQrUrl) {
+                            import('qrcode').then(QRCode => {
+                              QRCode.default.toDataURL(lanyardQrUrl, { width: 370, margin: 1, color: { dark: '#000000', light: '#FFFFFF' } })
+                                .then(drawRest).catch(() => drawRest());
+                            }).catch(() => drawRest());
                           } else { drawRest(); }
                         }}
                         style={{ padding: '9px 22px', borderRadius: '99px', background: 'linear-gradient(135deg,#6B21A8,#FFD700)', border: 'none', color: '#fff', fontFamily: "'Outfit',sans-serif", fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '6px' }}
