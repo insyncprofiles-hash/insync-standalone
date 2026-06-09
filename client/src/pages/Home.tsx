@@ -3133,7 +3133,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                       </div>
                       <button
                         onClick={() => { navigator.clipboard.writeText(shortUrl || hostedUrl); toast.success("Link copied!", { description: "Share this link with your client or paste it into an email." }); }}
-                        style={{ flexShrink: 0, padding: "10px 14px", borderRadius: "10px", background: A.gold, border: "none", cursor: "pointer", fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 700, color: "#1a2e1e" }}
+                        style={{ flexShrink: 0, padding: "10px 14px", borderRadius: "10px", background: A.gold, border: "none", cursor: "pointer", fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 700, color: "#ffffff" }}
                         aria-label="Copy unique profile link"
                       >Copy</button>
                     </div>
