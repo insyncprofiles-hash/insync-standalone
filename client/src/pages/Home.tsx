@@ -3405,6 +3405,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, lineHeight: 1.6 }}>
                   Generate a trust-first card showing your photo, location, and specialties — with a QR code participants can scan to open your profile. Download the PNG and post it on Facebook or Instagram.
                 </p>
+                {!shortUrl && !hostedUrl && profile.name && (
+                  <p style={{ margin: "0 0 10px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#e07b00", background: "rgba(244,197,66,0.12)", borderRadius: "8px", padding: "8px 12px", lineHeight: 1.5 }}>
+                    💡 <strong>Tip:</strong> Tap <strong>Save Changes</strong> first to generate a clean short link — this makes your card QR code much easier to scan.
+                  </p>
+                )}
                 <button
                   onClick={handleGenerateCard}
                   disabled={cardGenerating || !profile.name}
