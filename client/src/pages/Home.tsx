@@ -489,7 +489,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
   const checkedExperience = (profile.experienceGroups || []).flatMap(g => g.items.filter(i => i.checked).map(i => ({ group: g.title, label: i.label })));
   const hasShowUp = profile.showUpStyle && (profile.showUpStyle.communicate?.length > 0 || profile.showUpStyle.connect?.length > 0 || profile.showUpStyle.presence?.length > 0);
   const PASTEL_BG = ['#fce4ec','#e3f2fd','#e8f5e9','#fff3e0','#fef9e7'];
-  const BADGE_ICONS: Record<string, string> = { 'NDIS Worker Screened': '🛡', 'First Aid Certified': '🟥', 'Mental Health Support': '🤍', 'Working With Children Check': '🧒', 'Police Check': '🔍', 'NDIS Worker Check': '✅', '5+ Years Experience': '👥', 'Mental Health First Aid': '🤍', 'Public Liability Insurance': '📋', 'Professional Indemnity Insurance': '🔒', 'Auslan Interpreter': '🤟' };
+  const BADGE_ICONS: Record<string, string> = { 'NDIS Worker Screened': '🛡', 'First Aid Certified': '__RED_CROSS__', 'Mental Health Support': '🤍', 'Working With Children Check': '🧒', 'Police Check': '🔍', 'NDIS Worker Check': '✅', '5+ Years Experience': '👥', 'Mental Health First Aid': '🤍', 'Public Liability Insurance': '📋', 'Professional Indemnity Insurance': '🔒', 'Auslan Interpreter': '🤟' };
   let threadNum = 0;
 
   return (
@@ -806,7 +806,15 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 {profile.badges.map(badge => (
                   <div key={badge} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', background: 'rgba(200,160,230,0.12)', border: '1.5px solid rgba(200,140,220,0.30)', borderRadius: '14px' }}>
-                    <span style={{ fontSize: '18px', flexShrink: 0 }}>{BADGE_ICONS[badge] || '✶'}</span>
+                    {BADGE_ICONS[badge] === '__RED_CROSS__' ? (
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }} aria-hidden="true">
+                        <circle cx="10" cy="10" r="10" fill="#e53935"/>
+                        <rect x="8.5" y="4" width="3" height="12" rx="1" fill="white"/>
+                        <rect x="4" y="8.5" width="12" height="3" rx="1" fill="white"/>
+                      </svg>
+                    ) : (
+                      <span style={{ fontSize: '18px', flexShrink: 0 }}>{BADGE_ICONS[badge] || '✶'}</span>
+                    )}
                     <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', fontWeight: 700, color: '#6a3a8a', lineHeight: 1.25 }}>{badge}</span>
                   </div>
                 ))}
