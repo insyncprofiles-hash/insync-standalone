@@ -2081,16 +2081,19 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
           img.src = qrDataUrl;
         });
         const qrY = PANEL_Y + (PANEL_H - QR_SIZE) / 2;
-        // Reset any clip region before drawing QR
+        // Draw QR outside any clip region by using a fresh save with no clip
         ctx.save();
-        ctx.restore();
-        ctx.resetTransform();
+        // Explicitly reset clipping by re-applying full canvas clip
+        ctx.beginPath();
+        ctx.rect(0, 0, W, H);
+        ctx.clip();
         // White background behind QR
         ctx.beginPath();
         roundRect(QR_X - 4, qrY - 4, QR_SIZE + 8, QR_SIZE + 8, 6);
         ctx.fillStyle = "#ffffff";
         ctx.fill();
         ctx.drawImage(qrImg, QR_X, qrY, QR_SIZE, QR_SIZE);
+        ctx.restore();
       } catch (_e) {
         // QR failed silently
       }
