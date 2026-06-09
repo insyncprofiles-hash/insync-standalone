@@ -1616,8 +1616,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   });
   const [shortUrl, setShortUrl] = useState<string>(() => {
     const stored = localStorage.getItem("insync_short_url") || "";
-    // Clear old is.gd links so a fresh Bitly/TinyURL link is generated
-    if (stored.includes('is.gd')) {
+    const hostedStored = localStorage.getItem("insync_hosted_url") || "";
+    // Clear stale short links: is.gd links, or short links from a different session
+    // (i.e. the short URL was generated for a different hostedUrl — e.g. Pete James demo)
+    // We validate by checking the short URL was generated after the current hostedUrl was saved.
+    // Simplest heuristic: if hostedUrl is empty, there's no valid short URL either.
+    if (!hostedStored || stored.includes('is.gd')) {
       localStorage.removeItem("insync_short_url");
       return "";
     }
