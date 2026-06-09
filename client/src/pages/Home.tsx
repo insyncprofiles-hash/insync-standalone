@@ -1616,12 +1616,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   });
   const [shortUrl, setShortUrl] = useState<string>(() => {
     const stored = localStorage.getItem("insync_short_url") || "";
-    // Keep bit.ly and tinyurl links; clear anything else that looks stale
-    // Ensure TinyURL links have trailing slash to bypass preview page
-    if (stored.includes('tinyurl.com') && !stored.endsWith('/')) {
-      const fixed = stored + '/';
-      localStorage.setItem("insync_short_url", fixed);
-      return fixed;
+    // Clear old tinyurl links (they show preview pages) so a fresh is.gd link is generated
+    if (stored.includes('tinyurl.com')) {
+      localStorage.removeItem("insync_short_url");
+      return "";
     }
     return stored;
   });
@@ -1787,19 +1785,17 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         }
       })
       .catch((err) => {
-        console.warn('Bitly shortening failed, trying TinyURL fallback:', err);
-        // Fallback: TinyURL (free, unlimited, no auth)
-        fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
+        console.warn('Bitly shortening failed, trying is.gd fallback:', err);
+        // Fallback: is.gd (free, no auth, always direct redirect - no preview page)
+        fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(shareUrl)}`)
           .then(r => r.text())
-          .then(tiny => {
-            if (tiny && tiny.startsWith('http')) {
-              // Append trailing slash to bypass TinyURL preview page
-              const directTiny = tiny.endsWith('/') ? tiny : tiny + '/';
-              setShortUrl(directTiny);
-              localStorage.setItem("insync_short_url", directTiny);
-              toast.success("Short link ready!", { description: directTiny });
+          .then(short => {
+            if (short && short.startsWith('http')) {
+              setShortUrl(short);
+              localStorage.setItem("insync_short_url", short);
+              toast.success("Short link ready!", { description: short });
             } else {
-              throw new Error('Invalid TinyURL response');
+              throw new Error('Invalid is.gd response');
             }
           })
           .catch(() => {
