@@ -2081,9 +2081,14 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
           img.src = qrDataUrl;
         });
         const qrY = PANEL_Y + (PANEL_H - QR_SIZE) / 2;
+        // Reset any clip region before drawing QR
+        ctx.save();
+        ctx.restore();
+        ctx.resetTransform();
         // White background behind QR
-        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
         roundRect(QR_X - 4, qrY - 4, QR_SIZE + 8, QR_SIZE + 8, 6);
+        ctx.fillStyle = "#ffffff";
         ctx.fill();
         ctx.drawImage(qrImg, QR_X, qrY, QR_SIZE, QR_SIZE);
       } catch (_e) {
