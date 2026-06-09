@@ -3025,7 +3025,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   borderRadius: "99px",
                   background: `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
                   border: "none",
-                  color: "oklch(0.08 0.05 155)",
+                  color: "#ffffff",
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: "15px",
                   fontWeight: 700,
@@ -3438,7 +3438,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     background: cardGenerating
                       ? `${A.gold}44`
                       : `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
-                    color: "#1a2e1e",
+                    color: "#ffffff",
                     fontFamily: "'Outfit', sans-serif",
                     fontSize: "14px",
                     fontWeight: 700,
@@ -3471,7 +3471,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         style={{
                           flex: 1, padding: "13px", borderRadius: "12px",
                           background: `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
-                          color: "#1a2e1e", fontFamily: "'Outfit', sans-serif",
+                          color: "#ffffff", fontFamily: "'Outfit', sans-serif",
                           fontSize: "14px", fontWeight: 700, textDecoration: "none",
                           display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
                           boxShadow: `0 4px 16px ${A.gold}44`,
@@ -3662,7 +3662,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               ? 'linear-gradient(135deg, #2ecc71 0%, oklch(0.55 0.18 145) 100%)'
               : `linear-gradient(135deg, ${A.gold} 0%, oklch(0.62 0.22 55) 100%)`,
             border: saved ? 'none' : '2.5px solid oklch(0.85 0.18 75)',
-            color: 'oklch(0.08 0.05 155)',
+            color: '#ffffff',
             fontFamily: "'Outfit', sans-serif",
             fontSize: isMobile ? '16px' : '18px',
             fontWeight: 900,
