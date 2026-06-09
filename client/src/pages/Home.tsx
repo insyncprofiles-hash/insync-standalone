@@ -489,7 +489,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
   const checkedExperience = (profile.experienceGroups || []).flatMap(g => g.items.filter(i => i.checked).map(i => ({ group: g.title, label: i.label })));
   const hasShowUp = profile.showUpStyle && (profile.showUpStyle.communicate?.length > 0 || profile.showUpStyle.connect?.length > 0 || profile.showUpStyle.presence?.length > 0);
   const PASTEL_BG = ['#fce4ec','#e3f2fd','#e8f5e9','#fff3e0','#fef9e7'];
-  const BADGE_ICONS: Record<string, string> = { 'NDIS Worker Screened': '🛡', 'First Aid Certified': '⭐', 'Mental Health Support': '🤍', 'Working With Children Check': '🧒', 'Police Check': '🔍', 'NDIS Worker Check': '✅', '5+ Years Experience': '👥', 'Mental Health First Aid': '🤍', 'Public Liability Insurance': '📋', 'Professional Indemnity Insurance': '🔒', 'Auslan Interpreter': '🤟' };
+  const BADGE_ICONS: Record<string, string> = { 'NDIS Worker Screened': '🛡', 'First Aid Certified': '🚑', 'Mental Health Support': '🤍', 'Working With Children Check': '🧒', 'Police Check': '🔍', 'NDIS Worker Check': '✅', '5+ Years Experience': '👥', 'Mental Health First Aid': '🤍', 'Public Liability Insurance': '📋', 'Professional Indemnity Insurance': '🔒', 'Auslan Interpreter': '🤟' };
   let threadNum = 0;
 
   return (
