@@ -1825,64 +1825,17 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         .concat(profile.services.filter(s => s.selected).map(s => s.label))
         .slice(0, 5);
 
-      // ── Canvas dimensions ────────────────────────────────────────────────
-      const W = 900, H = 1125;
+      // ── Canvas: 1080×1080 square (reference spec) ──────────────────────
+      const W = 1080, H = 1080;
       const canvas = document.createElement("canvas");
       canvas.width = W; canvas.height = H;
       const ctx = canvas.getContext("2d")!;
 
-      const GOLD = "#F5C842";
-      const NAVY = "#1a1a2e";
-      const WHITE = "#FFFFFF";
-      const PURPLE = "#6B21A8";
-
-      // ── Load photo (if available) ────────────────────────────────────────
-      let photoImg: HTMLImageElement | null = null;
-      const photoSrc = profile.profileImage && profile.profileImage.startsWith("http") ? profile.profileImage : null;
-      if (photoSrc) {
-        try {
-          photoImg = await new Promise<HTMLImageElement>((resolve, reject) => {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.onload = () => resolve(img);
-            img.onerror = reject;
-            setTimeout(() => reject(new Error("timeout")), 6000);
-            img.src = photoSrc;
-          });
-        } catch { photoImg = null; }
-      }
-
-      // ── Background ───────────────────────────────────────────────────────
-      if (photoImg) {
-        // Draw photo full-bleed — crop from centre-left so face slides to left of canvas
-        const scale = Math.max(W / photoImg.width, H / photoImg.height);
-        const sw = W / scale, sh = H / scale;
-        // Use 30% offset to push face toward left side of canvas
-        const sx = (photoImg.width - sw) * 0.3, sy = 0;
-        ctx.drawImage(photoImg, sx, sy, sw, sh, 0, 0, W, H);
-      } else {
-        const grad = ctx.createLinearGradient(0, 0, W, H);
-        grad.addColorStop(0, NAVY);
-        grad.addColorStop(1, "#2d1b69");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, W, H);
-      }
-
-      // ── Dark overlay — LEFT 38% only, narrow strip ──────────────────────
-      // Right-side overlay: transparent on left (face visible), dark on right (text readable)
-      const overlayR = ctx.createLinearGradient(W * 0.35, 0, W, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");
-      overlayR.addColorStop(0.2, "rgba(0,0,0,0.50)");
-      overlayR.addColorStop(1, "rgba(0,0,0,0.80)");
-      ctx.fillStyle = overlayR;
-      ctx.fillRect(0, 0, W, H);
-
-      // Bottom fade into white panel
-      const overlayB = ctx.createLinearGradient(0, H - 420, 0, H - 280);
-      overlayB.addColorStop(0, "rgba(255,255,255,0)");
-      overlayB.addColorStop(1, "rgba(255,255,255,0.9)");
-      ctx.fillStyle = overlayB;
-      ctx.fillRect(0, H - 420, W, 140);
+      const MUSTARD = "#F4C542";
+      const NAVY    = "#112B6B";
+      const WHITE   = "#FFFFFF";
+      const PURPLE  = "#6B3FA0";
+      const PANEL_BG = "rgba(245,244,242,0.95)";
 
       // ── Helper: rounded rect ─────────────────────────────────────────────
       const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
@@ -1899,143 +1852,215 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.closePath();
       };
 
-      // ── Location badge (top-LEFT) ───────────────────────────────────────
+      // ── Helper: shadow text ──────────────────────────────────────────────
+      const shadowText = (text: string, x: number, y: number, colour: string, blur = 12) => {
+        ctx.shadowColor = "rgba(0,0,0,0.75)";
+        ctx.shadowBlur = blur;
+        ctx.fillStyle = colour;
+        ctx.fillText(text, x, y);
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = "transparent";
+      };
+
+      // ── 1. PHOTO — fills entire canvas, face shifted LEFT ────────────────
+      let photoImg: HTMLImageElement | null = null;
+      const photoSrc = profile.profileImage && profile.profileImage.startsWith("http") ? profile.profileImage : null;
+      if (photoSrc) {
+        try {
+          photoImg = await new Promise<HTMLImageElement>((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            setTimeout(() => reject(new Error("timeout")), 8000);
+            img.src = photoSrc;
+          });
+        } catch { photoImg = null; }
+      }
+
+      if (photoImg) {
+        // Scale to fill canvas height, then shift left so face is on left side
+        const photoScale = H / photoImg.height;
+        const pw = photoImg.width * photoScale;
+        const ph = H;
+        // Shift: face centre (~50% of source) should appear at ~28% of canvas width
+        const px = Math.round(W * 0.28 - pw * 0.50);
+        ctx.drawImage(photoImg, px, 0, pw, ph);
+      } else {
+        // Fallback gradient background
+        const grad = ctx.createLinearGradient(0, 0, W, H);
+        grad.addColorStop(0, NAVY);
+        grad.addColorStop(1, "#2d1b69");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      // ── 2. DARK GRADIENT OVERLAY — right 45% for text readability ────────
+      const overlayStart = W * 0.38;
+      const grad2 = ctx.createLinearGradient(overlayStart, 0, W, 0);
+      grad2.addColorStop(0,    "rgba(0,0,0,0.0)");
+      grad2.addColorStop(0.15, "rgba(0,0,0,0.35)");
+      grad2.addColorStop(1,    "rgba(0,0,0,0.60)");
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, W, H);
+
+      // ── 3. FROSTED GLASS PANEL — bottom ~34% ─────────────────────────────
+      const PANEL_Y = Math.round(H * 0.660);
+      const PANEL_H = H - PANEL_Y;
+      const PANEL_R = 28;
+      ctx.shadowColor = "rgba(0,0,0,0.25)";
+      ctx.shadowBlur = 24;
+      ctx.shadowOffsetY = -4;
+      roundRect(12, PANEL_Y, W - 24, PANEL_H - 12, PANEL_R);
+      ctx.fillStyle = PANEL_BG;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
+      ctx.shadowColor = "transparent";
+
+      // ── 4. LOCATION BADGE — top right, aligned with checklist ────────────
+      const TEXT_LEFT = Math.round(W * 0.50);
+      const TEXT_RIGHT_MARGIN = 36;
+      const TEXT_MAX_W = W - TEXT_LEFT - TEXT_RIGHT_MARGIN;
+      const BADGE_PAD_X = 22, BADGE_PAD_Y = 14, BADGE_R = 18;
+      const BADGE_TOP = 36;
+
       if (profile.location) {
         const loc = profile.location.toUpperCase();
-        ctx.font = "bold 22px 'Outfit', sans-serif";
-        const locW = ctx.measureText(loc).width;
-        const badgeW = Math.min(locW + 56, 400), badgeH = 52;
-        // Word-wrap location into badge — top RIGHT corner
-        const badgePadX = 22, badgePadY = 14;
-        const badgeMaxW = 320;
-        ctx.font = "bold 26px 'Outfit', sans-serif";
-        const locWords = loc.split(' ');
-        const locLines: string[] = []; let lCur = '';
+        const badgeFontSize = 28;
+        ctx.font = `900 ${badgeFontSize}px Arial, sans-serif`;
+        // Word-wrap location text to fit badge
+        const badgeMaxTextW = TEXT_MAX_W - 50;
+        const locWords = loc.split(" ");
+        const locLines: string[] = []; let lCur = "";
         for (const lw of locWords) {
-          const t = lCur ? lCur + ' ' + lw : lw;
-          if (ctx.measureText(t).width > badgeMaxW - 60) { if (lCur) locLines.push(lCur); lCur = lw; } else lCur = t;
+          const t = lCur ? lCur + " " + lw : lw;
+          if (ctx.measureText(t).width > badgeMaxTextW && lCur) { locLines.push(lCur); lCur = lw; } else lCur = t;
         }
         if (lCur) locLines.push(lCur);
-        const locLineH = 34;
-        const badgeH2 = locLines.length * locLineH + badgePadY * 2;
-        const maxLineW2 = Math.max(...locLines.map(l => ctx.measureText(l).width));
-        const badgeW2 = Math.min(badgeMaxW, maxLineW2 + 60);
-        const bx = W - badgeW2 - 32, by = 32;
-        roundRect(bx, by, badgeW2, badgeH2, 18);
-        ctx.fillStyle = GOLD; ctx.fill();
-        ctx.font = "24px sans-serif";
-        ctx.fillText("📍", bx + 14, by + badgePadY + 24);
-        ctx.font = "bold 24px 'Outfit', sans-serif"; ctx.fillStyle = NAVY;
-        locLines.forEach((line, i) => ctx.fillText(line, bx + 46, by + badgePadY + 26 + i * locLineH));
+        const locLineH = badgeFontSize + 6;
+        const maxLocW = Math.max(...locLines.map(l => ctx.measureText(l).width));
+        const pinW = 38;
+        const badgeW = pinW + maxLocW + BADGE_PAD_X * 2 + 8;
+        const badgeH = locLines.length * locLineH + BADGE_PAD_Y * 2;
+        const bx = TEXT_LEFT, by = BADGE_TOP;
+        roundRect(bx, by, badgeW, badgeH, BADGE_R);
+        ctx.fillStyle = MUSTARD; ctx.fill();
+        // Pin icon
+        const pinCX = bx + BADGE_PAD_X + 14;
+        const pinCY = by + badgeH / 2 - 4;
+        ctx.fillStyle = "#111111";
+        ctx.beginPath(); ctx.arc(pinCX, pinCY - 6, 11, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(pinCX - 7, pinCY - 2); ctx.lineTo(pinCX + 7, pinCY - 2); ctx.lineTo(pinCX, pinCY + 14); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = MUSTARD; ctx.beginPath(); ctx.arc(pinCX, pinCY - 6, 4.5, 0, Math.PI * 2); ctx.fill();
+        // Text
+        ctx.font = `900 ${badgeFontSize}px Arial, sans-serif`;
+        ctx.fillStyle = "#111111";
+        const textX = bx + BADGE_PAD_X + pinW;
+        locLines.forEach((line, i) => ctx.fillText(line, textX, by + BADGE_PAD_Y + badgeFontSize + i * locLineH));
       }
 
-      // ── "Looking for support that understands:" + checklist (LEFT side, narrow) ───
+      // ── 5. RIGHT-SIDE TEXT BLOCK (checklist) ─────────────────────────────
+      const BADGE_H_EST = 36 + 2 * (28 + 6) + BADGE_PAD_Y * 2; // estimated badge height
+      const HEADING_Y_START = BADGE_TOP + BADGE_H_EST + 32;
+      const headingFontSize = 38;
+      const headingLineH = headingFontSize + 10;
+
+      ctx.font = `bold ${headingFontSize}px Arial, sans-serif`;
+      const hWords = "Looking for support that understands:".split(" ");
+      const hLines: string[] = []; let hCur = "";
+      for (const hw of hWords) {
+        const t = hCur ? hCur + " " + hw : hw;
+        if (ctx.measureText(t).width > TEXT_MAX_W && hCur) { hLines.push(hCur); hCur = hw; } else hCur = t;
+      }
+      if (hCur) hLines.push(hCur);
+      hLines.forEach((l, i) => shadowText(l, TEXT_LEFT, HEADING_Y_START + i * headingLineH, WHITE, 14));
+
       if (specialties.length > 0) {
-        // Right side: starts at 46% of card width
-        const rx = W * 0.46, ry = 130;
-        const panelTextW = W - rx - 36;
-        ctx.shadowColor = "rgba(0,0,0,0.8)";
-        ctx.shadowBlur = 8;
-        ctx.font = "bold 19px 'Outfit', sans-serif";
-        ctx.fillStyle = WHITE;
-        // Wrap heading into narrow column
-        const hWords = "Looking for support that understands:".split(" ");
-        const hLines: string[] = []; let hCur = "";
-        for (const w of hWords) {
-          const t = hCur ? hCur + " " + w : w;
-          if (ctx.measureText(t).width > panelTextW) { if (hCur) hLines.push(hCur); hCur = w; } else hCur = t;
-        }
-        if (hCur) hLines.push(hCur);
-        hLines.forEach((l, i) => ctx.fillText(l, rx, ry + i * 24));
-        ctx.shadowBlur = 0;
-
-        const maxLabelW = panelTextW - 28;
-        const lblFont = "bold 19px 'Outfit', sans-serif";
-        let checkY = ry + hLines.length * 24 + 16;
-        specialties.forEach((label) => {
-          const words = label.split(" ");
-          const wrappedLines: string[] = [];
-          let cur = "";
-          ctx.font = lblFont;
-          for (const word of words) {
-            const test = cur ? cur + " " + word : word;
-            if (ctx.measureText(test).width > maxLabelW) {
-              if (cur) wrappedLines.push(cur);
-              cur = word;
-            } else {
-              cur = test;
-            }
+        const itemFontSize = 38;
+        const itemLineH = itemFontSize + 12;
+        const tickSize = 42;
+        const TEXT_INDENT = 52;
+        let itemY = HEADING_Y_START + hLines.length * headingLineH + 28;
+        for (const label of specialties) {
+          const subLines = label.split(" ");
+          // wrap label
+          const wrapped: string[] = []; let wCur = "";
+          ctx.font = `bold ${itemFontSize}px Arial, sans-serif`;
+          for (const word of subLines) {
+            const t = wCur ? wCur + " " + word : word;
+            if (ctx.measureText(t).width > TEXT_MAX_W - TEXT_INDENT && wCur) { wrapped.push(wCur); wCur = word; } else wCur = t;
           }
-          if (cur) wrappedLines.push(cur);
-
-          ctx.shadowColor = "rgba(0,0,0,0.6)";
-          ctx.shadowBlur = 4;
-          ctx.font = "bold 21px sans-serif";
-          ctx.fillStyle = GOLD;
-          ctx.fillText("✓", rx, checkY);
-
-          ctx.font = lblFont;
-          ctx.fillStyle = WHITE;
-          wrappedLines.forEach((line, li) => {
-            ctx.fillText(line, rx + 26, checkY + li * 24);
-          });
-          ctx.shadowBlur = 0;
-          checkY += Math.max(wrappedLines.length, 1) * 24 + 12;
-        });
+          if (wCur) wrapped.push(wCur);
+          ctx.font = `bold ${tickSize}px Arial, sans-serif`;
+          shadowText("✓", TEXT_LEFT, itemY, MUSTARD, 10);
+          ctx.font = `bold ${itemFontSize}px Arial, sans-serif`;
+          wrapped.forEach((subLine, si) => shadowText(subLine, TEXT_LEFT + TEXT_INDENT, itemY + si * (itemFontSize + 4), WHITE, 14));
+          itemY += wrapped.length * (itemFontSize + 4) + (itemLineH - itemFontSize);
+        }
       }
 
-      // ── [Play button removed — replaced by QR in white panel] ──
-      // ── Bottom white panel (was below play button) ─────────────────────────
-      // ── Bottom white panel ───────────────────────────────────────────────
-      const panelH = 290;
-      roundRect(0, H - panelH, W, panelH, 28);
-      ctx.fillStyle = "rgba(255,255,255,0.97)";
-      ctx.fill();
+      // ── 6. PANEL CONTENT ─────────────────────────────────────────────────
+      const PANEL_PAD_L = 36;
+      const PANEL_PAD_T = 22;
+      const QR_SIZE = Math.round(PANEL_H * 0.82);
+      const QR_X = W - 36 - QR_SIZE;
+      const TEXT_AREA_W = QR_X - PANEL_PAD_L - 16;
 
-      const py = H - panelH + 28;
-      const qrSize = 160;
-      const textMaxW = W - 72 - qrSize - 24; // leave room for QR on right
-
-      // Name
-      ctx.font = "900 68px 'Outfit', sans-serif";
+      // Name — first name only, large bold navy
+      const nameFontSize = Math.round(PANEL_H * 0.38);
+      ctx.font = `900 ${nameFontSize}px Arial, sans-serif`;
       ctx.fillStyle = NAVY;
-      let nameText = profile.name.toUpperCase();
-      while (ctx.measureText(nameText).width > textMaxW && nameText.length > 2)
+      const nameY = PANEL_Y + PANEL_PAD_T + nameFontSize;
+      let nameText = profile.name.split(" ")[0].toUpperCase(); // first name only
+      while (ctx.measureText(nameText).width > TEXT_AREA_W && nameText.length > 2)
         nameText = nameText.slice(0, -1);
-      if (nameText !== profile.name.toUpperCase()) nameText = nameText.trimEnd() + "…";
-      ctx.fillText(nameText, 36, py + 60);
+      ctx.fillText(nameText, PANEL_PAD_L, nameY);
 
-      // Title
-      ctx.font = "bold 26px 'Outfit', sans-serif";
+      // Title — purple bold
+      const titleFontSize = Math.round(PANEL_H * 0.175 * 0.85);
+      ctx.font = `bold ${titleFontSize}px Arial, sans-serif`;
       ctx.fillStyle = PURPLE;
+      const titleY = nameY + Math.round(PANEL_H * 0.18);
       let titleText = profile.title || "Support Worker";
-      while (ctx.measureText(titleText).width > textMaxW && titleText.length > 2)
+      while (ctx.measureText(titleText).width > TEXT_AREA_W && titleText.length > 2)
         titleText = titleText.slice(0, -1);
-      if (titleText !== (profile.title || "Support Worker")) titleText = titleText.trimEnd() + "…";
-      ctx.fillText(titleText, 36, py + 96);
+      ctx.fillText(titleText, PANEL_PAD_L, titleY);
 
-      // Tagline — word-wrapped
+      // Tagline / quote — italic dark navy
       if (profile.tagline) {
-        ctx.font = "italic 22px 'Outfit', sans-serif";
-        ctx.fillStyle = "#333333";
+        const quoteFontSize = Math.round(PANEL_H * 0.125);
+        ctx.font = `italic ${quoteFontSize}px Georgia, "Times New Roman", serif`;
+        ctx.fillStyle = NAVY;
         const tagWords = profile.tagline.split(" ");
         const tagLines: string[] = []; let tCur = "";
         for (const tw of tagWords) {
-          const test = tCur ? tCur + " " + tw : tw;
-          if (ctx.measureText(test).width > textMaxW) { if (tCur) tagLines.push(tCur); tCur = tw; } else tCur = test;
+          const t = tCur ? tCur + " " + tw : tw;
+          if (ctx.measureText(t).width > TEXT_AREA_W && tCur) { tagLines.push(tCur); tCur = tw; } else tCur = t;
         }
         if (tCur) tagLines.push(tCur);
-        const tagLineH = 28;
-        tagLines.slice(0, 3).forEach((line, i) => ctx.fillText(line, 36, py + 134 + i * tagLineH));
-        const lastTagLine = tagLines.slice(0, 3).at(-1) || "";
-        const lastTagY = py + 134 + (Math.min(tagLines.length, 3) - 1) * tagLineH + 8;
+        const quoteStartY = titleY + Math.round(PANEL_H * 0.17);
+        const quoteLineH = quoteFontSize + 4;
+        tagLines.slice(0, 3).forEach((line, i) => {
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(PANEL_PAD_L, PANEL_Y, TEXT_AREA_W, PANEL_H);
+          ctx.clip();
+          ctx.fillText(line, PANEL_PAD_L, quoteStartY + i * quoteLineH);
+          ctx.restore();
+        });
+        // Purple underline under last line
+        const lastLine = tagLines.slice(0, 3).at(-1) || "";
+        ctx.font = `italic ${quoteFontSize}px Georgia, "Times New Roman", serif`;
+        const lastLineW = Math.min(ctx.measureText(lastLine).width, TEXT_AREA_W);
+        const underlineY = quoteStartY + (Math.min(tagLines.length, 3) - 1) * quoteLineH + 5;
         ctx.beginPath();
-        ctx.moveTo(36, lastTagY);
-        ctx.lineTo(36 + Math.min(ctx.measureText(lastTagLine).width, textMaxW), lastTagY);
-        ctx.strokeStyle = PURPLE; ctx.lineWidth = 3; ctx.stroke();
+        ctx.moveTo(PANEL_PAD_L, underlineY);
+        ctx.lineTo(PANEL_PAD_L + lastLineW, underlineY);
+        ctx.strokeStyle = PURPLE; ctx.lineWidth = 2.5; ctx.stroke();
       }
 
-      // ── QR Code — right side of white panel ─────────────────────────────
+      // ── 7. QR CODE — right side of panel ─────────────────────────────────
       const profileUrl = window.location.origin + "/view?" + new URLSearchParams({
         name: profile.name,
         title: profile.title || "",
@@ -2045,9 +2070,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       try {
         const QRCode = await import("qrcode");
         const qrDataUrl: string = await (QRCode as any).toDataURL(profileUrl, {
-          width: qrSize,
+          width: QR_SIZE,
           margin: 1,
-          color: { dark: "#1a1a2e", light: "#ffffff" },
+          color: { dark: NAVY, light: "#ffffff" },
         });
         const qrImg = await new Promise<HTMLImageElement>((resolve, reject) => {
           const img = new Image();
@@ -2055,14 +2080,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
           img.onerror = reject;
           img.src = qrDataUrl;
         });
-        const qrX = W - 36 - qrSize;
-        const qrY = H - panelH + (panelH - qrSize) / 2 - 10;
-        ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
-        ctx.font = "bold 14px 'Outfit', sans-serif";
-        ctx.fillStyle = NAVY;
-        ctx.textAlign = "center";
-        ctx.fillText("SCAN TO VIEW", qrX + qrSize / 2, qrY + qrSize + 18);
-        ctx.textAlign = "left";
+        const qrY = PANEL_Y + (PANEL_H - QR_SIZE) / 2;
+        // White background behind QR
+        ctx.fillStyle = "#ffffff";
+        roundRect(QR_X - 4, qrY - 4, QR_SIZE + 8, QR_SIZE + 8, 6);
+        ctx.fill();
+        ctx.drawImage(qrImg, QR_X, qrY, QR_SIZE, QR_SIZE);
       } catch (_e) {
         // QR failed silently
       }
