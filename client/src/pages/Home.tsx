@@ -1948,7 +1948,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       const headingLineH = headingFontSize + 10;
 
       ctx.font = `bold ${headingFontSize}px Arial, sans-serif`;
-      const hWords = "Looking for support that understands:".split(" ");
+      const hWords = "Support that understands:".split(" ");
       const hLines: string[] = []; let hCur = "";
       for (const hw of hWords) {
         const t = hCur ? hCur + " " + hw : hw;
