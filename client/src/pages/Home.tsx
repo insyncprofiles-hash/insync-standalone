@@ -1749,11 +1749,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   };
 
   const handleSaveChanges = () => {
-    // In demo mode, don't generate a real URL — prompt to sign up instead
-    if (isDemo) {
-      toast.info("This is a demo!", { description: "Sign up at insyncprofiles.net to create your own profile and get a real shareable link." });
-      return;
-    }
     // Encode full profile data (including video URL and active skin) into the URL
     // The full URL is the shareable link — works on any device without localStorage
     const fullUrl = encodeProfileToURLWithSkin(profile, personalVideoUrl, activeSkinId);
