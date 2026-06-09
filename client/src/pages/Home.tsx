@@ -1594,16 +1594,34 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     return localStorage.getItem("insync_profile_id") || "";
   });
   const [hostedUrl, setHostedUrl] = useState<string>(() => {
-    // Restore the last saved full URL from localStorage (cross-device safe)
-    return localStorage.getItem("insync_hosted_url") || "";
+    // Restore the last saved full URL, but only if it belongs to THIS buyer.
+    // Cross-check: the stored hostedUrl must contain the buyer's own saved name.
+    // If it doesn't match (e.g. a Pete James demo URL from a previous session), discard it.
+    const storedHosted = localStorage.getItem("insync_hosted_url") || "";
+    const storedDraft = localStorage.getItem("insync_draft_profile");
+    if (storedHosted && storedDraft) {
+      try {
+        const draftProfile = JSON.parse(storedDraft) as ProfileData;
+        const draftName = (draftProfile?.name || "").trim().toLowerCase();
+        if (draftName) {
+          // The hostedUrl encodes name= as a URL param — check it matches
+          const hostedParams = new URLSearchParams(storedHosted.split("?")[1] || "");
+          const hostedName = (hostedParams.get("name") || "").trim().toLowerCase();
+          if (hostedName && hostedName !== draftName) {
+            // Mismatch — stale URL from another session (e.g. Pete James)
+            localStorage.removeItem("insync_hosted_url");
+            localStorage.removeItem("insync_short_url");
+            return "";
+          }
+        }
+      } catch {}
+    }
+    return storedHosted;
   });
   const [shortUrl, setShortUrl] = useState<string>(() => {
     const stored = localStorage.getItem("insync_short_url") || "";
     const hostedStored = localStorage.getItem("insync_hosted_url") || "";
-    // Clear stale short links: is.gd links, or short links from a different session
-    // (i.e. the short URL was generated for a different hostedUrl — e.g. Pete James demo)
-    // We validate by checking the short URL was generated after the current hostedUrl was saved.
-    // Simplest heuristic: if hostedUrl is empty, there's no valid short URL either.
+    // Clear stale short links: is.gd links, or if there's no valid hostedUrl
     if (!hostedStored || stored.includes('is.gd')) {
       localStorage.removeItem("insync_short_url");
       return "";
