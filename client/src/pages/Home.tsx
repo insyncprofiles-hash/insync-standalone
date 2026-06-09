@@ -3387,7 +3387,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               <div style={{ marginTop: "20px", background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)", borderRadius: "16px", border: `1px solid ${A.gold}33`, padding: "18px" }}>
                 <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: A.gold }}>📲 Social Media Card</p>
                 <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, lineHeight: 1.6 }}>
-                  Generate a trust-first card showing your location, who you work with, and a play button for your video intro. Download the PNG and post it directly to Facebook or Instagram.
+                  Generate a trust-first card showing your photo, location, and specialties — with a QR code participants can scan to open your profile. Download the PNG and post it on Facebook or Instagram.
                 </p>
                 <button
                   onClick={handleGenerateCard}
