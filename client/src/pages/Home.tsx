@@ -3060,7 +3060,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     ? `linear-gradient(135deg, ${A.green} 0%, oklch(0.55 0.18 145) 100%)`
                     : `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`,
                   border: "none",
-                  color: "oklch(0.08 0.05 155)",
+                  color: "#ffffff",
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "20px",
                   fontStyle: "italic",
@@ -3105,10 +3105,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   toast.success("Profile saved — opening client view…", { description: "This is exactly what your client sees when they open your link." });
                   window.open(previewLink, "_blank");
                 }}
-                style={{ width: "100%", padding: "14px", borderRadius: "12px", background: `${A.gold}18`, border: `1px solid ${A.gold}55`, color: A.gold, fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 700, cursor: "pointer", marginBottom: "16px", transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
+                style={{ width: "100%", padding: "16px", borderRadius: "12px", background: `${A.gold}28`, border: `2px solid ${A.gold}88`, color: A.gold, fontFamily: "'Outfit', sans-serif", fontSize: "17px", fontWeight: 800, cursor: "pointer", marginBottom: "16px", transition: "all 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", letterSpacing: "0.02em" }}
                 aria-label="Preview your profile as a client would see it"
               >
-                <span style={{ fontSize: "18px" }}>👁️</span> Preview as Client
+                <span style={{ fontSize: "20px" }}>👁️</span> Preview as Client
               </button>
 
               {/* ── Unique Link & QR Code ── */}
@@ -3184,7 +3184,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                           };
                           img.src = url;
                         }}
-                        style={{ padding: '9px 22px', borderRadius: '99px', background: `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`, border: 'none', color: '#1a2e1e', fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        style={{ padding: '9px 22px', borderRadius: '99px', background: `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`, border: 'none', color: '#ffffff', fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '6px' }}
                         aria-label="Download QR code as PNG image"
                       >
                         ⬇️ Download QR as Image
