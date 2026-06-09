@@ -1616,8 +1616,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   });
   const [shortUrl, setShortUrl] = useState<string>(() => {
     const stored = localStorage.getItem("insync_short_url") || "";
-    // Clear old tinyurl/bitly links so a fresh is.gd link is generated
-    if (stored.includes('tinyurl.com') || stored.includes('bit.ly')) {
+    // Clear old is.gd links so a fresh Bitly/TinyURL link is generated
+    if (stored.includes('is.gd')) {
       localStorage.removeItem("insync_short_url");
       return "";
     }
@@ -1762,20 +1762,40 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     setSaved(true);
     toast.success("Profile saved!", { description: "Your unique shareable link and QR code are ready in Thread 7." });
     setTimeout(() => setSaved(false), 2500);
-    // Shorten URL using is.gd (no CORS issues, direct redirect, no preview page)
-    fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(shareUrl)}`)
-      .then(r => r.text())
-      .then(short => {
+    // Shorten URL: Bitly primary, TinyURL fallback
+    const BITLY_TOKEN = "62209a105a1717c7b05b1fdf28b229b87f49203d";
+    fetch("https://api-ssl.bitly.com/v4/shorten", {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${BITLY_TOKEN}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ long_url: shareUrl })
+    })
+      .then(r => r.json())
+      .then(data => {
+        const short = data?.link;
         if (short && short.startsWith('http')) {
           setShortUrl(short);
           localStorage.setItem("insync_short_url", short);
           toast.success("Short link ready!", { description: short });
         } else {
-          throw new Error('Invalid is.gd response');
+          throw new Error('Bitly failed');
         }
       })
       .catch(() => {
-        toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
+        // Fallback: TinyURL
+        fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
+          .then(r => r.text())
+          .then(short => {
+            if (short && short.startsWith('http')) {
+              setShortUrl(short);
+              localStorage.setItem("insync_short_url", short);
+              toast.success("Short link ready!", { description: short });
+            } else {
+              throw new Error('TinyURL failed');
+            }
+          })
+          .catch(() => {
+            toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
+          });
       });
   };
 
@@ -3114,7 +3134,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     </div>
                     {!shortUrl && (
                       <p style={{ margin: "0 0 14px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, lineHeight: 1.5 }}>
-                        ⏳ Generating short link… click <strong>Save Changes</strong> again to get your <strong>is.gd/…</strong> link.
+                        ⏳ Generating short link… click <strong>Save Changes</strong> to get your short link.
                       </p>
                     )}
                     {/* QR Code */}
