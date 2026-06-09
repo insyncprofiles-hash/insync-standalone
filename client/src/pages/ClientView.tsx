@@ -114,7 +114,7 @@ const DEFAULT_EXPERIENCE_GROUPS: ExperienceGroup[] = [
 
 const BADGE_ICONS: Record<string, string> = {
   "NDIS Worker Screened":  "🛡",
-  "First Aid Certified":   "🚑",
+  "First Aid Certified":   "🟥",
   "Mental Health Support": "🤍",
   "Working With Children Check": "🧒",
   "Police Check":          "🔍",
