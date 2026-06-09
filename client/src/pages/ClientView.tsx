@@ -633,13 +633,21 @@ export default function ClientView() {
     <>
     <AccessibilityToolbar />
     <ThemeSwitcher />
+    {/* High-contrast filter applied as a pointer-events-none overlay so it never traps position:fixed children */}
+    {a11yStyle.filter && (
+      <div style={{
+        position: "fixed", inset: 0, zIndex: 9990,
+        filter: a11yStyle.filter,
+        pointerEvents: "none",
+        background: "transparent",
+      }} aria-hidden="true" />
+    )}
     <div style={{
       ...bgStyle,
       minHeight: "100vh",
       fontFamily: activeSkin ? `'${activeSkin.fonts.body}', sans-serif` : (a11yStyle.fontFamily || "'Outfit', sans-serif"),
       paddingTop: "110px",
       fontSize: `calc(${fontScale}rem * ${a11yStyle.fontSize ? parseFloat(a11yStyle.fontSize as string) / 100 : 1})`,
-      filter: a11yStyle.filter,
     }}>
       {/* ── Read Aloud — vibrant solid contrast button at very top ─── */}
       <div data-no-print="true" style={{ padding: "12px 16px 0", maxWidth: "680px", margin: "0 auto" }}>
