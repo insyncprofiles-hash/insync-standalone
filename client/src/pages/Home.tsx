@@ -1749,40 +1749,25 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
     setSaved(true);
     toast.success("Profile saved!", { description: "Your unique shareable link and QR code are ready in Thread 7." });
     setTimeout(() => setSaved(false), 2500);
-    // Shorten URL: Bitly primary, TinyURL fallback
-    const BITLY_TOKEN = "62209a105a1717c7b05b1fdf28b229b87f49203d";
-    fetch("https://api-ssl.bitly.com/v4/shorten", {
+    // Shorten URL via server-side Cloudflare proxy — token never reaches the browser
+    fetch("/api/shorten", {
       method: "POST",
-      headers: { "Authorization": `Bearer ${BITLY_TOKEN}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ long_url: shareUrl })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: shareUrl })
     })
       .then(r => r.json())
       .then(data => {
-        const short = data?.link;
+        const short = data?.short;
         if (short && short.startsWith('http')) {
           setShortUrl(short);
           localStorage.setItem("insync_short_url", short);
           toast.success("Short link ready!", { description: short });
         } else {
-          throw new Error('Bitly failed');
+          toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
         }
       })
       .catch(() => {
-        // Fallback: TinyURL
-        fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(shareUrl)}`)
-          .then(r => r.text())
-          .then(short => {
-            if (short && short.startsWith('http')) {
-              setShortUrl(short);
-              localStorage.setItem("insync_short_url", short);
-              toast.success("Short link ready!", { description: short });
-            } else {
-              throw new Error('TinyURL failed');
-            }
-          })
-          .catch(() => {
-            toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
-          });
+        toast.info("Link saved!", { description: "Your full profile link is ready to copy and share." });
       });
   };
 
