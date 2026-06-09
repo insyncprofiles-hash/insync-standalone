@@ -157,6 +157,18 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
   const btnActiveBorder = isLight ? theme.accent : isAurora ? "rgba(60,200,100,0.55)" : theme.accent;
   const accentColor = isLight ? theme.accent : isAurora ? "oklch(0.72 0.18 145)" : theme.accent;
 
+  const a11yPanelStyle: React.CSSProperties = {
+    position: "fixed",
+    top: `${TOP_BAR_HEIGHT + 4}px`,
+    zIndex: 10001,
+    width: "min(360px, calc(100vw - 32px))",
+    background: "#0a0a0a",
+    border: "2px solid #c9a84c",
+    borderRadius: "0 0 16px 16px",
+    boxShadow: "0 12px 40px rgba(0,0,0,0.85)",
+    padding: "20px",
+    animation: "fadeInDown 180ms cubic-bezier(0.23,1,0.32,1)",
+  };
   const panelStyle: React.CSSProperties = {
     position: "fixed",
     top: `${TOP_BAR_HEIGHT + 4}px`,
@@ -170,6 +182,16 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     animation: "fadeInDown 180ms cubic-bezier(0.23,1,0.32,1)",
   };
 
+  const a11ySectionLabel: React.CSSProperties = {
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: "10px",
+    fontWeight: 700,
+    letterSpacing: "0.12em",
+    textTransform: "uppercase",
+    color: "#c9a84c",
+    marginBottom: "10px",
+    display: "block",
+  };
   const sectionLabel: React.CSSProperties = {
     fontFamily: "'Outfit', sans-serif",
     fontSize: "10px",
@@ -181,6 +203,13 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     display: "block",
   };
 
+  const a11yControlRow: React.CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "10px 0",
+    borderBottom: "1px solid rgba(201,168,76,0.15)",
+  };
   const controlRow: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
@@ -189,6 +218,20 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     borderBottom: "1px solid oklch(1 0 0 / 6%)",
   };
 
+  const a11yControlLabel: React.CSSProperties = {
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: "14px",
+    fontWeight: 500,
+    color: "#f0d080",
+    lineHeight: 1.3,
+  };
+  const a11yControlDesc: React.CSSProperties = {
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: "11px",
+    color: "#a89060",
+    lineHeight: 1.3,
+    marginTop: "1px",
+  };
   const controlLabel: React.CSSProperties = {
     fontFamily: "'Outfit', sans-serif",
     fontSize: "14px",
@@ -205,6 +248,29 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     marginTop: "1px",
   };
 
+  const a11yToggleBtn = (active: boolean): React.CSSProperties => ({
+    width: "48px",
+    height: "26px",
+    borderRadius: "13px",
+    background: active ? "#c9a84c" : "#2a2a2a",
+    border: `1.5px solid ${active ? "#c9a84c" : "#444"}`,
+    cursor: "pointer",
+    position: "relative",
+    transition: "all 200ms ease-out",
+    flexShrink: 0,
+  });
+  const a11yFontSizeBtn = (size: number): React.CSSProperties => ({
+    padding: "6px 14px",
+    borderRadius: "8px",
+    border: `1.5px solid ${settings.fontSize === size ? "#c9a84c" : "#333"}`,
+    background: settings.fontSize === size ? "#c9a84c22" : "transparent",
+    color: settings.fontSize === size ? "#f0d080" : "#a89060",
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: `${12 * size}px`,
+    fontWeight: 600,
+    cursor: "pointer",
+    transition: "all 150ms ease-out",
+  });
   const toggleBtn = (active: boolean): React.CSSProperties => ({
     width: "48px",
     height: "26px",
@@ -599,65 +665,65 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           role="dialog"
           aria-label="Accessibility settings"
           aria-modal="false"
-          style={{ ...panelStyle, right: "16px" }}
+          style={{ ...a11yPanelStyle, right: "16px" }}
         >
           {/* Text Size */}
-          <span style={sectionLabel}>Text Size</span>
+          <span style={a11ySectionLabel}>Text Size</span>
           <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
-            <button style={fontSizeBtn(1)} onClick={() => updateSettings({ fontSize: 1 })} aria-pressed={settings.fontSize === 1} aria-label="Normal text size">A</button>
-            <button style={fontSizeBtn(1.25)} onClick={() => updateSettings({ fontSize: 1.25 })} aria-pressed={settings.fontSize === 1.25} aria-label="Large text size">A+</button>
-            <button style={fontSizeBtn(1.5)} onClick={() => updateSettings({ fontSize: 1.5 })} aria-pressed={settings.fontSize === 1.5} aria-label="Extra large text size">A++</button>
+            <button style={a11yFontSizeBtn(1)} onClick={() => updateSettings({ fontSize: 1 })} aria-pressed={settings.fontSize === 1} aria-label="Normal text size">A</button>
+            <button style={a11yFontSizeBtn(1.25)} onClick={() => updateSettings({ fontSize: 1.25 })} aria-pressed={settings.fontSize === 1.25} aria-label="Large text size">A+</button>
+            <button style={a11yFontSizeBtn(1.5)} onClick={() => updateSettings({ fontSize: 1.5 })} aria-pressed={settings.fontSize === 1.5} aria-label="Extra large text size">A++</button>
           </div>
 
           {/* Toggles */}
-          <span style={sectionLabel}>Display Options</span>
+          <span style={a11ySectionLabel}>Display Options</span>
 
           {/* High Contrast */}
-          <div style={controlRow}>
+          <div style={a11yControlRow}>
             <div>
-              <p style={controlLabel}>High Contrast</p>
-              <p style={controlDesc}>Stronger colour contrast for easier reading</p>
+              <p style={a11yControlLabel}>High Contrast</p>
+              <p style={a11yControlDesc}>Stronger colour contrast for easier reading</p>
             </div>
             <button
               role="switch"
               aria-checked={settings.highContrast}
               aria-label="Toggle high contrast mode"
               onClick={() => updateSettings({ highContrast: !settings.highContrast })}
-              style={toggleBtn(settings.highContrast)}
+              style={a11yToggleBtn(settings.highContrast)}
             >
               <span style={toggleThumb(settings.highContrast)} />
             </button>
           </div>
 
           {/* Dyslexia Font */}
-          <div style={controlRow}>
+          <div style={a11yControlRow}>
             <div>
-              <p style={controlLabel}>Dyslexia-Friendly Font</p>
-              <p style={controlDesc}>Switches to Lexend — easier letter spacing</p>
+              <p style={a11yControlLabel}>Dyslexia-Friendly Font</p>
+              <p style={a11yControlDesc}>Switches to Lexend — easier letter spacing</p>
             </div>
             <button
               role="switch"
               aria-checked={settings.dyslexiaFont}
               aria-label="Toggle dyslexia-friendly font"
               onClick={() => updateSettings({ dyslexiaFont: !settings.dyslexiaFont })}
-              style={toggleBtn(settings.dyslexiaFont)}
+              style={a11yToggleBtn(settings.dyslexiaFont)}
             >
               <span style={toggleThumb(settings.dyslexiaFont)} />
             </button>
           </div>
 
           {/* Reduced Motion */}
-          <div style={controlRow}>
+          <div style={a11yControlRow}>
             <div>
-              <p style={controlLabel}>Reduce Motion</p>
-              <p style={controlDesc}>Stops animations and transitions</p>
+              <p style={a11yControlLabel}>Reduce Motion</p>
+              <p style={a11yControlDesc}>Stops animations and transitions</p>
             </div>
             <button
               role="switch"
               aria-checked={settings.reducedMotion}
               aria-label="Toggle reduced motion"
               onClick={() => updateSettings({ reducedMotion: !settings.reducedMotion })}
-              style={toggleBtn(settings.reducedMotion)}
+              style={a11yToggleBtn(settings.reducedMotion)}
             >
               <span style={toggleThumb(settings.reducedMotion)} />
             </button>
@@ -665,10 +731,10 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
 
           {/* AAC Board */}
-          <div style={{ ...controlRow }}>
+          <div style={{ ...a11yControlRow }}>
             <div>
-              <p style={controlLabel}>AAC Board</p>
-              <p style={controlDesc}>Augmentative communication tiles — tap to speak</p>
+              <p style={a11yControlLabel}>AAC Board</p>
+              <p style={a11yControlDesc}>Augmentative communication tiles — tap to speak</p>
             </div>
             <button
               onClick={() => { setShowAACBoard(true); setOpenPanel("none"); }}
@@ -676,9 +742,9 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
               style={{
                 padding: "8px 14px",
                 borderRadius: "8px",
-                background: `${accentColor}22`,
-                border: `1.5px solid ${accentColor}`,
-                color: accentColor,
+                background: "#c9a84c22",
+                border: "1.5px solid #c9a84c",
+                color: "#f0d080",
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: "13px",
                 fontWeight: 600,
@@ -692,10 +758,10 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           </div>
 
           {/* Read Aloud */}
-          <div style={{ ...controlRow, borderBottom: "none", paddingBottom: 0 }}>
+          <div style={{ ...a11yControlRow, borderBottom: "none", paddingBottom: 0 }}>
             <div>
-              <p style={controlLabel}>Read Page Aloud</p>
-              <p style={controlDesc}>Text-to-speech for the whole page</p>
+              <p style={a11yControlLabel}>Read Page Aloud</p>
+              <p style={a11yControlDesc}>Text-to-speech for the whole page</p>
             </div>
             <button
               onClick={readPage}
@@ -703,9 +769,9 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
               style={{
                 padding: "8px 14px",
                 borderRadius: "8px",
-                background: ttsStatus !== "idle" ? `${accentColor}22` : "oklch(0.18 0.05 155)",
-                border: `1.5px solid ${ttsStatus !== "idle" ? accentColor : "oklch(0.28 0.05 155)"}`,
-                color: ttsStatus !== "idle" ? accentColor : "oklch(0.75 0.03 155)",
+                background: ttsStatus !== "idle" ? "#c9a84c22" : "#1a1a1a",
+                border: `1.5px solid ${ttsStatus !== "idle" ? "#c9a84c" : "#333"}`,
+                color: ttsStatus !== "idle" ? "#f0d080" : "#a89060",
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: "13px",
                 fontWeight: 600,
