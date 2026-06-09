@@ -48,7 +48,7 @@ const SECTIONS = [
         icon: "👤",
         title: "Fill In Your Profile Details",
         advantage: "Live preview — see exactly what clients will see as you type.",
-        detail: `Open the Edit Profile panel on the right side of the screen. In the Profile tab, fill in:\n\n• Full Name — appears on the post card and in the URL\n• Title — e.g. "Support Worker", "NDIS Support Worker", "Disability Support Specialist"\n• Tagline — your one-line statement (e.g. "I get it. I see you. I'm here.")\n• Bio — up to 280 characters. Write in your own voice.\n• Location — suburb and state (e.g. Brisbane, Queensland)\n• Email — your professional contact email\n• Website — your personal or professional website (optional)\n• Phone — optional, only add if you want clients to call directly\n• Availability — toggle the days you work and set your hours\n• Languages — add any languages you speak beyond English\n\nEvery field updates the post card preview instantly.`,
+        detail: `Open the Edit Profile panel on the right side of the screen. In the Profile tab, fill in:\n\n• Full Name — appears on the post card and in the URL\n• Title — e.g. "Support Worker", "NDIS Support Worker", "Disability Support Specialist"\n• Tagline — your one-line statement (e.g. "I get it. I see you. I'm here.") — maximum 55 characters. It appears on your social card and at the top of your profile. Keep it short, human, and memorable. The 55-character limit is intentional — it forces you to say something real rather than something long. Count yours before you type: "I get it. I see you. I'm here." is 33 characters. "Calm, consistent support — always in your corner." is 49 characters.\n• Bio — up to 280 characters. Write in your own voice.\n• Location — suburb and state (e.g. Brisbane, Queensland)\n• Email — your professional contact email\n• Website — your personal or professional website (optional)\n• Phone — optional, only add if you want clients to call directly\n• Availability — toggle the days you work and set your hours\n• Languages — add any languages you speak beyond English\n\nEvery field updates the post card preview instantly.`,
         tip: "Write your bio as if you're talking directly to a client or their family. Avoid jargon. Be specific about what you actually do.",
         tags: ["Live preview", "No save needed", "Up to 280 char bio"],
       },
@@ -140,6 +140,15 @@ const SECTIONS = [
     title: "Sharing Your Profile",
     subtitle: "Get your profile in front of clients and coordinators",
     steps: [
+      {
+        number: "11b",
+        icon: "💾",
+        title: "Save Changes Before Sharing",
+        advantage: "Your profile link and QR code only update when you save. Always save first — then share.",
+        detail: `This is the most important step that buyers miss.\n\nEverything you type in the editor updates the live preview instantly — but your shareable link, QR code, and social card are only generated from your saved profile. If you share a link before saving, the person who opens it will see an outdated version — or nothing at all.\n\nHow to save:\n1. Fill in all your details in the editor\n2. Click the "💾 Save Changes" button in Thread 7 (Share & Distribute)\n3. Wait for the confirmation — a short link will appear\n4. That short link is now your permanent shareable profile URL\n5. Copy it, share it, print it on your lanyard card\n\nWhen to re-save:\n• Every time you update your bio, photo, services, or credentials\n• Before generating a new social card\n• Before downloading a new lanyard card or QR code\n• Before sending your link to a new coordinator or client\n\nYour short link stays the same every time you save — it always points to your most recently saved profile. You don't need to update every place you've shared it.`,
+        tip: "Get into the habit: update, save, then share. In that order, every time.",
+        tags: ["Save before sharing", "Short link stays the same", "QR updates on save"],
+      },
       {
         number: "12",
         icon: "🔗",
