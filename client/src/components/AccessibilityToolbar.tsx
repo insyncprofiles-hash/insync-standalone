@@ -158,10 +158,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
   const currentFontIdx = fontSizeValues.indexOf(settings.fontSize);
 
   const btnStyle = (active: boolean): React.CSSProperties => ({
-    background: active ? "#1a1a2e" : "#f0f0f0",
-    border: `1.5px solid ${active ? "#1a1a2e" : "#ccc"}`,
+    background: active ? "#c9a84c" : "#1a1a1a",
+    border: `1.5px solid ${active ? "#c9a84c" : "#c9a84c44"}`,
     borderRadius: "10px",
-    color: active ? "#ffffff" : "#333",
+    color: active ? "#0a0a0a" : "#c9a84c",
     padding: "8px 12px",
     fontSize: "13px",
     fontFamily: "'Outfit', sans-serif",
@@ -256,10 +256,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
             right: "24px",
             zIndex: 9998,
             width: "min(360px, calc(100vw - 32px))",
-            background: "#ffffff",
-            border: "2px solid #1a1a2e",
+            background: "#0a0a0a",
+            border: "2px solid #c9a84c",
             borderRadius: "20px",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.25)",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.7)",
             padding: "20px",
             animation: "slideUpFade 200ms cubic-bezier(0.23, 1, 0.32, 1) both",
           }}
@@ -267,10 +267,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 style={{ color: "#1a1a2e", fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, margin: 0 }}>
+              <h2 style={{ color: "#c9a84c", fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, margin: 0 }}>
                 Accessibility
               </h2>
-              <p style={{ color: "#444", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
+              <p style={{ color: "#d4b96a", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
                 Customise your reading experience
               </p>
             </div>
@@ -278,10 +278,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
               onClick={() => setOpen(false)}
               aria-label="Close accessibility panel"
               style={{
-                background: "#f0f0f0",
-                border: "1px solid #ccc",
+                background: "#1a1a1a",
+                border: "1px solid #c9a84c",
                 borderRadius: "8px",
-                color: "#333",
+                color: "#c9a84c",
                 width: "32px",
                 height: "32px",
                 cursor: "pointer",
@@ -299,7 +299,7 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
 
             {/* ── Text Size ── */}
             <section aria-labelledby="a11y-fontsize-label">
-              <p id="a11y-fontsize-label" style={{ color: "#1a1a2e", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+              <p id="a11y-fontsize-label" style={{ color: "#c9a84c", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
                 🔤 Text Size
               </p>
               <div role="group" aria-labelledby="a11y-fontsize-label" style={{ display: "flex", gap: "6px" }}>
@@ -320,14 +320,14 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
                   </button>
                 ))}
               </div>
-              <p style={{ color: "#555", fontSize: "11px", fontFamily: "'Outfit', sans-serif", marginTop: "5px" }}>
-                Currently: <strong style={{ color: "#1a1a2e" }}>{fontSizeLabels[currentFontIdx] ?? "Normal"}</strong>
+              <p style={{ color: "#a89060", fontSize: "11px", fontFamily: "'Outfit', sans-serif", marginTop: "5px" }}>
+                Currently: <strong style={{ color: "#f0d080" }}>{fontSizeLabels[currentFontIdx] ?? "Normal"}</strong>
               </p>
             </section>
 
             {/* ── Text to Speech ── */}
             <section aria-labelledby="a11y-tts-label">
-              <p id="a11y-tts-label" style={{ color: "#1a1a2e", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+              <p id="a11y-tts-label" style={{ color: "#c9a84c", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
                 🔊 Text to Speech
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -344,12 +344,12 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
                 >
                   {ttsStatus === "reading" ? "⏹ Stop Reading" : "▶ Read Page Aloud"}
                 </button>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", borderRadius: "10px", background: "#f5f5f5", border: "1.5px solid #ddd" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", borderRadius: "10px", background: "#1a1a1a", border: "1.5px solid #c9a84c44" }}>
                   <div>
-                    <p style={{ color: "#1a1a2e", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
+                    <p style={{ color: "#f0d080", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
                       Hover to Speak
                     </p>
-                    <p style={{ color: "#555", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
+                    <p style={{ color: "#a89060", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
                       Reads text under your cursor
                     </p>
                   </div>
@@ -364,7 +364,7 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
 
             {/* ── Display Options ── */}
             <section aria-labelledby="a11y-display-label">
-              <p id="a11y-display-label" style={{ color: "#1a1a2e", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+              <p id="a11y-display-label" style={{ color: "#c9a84c", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
                 🎨 Display Options
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -396,20 +396,20 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
                       justifyContent: "space-between",
                       padding: "10px 12px",
                       borderRadius: "10px",
-                      background: settings[opt.key] ? "#e8f4e8" : "#f5f5f5",
-                      border: `1.5px solid ${settings[opt.key] ? "#2e7d32" : "#ddd"}`,
+                      background: settings[opt.key] ? "#1f1a0a" : "#1a1a1a",
+                      border: `1.5px solid ${settings[opt.key] ? "#c9a84c" : "#c9a84c44"}`,
                       transition: "all 160ms ease-out",
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span style={{ fontSize: "16px", width: "22px", textAlign: "center", color: settings[opt.key] ? "#2e7d32" : "#555" }} aria-hidden="true">
+                      <span style={{ fontSize: "16px", width: "22px", textAlign: "center", color: settings[opt.key] ? "#f0d080" : "#c9a84c" }} aria-hidden="true">
                         {opt.icon}
                       </span>
                       <div>
-                        <p style={{ color: "#1a1a2e", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
+                        <p style={{ color: "#f0d080", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
                           {opt.label}
                         </p>
-                        <p style={{ color: "#555", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
+                        <p style={{ color: "#a89060", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
                           {opt.desc}
                         </p>
                       </div>
@@ -430,9 +430,9 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
               aria-label="Reset all accessibility settings to default"
               style={{
                 background: "transparent",
-                border: "1.5px solid #ccc",
+                border: "1.5px solid #c9a84c44",
                 borderRadius: "10px",
-                color: "#555",
+                color: "#a89060",
                 padding: "8px",
                 fontSize: "12px",
                 fontFamily: "'Outfit', sans-serif",
@@ -462,7 +462,7 @@ function ToggleSwitch({ checked, onChange, label }: { checked: boolean; onChange
         width: "44px",
         height: "24px",
         borderRadius: "12px",
-        background: checked ? "#1a1a2e" : "#ccc",
+        background: checked ? "#c9a84c" : "#333",
         border: "none",
         cursor: "pointer",
         position: "relative",
