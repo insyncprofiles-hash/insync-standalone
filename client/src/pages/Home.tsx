@@ -2475,14 +2475,14 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <input
                     id="h-tagline"
                     type="text"
-                    maxLength={50}
+                    maxLength={55}
                     style={{ ...THREAD_INPUT, paddingRight: "52px" }}
                     value={profile.tagline}
-                    onChange={e => updateProfile({ tagline: e.target.value.slice(0, 50) })}
+                    onChange={e => updateProfile({ tagline: e.target.value.slice(0, 55) })}
                     placeholder="I get it. I see you. I'm here."
                   />
-                  <span style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: profile.tagline.length > 42 ? "#ff7070" : "rgba(255,255,255,0.3)", pointerEvents: "none" }}>
-                    {profile.tagline.length}/50
+                  <span style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: profile.tagline.length > 47 ? "#ff7070" : "rgba(255,255,255,0.3)", pointerEvents: "none" }}>
+                    {profile.tagline.length}/55
                   </span>
                 </div>
               </FieldRow>
