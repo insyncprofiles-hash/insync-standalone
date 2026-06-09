@@ -473,6 +473,7 @@ export default function ClientView() {
       connect: ["Warm & patient", "Humour when appropriate", "Non-judgmental"],
       presence: ["Calm & grounded", "Consistent", "Strengths-based"],
     },
+    yearsExperience: "",
     ...urlOverrides,
   };
 

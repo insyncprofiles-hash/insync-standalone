@@ -969,7 +969,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
 
           {/* QR Code */}
           {(() => {
-            const qrUrl = !isDemo && (shortUrl || hostedUrl) ? (shortUrl || hostedUrl) : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
+            const qrUrl: string = !isDemo && (shortUrl || hostedUrl) ? (shortUrl || hostedUrl)! : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
             const qrLabel = !isDemo && hostedUrl ? 'Scan to open this profile' : 'Scan to get your own profile';
             return (
               <div id='demo-overlay-qr' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px 24px', background: 'white', borderRadius: '20px', boxShadow: '0 4px 24px rgba(74,144,217,0.12)', border: '1.5px solid rgba(74,144,217,0.15)' }}>
@@ -1869,19 +1869,20 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       }
 
       // ── Dark overlay — LEFT 38% only, narrow strip ──────────────────────
-      const overlayR = ctx.createLinearGradient(0, 0, W * 0.38, 0);
-      overlayR.addColorStop(0, "rgba(0,0,0,0.90)");   // far left: fully dark
-      overlayR.addColorStop(0.70, "rgba(0,0,0,0.82)"); // still dark
-      overlayR.addColorStop(1, "rgba(0,0,0,0.0)");    // fades to clear at edge
+      // Right-side overlay: transparent on left (face visible), dark on right (text readable)
+      const overlayR = ctx.createLinearGradient(W * 0.35, 0, W, 0);
+      overlayR.addColorStop(0, "rgba(0,0,0,0.0)");
+      overlayR.addColorStop(0.2, "rgba(0,0,0,0.50)");
+      overlayR.addColorStop(1, "rgba(0,0,0,0.80)");
       ctx.fillStyle = overlayR;
-      ctx.fillRect(0, 0, W * 0.38, H); // only paint the left 38%
+      ctx.fillRect(0, 0, W, H);
 
-      // Bottom gradient for panel readability
-      const overlayB = ctx.createLinearGradient(0, H - 380, 0, H);
-      overlayB.addColorStop(0, "rgba(0,0,0,0)");
-      overlayB.addColorStop(1, "rgba(0,0,0,0.75)");
+      // Bottom fade into white panel
+      const overlayB = ctx.createLinearGradient(0, H - 420, 0, H - 280);
+      overlayB.addColorStop(0, "rgba(255,255,255,0)");
+      overlayB.addColorStop(1, "rgba(255,255,255,0.9)");
       ctx.fillStyle = overlayB;
-      ctx.fillRect(0, H - 380, W, 380);
+      ctx.fillRect(0, H - 420, W, 140);
 
       // ── Helper: rounded rect ─────────────────────────────────────────────
       const roundRect = (x: number, y: number, w: number, h: number, r: number) => {
@@ -1904,26 +1905,35 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         ctx.font = "bold 22px 'Outfit', sans-serif";
         const locW = ctx.measureText(loc).width;
         const badgeW = Math.min(locW + 56, 400), badgeH = 52;
-        const bx = 36, by = 36;
-        roundRect(bx, by, badgeW, badgeH, 14);
-        ctx.fillStyle = GOLD;
-        ctx.fill();
-        // Pin emoji
-        ctx.font = "22px sans-serif";
-        ctx.fillText("📍", bx + 12, by + 34);
-        // Location text
-        ctx.font = "bold 20px 'Outfit', sans-serif";
-        ctx.fillStyle = NAVY;
-        let locTxt = loc;
-        while (ctx.measureText(locTxt).width > badgeW - 56 && locTxt.length > 4) locTxt = locTxt.slice(0, -1);
-        if (locTxt !== loc) locTxt = locTxt.trimEnd() + "…";
-        ctx.fillText(locTxt, bx + 40, by + 34);
+        // Word-wrap location into badge — top RIGHT corner
+        const badgePadX = 22, badgePadY = 14;
+        const badgeMaxW = 320;
+        ctx.font = "bold 26px 'Outfit', sans-serif";
+        const locWords = loc.split(' ');
+        const locLines: string[] = []; let lCur = '';
+        for (const lw of locWords) {
+          const t = lCur ? lCur + ' ' + lw : lw;
+          if (ctx.measureText(t).width > badgeMaxW - 60) { if (lCur) locLines.push(lCur); lCur = lw; } else lCur = t;
+        }
+        if (lCur) locLines.push(lCur);
+        const locLineH = 34;
+        const badgeH2 = locLines.length * locLineH + badgePadY * 2;
+        const maxLineW2 = Math.max(...locLines.map(l => ctx.measureText(l).width));
+        const badgeW2 = Math.min(badgeMaxW, maxLineW2 + 60);
+        const bx = W - badgeW2 - 32, by = 32;
+        roundRect(bx, by, badgeW2, badgeH2, 18);
+        ctx.fillStyle = GOLD; ctx.fill();
+        ctx.font = "24px sans-serif";
+        ctx.fillText("📍", bx + 14, by + badgePadY + 24);
+        ctx.font = "bold 24px 'Outfit', sans-serif"; ctx.fillStyle = NAVY;
+        locLines.forEach((line, i) => ctx.fillText(line, bx + 46, by + badgePadY + 26 + i * locLineH));
       }
 
       // ── "Looking for support that understands:" + checklist (LEFT side, narrow) ───
       if (specialties.length > 0) {
-        const rx = 28, ry = 130;
-        const panelTextW = W * 0.38 - 56;
+        // Right side: starts at 46% of card width
+        const rx = W * 0.46, ry = 130;
+        const panelTextW = W - rx - 36;
         ctx.shadowColor = "rgba(0,0,0,0.8)";
         ctx.shadowBlur = 8;
         ctx.font = "bold 19px 'Outfit', sans-serif";
@@ -1974,84 +1984,87 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         });
       }
 
-      // ── Play button (bottom centre, above panel) ─────────────────────────
-      const pbx = W / 2, pby = H - 380 - 80;
-      // Outer circle
-      ctx.beginPath();
-      ctx.arc(pbx, pby, 75, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255,255,255,0.92)";
-      ctx.fill();
-      ctx.lineWidth = 6;
-      ctx.strokeStyle = GOLD;
-      ctx.stroke();
-      // Triangle
-      ctx.beginPath();
-      ctx.moveTo(pbx - 22, pby - 32);
-      ctx.lineTo(pbx - 22, pby + 32);
-      ctx.lineTo(pbx + 36, pby);
-      ctx.closePath();
-      ctx.fillStyle = NAVY;
-      ctx.fill();
-
-      // ── "Tap to watch" callout (moved up to match play button) ────────────
-      ctx.shadowColor = "rgba(0,0,0,0.8)";
-      ctx.shadowBlur = 6;
-      ctx.font = "italic bold 21px 'Outfit', sans-serif";
-      ctx.fillStyle = GOLD;
-      ctx.textAlign = "center";
-      ctx.fillText("Tap to watch my 15 sec intro!", pbx, H - 295);
-      ctx.textAlign = "left";
-      ctx.shadowBlur = 0;
-
+      // ── [Play button removed — replaced by QR in white panel] ──
+      // ── Bottom white panel (was below play button) ─────────────────────────
       // ── Bottom white panel ───────────────────────────────────────────────
-      const panelH = profile.tagline ? 270 : 180;
-      roundRect(0, H - panelH, W, panelH, 0);
-      ctx.fillStyle = "rgba(255,255,255,0.95)";
-      ctx.fill();
-      // Rounded top corners
-      roundRect(0, H - panelH, W, panelH, 24);
+      const panelH = 290;
+      roundRect(0, H - panelH, W, panelH, 28);
+      ctx.fillStyle = "rgba(255,255,255,0.97)";
       ctx.fill();
 
       const py = H - panelH + 28;
+      const qrSize = 160;
+      const textMaxW = W - 72 - qrSize - 24; // leave room for QR on right
+
       // Name
       ctx.font = "900 68px 'Outfit', sans-serif";
       ctx.fillStyle = NAVY;
-      ctx.fillText(profile.name.toUpperCase(), 36, py + 60);
+      let nameText = profile.name.toUpperCase();
+      while (ctx.measureText(nameText).width > textMaxW && nameText.length > 2)
+        nameText = nameText.slice(0, -1);
+      if (nameText !== profile.name.toUpperCase()) nameText = nameText.trimEnd() + "…";
+      ctx.fillText(nameText, 36, py + 60);
+
       // Title
       ctx.font = "bold 26px 'Outfit', sans-serif";
       ctx.fillStyle = PURPLE;
-      ctx.fillText(profile.title || "Support Worker", 36, py + 96);
+      let titleText = profile.title || "Support Worker";
+      while (ctx.measureText(titleText).width > textMaxW && titleText.length > 2)
+        titleText = titleText.slice(0, -1);
+      if (titleText !== (profile.title || "Support Worker")) titleText = titleText.trimEnd() + "…";
+      ctx.fillText(titleText, 36, py + 96);
+
       // Tagline — word-wrapped
       if (profile.tagline) {
         ctx.font = "italic 22px 'Outfit', sans-serif";
         ctx.fillStyle = "#333333";
-        const maxTW = W - 72;
-        const words = profile.tagline.split(" ");
-        const lines: string[] = [];
-        let cur = "";
-        for (const word of words) {
-          const test = cur ? cur + " " + word : word;
-          if (ctx.measureText(test).width > maxTW) {
-            if (cur) lines.push(cur);
-            cur = word;
-          } else {
-            cur = test;
-          }
+        const tagWords = profile.tagline.split(" ");
+        const tagLines: string[] = []; let tCur = "";
+        for (const tw of tagWords) {
+          const test = tCur ? tCur + " " + tw : tw;
+          if (ctx.measureText(test).width > textMaxW) { if (tCur) tagLines.push(tCur); tCur = tw; } else tCur = test;
         }
-        if (cur) lines.push(cur);
-        const lineH = 28;
-        lines.slice(0, 3).forEach((line, i) => {
-          ctx.fillText(line, 36, py + 134 + i * lineH);
-        });
-        // Underline under last line
-        const lastLine = lines.slice(0, 3).at(-1) || "";
-        const lastY = py + 134 + (Math.min(lines.length, 3) - 1) * lineH + 8;
+        if (tCur) tagLines.push(tCur);
+        const tagLineH = 28;
+        tagLines.slice(0, 3).forEach((line, i) => ctx.fillText(line, 36, py + 134 + i * tagLineH));
+        const lastTagLine = tagLines.slice(0, 3).at(-1) || "";
+        const lastTagY = py + 134 + (Math.min(tagLines.length, 3) - 1) * tagLineH + 8;
         ctx.beginPath();
-        ctx.moveTo(36, lastY);
-        ctx.lineTo(Math.min(36 + ctx.measureText(lastLine).width, W - 36), lastY);
-        ctx.strokeStyle = PURPLE;
-        ctx.lineWidth = 3;
-        ctx.stroke();
+        ctx.moveTo(36, lastTagY);
+        ctx.lineTo(36 + Math.min(ctx.measureText(lastTagLine).width, textMaxW), lastTagY);
+        ctx.strokeStyle = PURPLE; ctx.lineWidth = 3; ctx.stroke();
+      }
+
+      // ── QR Code — right side of white panel ─────────────────────────────
+      const profileUrl = window.location.origin + "/view?" + new URLSearchParams({
+        name: profile.name,
+        title: profile.title || "",
+        location: profile.location || "",
+        tagline: profile.tagline || "",
+      }).toString();
+      try {
+        const QRCode = await import("qrcode");
+        const qrDataUrl: string = await (QRCode as any).toDataURL(profileUrl, {
+          width: qrSize,
+          margin: 1,
+          color: { dark: "#1a1a2e", light: "#ffffff" },
+        });
+        const qrImg = await new Promise<HTMLImageElement>((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = qrDataUrl;
+        });
+        const qrX = W - 36 - qrSize;
+        const qrY = H - panelH + (panelH - qrSize) / 2 - 10;
+        ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+        ctx.font = "bold 14px 'Outfit', sans-serif";
+        ctx.fillStyle = NAVY;
+        ctx.textAlign = "center";
+        ctx.fillText("SCAN TO VIEW", qrX + qrSize / 2, qrY + qrSize + 18);
+        ctx.textAlign = "left";
+      } catch (_e) {
+        // QR failed silently
       }
 
       // ── Export as PNG ────────────────────────────────────────────────────
@@ -3441,6 +3454,26 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     <p style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, lineHeight: 1.5, textAlign: "center" as const }}>
                       Tip: On Facebook, attach the PNG as a photo (not a link) for best quality. Add your profile link in the caption.
                     </p>
+                    {/* Sample Post Script */}
+                    <div style={{ background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)", borderRadius: "12px", border: `1px solid ${A.gold}33`, padding: "14px 16px" }}>
+                      <p style={{ margin: "0 0 8px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: A.gold }}>📋 Sample Post Caption</p>
+                      <p style={{ margin: "0 0 10px", fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: isDark ? "#e8e8e8" : "#2a2a2a", lineHeight: 1.65, whiteSpace: "pre-line" as const }}>{`Before support begins, connection matters. Step inside my interactive profile.
+
+📱 Scan • Click • Connect`}</p>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText("Before support begins, connection matters. Step inside my interactive profile.\n\n📱 Scan • Click • Connect")
+                            .then(() => toast.success("Caption copied!", { description: "Paste it into your Facebook or Instagram post." }));
+                        }}
+                        style={{
+                          width: "100%", padding: "10px", borderRadius: "8px",
+                          background: `${A.gold}18`, border: `1px solid ${A.gold}55`,
+                          color: A.gold, fontFamily: "'Outfit', sans-serif",
+                          fontSize: "13px", fontWeight: 700, cursor: "pointer",
+                        }}
+                        aria-label="Copy sample post caption to clipboard"
+                      >📋 Copy Caption</button>
+                    </div>
                   </div>
                 )}
                 {!profile.name && (
