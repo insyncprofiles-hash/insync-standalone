@@ -2469,26 +2469,17 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
               <FieldRow label="Tagline" htmlFor="h-tagline">
                 <div style={{ position: "relative" }}>
-                  <textarea
+                  <input
                     id="h-tagline"
-                    rows={2}
-                    maxLength={100}
-                    style={{ ...THREAD_INPUT, resize: "none", minHeight: "unset", height: "auto", overflow: "hidden", lineHeight: "1.5" }}
+                    type="text"
+                    maxLength={80}
+                    style={{ ...THREAD_INPUT, paddingRight: "52px" }}
                     value={profile.tagline}
-                    onChange={e => {
-                      // Limit to 2 lines
-                      const lines = e.target.value.split("\n");
-                      if (lines.length > 2) return;
-                      updateProfile({ tagline: e.target.value });
-                    }}
-                    onKeyDown={e => {
-                      // Prevent adding a 3rd line via Enter
-                      if (e.key === "Enter" && profile.tagline.split("\n").length >= 2) e.preventDefault();
-                    }}
+                    onChange={e => updateProfile({ tagline: e.target.value })}
                     placeholder="I get it. I see you. I'm here."
                   />
-                  <span style={{ position: "absolute", bottom: "6px", right: "10px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: profile.tagline.length > 90 ? "#ff7070" : "rgba(255,255,255,0.3)" }}>
-                    {profile.tagline.length}/100
+                  <span style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: profile.tagline.length > 70 ? "#ff7070" : "rgba(255,255,255,0.3)", pointerEvents: "none" }}>
+                    {profile.tagline.length}/80
                   </span>
                 </div>
               </FieldRow>
