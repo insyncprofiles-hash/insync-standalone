@@ -181,8 +181,8 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
         data-no-print="true"
         style={{
           position: "fixed",
-          bottom: "24px",
-          right: "24px",
+          top: "116px",
+          right: "16px",
           zIndex: 9999,
           display: "flex",
           flexDirection: "column",
@@ -252,8 +252,8 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
           aria-modal="false"
           style={{
             position: "fixed",
-            bottom: "92px",
-            right: "24px",
+            top: "168px",
+            right: "16px",
             zIndex: 9998,
             width: "min(360px, calc(100vw - 32px))",
             background: "#0a0a0a",
