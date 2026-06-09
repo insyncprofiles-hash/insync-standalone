@@ -365,15 +365,15 @@ function ThreadSection({ num, icon, title, subtitle, children }: ThreadSectionPr
           width: "60px", height: "60px", borderRadius: "50%", flexShrink: 0,
           background: `${color}18`,
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: "26px",
+          fontSize: "1.625em",
         }}>{icon}</div>
         {/* Text block */}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color, margin: "0 0 2px" }}>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color, margin: "0 0 2px" }}>
             Thread {num}
           </p>
-          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "26px", fontWeight: 700, color: "#1a2e4a", margin: "0 0 4px", lineHeight: 1.1 }}>{title}</h3>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", color: "#4a5a7a", margin: 0, lineHeight: 1.3 }}>{subtitle}</p>
+          <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.625em", fontWeight: 700, color: "#1a2e4a", margin: "0 0 4px", lineHeight: 1.1 }}>{title}</h3>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", color: "#4a5a7a", margin: 0, lineHeight: 1.3 }}>{subtitle}</p>
         </div>
       </div>
       <div style={{ padding: "0 18px 20px 18px", borderTop: `1px solid ${color}18` }}>
@@ -638,7 +638,7 @@ export default function ClientView() {
       minHeight: "100vh",
       fontFamily: activeSkin ? `'${activeSkin.fonts.body}', sans-serif` : (a11yStyle.fontFamily || "'Outfit', sans-serif"),
       paddingTop: "110px",
-      fontSize: a11yStyle.fontSize ? `calc(${fontScale}rem * ${a11yStyle.fontSize})` : `${fontScale}rem`,
+      fontSize: `calc(${fontScale}rem * ${a11yStyle.fontSize ? parseFloat(a11yStyle.fontSize as string) / 100 : 1})`,
       filter: a11yStyle.filter,
     }}>
       {/* ── Read Aloud — vibrant solid contrast button at very top ─── */}
@@ -672,12 +672,12 @@ export default function ClientView() {
           onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
           aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
         >
-          <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">
+          <span style={{ fontSize: "1.375em", lineHeight: 1 }} aria-hidden="true">
             {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
           </span>
           <span style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: "15px",
+            fontSize: "0.9375em",
             fontWeight: 900,
             letterSpacing: "0.10em",
             color: "#ffffff",
@@ -698,7 +698,7 @@ export default function ClientView() {
               border: "none",
               cursor: "pointer",
               fontFamily: "'Outfit', sans-serif",
-              fontSize: "13px",
+              fontSize: "0.8125em",
               fontWeight: 800,
               color: "#ffffff",
               letterSpacing: "0.06em",
@@ -757,8 +757,8 @@ export default function ClientView() {
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: 1 }}>
               <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "34px", height: "34px", flexShrink: 0 }} />
               <div style={{ minWidth: 0 }}>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>GET TO KNOW ME</p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 800, color: "#F0C040", margin: "2px 0 0", letterSpacing: "0.10em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7)", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>GET TO KNOW ME</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.625em", fontWeight: 800, color: "#F0C040", margin: "2px 0 0", letterSpacing: "0.10em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7)", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
                   Interactive &amp; Accessible
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
@@ -788,13 +788,13 @@ export default function ClientView() {
             </div>
             {/* Name / title / location */}
             <div style={{ flex: 1, paddingTop: "8px" }}>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "30px", fontWeight: 700, color: P.text, margin: "0 0 6px", lineHeight: 1.05 }}>
+              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.875em", fontWeight: 700, color: P.text, margin: "0 0 6px", lineHeight: 1.05 }}>
                 {profile.name}
               </h1>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: P.accent, margin: "0 0 10px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: P.accent, margin: "0 0 10px" }}>
                 {profile.title}
               </p>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.text, margin: 0, display: "flex", alignItems: "center", gap: "6px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.text, margin: 0, display: "flex", alignItems: "center", gap: "6px" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#e74c3c" aria-hidden="true">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                 </svg>
@@ -816,12 +816,12 @@ export default function ClientView() {
                         width: "60px", height: "60px", borderRadius: "50%",
                         background: PASTEL_BG[i % PASTEL_BG.length],
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: "26px",
+                        fontSize: "1.625em",
                       }}>
                         {svc.icon}
                       </div>
                       <p style={{
-                        fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 700,
+                        fontFamily: "'Outfit', sans-serif", fontSize: "0.75em", fontWeight: 700,
                         color: "#3a4a6a", textAlign: "center", margin: 0, lineHeight: 1.25,
                         maxWidth: "62px",
                       }}>
@@ -879,7 +879,7 @@ export default function ClientView() {
                           transform: "translateX(-50%)",
                           background: "rgba(0,0,0,0.65)",
                           borderRadius: "20px", padding: "4px 14px",
-                          fontFamily: "'Outfit', sans-serif", fontSize: "11px",
+                          fontFamily: "'Outfit', sans-serif", fontSize: "0.6875em",
                           fontWeight: 700, color: "#F0C040", letterSpacing: "0.06em",
                           whiteSpace: "nowrap",
                         }}>▶ WATCH INTRO</div>
@@ -916,7 +916,7 @@ export default function ClientView() {
                   minHeight: "180px",
                   justifyContent: "center",
                 }}>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontStyle: "italic", fontWeight: 600, color: "rgba(255,255,255,0.92)", margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.0625em", fontStyle: "italic", fontWeight: 600, color: "rgba(255,255,255,0.92)", margin: 0, lineHeight: 1.5 }}>
                     "I think good support starts with curiosity."
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -925,10 +925,10 @@ export default function ClientView() {
                       "What have people assumed you can't do?",
                       "What would make life feel bigger?",
                     ].map(q => (
-                      <p key={q} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 600, color: "rgba(245,200,66,0.90)", margin: 0, paddingLeft: "14px", borderLeft: "2px solid rgba(245,200,66,0.45)" }}>{q}</p>
+                      <p key={q} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600, color: "rgba(245,200,66,0.90)", margin: 0, paddingLeft: "14px", borderLeft: "2px solid rgba(245,200,66,0.45)" }}>{q}</p>
                     ))}
                   </div>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", fontStyle: "italic", fontWeight: 600, color: "rgba(255,255,255,0.75)", margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.0em", fontStyle: "italic", fontWeight: 600, color: "rgba(255,255,255,0.75)", margin: 0, lineHeight: 1.5 }}>
                     "That's where the real work starts."
                   </p>
                 </div>
@@ -939,7 +939,7 @@ export default function ClientView() {
           {/* Tagline — italic serif, matching reference */}
           <div style={{ padding: "4px 24px 18px", textAlign: "center" }}>
             <p style={{
-              fontFamily: "'Cormorant Garamond', serif", fontSize: "24px",
+              fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5em",
               fontStyle: "italic", fontWeight: 600, color: P.text, margin: 0,
               lineHeight: 1.35,
             }}>
@@ -950,7 +950,7 @@ export default function ClientView() {
           {/* Badges — 2-column grid, light border, matching reference */}
           {profile.badges.length > 0 && (
             <div style={{ padding: "0 20px 16px" }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: P.accent, margin: "0 0 10px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: P.accent, margin: "0 0 10px" }}>
                 🏅 Professional Credentials{" "}
                 <span style={{ fontWeight: 400, opacity: 0.6 }}>(Self-Reported)</span>
               </p>
@@ -970,9 +970,9 @@ export default function ClientView() {
                         <rect x="4" y="8.5" width="12" height="3" rx="1" fill="white"/>
                       </svg>
                     ) : (
-                      <span style={{ fontSize: "18px", flexShrink: 0 }}>{BADGE_ICONS[badge] || "✦"}</span>
+                      <span style={{ fontSize: "1.125em", flexShrink: 0 }}>{BADGE_ICONS[badge] || "✦"}</span>
                     )}
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 700, color: P.text, lineHeight: 1.25 }}>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, color: P.text, lineHeight: 1.25 }}>
                       {badge}
                     </span>
                   </div>
@@ -991,7 +991,7 @@ export default function ClientView() {
 
         {/* ── Threads divider label ─────────────────────── */}
         <div style={{ textAlign: 'center', margin: '8px 0 0' }}>
-          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#7a8fbb', margin: 0 }}>✦ My Profile Threads ✦</p>
+          <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.8125em', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#7a8fbb', margin: 0 }}>✦ My Profile Threads ✦</p>
         </div>
 
         {/* ── Thread connector ─────────────────────────────── */}
@@ -1001,19 +1001,19 @@ export default function ClientView() {
         <ThreadSection num={1} icon="🫆" title="Identity" subtitle="Who I am, what matters to me, and how I work." textColor={P.text} cardBg={P.bg}>
           <div style={{ paddingTop: "16px" }}>
             {profile.bio && (
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.text, lineHeight: 1.6, margin: "0 0 12px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.text, lineHeight: 1.6, margin: "0 0 12px" }}>
                 {profile.bio}
               </p>
             )}
             {profile.languages.length > 0 && (
               <div>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: P.accent, margin: "0 0 8px" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: P.accent, margin: "0 0 8px" }}>
                   Languages
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                   {profile.languages.map(lang => (
                     <span key={lang} style={{
-                      fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 600,
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                       padding: "6px 14px", borderRadius: "20px",
                       background: P.badgeBg, border: `1px solid ${P.badgeBorder}`,
                       color: P.text,
@@ -1039,13 +1039,13 @@ export default function ClientView() {
                     background: `${P.circleColors[i % P.circleColors.length]}14`,
                     border: `1.5px solid ${P.circleColors[i % P.circleColors.length]}40`,
                   }}>
-                    <span style={{ fontSize: "18px" }}>{svc.icon}</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 600, color: P.text }}>{svc.label}</span>
+                    <span style={{ fontSize: "1.125em" }}>{svc.icon}</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 600, color: P.text }}>{svc.label}</span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.textMid, margin: 0 }}>No services listed.</p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.textMid, margin: 0 }}>No services listed.</p>
             )}
           </div>
           {/* Vehicle Details — shown when transport is selected */}
@@ -1061,16 +1061,16 @@ export default function ClientView() {
             );
             return (
               <div style={{ marginTop: "16px", padding: "14px", background: "rgba(100,160,255,0.06)", border: "1px solid rgba(100,160,255,0.18)", borderRadius: "14px" }}>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: P.accent, marginBottom: "12px" }}>🚗 Vehicle Details</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: P.accent, marginBottom: "12px" }}>🚗 Vehicle Details</p>
                 {hasAnyChecked ? vehicleCats.map(({ key, label }) => {
                   const checked = (profile.vehicleOptions[key] || []).filter((i: { checked: boolean; label: string }) => i.checked);
                   if (checked.length === 0) return null;
                   return (
                     <div key={key} style={{ marginBottom: "10px" }}>
-                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 600, color: P.textMid, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</p>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 600, color: P.textMid, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                         {checked.map((item: { label: string }) => (
-                          <span key={item.label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 600, padding: "6px 12px", borderRadius: "20px", background: `${P.accent}18`, border: `1px solid ${P.accent}40`, color: P.text }}>
+                          <span key={item.label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600, padding: "6px 12px", borderRadius: "20px", background: `${P.accent}18`, border: `1px solid ${P.accent}40`, color: P.text }}>
                             {item.label}
                           </span>
                         ))}
@@ -1078,7 +1078,7 @@ export default function ClientView() {
                     </div>
                   );
                 }) : (
-                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", color: P.textMid, margin: 0 }}>Transport is available — contact me for vehicle details.</p>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", color: P.textMid, margin: 0 }}>Transport is available — contact me for vehicle details.</p>
                 )}
               </div>
             );
@@ -1092,7 +1092,7 @@ export default function ClientView() {
               <div style={{ paddingTop: "16px", display: "flex", flexWrap: "wrap", gap: "6px" }}>
                 {checkedExperience.map(({ label }) => (
                   <span key={label} style={{
-                    fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 600,
+                    fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                     padding: "6px 14px", borderRadius: "20px",
                     background: P.badgeBg, border: `1px solid ${P.badgeBorder}`,
                     color: P.text,
@@ -1117,13 +1117,13 @@ export default function ClientView() {
                 ] as { key: "communicate" | "connect" | "presence"; label: string }[]).map(group => (
                   profile.showUpStyle[group.key].length > 0 ? (
                     <div key={group.key}>
-                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: P.accent, margin: "0 0 8px" }}>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: P.accent, margin: "0 0 8px" }}>
                         {group.label}
                       </p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
                         {profile.showUpStyle[group.key].map(chip => (
                           <span key={chip} style={{
-                            fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 600,
+                            fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                             padding: "6px 14px", borderRadius: "20px",
                             background: `${P.ctaFrom}14`, border: `1.5px solid ${P.ctaFrom}35`,
                             color: P.text,
@@ -1147,14 +1147,14 @@ export default function ClientView() {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "12px" }}>
                   {availDays.map(d => (
                     <span key={d} style={{
-                      fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 700,
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 700,
                       padding: "7px 16px", borderRadius: "20px",
                       background: `${P.ctaFrom}18`, border: `1.5px solid ${P.ctaFrom}40`,
                       color: P.text,
                     }}>{d}</span>
                   ))}
                 </div>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", color: P.textMid, margin: 0 }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", color: P.textMid, margin: 0 }}>
                   {profile.availFrom} – {profile.availTo}
                 </p>
               </div>
@@ -1170,26 +1170,26 @@ export default function ClientView() {
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 {profile.phone && (
                   <a href={`tel:${profile.phone}`} style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                    <span style={{ fontSize: "18px" }}>📱</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.accent }}>{profile.phone}</span>
+                    <span style={{ fontSize: "1.125em" }}>📱</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.accent }}>{profile.phone}</span>
                   </a>
                 )}
                 {profile.email && (
                   <a href={`mailto:${profile.email}`} style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                    <span style={{ fontSize: "18px" }}>✉️</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.accent }}>{profile.email}</span>
+                    <span style={{ fontSize: "1.125em" }}>✉️</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.accent }}>{profile.email}</span>
                   </a>
                 )}
                 {profile.whatsapp && (
                   <a href={`https://wa.me/${profile.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                    <span style={{ fontSize: "18px" }}>💬</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.accent }}>WhatsApp</span>
+                    <span style={{ fontSize: "1.125em" }}>💬</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.accent }}>WhatsApp</span>
                   </a>
                 )}
                 {profile.website && (
                   <a href={profile.website.startsWith('http') ? profile.website : `https://${profile.website}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                    <span style={{ fontSize: "18px" }}>🌐</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", color: P.accent, wordBreak: "break-all" }}>
+                    <span style={{ fontSize: "1.125em" }}>🌐</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.accent, wordBreak: "break-all" }}>
                       {profile.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
                     </span>
                   </a>
@@ -1228,7 +1228,7 @@ export default function ClientView() {
               padding: '14px 28px', borderRadius: '99px',
               background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
               border: 'none', cursor: 'pointer',
-              fontFamily: "'Outfit', sans-serif", fontSize: '14px', fontWeight: 800,
+              fontFamily: "'Outfit', sans-serif", fontSize: '0.875em', fontWeight: 800,
               color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase',
               boxShadow: `0 6px 24px ${P.accent}55`,
               transform: 'scale(1)', transition: 'transform 0.16s cubic-bezier(0.23,1,0.32,1)',
@@ -1237,24 +1237,24 @@ export default function ClientView() {
             onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
             aria-label="Save or print this profile"
           >
-            <span style={{ fontSize: '18px' }}>🖨️</span>
+            <span style={{ fontSize: '1.125em' }}>🖨️</span>
             Save / Print Profile
           </button>
           {/* Disclaimer */}
           <p style={{
-            fontFamily: "'Outfit', sans-serif", fontSize: '11px', lineHeight: '1.6',
+            fontFamily: "'Outfit', sans-serif", fontSize: '0.6875em', lineHeight: '1.6',
             color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(0,0,0,0.38)',
             margin: '0 auto', maxWidth: '680px', textAlign: 'center', padding: '0 16px',
           }}>
-            <strong style={{ display: 'block', marginBottom: '4px', fontSize: '11px', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
+            <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.6875em', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
             The information presented in this profile is self-reported and has not been independently verified. InSync Profiles makes no representation as to the accuracy, completeness, or currency of any skills, experience, qualifications, credentials, or other claims contained herein. It is the sole responsibility of the recipient or any appointing party to verify all profile content directly with the individual or through their nominated professional references and registrations.
           </p>
           {/* Brand footer */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', paddingTop: '16px', borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)', width: '100%', maxWidth: '680px' }}>
             <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 800, color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>InSync Profiles</p>
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)', margin: 0 }}>&copy; {new Date().getFullYear()} InSync Profiles. All rights reserved. &nbsp;·&nbsp; ABN 54 116 010 622</p>
-            <a href="/privacy" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.4)', textDecoration: 'underline', marginTop: '2px' }}>Terms of Sale &amp; Refund Policy</a>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.8125em', fontWeight: 800, color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>InSync Profiles</p>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.6875em', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)', margin: 0 }}>&copy; {new Date().getFullYear()} InSync Profiles. All rights reserved. &nbsp;·&nbsp; ABN 54 116 010 622</p>
+            <a href="/privacy" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.6875em', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.4)', textDecoration: 'underline', marginTop: '2px' }}>Terms of Sale &amp; Refund Policy</a>
           </div>
         </div>
       </div>

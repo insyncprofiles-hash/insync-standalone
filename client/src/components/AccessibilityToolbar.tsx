@@ -158,10 +158,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
   const currentFontIdx = fontSizeValues.indexOf(settings.fontSize);
 
   const btnStyle = (active: boolean): React.CSSProperties => ({
-    background: active ? "oklch(0.82 0.14 75)" : "oklch(0.15 0.06 155)",
-    border: `1.5px solid ${active ? "oklch(0.82 0.14 75)" : "oklch(0.72 0.14 75 / 30%)"}`,
+    background: active ? "#1a1a2e" : "#f0f0f0",
+    border: `1.5px solid ${active ? "#1a1a2e" : "#ccc"}`,
     borderRadius: "10px",
-    color: active ? "oklch(0.08 0.05 155)" : "oklch(0.82 0.04 130)",
+    color: active ? "#ffffff" : "#333",
     padding: "8px 12px",
     fontSize: "13px",
     fontFamily: "'Outfit', sans-serif",
@@ -256,10 +256,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
             right: "24px",
             zIndex: 9998,
             width: "min(360px, calc(100vw - 32px))",
-            background: "oklch(0.12 0.06 155)",
-            border: "1.5px solid oklch(0.72 0.14 75 / 40%)",
+            background: "#ffffff",
+            border: "2px solid #1a1a2e",
             borderRadius: "20px",
-            boxShadow: "0 8px 40px oklch(0.06 0.05 155 / 80%), 0 0 0 1px oklch(0.72 0.14 75 / 10%)",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.25)",
             padding: "20px",
             animation: "slideUpFade 200ms cubic-bezier(0.23, 1, 0.32, 1) both",
           }}
@@ -267,10 +267,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 style={{ color: "oklch(0.92 0.01 78)", fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, margin: 0 }}>
+              <h2 style={{ color: "#1a1a2e", fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", fontWeight: 700, margin: 0 }}>
                 Accessibility
               </h2>
-              <p style={{ color: "oklch(0.60 0.04 155)", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
+              <p style={{ color: "#444", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
                 Customise your reading experience
               </p>
             </div>
@@ -278,10 +278,10 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
               onClick={() => setOpen(false)}
               aria-label="Close accessibility panel"
               style={{
-                background: "oklch(0.15 0.06 155)",
-                border: "1px solid oklch(0.72 0.14 75 / 20%)",
+                background: "#f0f0f0",
+                border: "1px solid #ccc",
                 borderRadius: "8px",
-                color: "oklch(0.65 0.04 155)",
+                color: "#333",
                 width: "32px",
                 height: "32px",
                 cursor: "pointer",
@@ -299,7 +299,7 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
 
             {/* ── Text Size ── */}
             <section aria-labelledby="a11y-fontsize-label">
-              <p id="a11y-fontsize-label" style={{ color: "oklch(0.72 0.14 75 / 80%)", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+              <p id="a11y-fontsize-label" style={{ color: "#1a1a2e", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
                 🔤 Text Size
               </p>
               <div role="group" aria-labelledby="a11y-fontsize-label" style={{ display: "flex", gap: "6px" }}>
@@ -320,14 +320,14 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
                   </button>
                 ))}
               </div>
-              <p style={{ color: "oklch(0.55 0.04 155)", fontSize: "11px", fontFamily: "'Outfit', sans-serif", marginTop: "5px" }}>
-                Currently: <strong style={{ color: "oklch(0.82 0.14 75)" }}>{fontSizeLabels[currentFontIdx] ?? "Normal"}</strong>
+              <p style={{ color: "#555", fontSize: "11px", fontFamily: "'Outfit', sans-serif", marginTop: "5px" }}>
+                Currently: <strong style={{ color: "#1a1a2e" }}>{fontSizeLabels[currentFontIdx] ?? "Normal"}</strong>
               </p>
             </section>
 
             {/* ── Text to Speech ── */}
             <section aria-labelledby="a11y-tts-label">
-              <p id="a11y-tts-label" style={{ color: "oklch(0.72 0.14 75 / 80%)", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+              <p id="a11y-tts-label" style={{ color: "#1a1a2e", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
                 🔊 Text to Speech
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -344,12 +344,12 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
                 >
                   {ttsStatus === "reading" ? "⏹ Stop Reading" : "▶ Read Page Aloud"}
                 </button>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", borderRadius: "10px", background: "oklch(0.15 0.06 155)", border: "1.5px solid oklch(0.72 0.14 75 / 20%)" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", borderRadius: "10px", background: "#f5f5f5", border: "1.5px solid #ddd" }}>
                   <div>
-                    <p style={{ color: "oklch(0.82 0.04 130)", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
+                    <p style={{ color: "#1a1a2e", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
                       Hover to Speak
                     </p>
-                    <p style={{ color: "oklch(0.55 0.04 155)", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
+                    <p style={{ color: "#555", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
                       Reads text under your cursor
                     </p>
                   </div>
@@ -364,7 +364,7 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
 
             {/* ── Display Options ── */}
             <section aria-labelledby="a11y-display-label">
-              <p id="a11y-display-label" style={{ color: "oklch(0.72 0.14 75 / 80%)", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
+              <p id="a11y-display-label" style={{ color: "#1a1a2e", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
                 🎨 Display Options
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -396,20 +396,20 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
                       justifyContent: "space-between",
                       padding: "10px 12px",
                       borderRadius: "10px",
-                      background: settings[opt.key] ? "oklch(0.72 0.14 75 / 10%)" : "oklch(0.15 0.06 155)",
-                      border: `1.5px solid ${settings[opt.key] ? "oklch(0.72 0.14 75 / 40%)" : "oklch(0.72 0.14 75 / 20%)"}`,
+                      background: settings[opt.key] ? "#e8f4e8" : "#f5f5f5",
+                      border: `1.5px solid ${settings[opt.key] ? "#2e7d32" : "#ddd"}`,
                       transition: "all 160ms ease-out",
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span style={{ fontSize: "16px", width: "22px", textAlign: "center", color: settings[opt.key] ? "oklch(0.82 0.14 75)" : "oklch(0.60 0.04 155)" }} aria-hidden="true">
+                      <span style={{ fontSize: "16px", width: "22px", textAlign: "center", color: settings[opt.key] ? "#2e7d32" : "#555" }} aria-hidden="true">
                         {opt.icon}
                       </span>
                       <div>
-                        <p style={{ color: settings[opt.key] ? "oklch(0.88 0.06 78)" : "oklch(0.82 0.04 130)", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
+                        <p style={{ color: "#1a1a2e", fontSize: "13px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, margin: 0 }}>
                           {opt.label}
                         </p>
-                        <p style={{ color: "oklch(0.55 0.04 155)", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
+                        <p style={{ color: "#555", fontSize: "11px", fontFamily: "'Outfit', sans-serif", margin: "2px 0 0" }}>
                           {opt.desc}
                         </p>
                       </div>
@@ -430,9 +430,9 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
               aria-label="Reset all accessibility settings to default"
               style={{
                 background: "transparent",
-                border: "1.5px solid oklch(0.72 0.14 75 / 20%)",
+                border: "1.5px solid #ccc",
                 borderRadius: "10px",
-                color: "oklch(0.55 0.04 155)",
+                color: "#555",
                 padding: "8px",
                 fontSize: "12px",
                 fontFamily: "'Outfit', sans-serif",
@@ -462,7 +462,7 @@ function ToggleSwitch({ checked, onChange, label }: { checked: boolean; onChange
         width: "44px",
         height: "24px",
         borderRadius: "12px",
-        background: checked ? "oklch(0.82 0.14 75)" : "oklch(0.18 0.06 155)",
+        background: checked ? "#1a1a2e" : "#ccc",
         border: "none",
         cursor: "pointer",
         position: "relative",
