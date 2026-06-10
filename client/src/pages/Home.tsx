@@ -1626,6 +1626,12 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
       localStorage.removeItem("insync_short_url");
       return "";
     }
+    // Auto-fix old TinyURL preview links (tinyurl.com/preview/xxxxx → tinyurl.com/xxxxx)
+    if (stored.includes('tinyurl.com/preview/')) {
+      const fixed = stored.replace('tinyurl.com/preview/', 'tinyurl.com/');
+      localStorage.setItem("insync_short_url", fixed);
+      return fixed;
+    }
     return stored;
   });
   const [downloadReady, setDownloadReady] = useState(false);
