@@ -65,20 +65,20 @@ export async function onRequestPost(context) {
     }
   }
 
-  // --- Fallback: TinyURL v2 API (returns direct link, no preview redirect) ---
+  // --- Fallback: TinyURL free endpoint (no auth required, returns direct link) ---
   try {
-    const tinyRes = await fetch("https://api.tinyurl.com/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: longUrl, domain: "tinyurl.com" }),
-    });
-    const tinyData = await tinyRes.json();
-    const short = tinyData?.data?.tiny_url;
-    if (short && short.startsWith("http")) {
-      return new Response(JSON.stringify({ short, fallback: true }), {
-        status: 200,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
+    const tinyRes = await fetch(
+      `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`
+    );
+    if (tinyRes.ok) {
+      const short = (await tinyRes.text()).trim();
+      // api-create.php returns the short URL as plain text; reject preview URLs
+      if (short && short.startsWith("http") && !short.includes("/preview/")) {
+        return new Response(JSON.stringify({ short, fallback: true }), {
+          status: 200,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
     }
   } catch {
     // both failed

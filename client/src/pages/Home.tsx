@@ -3133,6 +3133,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         ⏳ Generating short link… click <strong>Save Changes</strong> to get your short link.
                       </p>
                     )}
+                    {shortUrl && shortUrl.includes('/preview/') && (
+                      <div style={{ margin: "0 0 14px", padding: "10px 12px", borderRadius: "10px", background: "#fff3cd", border: "1.5px solid #ffc107", fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#856404", lineHeight: 1.5 }}>
+                        ⚠️ Your share link opens a preview page. Tap <strong>Save Changes</strong> below to generate a fixed direct link.
+                      </div>
+                    )}
                     {/* QR Code */}
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                       <div id="insync-share-qr" style={{ background: "#ffffff", borderRadius: "12px", padding: "10px", boxShadow: `0 4px 20px ${A.gold}44` }}>
