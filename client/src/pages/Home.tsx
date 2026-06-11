@@ -1024,10 +1024,10 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                     ⬇️ Download QR
                   </button>
                 )}
-                {!isDemo && hostedUrl && (
-                  <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl} />
+                {((!isDemo && hostedUrl) || isDemo) && (
+                  <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true')} />
                 )}
-                {!isDemo && hostedUrl && (
+                {((!isDemo && hostedUrl) || isDemo) && (
                   <button
                     onClick={() => {
                       // Generate personalised lanyard card using Canvas
@@ -1199,7 +1199,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                         logoImg.src = '/assets/insync-logo-main.png';
                       };
 
-                      const overlayQrUrl = shortUrl || hostedUrl;
+                      const overlayQrUrl = shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true');
                       if (overlayQrUrl) {
                         import('qrcode').then(QRCode => {
                           QRCode.default.toDataURL(overlayQrUrl, { width: 370, margin: 1, color: { dark: '#000000', light: '#FFFFFF' } })
@@ -3105,7 +3105,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               {/* ── Unique Link & QR Code ── */}
               <div style={{ background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.85)", borderRadius: "16px", border: `1.5px solid ${A.gold}44`, padding: "18px", marginBottom: "16px" }}>
                 <p style={{ margin: "0 0 4px", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", color: A.gold }}>🔗 Your Unique Profile Link</p>
-                {hostedUrl ? (
+                {(hostedUrl || isDemo) ? (
                   <>
                     {/* Link display */}
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: shortUrl ? "14px" : "4px", marginTop: "8px" }}>
@@ -3142,7 +3142,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                       <div id="insync-share-qr" style={{ background: "#ffffff", borderRadius: "12px", padding: "10px", boxShadow: `0 4px 20px ${A.gold}44` }}>
                         <QRCodeSVG
-                          value={shortUrl || hostedUrl}
+                          value={shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true')}
                           size={160}
                           bgColor="#ffffff"
                           fgColor="#1a2e1e"
@@ -3189,7 +3189,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
                     {/* ── Lanyard Card ── */}
                     <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                      <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl} />
+                      <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true')} />
                       <button
                         onClick={() => {
                           const W = 700, H = 1050;
@@ -3277,7 +3277,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                             logoImg.src='/assets/insync-logo-main.png';
                           };
                           // Generate QR directly from buyer's profile URL — no DOM dependency
-                          const lanyardQrUrl = shortUrl || hostedUrl;
+                          const lanyardQrUrl = shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true');
                           if (lanyardQrUrl) {
                             import('qrcode').then(QRCode => {
                               QRCode.default.toDataURL(lanyardQrUrl, { width: 370, margin: 1, color: { dark: '#000000', light: '#FFFFFF' } })
