@@ -215,6 +215,77 @@ const SECTIONS = [
     ],
   },
   {
+    id: "devices",
+    icon: "📱",
+    title: "Devices & Your Data",
+    subtitle: "What you need to know about how your profile is stored — and what happens if you switch devices",
+    steps: [
+      {
+        number: "17b",
+        icon: "💾",
+        title: "Where Your Profile Is Stored",
+        advantage: "No account needed — your data stays on your device, private and offline.",
+        detail: `Your InSync Profile is stored in your browser's local storage — a private area on your device that only your browser can access. Nothing is sent to a server. No account, no password, no cloud sync.
+
+This means:
+• Your profile loads instantly every time you open the editor
+• Your data is completely private — no one else can see it
+• It works without an internet connection once the page has loaded
+• There is no login to forget or account to manage
+
+The trade-off is that your profile data lives on the specific device and browser where you set it up. It does not automatically follow you to other devices.`,
+        tip: "Think of it like a document saved on your desktop — it's there every time you open your laptop, but it won't be on your phone unless you put it there.",
+        tags: ["No account needed", "Private by default", "Works offline", "Instant load"],
+      },
+      {
+        number: "17c",
+        icon: "📲",
+        title: "Using Your Editor on a Different Device",
+        advantage: "Your licence key works on any device — just be aware that your profile content won't transfer automatically.",
+        detail: `Your licence key has no device limit. You can enter it on your phone, tablet, laptop, and work computer — all at the same time if you want.
+
+However, because your profile data is stored in your browser's local storage, it lives on the device where you originally set it up. If you open the editor on a different device, you'll need to fill in your profile details again from scratch.
+
+How to use the editor on a new device:
+1. Open insyncprofiles.net/editor on the new device
+2. Enter your licence key when prompted
+3. Fill in your profile details again (name, bio, services, photo, etc.)
+4. Save your profile — your shareable link will be the same one you've always used
+
+Most support workers set up their profile once on their main device (usually their laptop or home computer) and use other devices only to view or share the finished profile — not to edit it.`,
+        tip: "If you want to edit from multiple devices regularly, do your main editing on one device and use the others just for sharing. This keeps things simple and avoids confusion about which version is current.",
+        tags: ["Unlimited devices", "Same licence key", "Start fresh on new device", "No sync needed"],
+      },
+      {
+        number: "17d",
+        icon: "⚠️",
+        title: "What Happens If You Clear Your Browsing Data",
+        advantage: "Know this before it happens — so you're not caught off guard.",
+        detail: `Clearing your browser's cache, cookies, or site data will delete your profile from that device. This includes:
+
+• Clearing history and browsing data in Chrome, Safari, Firefox, or Edge
+• Using a browser's "Clear All Data" or "Reset" option
+• Uninstalling and reinstalling your browser
+• Some phone resets or factory resets
+
+If this happens:
+• Your licence key is not affected — it still works
+• Your shareable profile link is not affected — it still works
+• But your profile content (name, bio, photo, services, etc.) will be gone from that device
+• You'll need to fill in your profile again from scratch
+
+What to do if this happens:
+1. Open the editor and enter your licence key again
+2. Rebuild your profile — use your shareable link as a reference for what you had
+3. Save your profile again
+
+Your shareable link will update to reflect your newly saved profile.`,
+        tip: "Take a screenshot of your completed profile before clearing your browser data, or copy your bio and key details into a Notes app. This makes it easy to rebuild quickly if you ever need to.",
+        tags: ["Licence key safe", "Link still works", "Profile needs rebuilding", "Screenshot as backup"],
+      },
+    ],
+  },
+  {
     id: "maintenance",
     icon: "🔄",
     title: "Keeping Your Profile Current",
