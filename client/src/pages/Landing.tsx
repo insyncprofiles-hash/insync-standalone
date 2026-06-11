@@ -579,6 +579,10 @@ export default function Landing() {
                 </span>
               </h1>
 
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(18px, 2.5vw, 24px)", fontStyle: "italic", fontWeight: 600, color: C.gold, letterSpacing: "0.01em", marginBottom: "20px", lineHeight: 1.3 }}>
+                Beyond the “Sea of Sameness.”
+              </p>
+
               <p style={{ color: C.textBody, fontSize: "clamp(14px, 2vw, 17px)", lineHeight: 1.8, marginBottom: "36px", maxWidth: "480px" }}>
                 InSync Profiles is an interactive, accessibility-first profile template for support workers and their potential clients. Share your services, availability, credentials, and communication style — all in one shareable link.
               </p>
