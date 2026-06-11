@@ -42,6 +42,7 @@ const LEGACY_KEY_HASHES: string[] = [
   "bdd22b55266b0a1066b80d0550d561687a092095f3a1ff6c23ca874e2686e542", // G — 23 May 2026
   "800568101d3ef987269e964600d66d04a7059bb111732202e392789485cd4c1e", // nadzak3434@gmail.com — SKI-2026-5401 (legacy)
   "b42ae14d0edeab593016a835a39c9f0c9d74abdc9cdbf443d6b9eb037731eb14", // sarapumpd6@gmail.com — SKI-2026-7823 (legacy)
+  "8841c21388df11b6175c039ad94839b0a14f64f7c552954ce838eb8aab07fbfd", // gzakig8@gmail.com — SCV-2025-G-BD5792 (legacy key, normalised hash added)
 ];
 
 // Combined list used for localStorage validation (covers both old and new hashes)
