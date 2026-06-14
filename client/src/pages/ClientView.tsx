@@ -980,11 +980,11 @@ export default function ClientView() {
             </button>
           </div>
 
-          {/* Message to Begin — secondary CTA */}
+          {/* Feedback — secondary CTA */}
           {profile.email && (
             <div style={{ padding: "0 24px 16px" }}>
               <a
-                href={`mailto:${profile.email}?subject=${encodeURIComponent("Hi, I'd like to get started")}&body=${encodeURIComponent(`Hi ${profile.name || 'there'},\n\nI found your profile on InSync Profiles and would like to get started.`)}`}
+                href={`mailto:${profile.email}?subject=${encodeURIComponent("Feedback")}&body=${encodeURIComponent(`Hi ${profile.name || 'there'},\n\nI wanted to share some feedback about your profile.`)}`}
                 style={{
                   width: "100%", padding: "16px 24px",
                   background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
@@ -997,14 +997,13 @@ export default function ClientView() {
                 }}
                 onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
                 onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
-                aria-label={`Message to Begin — email ${profile.name}`}
+                aria-label={`Send feedback to ${profile.name}`}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
                 <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, letterSpacing: "0.10em", color: "white", textTransform: "uppercase" }}>
-                  Message to Begin
+                  Feedback
                 </span>
               </a>
             </div>
