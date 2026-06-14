@@ -299,13 +299,13 @@ export default function Landing() {
 
         {/* Desktop nav links — hidden on mobile */}
         <nav aria-label="Page navigation" className="desktop-nav" style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-          <Link href="/pricing" style={{ color: C.textBody, fontSize: "13px", fontWeight: 500, textDecoration: "none", padding: "8px 16px", borderRadius: "8px", transition: "color 150ms" }}>Pricing</Link>
-          <Link href="/how-to-use" style={{ color: C.textBody, fontSize: "13px", fontWeight: 500, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>How It Works</Link>
-          <Link href="/scenarios" style={{ color: C.textBody, fontSize: "13px", fontWeight: 500, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Scenarios</Link>
-          <Link href="/blog" style={{ color: C.textBody, fontSize: "13px", fontWeight: 500, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Blog</Link>
-          <Link href="/coordinators" style={{ color: C.teal, fontSize: "13px", fontWeight: 600, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Coordinators</Link>
-          <Link href="/skins" style={{ display: "inline-flex", alignItems: "center", gap: "5px", color: C.gold, fontSize: "13px", fontWeight: 600, textDecoration: "none", padding: "8px 14px", borderRadius: "8px" }}>Skin Packs <span style={{ fontSize: "9px", fontWeight: 800, background: `rgba(245,200,66,0.15)`, color: C.gold, padding: "2px 6px", borderRadius: "20px", letterSpacing: "0.08em", border: `1px solid rgba(245,200,66,0.3)` }}>SOON</span></Link>
-          <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "13px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
+          <Link href="/pricing" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px", transition: "color 150ms" }}>Pricing</Link>
+          <Link href="/how-to-use" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>How It Works</Link>
+          <Link href="/scenarios" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Scenarios</Link>
+          <Link href="/blog" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Blog</Link>
+          <Link href="/coordinators" style={{ color: C.teal, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Coordinators</Link>
+          <Link href="/skins" style={{ display: "inline-flex", alignItems: "center", gap: "5px", color: C.gold, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 14px", borderRadius: "8px" }}>Skin Packs <span style={{ fontSize: "9px", fontWeight: 800, background: `rgba(245,200,66,0.15)`, color: C.gold, padding: "2px 6px", borderRadius: "20px", letterSpacing: "0.08em", border: `1px solid rgba(245,200,66,0.3)` }}>SOON</span></Link>
+          <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
         </nav>
 
         {/* Mobile hamburger button — shown only on mobile */}
