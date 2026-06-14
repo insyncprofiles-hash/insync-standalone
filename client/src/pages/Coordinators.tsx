@@ -127,7 +127,7 @@ const BENEFITS = [
   {
     icon: "♿", // replaced below
     heading: "Built for participants with complex needs",
-    body: "Large text, plain language, colour themes, AAC board, text-to-speech, and a video intro. Participants can engage with the profile independently.",
+    body: "Large text, plain language, AAC board, text-to-speech, and a video intro. Participants can engage with the profile independently.",
     accent: "#f87171",
   },
 ];

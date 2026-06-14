@@ -1,5 +1,5 @@
 /* ============================================================
-   TopAccessibilityBar — Fixed top bar with accessibility + colour theme controls
+   TopAccessibilityBar — Fixed top bar with accessibility controls
    Design: Always visible, high-contrast, WCAG 2.1 AA
    Purpose: First thing disabled users see — large labelled buttons
    ============================================================ */
@@ -59,27 +59,24 @@ interface Props {
   showBack?: boolean;
   backHref?: string;
   backLabel?: string;
-  showHamburger?: boolean;
 }
 
 export const TOP_BAR_HEIGHT = 60; // px — height of the fixed top bar
 export const TOP_BARS_TOTAL = 110; // px — top bar (60px) + access bar (50px) combined offset
 
-export default function TopAccessibilityBar({ onSettingsChange, showBack, backHref = "/", backLabel = "← Back", showHamburger = true }: Props) {
-  const { theme, setThemeId, themes } = useColorTheme();
+export default function TopAccessibilityBar({ onSettingsChange, showBack, backHref = "/", backLabel = "← Back" }: Props) {
+  const { theme } = useColorTheme();
   const isAurora = theme.id === "aurora";
   const isLight = ['daylight','sage-linen','blush-cream','slate-mint'].includes(theme.id);
 
   const [settings, setSettings] = useState<AccessibilitySettings>(loadSettings);
-  const [openPanel, setOpenPanel] = useState<"none" | "a11y" | "theme">("none");
+  const [openPanel, setOpenPanel] = useState<"none" | "a11y">("none");
   const [speaking, setSpeaking] = useState(false);
   const [ttsStatus, setTtsStatus] = useState<"idle" | "reading" | "paused">("idle");
   const [showAACBoard, setShowAACBoard] = useState(false);
 
   const a11yBtnRef = useRef<HTMLButtonElement>(null);
-  const themeBtnRef = useRef<HTMLButtonElement>(null);
   const a11yPanelRef = useRef<HTMLDivElement>(null);
-  const themePanelRef = useRef<HTMLDivElement>(null);
 
   // Apply settings on mount and change
   useEffect(() => {
@@ -94,7 +91,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       if (e.key === "Escape" && openPanel !== "none") {
         setOpenPanel("none");
         if (openPanel === "a11y") a11yBtnRef.current?.focus();
-        if (openPanel === "theme") themeBtnRef.current?.focus();
       }
     };
     document.addEventListener("keydown", handler);
@@ -108,9 +104,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       if (openPanel === "a11y" && a11yPanelRef.current && !a11yPanelRef.current.contains(target) && !a11yBtnRef.current?.contains(target)) {
         setOpenPanel("none");
       }
-      if (openPanel === "theme" && themePanelRef.current && !themePanelRef.current.contains(target) && !themeBtnRef.current?.contains(target)) {
-        setOpenPanel("none");
-      }
+
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -341,29 +335,8 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           color: "#1a2e4a",
         }}
       >
-        {/* Left: hamburger menu button — opens colour theme panel (hidden on demo/client view) */}
-        {showHamburger ? (
-          <button
-            ref={themeBtnRef}
-            onClick={() => setOpenPanel(p => p === "theme" ? "none" : "theme")}
-            aria-label="Open colour theme menu"
-            aria-expanded={openPanel === "theme"}
-            aria-controls="theme-panel"
-            style={{
-              width: "40px", height: "40px", borderRadius: "10px",
-              background: openPanel === "theme" ? "rgba(74,144,217,0.10)" : "transparent",
-              border: "none", cursor: "pointer",
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-              transition: "background 150ms ease-out", flexShrink: 0,
-            }}
-          >
-            <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-            <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-            <span style={{ display: "block", width: "20px", height: "2px", borderRadius: "2px", background: "#1a2e4a" }} />
-          </button>
-        ) : (
-          <div style={{ width: "40px" }} />
-        )}
+        {/* Left: spacer */}
+        <div style={{ width: "40px" }} />
         {/* Centre: InSync Profiles logo — sits next to hamburger on the left */}
         <a
           href="/"
@@ -507,150 +480,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
         </button>
       </div>
 
-      {/* ── COLOUR THEME PANEL ── */}
-      {openPanel === "theme" && (
-        <div
-          id="theme-panel"
-          ref={themePanelRef}
-          role="dialog"
-          aria-label="Choose colour theme"
-          aria-modal="false"
-          style={{ ...panelStyle, right: "16px" }}
-        >
-          <span style={sectionLabel}>🎨 Colour Theme</span>
-
-          {/* Gradient themes — shown first */}
-          <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: isLight ? theme.textDim : "oklch(0.55 0.04 155)", fontFamily: "'Outfit', sans-serif", margin: "0 0 6px 2px" }}>Gradient</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "14px" }}>
-            {themes.filter(t => ['sky-gold','ocean-amber','rainbow-prism','cobalt-gold'].includes(t.id)).map(t => (
-              <button
-                key={t.id}
-                onClick={() => { setThemeId(t.id); }}
-                aria-pressed={theme.id === t.id}
-                aria-label={`${t.name} theme — ${t.description}`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  padding: "10px 12px",
-                  borderRadius: "10px",
-                  border: theme.id === t.id ? `2px solid ${t.accent}` : `2px solid ${t.circleStroke}30`,
-                  background: theme.id === t.id ? `${t.accent}18` : t.postBg,
-                  cursor: "pointer",
-                  width: "100%",
-                  textAlign: "left",
-                  transition: "all 150ms ease-out",
-                }}
-              >
-                <div aria-hidden="true" style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  background: `linear-gradient(135deg, ${t.postBg2} 0%, ${t.circleStroke} 100%)`,
-                  border: `1px solid ${t.circleStroke}40`,
-                  flexShrink: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "16px",
-                }}>
-                  {t.emoji}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: "13px", fontWeight: 600, fontFamily: "'Outfit', sans-serif", color: theme.id === t.id ? t.accent : t.textLight, margin: 0, lineHeight: 1.2 }}>{t.name}</p>
-                  <p style={{ fontSize: "11px", fontFamily: "'Outfit', sans-serif", color: t.textDim, margin: 0, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.description}</p>
-                </div>
-                {theme.id === t.id && <span aria-hidden="true" style={{ fontSize: "16px", flexShrink: 0, color: t.accent }}>✓</span>}
-              </button>
-            ))}
-          </div>
-
-          {/* Light themes */}
-          <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: isLight ? theme.textDim : "oklch(0.55 0.04 155)", fontFamily: "'Outfit', sans-serif", margin: "0 0 6px 2px" }}>Light</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "14px" }}>
-            {themes.filter(t => ['daylight','sage-linen','blush-cream','slate-mint'].includes(t.id)).map(t => (
-              <button
-                key={t.id}
-                onClick={() => { setThemeId(t.id); }}
-                aria-pressed={theme.id === t.id}
-                aria-label={`${t.name} theme — ${t.description}`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  padding: "10px 12px",
-                  borderRadius: "10px",
-                  border: theme.id === t.id ? `2px solid ${t.accent}` : `2px solid ${t.circleStroke}30`,
-                  background: theme.id === t.id ? `${t.accent}18` : t.postBg,
-                  cursor: "pointer",
-                  width: "100%",
-                  textAlign: "left",
-                  transition: "all 150ms ease-out",
-                }}
-              >
-                <div aria-hidden="true" style={{
-                  width: "32px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  background: `linear-gradient(135deg, ${t.postBg} 0%, ${t.accent} 100%)`,
-                  border: "1px solid oklch(1 0 0 / 15%)",
-                  flexShrink: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "16px",
-                }}>
-                  {t.emoji}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: "13px", fontWeight: 600, fontFamily: "'Outfit', sans-serif", color: theme.id === t.id ? t.accent : t.textLight, margin: 0, lineHeight: 1.2 }}>{t.name}</p>
-                  <p style={{ fontSize: "11px", fontFamily: "'Outfit', sans-serif", color: t.textDim, margin: 0, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.description}</p>
-                </div>
-                {theme.id === t.id && <span aria-hidden="true" style={{ fontSize: "16px", flexShrink: 0, color: t.accent }}>✓</span>}
-              </button>
-            ))}
-          </div>
-
-          {/* Dark themes */}
-          <p style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: isLight ? theme.textDim : "oklch(0.55 0.04 155)", fontFamily: "'Outfit', sans-serif", margin: "0 0 6px 2px" }}>Dark</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "14px" }}>
-            {themes.filter(t => !['sky-gold','ocean-amber','rainbow-prism','cobalt-gold','daylight','sage-linen','blush-cream','slate-mint'].includes(t.id)).map(t => (
-              <button
-                key={t.id}
-                onClick={() => { setThemeId(t.id); }}
-                aria-pressed={theme.id === t.id}
-                aria-label={`${t.name} theme — ${t.description}`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  padding: "10px 12px",
-                  borderRadius: "10px",
-                  border: theme.id === t.id ? `2px solid ${t.accent}` : "2px solid oklch(1 0 0 / 8%)",
-                  background: theme.id === t.id ? `${t.accent}18` : "oklch(1 0 0 / 4%)",
-                  cursor: "pointer",
-                  width: "100%",
-                  textAlign: "left",
-                  transition: "all 150ms ease-out",
-                }}
-              >
-                <div aria-hidden="true" style={{ width: "32px", height: "32px", borderRadius: "8px", background: `linear-gradient(135deg, ${t.postBg} 0%, ${t.accent} 100%)`, border: "1px solid oklch(1 0 0 / 15%)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px" }}>
-                  {t.emoji}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: "13px", fontWeight: 600, fontFamily: "'Outfit', sans-serif", color: theme.id === t.id ? t.accent : "oklch(0.92 0.01 78)", margin: 0, lineHeight: 1.2 }}>{t.name}</p>
-                  <p style={{ fontSize: "11px", fontFamily: "'Outfit', sans-serif", color: "oklch(0.50 0.04 155)", margin: 0, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.description}</p>
-                </div>
-                {theme.id === t.id && <span aria-hidden="true" style={{ fontSize: "16px", flexShrink: 0, color: t.accent }}>✓</span>}
-              </button>
-            ))}
-          </div>
-
-          <p style={{ fontSize: "11px", fontFamily: "'Outfit', sans-serif", color: "oklch(0.45 0.04 155)", marginTop: "12px", textAlign: "center" }}>
-            Theme saves automatically
-          </p>
-        </div>
-      )}
 
       {/* ── AAC BOARD OVERLAY ── */}
       {showAACBoard && (

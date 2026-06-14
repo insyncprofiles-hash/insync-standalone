@@ -14,7 +14,6 @@ import {
 } from "./Home";
 import { useA11y } from "@/hooks/useA11y";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 // ── Defaults (same as Home.tsx) ───────────────────────────────
 const DEFAULT_VIDEO = "/assets/pete_james_intro_with_music_c9095da0.mp4"; // Pete James demo intro video (with music)
@@ -631,7 +630,6 @@ export default function ClientView() {
   return (
     <>
     <AccessibilityToolbar />
-    <ThemeSwitcher />
     {/* High-contrast filter applied as a pointer-events-none overlay so it never traps position:fixed children */}
     {a11yStyle.filter && (
       <div style={{

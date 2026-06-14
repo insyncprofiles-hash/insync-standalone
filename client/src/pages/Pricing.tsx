@@ -55,7 +55,6 @@ const TIERS = [
       "Text-to-speech & hover-to-speak",
       "Dyslexia-friendly font mode",
       "AAC communication board",
-      "11 colour themes",
       "WCAG 2.1 AA accessible",
       "Mobile responsive",
     ],
@@ -93,7 +92,6 @@ const TIERS = [
       "Up to 10 support worker profiles",
       "Everything in Team (5 users)",
       "Agency logo / branding option",
-      "Custom colour theme per worker",
       "Priority email support",
     ],
     notIncluded: [],
@@ -124,13 +122,7 @@ const COMPARISON_ROWS = [
     professional: "1 embed per worker",
     bundle: "1 embed per worker",
   },
-  {
-    category: "Profile & Sharing",
-    label: "Colour theme",
-    starter: "11 themes included",
-    professional: "11 themes included",
-    bundle: "11 themes included",
-  },
+
   {
     category: "Profile & Sharing",
     label: "Agency branding",

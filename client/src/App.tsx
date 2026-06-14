@@ -102,13 +102,11 @@ function BackAwareBar() {
     }
   }, [location]);
 
-  const hideHamburger = location === "/demo" || location === "/view";
   return (
     <TopAccessibilityBar
       showBack={!!backRoute}
       backHref={backRoute?.href}
       backLabel={backRoute?.label}
-      showHamburger={!hideHamburger}
     />
   );
 }

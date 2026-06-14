@@ -99,7 +99,7 @@ const FLOWCHARTS: Record<string, FlowchartData> = {
     benefits: [
       { icon: "⏱", text: "Cuts onboarding calls and intro emails — profile does the work" },
       { icon: "🧩", text: "AAC board lets non-verbal clients explore and respond before meeting" },
-      { icon: "🎨", text: "Team licence — consistent branding across all workers in your agency" },
+      { icon: "🏢", text: "Team licence — consistent branding across all workers in your agency" },
       { icon: "📊", text: "Clients arrive at first shift already knowing their worker — lower anxiety" },
     ],
   },
@@ -214,7 +214,7 @@ With InSync Profiles, every new worker has a complete, accessible profile ready 
 
 The first meeting isn't an introduction. It's a continuation.
 
-For agencies managing 5 or 10 workers, the Team licence means every person on your team has a consistent, professional presence — with your branding, your colour theme, and your standards. Onboarding becomes a system, not a scramble.`,
+For agencies managing 5 or 10 workers, the Team licence means every person on your team has a consistent, professional presence — with your branding and your standards. Onboarding becomes a system, not a scramble.`,
     quote: "We now send every new worker's profile link to clients 48 hours before their first shift. The difference in how clients receive them is remarkable.",
     quoteBy: "Support coordinator, Adelaide",
     tags: ["Providers", "Support Coordinators", "Team Onboarding", "Client Matching"],

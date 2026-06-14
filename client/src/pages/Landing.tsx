@@ -234,7 +234,7 @@ const FEATURES = [
   { icon: "🔧", title: "Profile Accessibility First",   desc: "Built to WCAG 2.1 AA. Font size controls, dyslexia-friendly font, AAC communication board, text-to-speech, and screen reader support — because the person reading your profile may have complex communication needs too." },
   { icon: "🛡", title: "Professional Credentials (Self-Reported)",         desc: "Display your NDIS Worker Check, Working with Children Check, First Aid, and Police Check as credential badges on your profile." },
   { icon: "📅", title: "Availability & Services",      desc: "Show exactly which days and hours you're available, which services you offer, and which areas you cover." },
-  { icon: "🎨", title: "11 Colour Themes",             desc: "Choose from 11 professionally designed colour themes to match your personal brand or organisation." },
+
   { icon: "📲", title: "QR Code Sharing",              desc: "Every profile generates a unique QR code. Print it on your CV, ID badge, business card, or flyer — clients scan and view your profile instantly, no typing required." },
 ];
 
@@ -878,7 +878,7 @@ export default function Landing() {
             {/* Condensed sample note */}
             <div style={{ background: "rgba(245,200,66,0.10)", border: "1px solid rgba(245,200,66,0.28)", borderRadius: "10px", padding: "8px 14px", maxWidth: "320px", textAlign: "center" }}>
               <p style={{ fontSize: "10px", color: "rgba(245,200,66,0.85)", lineHeight: 1.6, margin: 0, fontWeight: 500 }}>
-                ⚠️ This sample shows 4 of 8 profile threads. The full client view includes all threads, accessibility tools, and your custom colour theme.
+                ⚠️ This sample shows 4 of 8 profile threads. The full client view includes all threads and accessibility tools.
               </p>
             </div>
             {/* View Full Sample button */}
@@ -1106,7 +1106,7 @@ export default function Landing() {
             <div style={{ flex: "1 1 280px", maxWidth: "420px", display: "flex", flexDirection: "column", gap: "20px", paddingTop: "8px" }}>
               {[
                 { icon: "🔗", title: "One link, anywhere", desc: "Share via WhatsApp, email, Facebook, or print as a QR code. Clients tap and see everything instantly — no app needed." },
-                { icon: "🎨", title: "Fully personalised", desc: "Change the name, photo, bio, services, credentials, and availability. 11 colour themes to match your style." },
+                { icon: "🎨", title: "Fully personalised", desc: "Change the name, photo, bio, services, credentials, and availability to match your style." },
                 { icon: "⬛", title: "QR code included", desc: "Every profile generates a unique QR code. Print it on your CV, ID badge, business card, or flyer — clients scan and view instantly." },
                 { icon: "__acc__", title: "Accessibility built in", desc: "Font size controls, dyslexia-friendly font, AAC communication board, and screen reader support — WCAG 2.1 AA compliant." },
                 { icon: "💼", title: "Works for any sector", desc: "NDIS, aged care, CHSP, SAH, independent workers, and providers. One template that covers every corner of the support sector." },

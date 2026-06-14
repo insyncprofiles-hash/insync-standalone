@@ -407,16 +407,9 @@ body{font-size:calc(16px * var(--fs))}
 <div id="top-bar">
   <span id="top-bar-brand">✦ InSync Profiles</span>
   <div id="top-bar-controls">
-    <button class="top-btn" id="theme-toggle-btn" onclick="togglePanel('theme-panel')" aria-label="Choose colour theme" aria-expanded="false">🎨 Colour Theme</button>
     <button class="top-btn" id="a11y-toggle-btn" onclick="togglePanel('a11y-panel')" aria-label="Accessibility options" aria-expanded="false">Accessibility</button>
     <button class="top-btn" onclick="openAAC()" aria-label="Open AAC Communication Board">🗣 AAC Board</button>
   </div>
-</div>
-
-<!-- ── Theme panel ── -->
-<div id="theme-panel" role="dialog" aria-label="Choose colour theme">
-  <p class="panel-title">Colour Theme</p>
-  <div id="theme-list"></div>
 </div>
 
 <!-- ── Accessibility panel ── -->
