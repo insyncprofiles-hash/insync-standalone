@@ -502,8 +502,7 @@ export default function ClientView() {
     const name = profile.name || "this support worker";
     if (profile.email) {
       const subject = encodeURIComponent(`Support enquiry — ${name}`);
-      const body = encodeURIComponent(`Hi ${name},\n\nI found your profile on InSync Profiles and would like to connect.`);
-      window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${profile.email}?subject=${subject}`;
     } else {
       alert("No contact details have been added to this profile yet. Please ask the support worker to add their email in their profile settings.");
     }
