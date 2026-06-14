@@ -984,7 +984,7 @@ export default function ClientView() {
           {profile.email && (
             <div style={{ padding: "0 24px 16px" }}>
               <a
-                href={`mailto:${profile.email}?subject=${encodeURIComponent("Feedback")}&body=${encodeURIComponent(`Hi ${profile.name || 'there'},\n\nI wanted to share some feedback about your profile.`)}`}
+                href={`mailto:${profile.email}?subject=${encodeURIComponent("Feedback")}`}
                 style={{
                   width: "100%", padding: "16px 24px",
                   background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
