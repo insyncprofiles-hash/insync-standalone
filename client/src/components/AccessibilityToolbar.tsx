@@ -222,8 +222,8 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
           aria-label="Accessibility options — text size, contrast, text to speech"
           title="Accessibility Options"
           style={{
-            width: "56px",
-            height: "56px",
+            width: "64px",
+            height: "64px",
             borderRadius: "50%",
             background: open ? "oklch(0.82 0.14 75)" : "oklch(0.13 0.06 155)",
             border: "2px solid oklch(0.82 0.14 75)",
@@ -237,7 +237,7 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
             fontSize: "24px",
           }}
         >
-          <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "40px", height: "40px", objectFit: "contain", borderRadius: "50%" }} />
+          <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "56px", height: "56px", objectFit: "contain", borderRadius: "50%" }} />
         </button>
       </div>
 

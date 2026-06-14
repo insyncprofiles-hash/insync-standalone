@@ -262,8 +262,8 @@ function encodeProfileToURL(profile: ProfileData, videoUrl?: string | null): str
   params.set("bio", profile.bio);
   params.set("location", profile.location);
   if (profile.phone) params.set("phone", profile.phone);
-  params.set("email", profile.email);
-  params.set("website", profile.website);
+  if (profile.email) params.set("email", profile.email);
+  if (profile.website) params.set("website", profile.website);
   if (profile.instagram) params.set("instagram", profile.instagram);
   if (profile.whatsapp) params.set("whatsapp", profile.whatsapp);
   if (profile.contactLabel && profile.contactLabel !== "Contact") params.set("contactLabel", profile.contactLabel);

@@ -6,7 +6,7 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
 
-const LAST_UPDATED = "23 May 2026";
+const LAST_UPDATED = "14 June 2026";
 const CONTACT_EMAIL = "insyncprofiles@gmail.com";
 const SITE_NAME = "InSync Profiles";
 const PRODUCT_NAME = "InSync Profiles Support Worker Profile Template";
@@ -52,7 +52,8 @@ export default function Privacy() {
             ["#brand",   "Brand & Copyright"],
             ["#refunds", "No Refunds"],
             ["#privacy", "Privacy Policy"],
-            ["#paypal",  "PayPal & Email Data"],
+            ["#paypal",  "PayPal & Automated Delivery"],
+            ["#ski",     "Security Access Key (SKI)"],
             ["#media",   "Media & Consent"],
           ].map(([href, label]) => (
             <a key={href} href={href} style={{ fontSize: "12px", color: GOLD, border: `1px solid ${GOLD}44`, borderRadius: "99px", padding: "5px 14px", textDecoration: "none", background: `${GOLD}10` }}>{label}</a>
@@ -68,13 +69,13 @@ export default function Privacy() {
           <h2 className="text-lg font-bold mb-4" style={{ color: GOLD, fontFamily: "'Cormorant Garamond', serif" }}>Plain English Summary</h2>
           <ul className="space-y-3 text-sm" style={{ color: TEXT }}>
             <li>⚖️ <strong style={{ color: HEAD }}>Sold as-is as a digital template.</strong> Once delivered, all responsibility for content, accuracy, and use rests entirely with the buyer.</li>
-            <li>🚫 <strong style={{ color: HEAD }}>No refunds.</strong> All sales are final once the licence key is issued.</li>
+            <li>🚫 <strong style={{ color: HEAD }}>No refunds.</strong> All sales are final once the security access key (SKI key) is issued.</li>
             <li>🏷️ <strong style={{ color: HEAD }}>InSync Profiles branding must remain</strong> on all templates sold. No reselling rights.</li>
-            <li>📧 <strong style={{ color: HEAD }}>PayPal sends us your name and email</strong> for product delivery. It may also be used for future product updates — you can opt out at any time.</li>
-            <li>🗄️ <strong style={{ color: HEAD }}>No purchase database exists.</strong> We do not store your purchase details in any database, CRM, or spreadsheet. Your information lives only in the PayPal payment notification email in our inbox.</li>
-            <li>🔑 <strong style={{ color: HEAD }}>You receive a licence key.</strong> Once payment is confirmed, you'll receive a licence key to activate your InSync Profiles profile editor at insyncprofiles.net/editor.</li>
+            <li>📧 <strong style={{ color: HEAD }}>Delivery is fully automated.</strong> When PayPal confirms your payment, our system automatically generates your unique SKI key and emails it to you — no manual steps, no waiting.</li>
+            <li>🗄️ <strong style={{ color: HEAD }}>No purchase database exists.</strong> We do not store your purchase details in any database, CRM, or spreadsheet. Your information lives only in the PayPal payment notification and the automated delivery email.</li>
+            <li>🔑 <strong style={{ color: HEAD }}>You receive a Security Access Key (SKI key).</strong> Your unique SKI key unlocks the editor at insyncprofiles.net/editor. It is single-use, non-transferable, and tied to your purchase.</li>
             <li>🔒 <strong style={{ color: HEAD }}>Your profile data never leaves your browser.</strong> Everything typed into the editor stays on your device only.</li>
-            <li>🗣 <strong style={{ color: HEAD }}>Try before you buy at insyncprofiles.net/demo.</strong> The free demo lets you explore the full template — including the AAC communication board, text-to-speech, dyslexia font, high contrast mode, and text size controls — before committing to a purchase.</li>
+            <li>🗣 <strong style={{ color: HEAD }}>Try before you buy at insyncprofiles.net/view.</strong> The free demo lets you explore the full template — including the AAC communication board, text-to-speech, dyslexia font, high contrast mode, and text size controls — before committing to a purchase.</li>
             <li>🤝 <strong style={{ color: HEAD }}>Client references in your profile require their consent.</strong> This is entirely the buyer's responsibility.</li>
             <li>✅ <strong style={{ color: HEAD }}>We do not sell your data.</strong> Ever. To anyone.</li>
           </ul>
@@ -109,19 +110,22 @@ export default function Privacy() {
 
         <Section title="2. Delivery of the Product">
           <p>
-            Upon successful payment via <strong>PayPal</strong> (the sole accepted payment method), the Buyer will receive access to the Template via a link delivered to the email address associated with their PayPal account. Delivery is typically completed within <strong>24 hours</strong> of confirmed payment, often sooner.
+            Upon successful payment via <strong>PayPal</strong> (the sole accepted payment method), delivery is <strong>fully automated</strong>. When PayPal confirms your payment, our system immediately generates a unique Security Access Key (SKI key) and emails it to the address associated with your PayPal account. No manual processing is required. Delivery typically occurs within <strong>minutes</strong> of confirmed payment.
           </p>
           <p className="mt-3">
-            <strong>Access is via licence key.</strong> Once payment is confirmed, you'll receive a licence key to activate your profile editor. No downloads, no installs.
+            <strong>How automated delivery works:</strong> PayPal sends an Instant Payment Notification (IPN) to our secure delivery system. The system verifies the payment, generates a unique SKI key, creates a short personalised editor link, and sends the key and link to your PayPal email address via an automated delivery email. This process is handled entirely by our secure infrastructure — no human intervention is required.
           </p>
           <p className="mt-3">
-            If you have not received your licence key or require assistance, contact us at <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: GOLD }}>{CONTACT_EMAIL}</a> with your PayPal transaction reference number.
+            <strong>What you receive:</strong> A delivery email containing your unique SKI key and a direct link to the editor at <strong>insyncprofiles.net/editor</strong>. Enter your SKI key when prompted to unlock the full editor. No downloads, no installs.
           </p>
           <p className="mt-3">
-            Access is considered granted once the licence key has been issued. {SITE_NAME} is not responsible for issues caused by incorrect email addresses or email provider filtering beyond our control.
+            If you have not received your delivery email within 30 minutes of payment, check your spam/junk folder first, then contact us at <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: GOLD }}>{CONTACT_EMAIL}</a> with your PayPal transaction reference number.
           </p>
           <p className="mt-3">
-            <strong>Welcome modal on first activation:</strong> When a valid licence key is entered for the first time, a welcome modal is displayed to the Buyer confirming successful activation. The Buyer's first activation also triggers an automated owner notification (see Section 12) so that {SITE_NAME} is aware the key has been used.
+            Access is considered granted once the SKI key has been issued and the delivery email has been sent. {SITE_NAME} is not responsible for issues caused by incorrect email addresses, email provider filtering, or spam filters beyond our control.
+          </p>
+          <p className="mt-3">
+            <strong>First activation:</strong> When a valid SKI key is entered for the first time, a welcome screen is displayed confirming successful activation. The Buyer's first activation also triggers an automated owner notification so that {SITE_NAME} is aware the key has been used.
           </p>
           <p className="mt-3">
             <strong>Where is profile data saved?</strong> The Template is a browser-based tool. All profile data entered by the Buyer (name, bio, services, photos, video, etc.) is stored <strong>only within the Buyer's own browser</strong> on their device. No profile data is transmitted to or stored on {SITE_NAME}'s servers. The Buyer is responsible for saving or exporting their work.
@@ -141,7 +145,7 @@ export default function Privacy() {
             The Buyer may <strong>not</strong> resell, redistribute, sublicense, or share the Template files with individuals or organisations beyond the scope of their purchased licence tier.
           </p>
           <p className="mt-3">
-            Each licence key is <strong>single-use per buyer</strong> — it is issued to one individual or team and is not transferable. Licence keys may be revoked without refund in the event of a breach of these terms, including but not limited to: sharing the key with unauthorised users, reselling the Template, or using the Template in a manner inconsistent with the purchased licence tier.
+            Each SKI key is <strong>single-use per buyer</strong> — it is issued to one individual or team and is not transferable. SKI keys may be revoked without refund in the event of a breach of these terms, including but not limited to: sharing the key with unauthorised users, reselling the Template, or using the Template in a manner inconsistent with the purchased licence tier.
           </p>
           <p className="mt-3" style={{ fontWeight: 700, color: "#c0392b" }}>
             ⛔ Reselling is strictly prohibited. This licence is for personal professional use only. The Template may not be on-sold, repackaged, gifted to third parties, or commercially exploited in any form. Any breach of this condition will result in immediate revocation of the licence without refund.
@@ -191,6 +195,43 @@ export default function Privacy() {
           </Section>
         </div>
 
+        {/* ── SKI KEY SECTION ── */}
+        <div id="ski" style={{ scrollMarginTop: "120px" }}>
+          <Section title="12b. Security Access Key (SKI Key) — What It Is and How It Works">
+            <div className="rounded-xl p-5 mb-5" style={{ background: `${GOLD}0d`, border: `1.5px solid ${GOLD}44` }}>
+              <p style={{ color: GOLD, fontWeight: 700, fontSize: "14px", marginBottom: "8px" }}>🔑 Your SKI key is your access credential</p>
+              <p style={{ color: TEXT, fontSize: "13px", lineHeight: 1.75 }}>
+                A Security Access Key (SKI key) is a unique, one-time-use code generated automatically when your PayPal payment is confirmed. It unlocks the InSync Profiles editor at <strong style={{ color: HEAD }}>insyncprofiles.net/editor</strong> and is tied to your purchase only.
+              </p>
+            </div>
+
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>How is my SKI key generated?</h3>
+            <p>
+              SKI keys are generated automatically by our secure delivery infrastructure when PayPal confirms your payment via Instant Payment Notification (IPN). Each key is unique, randomly generated, and associated with your purchase tier (Solo, Team, or Team 10). The key is delivered to your PayPal email address within minutes of payment confirmation.
+            </p>
+
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>How do I use my SKI key?</h3>
+            <p>
+              Visit <strong>insyncprofiles.net/editor</strong> and enter your SKI key when prompted. Once validated, the editor unlocks and you can begin building your profile immediately. Your key only needs to be entered once per device — the editor remembers your access on that device.
+            </p>
+
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>Is my SKI key transferable?</h3>
+            <p>
+              <strong>No.</strong> SKI keys are non-transferable and issued for personal use only (or team use within the scope of the purchased licence tier). Sharing, selling, or distributing your SKI key to others is a breach of these Terms and will result in immediate key revocation without refund.
+            </p>
+
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>What if I lose my SKI key?</h3>
+            <p>
+              If you lose your SKI key, contact us at <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: GOLD }}>{CONTACT_EMAIL}</a> with your PayPal transaction reference number. We can reissue your key at our discretion, subject to verification of the original purchase.
+            </p>
+
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>Can my SKI key be revoked?</h3>
+            <p>
+              Yes. {SITE_NAME} reserves the right to revoke any SKI key without refund in the event of a breach of these Terms, including but not limited to: sharing the key with unauthorised users, reselling or redistributing the Template, or using the Template outside the scope of the purchased licence tier. Revocation is at our sole discretion.
+            </p>
+          </Section>
+        </div>
+
         {/* ── MEDIA & CLIENT CONSENT ── */}
         <div id="media" style={{ scrollMarginTop: "120px" }}>
           <Section title="6. Media, Client References & Consent">
@@ -235,11 +276,11 @@ export default function Privacy() {
               This policy is consistent with the <strong>Australian Consumer Law (Schedule 2, Competition and Consumer Act 2010)</strong>. Digital products that have been accessed or downloaded are not subject to a general right of return, provided the product is as described and functions as represented.
             </p>
             <p className="mt-3">
-              A <strong>free demo</strong> is available at <a href="/demo" style={{ color: GOLD }}>insyncprofiles.net/demo</a> prior to purchase so Buyers can evaluate the product before committing. The demo includes the full accessibility suite and a sample profile. By purchasing, the Buyer confirms they have reviewed the demo and understand what they are purchasing.
+              A <strong>free demo</strong> is available at <a href="/view" style={{ color: GOLD }}>insyncprofiles.net/view</a> prior to purchase so Buyers can evaluate the product before committing. The demo includes the full accessibility suite and a sample profile. By purchasing, the Buyer confirms they have reviewed the demo and understands what they are purchasing.
             </p>
             <p className="mt-3">Exceptions may be considered at our sole discretion only in cases of:</p>
             <ul className="list-disc pl-5 mt-2 space-y-1">
-              <li>Proven non-access (licence key not received or not functioning despite a correct PayPal email address)</li>
+              <li>Proven non-access (SKI key not received or not functioning despite a correct PayPal email address, and not resolvable by reissuance)</li>
               <li>A significant defect that renders the product fundamentally unusable and that we are unable to remedy</li>
             </ul>
             <p className="mt-3">
@@ -300,25 +341,30 @@ export default function Privacy() {
 
         {/* ── PAYPAL EMAIL SECTION ── */}
         <div id="paypal" style={{ scrollMarginTop: "120px" }}>
-          <Section title="12. PayPal Purchases — How Your Email Is Handled">
+          <Section title="12. PayPal Purchases — Automated Delivery & How Your Email Is Handled">
             <div className="rounded-xl p-5 mb-5" style={{ background: `${GOLD}0d`, border: `1.5px solid ${GOLD}44` }}>
-              <p style={{ color: GOLD, fontWeight: 700, fontSize: "14px", marginBottom: "8px" }}>📧 How PayPal delivery works</p>
+              <p style={{ color: GOLD, fontWeight: 700, fontSize: "14px", marginBottom: "8px" }}>⚡ Fully automated delivery</p>
               <p style={{ color: TEXT, fontSize: "13px", lineHeight: 1.75 }}>
-                When you purchase via PayPal, PayPal sends us a payment notification email containing your <strong style={{ color: HEAD }}>name and email address</strong>. We use this to issue your licence key. This is the only reason we receive your personal information.
+                When you purchase via PayPal, PayPal sends an Instant Payment Notification (IPN) to our secure delivery system. The system automatically verifies the payment, generates your unique SKI key, and emails it to the address associated with your PayPal account — all within minutes, with no manual processing.
               </p>
             </div>
 
-            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>Do we store your email in a database?</h3>
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>What personal information does the delivery system receive?</h3>
             <p>
-              <strong>No.</strong> We do not maintain a customer database, CRM, mailing list, or spreadsheet of any kind. Your name and email address exist only within the PayPal payment notification email in our inbox. We do not copy, export, or transfer this information into any separate system. No purchase record is created on our end beyond what PayPal itself records.
+              Our automated delivery system receives your <strong>name, email address, and payment amount</strong> from PayPal's IPN. This information is used solely to generate and deliver your SKI key. It is not stored in any database, CRM, or spreadsheet — it passes through the delivery system only for the purpose of sending your key email.
             </p>
 
-            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>Key activation notifications</h3>
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>Do we store your email in a database?</h3>
             <p>
-              When a buyer activates a licence key for the first time, an automated notification is sent to the {SITE_NAME} owner via the Manus platform's internal notification system. This notification contains only the timestamp of activation — no personal data, profile content, or payment details are included. This notification is used solely for operational awareness (confirming keys are being used as issued).
+              <strong>No.</strong> We do not maintain a customer database, CRM, mailing list, or spreadsheet of any kind. Your name and email address exist only within the PayPal payment notification and the automated delivery email in our inbox. We do not copy, export, or transfer this information into any separate system. No purchase record is created on our end beyond what PayPal itself records.
+            </p>
+
+            <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>SKI key activation notifications</h3>
+            <p>
+              When a buyer activates a SKI key for the first time, an automated notification is sent to the {SITE_NAME} owner. This notification contains only the timestamp of activation — no personal data, profile content, or payment details are included. This notification is used solely for operational awareness (confirming keys are being used as issued).
             </p>
             <p className="mt-3">
-              Licence key management (issuance, activation status, and revocation) is handled via a password-protected admin page accessible only to the {SITE_NAME} owner. No buyer personal data is stored in this system — it tracks only key status.
+              SKI key management (issuance, activation status, and revocation) is handled via a password-protected admin page accessible only to the {SITE_NAME} owner. No buyer personal data is stored in this system — it tracks only key status.
             </p>
 
             <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>Future use — marketing communications</h3>

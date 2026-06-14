@@ -955,6 +955,61 @@ export default function ClientView() {
             </p>
           </div>
 
+          {/* CTA button — blue-to-gold gradient pill */}
+          <div style={{ padding: "0 24px 12px" }}>
+            <button
+              onClick={handleCTA}
+              style={{
+                width: "100%", padding: "18px 24px",
+                background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
+                border: "none", borderRadius: "50px", cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
+                boxShadow: `0 6px 24px ${P.accent}55`,
+                transform: "scale(1)", transition: "transform 0.16s cubic-bezier(0.23,1,0.32,1)",
+              }}
+              onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
+              onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+              aria-label={`${profile.ctaText} — contact ${profile.name}`}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white" opacity="0.95" aria-hidden="true">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+              </svg>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, letterSpacing: "0.10em", color: "white", textTransform: "uppercase" }}>
+                {profile.ctaText}
+              </span>
+            </button>
+          </div>
+
+          {/* Message to Begin — secondary CTA */}
+          {profile.email && (
+            <div style={{ padding: "0 24px 16px" }}>
+              <a
+                href={`mailto:${profile.email}?subject=${encodeURIComponent("Hi, I'd like to get started")}&body=${encodeURIComponent(`Hi ${profile.name || 'there'},\n\nI found your profile on InSync Profiles and would like to get started.`)}`}
+                style={{
+                  width: "100%", padding: "16px 24px",
+                  background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
+                  border: "none",
+                  borderRadius: "50px", cursor: "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
+                  textDecoration: "none",
+                  boxShadow: `0 4px 20px ${P.ctaFrom}55`,
+                  transform: "scale(1)", transition: "transform 0.16s cubic-bezier(0.23,1,0.32,1)",
+                }}
+                onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
+                onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
+                aria-label={`Message to Begin — email ${profile.name}`}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, letterSpacing: "0.10em", color: "white", textTransform: "uppercase" }}>
+                  Message to Begin
+                </span>
+              </a>
+            </div>
+          )}
+
           {/* Badges — 2-column grid, light border, matching reference */}
           {profile.badges.length > 0 && (
             <div style={{ padding: "0 20px 16px" }}>
@@ -1257,6 +1312,32 @@ export default function ClientView() {
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.6875em', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
             The information presented in this profile is self-reported and has not been independently verified. InSync Profiles makes no representation as to the accuracy, completeness, or currency of any skills, experience, qualifications, credentials, or other claims contained herein. It is the sole responsibility of the recipient or any appointing party to verify all profile content directly with the individual or through their nominated professional references and registrations.
           </p>
+          {/* Feedback button */}
+          {profile.email && (
+          <div style={{ padding: '16px 24px 8px', width: '100%', maxWidth: '520px', textAlign: 'center' }}>
+            <a
+              href={`mailto:${profile.email}`}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                padding: '10px 24px', borderRadius: '99px',
+                background: 'transparent',
+                border: isDark ? '1.5px solid rgba(255,255,255,0.25)' : '1.5px solid rgba(0,0,0,0.18)',
+                textDecoration: 'none', cursor: 'pointer',
+                fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700,
+                color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.55)',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                transition: 'opacity 0.16s',
+              }}
+              aria-label={`Send feedback to ${profile.name}`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Feedback
+            </a>
+          </div>
+          )}
+
           {/* Brand footer */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', paddingTop: '16px', borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)', width: '100%', maxWidth: '680px' }}>
             <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
