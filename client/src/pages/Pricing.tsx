@@ -8,12 +8,68 @@ import { Link } from "wouter";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 import { useColorTheme } from "@/contexts/ColorThemeContext";
 
-// ── PayPal payment links ─────────────────────────────────────
-const PURCHASE_LINKS = {
-  starter: "https://www.paypal.com/ncp/payment/JZ2CD3AC2GVYY",
-  professional: "https://www.paypal.com/ncp/payment/VJLL6F8ZHLE6C",
-  bundle: "https://www.paypal.com/ncp/payment/56WHDVQLU252N",
+// ── PayPal IPN-compatible payment config ─────────────────────
+const PAYPAL_BUSINESS = "insyncprofiles@gmail.com";
+const PAYPAL_NOTIFY_URL = "https://insyncprofiles.net/generate-key";
+const PAYPAL_RETURN_URL = "https://insyncprofiles.net/pricing?success=1";
+const PAYPAL_CANCEL_URL = "https://insyncprofiles.net/pricing";
+
+const PURCHASE_AMOUNTS: Record<string, string> = {
+  starter: "25.00",
+  professional: "105.00",
+  bundle: "195.00",
 };
+
+const PURCHASE_NAMES: Record<string, string> = {
+  starter: "InSync Profiles — Solo (1 user)",
+  professional: "InSync Profiles — Team (5 users)",
+  bundle: "InSync Profiles — Team Bundle (10 users)",
+};
+
+// PayPal Buy Now form button — triggers IPN on payment completion
+function PayPalButton({ tierId, label, btnBg, btnColor, btnBorder, disabled, highlight }: {
+  tierId: string; label: string; btnBg: string; btnColor: string;
+  btnBorder: string; disabled: boolean; highlight: boolean;
+}) {
+  return (
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+      <input type="hidden" name="cmd" value="_xclick" />
+      <input type="hidden" name="business" value={PAYPAL_BUSINESS} />
+      <input type="hidden" name="item_name" value={PURCHASE_NAMES[tierId] || tierId} />
+      <input type="hidden" name="amount" value={PURCHASE_AMOUNTS[tierId] || "0"} />
+      <input type="hidden" name="currency_code" value="AUD" />
+      <input type="hidden" name="notify_url" value={PAYPAL_NOTIFY_URL} />
+      <input type="hidden" name="return" value={PAYPAL_RETURN_URL} />
+      <input type="hidden" name="cancel_return" value={PAYPAL_CANCEL_URL} />
+      <input type="hidden" name="no_shipping" value="1" />
+      <input type="hidden" name="no_note" value="1" />
+      <input type="hidden" name="rm" value="2" />
+      <button
+        type={disabled ? "button" : "submit"}
+        disabled={disabled}
+        style={{
+          display: "block", width: "100%",
+          textAlign: "center",
+          padding: "13px 20px",
+          borderRadius: "12px",
+          fontSize: "14px",
+          fontFamily: "'Outfit', sans-serif",
+          fontWeight: 700,
+          cursor: disabled ? "not-allowed" : "pointer",
+          transition: "all 160ms ease-out",
+          background: disabled ? "rgba(26,58,107,0.12)" : btnBg,
+          color: disabled ? "rgba(26,58,107,0.35)" : btnColor,
+          border: btnBorder,
+          boxShadow: !disabled && highlight ? "0 4px 20px rgba(247,224,138,0.35)" : "none",
+        }}
+        aria-label={label}
+        aria-disabled={disabled}
+      >
+        {label}
+      </button>
+    </form>
+  );
+}
 
 // Fixed palette — always readable on the light blue-gold gradient background
 const GOLD = "#b07d0a";          // dark gold — readable on light bg
@@ -587,33 +643,15 @@ export default function Pricing() {
                       </label>
 
                       {/* Buy button — disabled until checkbox ticked */}
-                      <a
-                        href={agreed[tier.id] ? PURCHASE_LINKS[tier.id as keyof typeof PURCHASE_LINKS] : undefined}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={!agreed[tier.id] ? (e) => e.preventDefault() : undefined}
-                        style={{
-                          display: "block",
-                          textAlign: "center",
-                          padding: "13px 20px",
-                          borderRadius: "12px",
-                          fontSize: "14px",
-                          fontFamily: "'Outfit', sans-serif",
-                          fontWeight: 700,
-                          textDecoration: "none",
-                          transition: "all 160ms ease-out",
-                          background: agreed[tier.id] ? btnBg : (isDark ? "rgba(255,255,255,0.12)" : "rgba(26,58,107,0.12)"),
-                          color: agreed[tier.id] ? btnColor : (isDark ? "rgba(255,255,255,0.35)" : "rgba(26,58,107,0.35)"),
-                          border: btnBorder,
-                          boxShadow: agreed[tier.id] && tier.highlight ? `0 4px 20px rgba(247,224,138,0.35)` : "none",
-                          cursor: agreed[tier.id] ? "pointer" : "not-allowed",
-                          pointerEvents: "auto",
-                        }}
-                        aria-label={`Purchase ${tier.name} plan for $${tier.price} AUD`}
-                        aria-disabled={!agreed[tier.id]}
-                      >
-                        {agreed[tier.id] ? `Get ${tier.name} — $${tier.price} AUD` : `Agree to Terms to Continue`}
-                      </a>
+                      <PayPalButton
+                        tierId={tier.id}
+                        label={agreed[tier.id] ? `Get ${tier.name} — $${tier.price} AUD` : `Agree to Terms to Continue`}
+                        btnBg={agreed[tier.id] ? btnBg : (isDark ? "rgba(255,255,255,0.12)" : "rgba(26,58,107,0.12)")}
+                        btnColor={agreed[tier.id] ? btnColor : (isDark ? "rgba(255,255,255,0.35)" : "rgba(26,58,107,0.35)")}
+                        btnBorder={btnBorder}
+                        disabled={!agreed[tier.id]}
+                        highlight={tier.highlight}
+                      />
                     </>
                   );
                 })()}
@@ -844,72 +882,59 @@ export default function Pricing() {
           </p>
           <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap", marginBottom: "16px" }}>
             {/* Solo */}
-            <a
-              href={PURCHASE_LINKS.starter}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                background: "#ffffff", color: "#1a3a6b",
-                padding: "12px 24px", borderRadius: "10px",
-                fontSize: "14px", fontFamily: "'Outfit', sans-serif", fontWeight: 700,
-                textDecoration: "none",
-                border: "2px solid #1a3a6b",
-                boxShadow: "0 2px 12px rgba(26,58,107,0.18)",
-              }}
-              aria-label="Purchase the Solo plan for $25 AUD via PayPal"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 11C7 8.23858 9.23858 6 12 6H17C19.7614 6 22 8.23858 22 11C22 13.7614 19.7614 16 17 16H16" stroke="#003087" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#009cde" stroke="#009cde" strokeWidth="0"/>
-                <path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#003087" opacity="0.15"/>
-              </svg>
-              <span>Solo — $25 AUD</span>
-            </a>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+              <input type="hidden" name="cmd" value="_xclick" />
+              <input type="hidden" name="business" value={PAYPAL_BUSINESS} />
+              <input type="hidden" name="item_name" value={PURCHASE_NAMES.starter} />
+              <input type="hidden" name="amount" value={PURCHASE_AMOUNTS.starter} />
+              <input type="hidden" name="currency_code" value="AUD" />
+              <input type="hidden" name="notify_url" value={PAYPAL_NOTIFY_URL} />
+              <input type="hidden" name="return" value={PAYPAL_RETURN_URL} />
+              <input type="hidden" name="cancel_return" value={PAYPAL_CANCEL_URL} />
+              <input type="hidden" name="no_shipping" value="1" />
+              <input type="hidden" name="no_note" value="1" />
+              <input type="hidden" name="rm" value="2" />
+              <button type="submit" style={{ display: "flex", alignItems: "center", gap: "8px", background: "#ffffff", color: "#1a3a6b", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, border: "2px solid #1a3a6b", boxShadow: "0 2px 12px rgba(26,58,107,0.18)", cursor: "pointer" }} aria-label="Purchase the Solo plan for $25 AUD via PayPal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11C7 8.23858 9.23858 6 12 6H17C19.7614 6 22 8.23858 22 11C22 13.7614 19.7614 16 17 16H16" stroke="#003087" strokeWidth="2" strokeLinecap="round"/><path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#009cde"/></svg>
+                <span>Solo — $25 AUD</span>
+              </button>
+            </form>
             {/* Team */}
-            <a
-              href={PURCHASE_LINKS.professional}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                background: "#003087", color: "#ffffff",
-                padding: "12px 24px", borderRadius: "10px",
-                fontSize: "14px", fontFamily: "'Outfit', sans-serif", fontWeight: 700,
-                textDecoration: "none",
-                border: "2px solid #003087",
-                boxShadow: "0 4px 20px rgba(0,48,135,0.40)",
-              }}
-              aria-label="Purchase the Team plan for $105 AUD via PayPal"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 11C7 8.23858 9.23858 6 12 6H17C19.7614 6 22 8.23858 22 11C22 13.7614 19.7614 16 17 16H16" stroke="#ffffff" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#009cde"/>
-              </svg>
-              <span>Team — $105 AUD ⭐ Popular</span>
-            </a>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+              <input type="hidden" name="cmd" value="_xclick" />
+              <input type="hidden" name="business" value={PAYPAL_BUSINESS} />
+              <input type="hidden" name="item_name" value={PURCHASE_NAMES.professional} />
+              <input type="hidden" name="amount" value={PURCHASE_AMOUNTS.professional} />
+              <input type="hidden" name="currency_code" value="AUD" />
+              <input type="hidden" name="notify_url" value={PAYPAL_NOTIFY_URL} />
+              <input type="hidden" name="return" value={PAYPAL_RETURN_URL} />
+              <input type="hidden" name="cancel_return" value={PAYPAL_CANCEL_URL} />
+              <input type="hidden" name="no_shipping" value="1" />
+              <input type="hidden" name="no_note" value="1" />
+              <input type="hidden" name="rm" value="2" />
+              <button type="submit" style={{ display: "flex", alignItems: "center", gap: "8px", background: "#003087", color: "#ffffff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, border: "2px solid #003087", boxShadow: "0 4px 20px rgba(0,48,135,0.40)", cursor: "pointer" }} aria-label="Purchase the Team plan for $105 AUD via PayPal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11C7 8.23858 9.23858 6 12 6H17C19.7614 6 22 8.23858 22 11C22 13.7614 19.7614 16 17 16H16" stroke="#ffffff" strokeWidth="2" strokeLinecap="round"/><path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#009cde"/></svg>
+                <span>Team — $105 AUD ⭐ Popular</span>
+              </button>
+            </form>
             {/* Bundle */}
-            <a
-              href={PURCHASE_LINKS.bundle}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex", alignItems: "center", gap: "8px",
-                background: "#b07d0a", color: "#ffffff",
-                padding: "12px 24px", borderRadius: "10px",
-                fontSize: "14px", fontFamily: "'Outfit', sans-serif", fontWeight: 700,
-                textDecoration: "none",
-                border: "2px solid #b07d0a",
-                boxShadow: "0 4px 20px rgba(176,125,10,0.40)",
-              }}
-              aria-label="Purchase the Team 10 users Bundle for $195 AUD via PayPal"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 11C7 8.23858 9.23858 6 12 6H17C19.7614 6 22 8.23858 22 11C22 13.7614 19.7614 16 17 16H16" stroke="#fff" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#f7e08a"/>
-              </svg>
-              <span>Bundle — $195 AUD</span>
-            </a>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+              <input type="hidden" name="cmd" value="_xclick" />
+              <input type="hidden" name="business" value={PAYPAL_BUSINESS} />
+              <input type="hidden" name="item_name" value={PURCHASE_NAMES.bundle} />
+              <input type="hidden" name="amount" value={PURCHASE_AMOUNTS.bundle} />
+              <input type="hidden" name="currency_code" value="AUD" />
+              <input type="hidden" name="notify_url" value={PAYPAL_NOTIFY_URL} />
+              <input type="hidden" name="return" value={PAYPAL_RETURN_URL} />
+              <input type="hidden" name="cancel_return" value={PAYPAL_CANCEL_URL} />
+              <input type="hidden" name="no_shipping" value="1" />
+              <input type="hidden" name="no_note" value="1" />
+              <input type="hidden" name="rm" value="2" />
+              <button type="submit" style={{ display: "flex", alignItems: "center", gap: "8px", background: "#b07d0a", color: "#ffffff", padding: "12px 24px", borderRadius: "10px", fontSize: "14px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, border: "2px solid #b07d0a", boxShadow: "0 4px 20px rgba(176,125,10,0.40)", cursor: "pointer" }} aria-label="Purchase the Team 10 users Bundle for $195 AUD via PayPal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 11C7 8.23858 9.23858 6 12 6H17C19.7614 6 22 8.23858 22 11C22 13.7614 19.7614 16 17 16H16" stroke="#fff" strokeWidth="2" strokeLinecap="round"/><path d="M5 13C5 10.2386 7.23858 8 10 8H15C17.7614 8 20 10.2386 20 13C20 15.7614 17.7614 18 15 18H7C4.23858 18 2 15.7614 2 13Z" fill="#f7e08a"/></svg>
+                <span>Bundle — $195 AUD</span>
+              </button>
+            </form>
           </div>
           <div style={{ display: "flex", justifyContent: "center", marginBottom: "8px" }}>
             <Link
