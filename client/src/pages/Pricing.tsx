@@ -122,13 +122,7 @@ const COMPARISON_ROWS = [
     professional: "1 embed per worker",
     bundle: "1 embed per worker",
   },
-  {
-    category: "Profile & Sharing",
-    label: "Colour theme",
-    starter: "11 themes included",
-    professional: "11 themes included",
-    bundle: "11 themes included",
-  },
+
 
   {
     category: "Content Sections",
