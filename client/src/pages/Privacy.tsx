@@ -71,9 +71,9 @@ export default function Privacy() {
             <li>⚖️ <strong style={{ color: HEAD }}>Sold as-is as a digital template.</strong> Once delivered, all responsibility for content, accuracy, and use rests entirely with the buyer.</li>
             <li>🚫 <strong style={{ color: HEAD }}>No refunds.</strong> All sales are final once the security access key (SKI key) is issued.</li>
             <li>🏷️ <strong style={{ color: HEAD }}>InSync Profiles branding must remain</strong> on all templates sold. No reselling rights.</li>
-            <li>📧 <strong style={{ color: HEAD }}>Delivery is fully automated.</strong> When PayPal confirms your payment, our system automatically generates your unique SKI key and emails it to you — no manual steps, no waiting.</li>
+            <li>📧 <strong style={{ color: HEAD }}>Delivery is fully automated.</strong> When PayPal confirms your payment, our system automatically generates your SKI key(s) and emails them to you — 1 key for Solo, 5 for Team, 10 for Bundle. No manual steps, no waiting.</li>
             <li>🗄️ <strong style={{ color: HEAD }}>No purchase database exists.</strong> We do not store your purchase details in any database, CRM, or spreadsheet. Your information lives only in the PayPal payment notification and the automated delivery email.</li>
-            <li>🔑 <strong style={{ color: HEAD }}>You receive a Security Access Key (SKI key).</strong> Your unique SKI key unlocks the editor at insyncprofiles.net/editor. It is single-use, non-transferable, and tied to your purchase.</li>
+            <li>🔑 <strong style={{ color: HEAD }}>You receive Security Access Key(s) (SKI keys).</strong> Solo: 1 key · Team: 5 keys · Bundle: 10 keys. Each key unlocks one editor session at insyncprofiles.net/editor. Keys are non-transferable and tied to your purchase.</li>
             <li>🔒 <strong style={{ color: HEAD }}>Your profile data never leaves your browser.</strong> Everything typed into the editor stays on your device only.</li>
             <li>🗣 <strong style={{ color: HEAD }}>Try before you buy at insyncprofiles.net/view.</strong> The free demo lets you explore the full template — including the AAC communication board, text-to-speech, dyslexia font, high contrast mode, and text size controls — before committing to a purchase.</li>
             <li>🤝 <strong style={{ color: HEAD }}>Client references in your profile require their consent.</strong> This is entirely the buyer's responsibility.</li>
@@ -110,19 +110,19 @@ export default function Privacy() {
 
         <Section title="2. Delivery of the Product">
           <p>
-            Upon successful payment via <strong>PayPal</strong> (the sole accepted payment method), delivery is <strong>fully automated</strong>. When PayPal confirms your payment, our system immediately generates a unique Security Access Key (SKI key) and emails it to the address associated with your PayPal account. No manual processing is required. Delivery typically occurs within <strong>minutes</strong> of confirmed payment.
+            Upon successful payment via <strong>PayPal</strong> (the sole accepted payment method), delivery is <strong>fully automated</strong>. When PayPal confirms your payment, our system immediately generates your SKI key(s) — 1 for Solo, 5 for Team, 10 for Bundle — and emails them to the address associated with your PayPal account. No manual processing is required. Delivery typically occurs within <strong>minutes</strong> of confirmed payment.
           </p>
           <p className="mt-3">
-            <strong>How automated delivery works:</strong> PayPal sends an Instant Payment Notification (IPN) to our secure delivery system. The system verifies the payment, generates a unique SKI key, creates a short personalised editor link, and sends the key and link to your PayPal email address via an automated delivery email. This process is handled entirely by our secure infrastructure — no human intervention is required.
+            <strong>How automated delivery works:</strong> PayPal sends an Instant Payment Notification (IPN) to our secure delivery system. The system verifies the payment, determines your tier, generates the appropriate number of SKI keys (1, 5, or 10), and sends all keys to your PayPal email address via an automated delivery email. This process is handled entirely by our secure infrastructure — no human intervention is required.
           </p>
           <p className="mt-3">
-            <strong>What you receive:</strong> A delivery email containing your unique SKI key and a direct link to the editor at <strong>insyncprofiles.net/editor</strong>. Enter your SKI key when prompted to unlock the full editor. No downloads, no installs.
+            <strong>What you receive:</strong> A delivery email containing your SKI key(s) and a direct link to the editor at <strong>insyncprofiles.net/editor</strong>. Solo purchases receive 1 key; Team purchases receive 5 keys; Bundle purchases receive 10 keys. Each key is issued individually and unlocks one editor session. Enter a SKI key when prompted to unlock the full editor. No downloads, no installs.
           </p>
           <p className="mt-3">
             If you have not received your delivery email within 30 minutes of payment, check your spam/junk folder first, then contact us at <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: GOLD }}>{CONTACT_EMAIL}</a> with your PayPal transaction reference number.
           </p>
           <p className="mt-3">
-            Access is considered granted once the SKI key has been issued and the delivery email has been sent. {SITE_NAME} is not responsible for issues caused by incorrect email addresses, email provider filtering, or spam filters beyond our control.
+            Access is considered granted once the SKI key(s) have been issued and the delivery email has been sent. {SITE_NAME} is not responsible for issues caused by incorrect email addresses, email provider filtering, or spam filters beyond our control.
           </p>
           <p className="mt-3">
             <strong>First activation:</strong> When a valid SKI key is entered for the first time, a welcome screen is displayed confirming successful activation. The Buyer's first activation also triggers an automated owner notification so that {SITE_NAME} is aware the key has been used.
@@ -137,15 +137,15 @@ export default function Privacy() {
             Upon purchase, the Buyer is granted a <strong>non-exclusive, non-transferable, personal licence</strong> to use the Template for their own professional profile. Licence tiers:
           </p>
           <ul className="list-disc pl-5 mt-3 space-y-2">
-            <li><strong>Solo:</strong> use by one individual support worker</li>
-            <li><strong>Team:</strong> use by up to 5 workers within a single organisation</li>
-            <li><strong>Team 10:</strong> use by up to 10 workers within a single organisation</li>
+            <li><strong>Solo ($25 AUD):</strong> 1 SKI key — use by one individual support worker</li>
+            <li><strong>Team ($105 AUD):</strong> 5 SKI keys — use by up to 5 workers within a single organisation</li>
+            <li><strong>Bundle ($195 AUD):</strong> 10 SKI keys — use by up to 10 workers within a single organisation</li>
           </ul>
           <p className="mt-3">
             The Buyer may <strong>not</strong> resell, redistribute, sublicense, or share the Template files with individuals or organisations beyond the scope of their purchased licence tier.
           </p>
           <p className="mt-3">
-            Each SKI key is <strong>single-use per buyer</strong> — it is issued to one individual or team and is not transferable. SKI keys may be revoked without refund in the event of a breach of these terms, including but not limited to: sharing the key with unauthorised users, reselling the Template, or using the Template in a manner inconsistent with the purchased licence tier.
+            Each SKI key is <strong>issued per user</strong> — it is tied to the purchase and is not transferable. Solo purchases receive 1 key; Team purchases receive 5 keys; Bundle purchases receive 10 keys. Each key may only be activated once. SKI keys may be revoked without refund in the event of a breach of these terms, including but not limited to: sharing the key with unauthorised users, reselling the Template, or using the Template in a manner inconsistent with the purchased licence tier.
           </p>
           <p className="mt-3" style={{ fontWeight: 700, color: "#c0392b" }}>
             ⛔ Reselling is strictly prohibited. This licence is for personal professional use only. The Template may not be on-sold, repackaged, gifted to third parties, or commercially exploited in any form. Any breach of this condition will result in immediate revocation of the licence without refund.
@@ -319,7 +319,7 @@ export default function Privacy() {
 
           <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>10.2 Website Visitors</h3>
           <p>
-            Our hosting platform (Manus) automatically collects standard server logs including IP addresses, browser type, pages visited, and timestamps. This is governed by Manus's own privacy policy. We collect only anonymous, aggregated page view analytics — no personal identifiers.
+            Our hosting infrastructure (Cloudflare) automatically collects standard server logs including IP addresses, browser type, pages visited, and timestamps. This is governed by Cloudflare's own privacy policy. We collect only anonymous, aggregated page view analytics — no personal identifiers.
           </p>
 
           <h3 className="font-semibold mb-2 mt-4" style={{ color: HEAD }}>10.3 Purchasers — PayPal Email Data</h3>
@@ -400,7 +400,7 @@ export default function Privacy() {
           <p className="mt-3">We may disclose personal information only in the following limited circumstances:</p>
           <ul className="list-disc pl-5 mt-3 space-y-2">
             <li><strong>PayPal:</strong> as required to process your purchase (governed by PayPal's own privacy policy)</li>
-            <li><strong>Manus (hosting provider):</strong> for website hosting and infrastructure</li>
+            <li><strong>Cloudflare (hosting provider):</strong> for website hosting and infrastructure</li>
             <li><strong>Legal requirements:</strong> where required by Australian law, court order, or government authority</li>
           </ul>
         </Section>
