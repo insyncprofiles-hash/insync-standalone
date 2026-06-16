@@ -55,7 +55,6 @@ const TIERS = [
       "Text-to-speech & hover-to-speak",
       "Dyslexia-friendly font mode",
       "AAC communication board",
-      "11 colour themes",
       "WCAG 2.1 AA accessible",
       "Mobile responsive",
     ],
@@ -91,7 +90,6 @@ const TIERS = [
     features: [
       "Up to 10 support worker profiles",
       "Everything in Team (5 users)",
-      "Custom colour theme per worker",
       "Priority email support",
     ],
     notIncluded: [],
