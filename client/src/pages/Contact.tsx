@@ -116,9 +116,6 @@ export default function Contact() {
 
         {/* ABN / Made in Australia */}
         <div style={{ textAlign: "center" }}>
-          <p style={{ fontSize: "13px", color: TEXT_DIM, margin: "0 0 24px" }}>
-            InSync Profiles · ABN 54 116 010 622 · Made in Australia 🇦🇺
-          </p>
           <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/" style={{ fontSize: "14px", color: TEXT_DIM, textDecoration: "none", fontWeight: 600 }}>← Back to Home</Link>
             <span style={{ color: BORDER }}>·</span>
