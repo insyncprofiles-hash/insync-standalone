@@ -393,10 +393,14 @@ export default function Landing() {
       <style>{`
         .hidden-mobile { display: flex; }
         .mobile-menu-btn { display: none; }
+        .mobile-top-nav { display: none; }
+        .footer-nav-links { display: flex; }
         @media (max-width: 768px) {
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+          .mobile-top-nav { display: block !important; }
+          .footer-nav-links { display: none !important; }
         }
         @keyframes fadeInDown {
           from { opacity: 0; transform: translateY(-8px); }
@@ -405,6 +409,48 @@ export default function Landing() {
       `}</style>
 
       <main id="main-content" style={{ paddingTop: "174px" }}>
+
+        {/* ── MOBILE TOP NAV STRIP — shown only on mobile, hidden on desktop ── */}
+        <div className="mobile-top-nav" style={{ display: "none" }}>
+          <div style={{
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            display: "flex",
+            gap: "6px",
+            padding: "10px 16px",
+            borderBottom: `1px solid ${C.border}`,
+            background: "rgba(13,27,42,0.95)",
+          }}>
+            {[
+              { href: "/pricing",    label: "Pricing" },
+              { href: "/how-to-use", label: "How It Works" },
+              { href: "/scenarios",  label: "Scenarios" },
+              { href: "/blog",       label: "Blog" },
+              { href: "/skins",      label: "Skin Packs" },
+              { href: "/privacy",    label: "Legal & Privacy" },
+              { href: "/demo",       label: "Try Demo" },
+            ].map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{
+                  color: C.textHead,
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  padding: "6px 14px",
+                  borderRadius: "99px",
+                  border: `1px solid ${C.border}`,
+                  background: "rgba(255,255,255,0.06)",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                }}
+              >{link.label}</Link>
+            ))}
+          </div>
+        </div>
 
         {/* Wave section removed */}
         {false && <section aria-labelledby="wave-heading">
@@ -1311,7 +1357,7 @@ export default function Landing() {
           <p style={{ color: C.textDim, fontSize: "12px", margin: "0 0 12px" }}>
             © {new Date().getFullYear()} InSync Profiles · ABN 54 116 010 622 · Made in Australia
           </p>
-          <div style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="footer-nav-links" style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
             {[
               { href: "/pricing",    label: "Pricing" },
               { href: "/how-to-use", label: "How It Works" },
