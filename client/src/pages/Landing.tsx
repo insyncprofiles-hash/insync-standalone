@@ -767,7 +767,7 @@ export default function Landing() {
               {/* Header row — real photo */}
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "16px" }}>
                 <img
-                  src={demoIndex === 0 ? "/assets/pete_james_headshot_c42b5c10.png" : "/assets/sophie_langford_headshot.png"}
+                  src={demoIndex === 0 ? "/assets/pete_james_headshot_c42b5c10.png" : "/assets/sophie_langford_headshot.jpg"}
                   alt={demoIndex === 0 ? "Pete James — support worker profile photo, Central Coast NSW" : "Sophie Langford — support worker profile photo, Melbourne VIC"}
                   draggable={false}
                   onContextMenu={e => e.preventDefault()}
