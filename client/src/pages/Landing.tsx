@@ -366,6 +366,7 @@ export default function Landing() {
             { href: "/how-to-use", label: "How It Works" },
             { href: "/blog",       label: "📝 Blog" },
             { href: "/coordinators", label: "🔗 For Coordinators" },
+            { href: "/contact",    label: "✉️ Contact" },
             { href: "/skins",      label: "🎨 Skin Packs — Coming Soon" },
           ].map(link => (
             <Link
@@ -430,6 +431,7 @@ export default function Landing() {
               { href: "/blog",       label: "Blog" },
               { href: "/skins",      label: "Skin Packs" },
               { href: "/privacy",    label: "Legal & Privacy" },
+              { href: "/contact",    label: "Contact" },
               { href: "/demo",       label: "Try Demo" },
             ].map(link => (
               <Link
@@ -1365,6 +1367,7 @@ export default function Landing() {
               { href: "/blog",       label: "Blog" },
               { href: "/skins",      label: "Skin Packs" },
               { href: "/privacy",    label: "Legal & Privacy" },
+              { href: "/contact",    label: "Contact" },
               { href: "/demo",      label: "Try Demo" },
             ].map(link => (
               <Link key={link.href} href={link.href} style={{ color: C.textDim, fontSize: "12px", textDecoration: "none", transition: "color 150ms" }}>{link.label}</Link>

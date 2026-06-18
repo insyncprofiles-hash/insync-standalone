@@ -21,6 +21,7 @@ import Admin from "./pages/Admin";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Coordinators from "./pages/Coordinators";
+import Contact from "./pages/Contact";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -52,6 +53,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug">{(params) => <BlogPost slug={params.slug} />}</Route>
       <Route path="/coordinators" component={Coordinators} />
+      <Route path="/contact" component={Contact} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -70,6 +72,7 @@ const BACK_ROUTES: Record<string, { href: string; label: string }> = {
   "/skins":     { href: "/",          label: "← Home" },
   "/blog":      { href: "/",          label: "← Home" },
   "/coordinators": { href: "/",       label: "← Home" },
+  "/contact":     { href: "/",          label: "← Home" },
   "/404":       { href: "/",          label: "← Home" },
 };
 
