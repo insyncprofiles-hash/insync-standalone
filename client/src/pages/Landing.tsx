@@ -834,15 +834,25 @@ export default function Landing() {
                   </div>
                   {/* Video thumbnail with play button */}
                   <div style={{ position: "relative", borderRadius: "8px", overflow: "hidden", width: "100%", aspectRatio: "16/9", background: "#0a0a1a" }}>
-                    <video
-                      src="/assets/sw_final_video_new_music_46a119c4.mp4"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
-                      muted
-                      playsInline
-                      preload="metadata"
-                      draggable={false}
-                      onContextMenu={e => e.preventDefault()}
-                    />
+                    {demoIndex === 1 ? (
+                      <img
+                        src="/assets/sophie_langford_video_thumb.png"
+                        alt="Sophie Langford intro video thumbnail"
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
+                        draggable={false}
+                        onContextMenu={e => e.preventDefault()}
+                      />
+                    ) : (
+                      <video
+                        src="/assets/sw_final_video_new_music_46a119c4.mp4"
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", pointerEvents: "none" }}
+                        muted
+                        playsInline
+                        preload="metadata"
+                        draggable={false}
+                        onContextMenu={e => e.preventDefault()}
+                      />
+                    )}
                     {/* Play button overlay */}
                     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.28)" }}>
                       <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(255,255,255,0.92)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.35)" }}>
