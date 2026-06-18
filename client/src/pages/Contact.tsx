@@ -112,11 +112,6 @@ export default function Contact() {
             </div>
           </div>
 
-          <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "28px" }}>
-            <p style={{ fontSize: "14px", color: TEXT_DIM, lineHeight: 1.7, margin: 0 }}>
-              <strong style={{ color: TEXT_BODY }}>Common enquiries:</strong> licence key issues, bulk team pricing, NDIS provider partnerships, accessibility feedback, or general questions about how InSync Profiles works.
-            </p>
-          </div>
         </div>
 
         {/* ABN / Made in Australia */}
