@@ -49,6 +49,7 @@ export interface ProfileData {
   availability: { [key: string]: boolean };
   availFrom: string;
   availTo: string;
+  dayHours: { [day: string]: { from: string; to: string } };
   languages: string[];
   vehicleOptions: VehicleOptions;
   showUpStyle: { communicate: string[]; connect: string[]; presence: string[] };
@@ -247,6 +248,7 @@ const DEFAULT_PROFILE: ProfileData = {
   availability: { Mon: false, Tue: false, Wed: false, Thu: false, Fri: false, Sat: false, Sun: false },
   availFrom: "9:00 AM",
   availTo: "5:00 PM",
+  dayHours: {},
   languages: DEFAULT_LANGUAGES,
   vehicleOptions: DEFAULT_VEHICLE_OPTIONS,
   showUpStyle: { communicate: [], connect: [], presence: [] },
@@ -280,6 +282,13 @@ function encodeProfileToURL(profile: ProfileData, videoUrl?: string | null): str
   if (availDays.length > 0) params.set("availDays", availDays.join(","));
   if (profile.availFrom) params.set("availFrom", profile.availFrom);
   if (profile.availTo) params.set("availTo", profile.availTo);
+  // Per-day hours: encode as "Mon:9:00AM-5:00PM,Tue:8:00AM-4:00PM"
+  if (profile.dayHours && Object.keys(profile.dayHours).length > 0) {
+    const parts = Object.entries(profile.dayHours)
+      .filter(([, h]) => h && h.from && h.to)
+      .map(([day, h]) => `${day}:${h.from.replace(/ /g, "")}-${h.to.replace(/ /g, "")}`);
+    if (parts.length > 0) params.set("dayHours", parts.join(","));
+  }
   // Vehicle options: encode checked items per category as "vehicleType:sedan,suv|wheelchairAccess:rear-ramp"
   const vehicleParts: string[] = [];
   (Object.keys(profile.vehicleOptions) as (keyof typeof profile.vehicleOptions)[]).forEach(cat => {
@@ -921,7 +930,17 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
                   {availDays.map(d => <span key={d} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, padding: '6px 14px', borderRadius: '20px', background: 'rgba(74,144,217,0.15)', border: '1.5px solid rgba(74,144,217,0.35)', color: '#2a4a7a' }}>{d}</span>)}
                 </div>
-                {(profile.availFrom || profile.availTo) && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: '#7a9b7e', margin: 0 }}>{profile.availFrom} – {profile.availTo}</p>}
+                {availDays.map(d => {
+                  const dh = (profile.dayHours || {})[d];
+                  const from = dh?.from || profile.availFrom || "9:00 AM";
+                  const to = dh?.to || profile.availTo || "5:00 PM";
+                  return (
+                    <p key={d} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: '#7a9b7e', margin: '2px 0 0', display: 'flex', gap: '6px' }}>
+                      <span style={{ fontWeight: 700, minWidth: '32px' }}>{d}</span>
+                      <span>{from} – {to}</span>
+                    </p>
+                  );
+                })}
               </>
             ) : (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: '#9aabcc', margin: 0, fontStyle: 'italic' }}>Set your available days in the editor to show them here.</p>
@@ -2741,17 +2760,38 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   ))}
                 </div>
               </FieldRow>
-              <FieldRow label="Hours">
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <select value={profile.availFrom} onChange={e => updateProfile({ availFrom: e.target.value })} style={{ ...THREAD_INPUT, flex: 1, width: "auto" }} aria-label="Available from time">
-                    {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                  <span style={{ color: A.textDim, fontFamily: "'Outfit', sans-serif", fontSize: "13px", flexShrink: 0 }}>to</span>
-                  <select value={profile.availTo} onChange={e => updateProfile({ availTo: e.target.value })} style={{ ...THREAD_INPUT, flex: 1, width: "auto" }} aria-label="Available to time">
-                    {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
-                  </select>
-                </div>
-              </FieldRow>
+              {/* Per-day hours — show a from/to row for each selected day */}
+              {DAYS.filter(d => profile.availability[d]).length > 0 && (
+                <FieldRow label="Hours per Day">
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {DAYS.filter(d => profile.availability[d]).map(day => {
+                      const dh = (profile.dayHours || {})[day] || { from: "9:00 AM", to: "5:00 PM" };
+                      return (
+                        <div key={day} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, color: A.gold, minWidth: "36px", flexShrink: 0 }}>{day}</span>
+                          <select
+                            value={dh.from}
+                            onChange={e => updateProfile({ dayHours: { ...(profile.dayHours || {}), [day]: { ...dh, from: e.target.value } } })}
+                            style={{ ...THREAD_INPUT, flex: 1, width: "auto", fontSize: "13px", padding: "8px 10px" }}
+                            aria-label={`${day} available from`}
+                          >
+                            {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+                          </select>
+                          <span style={{ color: A.textDim, fontFamily: "'Outfit', sans-serif", fontSize: "12px", flexShrink: 0 }}>to</span>
+                          <select
+                            value={dh.to}
+                            onChange={e => updateProfile({ dayHours: { ...(profile.dayHours || {}), [day]: { ...dh, to: e.target.value } } })}
+                            style={{ ...THREAD_INPUT, flex: 1, width: "auto", fontSize: "13px", padding: "8px 10px" }}
+                            aria-label={`${day} available to`}
+                          >
+                            {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+                          </select>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </FieldRow>
+              )}
             </Section>
 
             <ThreadConnector height={32} />
@@ -3548,7 +3588,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               profile.showUpStyle.connect.length +
               profile.showUpStyle.presence.length
             ) >= 2,                                                                              anchor: "section-show-up" },
-          { label: "Hours",      done: !!profile.availFrom,                                     anchor: "section-availability" },
+          { label: "Hours",      done: Object.keys(profile.dayHours || {}).length > 0 || !!profile.availFrom, anchor: "section-availability" },
           { label: "Contact",    done: !!(profile.email || profile.website),                    anchor: "section-contact" },
           { label: "Saved",      done: !!hostedUrl,                                             anchor: "section-share" },
         ];

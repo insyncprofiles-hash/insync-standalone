@@ -178,6 +178,21 @@ function loadProfileFromURL(): Partial<ProfileData> {
         }
         if (storedParams.get("availFrom")) overrides.availFrom = storedParams.get("availFrom")!;
         if (storedParams.get("availTo"))   overrides.availTo   = storedParams.get("availTo")!;
+        if (storedParams.get("dayHours")) {
+          const dh: { [day: string]: { from: string; to: string } } = {};
+          storedParams.get("dayHours")!.split(",").forEach(part => {
+            const colonIdx = part.indexOf(":");
+            if (colonIdx === -1) return;
+            const day = part.slice(0, colonIdx);
+            const range = part.slice(colonIdx + 1);
+            const dashIdx = range.lastIndexOf("-");
+            if (dashIdx === -1) return;
+            const from = range.slice(0, dashIdx).replace(/([0-9])([AP]M)/, "$1 $2");
+            const to = range.slice(dashIdx + 1).replace(/([0-9])([AP]M)/, "$1 $2");
+            dh[day] = { from, to };
+          });
+          overrides.dayHours = dh;
+        }
         if (storedParams.get("vehicle")) {
           const parts = storedParams.get("vehicle")!.split("|");
           const checkedMap: Record<string, string[]> = {};
@@ -254,6 +269,21 @@ function loadProfileFromURL(): Partial<ProfileData> {
   }
   if (params.get("availFrom")) overrides.availFrom = params.get("availFrom")!;
   if (params.get("availTo"))   overrides.availTo   = params.get("availTo")!;
+  if (params.get("dayHours")) {
+    const dh: { [day: string]: { from: string; to: string } } = {};
+    params.get("dayHours")!.split(",").forEach(part => {
+      const colonIdx = part.indexOf(":");
+      if (colonIdx === -1) return;
+      const day = part.slice(0, colonIdx);
+      const range = part.slice(colonIdx + 1);
+      const dashIdx = range.lastIndexOf("-");
+      if (dashIdx === -1) return;
+      const from = range.slice(0, dashIdx).replace(/([0-9])([AP]M)/, "$1 $2");
+      const to = range.slice(dashIdx + 1).replace(/([0-9])([AP]M)/, "$1 $2");
+      dh[day] = { from, to };
+    });
+    overrides.dayHours = dh;
+  }
   if (params.get("vehicle")) {
     const parts = params.get("vehicle")!.split("|");
     const checkedMap: Record<string, string[]> = {};
@@ -460,6 +490,7 @@ export default function ClientView() {
     availability: { Mon: true, Tue: true, Wed: true, Thu: true, Fri: true, Sat: false, Sun: false },
     availFrom: "9:00 AM",
     availTo: "5:00 PM",
+    dayHours: {},
     languages: ["English"],
     vehicleOptions: {
       vehicleType: [],
@@ -1203,19 +1234,24 @@ export default function ClientView() {
             <ThreadConnector />
             <ThreadSection num={checkedExperience.length > 0 ? 4 : 3} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px" }}>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "12px" }}>
-                  {availDays.map(d => (
-                    <span key={d} style={{
-                      fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 700,
-                      padding: "7px 16px", borderRadius: "20px",
-                      background: `${P.ctaFrom}18`, border: `1.5px solid ${P.ctaFrom}40`,
-                      color: P.text,
-                    }}>{d}</span>
-                  ))}
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {availDays.map(d => {
+                    const dh = (profile.dayHours || {})[d];
+                    const from = dh?.from || profile.availFrom || "9:00 AM";
+                    const to = dh?.to || profile.availTo || "5:00 PM";
+                    return (
+                      <div key={d} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <span style={{
+                          fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 700,
+                          padding: "6px 14px", borderRadius: "20px",
+                          background: `${P.ctaFrom}18`, border: `1.5px solid ${P.ctaFrom}40`,
+                          color: P.text, minWidth: "52px", textAlign: "center", flexShrink: 0,
+                        }}>{d}</span>
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", color: P.textMid }}>{from} – {to}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", color: P.textMid, margin: 0 }}>
-                  {profile.availFrom} – {profile.availTo}
-                </p>
               </div>
             </ThreadSection>
           </>
