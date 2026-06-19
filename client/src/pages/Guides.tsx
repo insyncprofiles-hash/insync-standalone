@@ -38,7 +38,7 @@ export default function Guides() {
   const [zoomed, setZoomed] = useState<string | null>(null);
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.textHead, fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: C.bg, color: C.textHead, fontFamily: "'Inter', sans-serif", paddingTop: "110px" }}>
 
       {/* Hero */}
       <section style={{ maxWidth: "860px", margin: "0 auto", padding: "60px 24px 32px", textAlign: "center" }}>
