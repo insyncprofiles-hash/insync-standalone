@@ -454,7 +454,7 @@ export default function Landing() {
                   flexShrink: 0,
                 }}
               >{link.label}</Link>
-            ))
+            ))}
           </div>
         </div>
 
