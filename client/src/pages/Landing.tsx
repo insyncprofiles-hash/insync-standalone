@@ -425,32 +425,33 @@ export default function Landing() {
             background: "rgba(13,27,42,0.95)",
           }}>
             {[
-              { href: "/pricing",    label: "Pricing" },
-              { href: "/how-to-use", label: "How It Works" },
-              { href: "/scenarios",  label: "Scenarios" },
-              { href: "/blog",       label: "Blog" },
-              { href: "/skins",      label: "Skin Packs" },
-              { href: "/privacy",    label: "Legal & Privacy" },
-              { href: "/contact",    label: "Contact" },
-              { href: "/demo",       label: "Try Demo" },
+              { href: "/pricing",    label: "Pricing",        teal: false },
+              { href: "/how-to-use", label: "How It Works",    teal: false },
+              { href: "/scenarios",  label: "Scenarios",       teal: false },
+              { href: "/blog",       label: "Blog",            teal: false },
+              { href: "/coordinators", label: "🔗 For Coordinators", teal: true },
+              { href: "/skins",      label: "Skin Packs",      teal: false },
+              { href: "/privacy",    label: "Legal & Privacy", teal: false },
+              { href: "/contact",    label: "Contact",         teal: false },
+              { href: "/demo",       label: "Try Demo",        teal: false },
             ].map(link => (
               <Link
                 key={link.href}
                 href={link.href}
                 style={{
-                  color: C.textHead,
+                  color: link.teal ? C.teal : C.textHead,
                   fontSize: "13px",
-                  fontWeight: 600,
+                  fontWeight: link.teal ? 800 : 600,
                   textDecoration: "none",
                   padding: "6px 14px",
                   borderRadius: "99px",
-                  border: `1px solid ${C.border}`,
-                  background: "rgba(255,255,255,0.06)",
+                  border: link.teal ? `1.5px solid ${C.teal}88` : `1px solid ${C.border}`,
+                  background: link.teal ? `rgba(26,184,160,0.12)` : "rgba(255,255,255,0.06)",
                   whiteSpace: "nowrap",
                   flexShrink: 0,
                 }}
               >{link.label}</Link>
-            ))}
+            ))
           </div>
         </div>
 
