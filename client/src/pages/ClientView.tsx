@@ -1073,6 +1073,24 @@ export default function ClientView() {
 
           {/* Languages removed from credentials card — shown in Identity thread instead */}
 
+          {/* Credentials disclaimer */}
+          {profile.badges.length > 0 && (
+            <div style={{ padding: "0 20px 20px" }}>
+              <p style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: "0.75em",
+                color: P.textMid,
+                lineHeight: 1.6,
+                margin: 0,
+                padding: "10px 14px",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "10px",
+              }}>
+                ⚠️ <strong>Self-reported credentials are not verified by InSync Profiles.</strong> The onus is on the Support Worker to provide evidence of any claims upon request. Recipients are encouraged to verify credentials directly with the individual before engaging their services.
+              </p>
+            </div>
+          )}
 
         </div>
 
@@ -1188,6 +1206,22 @@ export default function ClientView() {
                     color: P.text,
                   }}>{label}</span>
                 ))}
+              </div>
+              {/* Experience disclaimer */}
+              <div style={{ marginTop: "16px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+                <p style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: "0.75em",
+                  color: P.textMid,
+                  lineHeight: 1.6,
+                  margin: 0,
+                  padding: "10px 14px",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "10px",
+                }}>
+                  ⚠️ <strong>Self-reported experience is not verified by InSync Profiles.</strong> The onus is on the Support Worker to provide evidence of any claims upon request. Recipients are encouraged to verify experience directly with the individual before engaging their services.
+                </p>
               </div>
             </ThreadSection>
           </>
