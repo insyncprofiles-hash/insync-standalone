@@ -1343,7 +1343,7 @@ export default function ClientView() {
             margin: '0 auto', maxWidth: '680px', textAlign: 'center', padding: '0 16px',
           }}>
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.6875em', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
-            The information presented in this profile is self-reported and has not been independently verified. InSync Profiles makes no representation as to the accuracy, completeness, or currency of any skills, experience, qualifications, credentials, or other claims contained herein. It is the sole responsibility of the recipient or any appointing party to verify all profile content directly with the individual or through their nominated professional references and registrations.
+            The information presented in this profile is self-reported and has not been independently verified by InSync Profiles. It is the responsibility of the Support Worker and their Provider to ensure all credentials, experience, and claims are accurate and supported by evidence upon request.
           </p>
           {/* Feedback button */}
           {profile.email && (
