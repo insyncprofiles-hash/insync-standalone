@@ -828,6 +828,20 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                   </div>
                 ))}
               </div>
+              {/* Credentials disclaimer */}
+              <p style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '10px',
+                color: '#7a6a8a',
+                lineHeight: 1.6,
+                margin: '10px 0 0',
+                padding: '8px 12px',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(200,140,220,0.18)',
+                borderRadius: '8px',
+              }}>
+                ⚠️ <strong>Self-reported credentials are not verified by InSync Profiles.</strong> The onus is on the Support Worker to provide evidence of any claims upon request.
+              </p>
             </div>
           )}
 
@@ -894,6 +908,21 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
               </div>
             ) : (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: '#9aabcc', margin: 0, fontStyle: 'italic' }}>Tick your experience areas in the editor to show them here.</p>
+            )}
+            {checkedExperience.length > 0 && (
+              <p style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '10px',
+                color: '#7a8a9a',
+                lineHeight: 1.6,
+                margin: '10px 0 0',
+                padding: '8px 12px',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(74,144,217,0.18)',
+                borderRadius: '8px',
+              }}>
+                ⚠️ <strong>Self-reported experience is not verified by InSync Profiles.</strong> The onus is on the Support Worker to provide evidence of any claims upon request.
+              </p>
             )}
           </div>
         </DemoThreadSection>
