@@ -332,16 +332,21 @@ function WhoIsGoingToSupportMeArticle() {
         <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
           {[
-            "NDIS informed choice",
-            "NDIS 2026 reforms participant rights",
-            "Support worker selection NDIS",
-            "Supported decision making NDIS",
-            "NDIS participant choice and control",
-            "Support worker profile Australia",
-            "NDIS Future Generations Bill 2026",
-            "Participant engagement NDIS provider",
-            "How to choose a support worker",
-            "NDIS transparency reforms",
+            "#NDISInformedChoice",
+            "#ChoiceAndControl",
+            "#Inclusion",
+            "#DisabilityInclusion",
+            "#SupportedDecisionMaking",
+            "#NDISParticipantRights",
+            "#NDIS2026Reforms",
+            "#SupportWorker",
+            "#NDISParticipant",
+            "#InclusiveSupport",
+            "#NDISFutureGenerationsBill",
+            "#ParticipantEngagement",
+            "#InformedChoice",
+            "#DisabilityRights",
+            "#NDISTransparency",
           ].map(tag => (
             <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
           ))}
