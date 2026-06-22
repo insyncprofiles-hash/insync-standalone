@@ -325,7 +325,7 @@ function WhoIsGoingToSupportMeArticle() {
       </p>
 
       <p>
-        <a href="/view" style={{ color: "#f5c842" }}>See a sample InSync Profile →</a>
+        <a href="/view" style={{ color: "#f5c842" }}>See what a participant sees when choosing their support worker →</a>
       </p>
 
       <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
