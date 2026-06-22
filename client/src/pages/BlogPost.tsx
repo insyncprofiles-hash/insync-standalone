@@ -252,7 +252,7 @@ function WhoIsGoingToSupportMeArticle() {
         The gap between the right to choose and the information needed to choose has remained largely unchanged. That is the problem InSync Profiles was built to close.
       </p>
 
-      <h2>What Informed Choice Actually Requires</h2>
+      <h2>What Informed Choice Actually Looks Like</h2>
 
       <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
         <img
@@ -266,23 +266,23 @@ function WhoIsGoingToSupportMeArticle() {
       </div>
 
       <p>
-        The comparison above makes the logic plain. When a participant is given only a name, a gender, and an availability window, they are not making a choice — they are making a guess. A guess about whether this person communicates in a way that works for them. A guess about whether their approach to support aligns with how the participant wants to live. A guess about whether they will actually show up.
+        When a participant is given only a name, a gender, and an availability window, the decision they make is not really a choice — it is a guess. A guess about whether this person communicates in a way that works for them. A guess about whether their approach to support aligns with how the participant wants to live. A guess about whether they will actually show up.
       </p>
       <p>
-        Informed choice requires information about the person, not just the position. That means:
+        Informed choice is built on information about the person, not just the position. The kind of information that actually matters includes things like:
       </p>
       <ul>
-        <li><strong>Communication style</strong> — how the worker communicates, and whether that matches the participant's needs</li>
-        <li><strong>Interests and personality</strong> — the human dimension that determines whether support becomes a relationship or just a transaction</li>
+        <li><strong>Communication style</strong> — how the worker communicates, and whether that matches the participant's preferences</li>
+        <li><strong>Interests and personality</strong> — the human dimension that shapes whether support becomes a genuine relationship or just a transaction</li>
         <li><strong>Experience areas</strong> — specific conditions, environments, and support types the worker has genuine experience with</li>
-        <li><strong>Approach to support</strong> — their values, their boundaries, and how they handle difficult moments</li>
+        <li><strong>Approach to support</strong> — their values and how they show up in practice</li>
         <li><strong>A video introduction</strong> — because a face and a voice carry information that text never can</li>
       </ul>
       <p>
-        None of this is radical. It is the same information you would want before hiring anyone to work in your home. The difference is that in the NDIS sector, this information has historically been inaccessible — not because it doesn't exist, but because there has been no standard way to share it.
+        None of this is unusual. It is the same kind of information anyone would want before inviting someone into their home. The difference is that in the NDIS sector, this information has historically been hard to access — not because it doesn't exist, but because there has been no standard way to share it.
       </p>
 
-      <h2>The 2026 Reforms Are Raising the Bar</h2>
+      <h2>The 2026 Reforms Are Shifting the Landscape</h2>
 
       <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
         <img
@@ -299,21 +299,21 @@ function WhoIsGoingToSupportMeArticle() {
         The NDIS Future Generations Bill 2026, introduced in June 2026, formally restructures how intermediary services operate. The direction is clear: reduce the layers between participants and their supports, and increase the expectation that participants are genuinely involved in choosing who works with them.
       </p>
       <p>
-        For providers, this means the question <em>"Can you show how your participants choose their support worker?"</em> is no longer rhetorical. It is becoming a compliance expectation. Supported decision-making is a priority. Participant engagement is central to quality. Greater provider transparency and oversight are explicitly named reform outcomes.
+        For providers, the question <em>"Can you show how your participants choose their support worker?"</em> is increasingly moving from a good-practice aspiration to a compliance expectation. Supported decision-making, participant engagement, and greater transparency are explicitly named reform outcomes.
       </p>
       <p>
-        A support worker profile that contains only a name and a roster slot does not meet this standard. A profile that contains a video introduction, a communication style, a set of experience areas, and a clear statement of values — that is a tool for genuine participant choice.
+        A worker profile that contains only a name and a roster slot sits well short of what these reforms are pointing toward. A profile that includes a video introduction, a communication style, a set of experience areas, and a clear statement of values gives participants something they can actually use to make a real decision.
       </p>
 
-      <h2>What This Means in Practice</h2>
+      <h2>Where This Lands for Everyone Involved</h2>
       <p>
-        For <strong>participants and families</strong>: you have the right to know who is coming. Before you agree to a support arrangement, ask to see the worker's profile. If one doesn't exist, ask why. The reforms are on your side.
+        For <strong>participants and families</strong>, the reforms are reinforcing something that was always true: the right to know who is coming, and to have enough information to make that call with confidence. More workers are building profiles that answer this question directly — and that makes the whole process easier.
       </p>
       <p>
-        For <strong>support workers</strong>: your profile is your answer to the question every participant is asking. The workers who build a clear, honest, human profile are the ones who will be chosen — not because they are the cheapest or the closest, but because they are the most knowable.
+        For <strong>support workers</strong>, a clear and honest profile is a direct response to the question every participant is already asking. Workers who make themselves knowable — through a video, a communication style, a genuine statement of who they are — tend to attract participants who are already aligned with them. That makes for better working relationships on both sides.
       </p>
       <p>
-        For <strong>providers and coordinators</strong>: the 2026 reforms are shifting accountability toward demonstrable participant engagement. Having a system where workers maintain rich, shareable profiles is not just good practice — it is increasingly what the sector will expect of you.
+        For <strong>providers and coordinators</strong>, the 2026 reforms are shifting accountability toward demonstrable participant engagement. Having a system where workers maintain rich, shareable profiles is increasingly what the sector is moving toward — and it also makes the coordinator's job easier when participants can review workers before a match is proposed.
       </p>
 
       <blockquote>
