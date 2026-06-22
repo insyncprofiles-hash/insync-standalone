@@ -632,7 +632,7 @@ export default function Landing() {
 
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/blog/who-is-going-to-support-me" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em" }}>Read the Article →</Link>
-              <Link href="/view" style={{ background: "transparent", color: C.teal, padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: `1.5px solid ${C.tealDim}` }}>See what a participant sees when choosing their support worker →</Link>
+              <Link href="/view" style={{ background: C.gold, color: "#0d1b2a", padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", border: "none" }}>See what a participant sees when choosing their support worker →</Link>
             </div>
           </div>
         </section>
