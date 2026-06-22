@@ -3,8 +3,9 @@
    Design: Matches Landing page — deep navy bg, gold accents
    Fonts: Cormorant Garamond (display) + Outfit (body)
    ============================================================ */
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "wouter";
+import { useSEO } from "@/hooks/useSEO";
 
 const C = {
   bgPage:    "linear-gradient(160deg, #0d1b2a 0%, #0f2d3d 40%, #0a2a1e 100%)",
@@ -358,6 +359,8 @@ const ARTICLES: Record<string, {
   category: string;
   emoji: string;
   metaDescription: string;
+  ogImage?: string;
+  keywords?: string;
   content: () => React.ReactElement;
 }> = {
   "lanyard-card-benefits": {
@@ -365,8 +368,9 @@ const ARTICLES: Record<string, {
     date: "June 2026",
     readTime: "4 min read",
     category: "Tips & Strategy",
-    emoji: "🪪",
+    emoji: "🪴",
     metaDescription: "Discover how the InSync Profiles lanyard card helps NDIS support workers go from invisible to unmissable — in the community, on errands, and at events — with a single QR code scan.",
+    keywords: "NDIS support worker lanyard card, QR code support worker, NDIS worker marketing, support worker personal brand, NDIS independent worker tips, how to attract NDIS clients, support worker business card alternative, digital profile NDIS worker Australia",
     content: LanyardCardBenefitsArticle,
   },
   "sea-of-sameness": {
@@ -376,6 +380,7 @@ const ARTICLES: Record<string, {
     category: "Industry Insights",
     emoji: "🌊",
     metaDescription: "Discover why generic social media posts are failing NDIS support workers and how InSync Profiles's digital profile platform helps workers stand out in the Australian care sector.",
+    keywords: "NDIS support worker social media, sea of sameness disability sector, support worker digital profile Australia, NDIS worker stand out, InSync Profiles, disability support worker marketing, NDIS independent worker visibility",
     content: SeaOfSamenessArticle,
   },
   "who-is-going-to-support-me": {
@@ -385,6 +390,8 @@ const ARTICLES: Record<string, {
     category: "Informed Choice",
     emoji: "🧭",
     metaDescription: "Informed choice is a right — not a privilege. Yet most NDIS participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 reforms are changing that.",
+    ogImage: "https://insyncprofiles.net/manus-storage/informed_choice_gap_real_c626373a.jpg",
+    keywords: "NDIS informed choice, NDIS 2026 reforms participant rights, support worker selection NDIS, supported decision making NDIS, NDIS participant choice and control, NDIS Future Generations Bill 2026, participant engagement NDIS provider, how to choose a support worker Australia, NDIS transparency reforms, disability support worker profile",
     content: WhoIsGoingToSupportMeArticle,
   },
 };
@@ -409,6 +416,33 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
   }
 
   const ArticleContent = article.content;
+
+  // Dynamic SEO for this article
+  useSEO({
+    title: `${article.title} | InSync Profiles Blog`,
+    description: article.metaDescription,
+    canonical: `https://insyncprofiles.net/blog/${slug}`,
+  });
+
+  // Inject OG image and keywords dynamically
+  useEffect(() => {
+    const ogImage = document.querySelector('meta[property="og:image"]') as HTMLMetaElement | null;
+    if (ogImage) ogImage.content = article.ogImage || "https://insyncprofiles.net/assets/insync_og_default.jpg";
+    const twImage = document.querySelector('meta[name="twitter:image"]') as HTMLMetaElement | null;
+    if (twImage) twImage.content = article.ogImage || "https://insyncprofiles.net/assets/insync_og_default.jpg";
+    // Keywords
+    let kwEl = document.querySelector('meta[name="keywords"]') as HTMLMetaElement | null;
+    if (!kwEl) {
+      kwEl = document.createElement("meta");
+      kwEl.name = "keywords";
+      document.head.appendChild(kwEl);
+    }
+    kwEl.content = article.keywords || "NDIS support worker, InSync Profiles, disability support Australia";
+    return () => {
+      const ogImg = document.querySelector('meta[property="og:image"]') as HTMLMetaElement | null;
+      if (ogImg) ogImg.content = "https://insyncprofiles.net/assets/insync_og_default.jpg";
+    };
+  }, [article]);
 
   return (
     <div style={{ minHeight: "100vh", background: C.bgPage, fontFamily: "'Outfit', sans-serif" }}>
