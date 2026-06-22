@@ -21,6 +21,15 @@ const C = {
 
 const POSTS = [
   {
+    slug: "who-is-going-to-support-me",
+    title: "Who is going to support me?",
+    excerpt: "Informed choice is a right — not a privilege. Yet most NDIS participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 reforms are changing that. Here's what informed choice actually requires.",
+    date: "June 2026",
+    readTime: "6 min read",
+    category: "Informed Choice",
+    emoji: "🧭",
+  },
+  {
     slug: "lanyard-card-benefits",
     title: "From Invisible to Unmissable: Your Lanyard Card Is a Walking Billboard That Turns Every Moment Into a Client Connection",
     excerpt: "A matt black card with a diagonal aurora strip and a QR code. That's it. Yet support workers wearing it are sparking conversations, attracting informed clients, and building a personal brand — without saying a word.",

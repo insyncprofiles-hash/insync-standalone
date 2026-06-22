@@ -595,6 +595,48 @@ export default function Landing() {
           </div>
         </section>}
 
+        {/* ── REFORM HERO STATEMENT ── */}
+        <section
+          aria-labelledby="reform-hero-heading"
+          style={{
+            padding: "48px 24px 56px",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            textAlign: "center",
+            position: "relative",
+          }}
+        >
+          {/* Glow */}
+          <div aria-hidden="true" style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "700px", height: "260px", background: `radial-gradient(ellipse at center, rgba(45,212,191,0.10) 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
+          <div style={{ position: "relative", zIndex: 1 }}>
+            {/* Reform tag */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(245,200,66,0.10)", border: "1px solid rgba(245,200,66,0.30)", borderRadius: "99px", padding: "5px 16px", marginBottom: "24px" }}>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.gold, display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
+              <span style={{ color: C.gold, fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'Outfit', sans-serif" }}>NDIS 2026 Reforms · Informed Choice · Participant Rights</span>
+            </div>
+
+            <h2
+              id="reform-hero-heading"
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(32px, 6vw, 64px)", fontWeight: 700, lineHeight: 1.05, marginBottom: "20px", letterSpacing: "-0.01em" }}
+            >
+              Who is going to
+              <br />
+              <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
+                support me?
+              </span>
+            </h2>
+
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,255,255,0.70)", fontSize: "clamp(15px, 2vw, 19px)", lineHeight: 1.75, maxWidth: "640px", margin: "0 auto 32px", fontWeight: 400 }}>
+              Informed choice is a right — not a privilege. Yet most participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 NDIS reforms are changing that. InSync Profiles gives workers the tools to show who they are before the first shift.
+            </p>
+
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/blog/who-is-going-to-support-me" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em" }}>Read the Article →</Link>
+              <Link href="/demo" style={{ background: "transparent", color: C.teal, padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: `1.5px solid ${C.tealDim}` }}>See a Sample Profile</Link>
+            </div>
+          </div>
+        </section>
+
         {/* ── HERO ── */}
         <section
           style={{

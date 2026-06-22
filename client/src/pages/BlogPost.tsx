@@ -220,6 +220,136 @@ function LanyardCardBenefitsArticle() {
   );
 }
 
+// ── "Who is going to support me?" Article ─────────────────────
+function WhoIsGoingToSupportMeArticle() {
+  return (
+    <>
+      <p>
+        It is one of the most important questions a person can ask. And for most NDIS participants, the answer arrives with almost no useful information.
+      </p>
+      <p>
+        A name. A gender. A time slot. That is often all a participant receives before a stranger walks through their front door to provide intimate, personal support. In a sector built on the principle of <strong>choice and control</strong>, this information gap is not a minor inconvenience — it is a structural failure.
+      </p>
+
+      <h2>The Gap Is Real</h2>
+
+      <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
+        <img
+          src="/manus-storage/informed_choice_gap_real_c626373a.jpg"
+          alt="The Gap Is Real — InSync Profiles infographic showing 2023 NDIS Review findings and 2026 participant voice on informed choice"
+          style={{ width: "100%", display: "block", borderRadius: "16px" }}
+        />
+        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginTop: "10px", fontStyle: "italic", textAlign: "center" }}>
+          Source: NDIS Review — What We Have Heard Report (June 2023) · NDIA Supported Decision Making Advisory Group Feedback (February 2026)
+        </p>
+      </div>
+
+      <p>
+        The 2023 NDIS Review found that <em>"participants and their families do not have the support and information they need to find providers, compare what they are offering and make an informed choice about what will work best for them."</em> Three years later, the NDIA's own Supported Decision Making Advisory Group reported that participants were still asking for better information so they could understand what supported decision making is and how to use it.
+      </p>
+      <p>
+        The gap between the right to choose and the information needed to choose has remained largely unchanged. That is the problem InSync Profiles was built to close.
+      </p>
+
+      <h2>What Informed Choice Actually Requires</h2>
+
+      <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
+        <img
+          src="/manus-storage/informed_choice_comparison_b602ade8.jpg"
+          alt="Which side supports informed choice? Comparison of limited information (name, gender, availability) versus rich information (communication style, interests, experience, personality, video introduction)"
+          style={{ width: "100%", display: "block", borderRadius: "16px" }}
+        />
+        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginTop: "10px", fontStyle: "italic", textAlign: "center" }}>
+          Limited information leads to high uncertainty. More information leads to stronger choice.
+        </p>
+      </div>
+
+      <p>
+        The comparison above makes the logic plain. When a participant is given only a name, a gender, and an availability window, they are not making a choice — they are making a guess. A guess about whether this person communicates in a way that works for them. A guess about whether their approach to support aligns with how the participant wants to live. A guess about whether they will actually show up.
+      </p>
+      <p>
+        Informed choice requires information about the person, not just the position. That means:
+      </p>
+      <ul>
+        <li><strong>Communication style</strong> — how the worker communicates, and whether that matches the participant's needs</li>
+        <li><strong>Interests and personality</strong> — the human dimension that determines whether support becomes a relationship or just a transaction</li>
+        <li><strong>Experience areas</strong> — specific conditions, environments, and support types the worker has genuine experience with</li>
+        <li><strong>Approach to support</strong> — their values, their boundaries, and how they handle difficult moments</li>
+        <li><strong>A video introduction</strong> — because a face and a voice carry information that text never can</li>
+      </ul>
+      <p>
+        None of this is radical. It is the same information you would want before hiring anyone to work in your home. The difference is that in the NDIS sector, this information has historically been inaccessible — not because it doesn't exist, but because there has been no standard way to share it.
+      </p>
+
+      <h2>The 2026 Reforms Are Raising the Bar</h2>
+
+      <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
+        <img
+          src="/manus-storage/informed_choice_provider_banner_8a90847c.jpg"
+          alt="Can you show how your participants choose their support worker? InSync Profiles helps providers turn 2026 reform principles into practice — supported decision making, participant engagement, transparency and choice."
+          style={{ width: "100%", display: "block", borderRadius: "16px" }}
+        />
+        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginTop: "10px", fontStyle: "italic", textAlign: "center" }}>
+          2026 reforms are increasing expectations around participant engagement, supported decision-making, transparency and choice.
+        </p>
+      </div>
+
+      <p>
+        The NDIS Future Generations Bill 2026, introduced in June 2026, formally restructures how intermediary services operate. The direction is clear: reduce the layers between participants and their supports, and increase the expectation that participants are genuinely involved in choosing who works with them.
+      </p>
+      <p>
+        For providers, this means the question <em>"Can you show how your participants choose their support worker?"</em> is no longer rhetorical. It is becoming a compliance expectation. Supported decision-making is a priority. Participant engagement is central to quality. Greater provider transparency and oversight are explicitly named reform outcomes.
+      </p>
+      <p>
+        A support worker profile that contains only a name and a roster slot does not meet this standard. A profile that contains a video introduction, a communication style, a set of experience areas, and a clear statement of values — that is a tool for genuine participant choice.
+      </p>
+
+      <h2>What This Means in Practice</h2>
+      <p>
+        For <strong>participants and families</strong>: you have the right to know who is coming. Before you agree to a support arrangement, ask to see the worker's profile. If one doesn't exist, ask why. The reforms are on your side.
+      </p>
+      <p>
+        For <strong>support workers</strong>: your profile is your answer to the question every participant is asking. The workers who build a clear, honest, human profile are the ones who will be chosen — not because they are the cheapest or the closest, but because they are the most knowable.
+      </p>
+      <p>
+        For <strong>providers and coordinators</strong>: the 2026 reforms are shifting accountability toward demonstrable participant engagement. Having a system where workers maintain rich, shareable profiles is not just good practice — it is increasingly what the sector will expect of you.
+      </p>
+
+      <blockquote>
+        <p>Accessible information about support workers remains largely unavailable. InSync Profiles exists to change that — one profile at a time.</p>
+      </blockquote>
+
+      <p>
+        The question <em>"Who is going to support me?"</em> deserves a real answer. Not a name on a roster. A person. A profile. A choice.
+      </p>
+
+      <p>
+        <a href="/demo" style={{ color: "#f5c842" }}>See a sample InSync Profile →</a>
+      </p>
+
+      <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {[
+            "NDIS informed choice",
+            "NDIS 2026 reforms participant rights",
+            "Support worker selection NDIS",
+            "Supported decision making NDIS",
+            "NDIS participant choice and control",
+            "Support worker profile Australia",
+            "NDIS Future Generations Bill 2026",
+            "Participant engagement NDIS provider",
+            "How to choose a support worker",
+            "NDIS transparency reforms",
+          ].map(tag => (
+            <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // ── Article metadata registry ────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
@@ -247,6 +377,15 @@ const ARTICLES: Record<string, {
     emoji: "🌊",
     metaDescription: "Discover why generic social media posts are failing NDIS support workers and how InSync Profiles's digital profile platform helps workers stand out in the Australian care sector.",
     content: SeaOfSamenessArticle,
+  },
+  "who-is-going-to-support-me": {
+    title: "Who is going to support me?",
+    date: "June 2026",
+    readTime: "6 min read",
+    category: "Informed Choice",
+    emoji: "🧭",
+    metaDescription: "Informed choice is a right — not a privilege. Yet most NDIS participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 reforms are changing that.",
+    content: WhoIsGoingToSupportMeArticle,
   },
 };
 
