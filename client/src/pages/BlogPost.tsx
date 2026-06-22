@@ -236,7 +236,7 @@ function WhoIsGoingToSupportMeArticle() {
 
       <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
         <img
-          src="/manus-storage/informed_choice_gap_real_c626373a.jpg"
+          src="/assets/informed_choice_gap_real.jpg"
           alt="The Gap Is Real — InSync Profiles infographic showing 2023 NDIS Review findings and 2026 participant voice on informed choice"
           style={{ width: "100%", display: "block", borderRadius: "16px" }}
         />
@@ -256,7 +256,7 @@ function WhoIsGoingToSupportMeArticle() {
 
       <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
         <img
-          src="/manus-storage/informed_choice_comparison_b602ade8.jpg"
+          src="/assets/informed_choice_comparison.jpg"
           alt="Which side supports informed choice? Comparison of limited information (name, gender, availability) versus rich information (communication style, interests, experience, personality, video introduction)"
           style={{ width: "100%", display: "block", borderRadius: "16px" }}
         />
@@ -286,7 +286,7 @@ function WhoIsGoingToSupportMeArticle() {
 
       <div style={{ margin: "32px 0", borderRadius: "16px", overflow: "hidden" }}>
         <img
-          src="/manus-storage/informed_choice_provider_banner_8a90847c.jpg"
+          src="/assets/informed_choice_provider_banner.jpg"
           alt="Can you show how your participants choose their support worker? InSync Profiles helps providers turn 2026 reform principles into practice — supported decision making, participant engagement, transparency and choice."
           style={{ width: "100%", display: "block", borderRadius: "16px" }}
         />
@@ -395,7 +395,7 @@ const ARTICLES: Record<string, {
     category: "Informed Choice",
     emoji: "🧭",
     metaDescription: "Informed choice is a right — not a privilege. Yet most NDIS participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 reforms are changing that.",
-    ogImage: "https://insyncprofiles.net/manus-storage/informed_choice_gap_real_c626373a.jpg",
+    ogImage: "https://insyncprofiles.net/assets/informed_choice_gap_real.jpg",
     keywords: "NDIS informed choice, NDIS 2026 reforms participant rights, support worker selection NDIS, supported decision making NDIS, NDIS participant choice and control, NDIS Future Generations Bill 2026, participant engagement NDIS provider, how to choose a support worker Australia, NDIS transparency reforms, disability support worker profile",
     content: WhoIsGoingToSupportMeArticle,
   },
