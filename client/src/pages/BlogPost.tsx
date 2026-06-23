@@ -347,6 +347,13 @@ function WhoIsGoingToSupportMeArticle() {
             "#InformedChoice",
             "#DisabilityRights",
             "#NDISTransparency",
+            "#NDISSupports",
+            "#NDISAct",
+            "#MainstreamSupports",
+            "#CommunitySupports",
+            "#SocialAndRecreationalSupports",
+            "#ChangesToTheNDIS",
+            "#SupportsUnderTheNDIS",
           ].map(tag => (
             <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
           ))}
