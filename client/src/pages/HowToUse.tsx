@@ -359,9 +359,8 @@ export default function HowToUse() {
         {/* Quick stats */}
         <div className="flex flex-wrap justify-center gap-8">
           {[
-            { value: "20", label: "Steps covered" },
+            { value: "23", label: "Steps covered" },
             { value: "~10", label: "Minutes to set up" },
-            { value: "11", label: "Colour themes" },
             { value: "0", label: "App downloads" },
           ].map(stat => (
             <div key={stat.label} className="text-center">
