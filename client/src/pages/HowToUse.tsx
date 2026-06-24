@@ -22,7 +22,7 @@ const SECTIONS = [
         icon: "🛒",
         title: "Purchase the Template",
         advantage: "Buy once. Use forever. No subscription.",
-        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at insyncprofiles.net/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.\n\nYour licence key works on as many devices as you like. Enter the same key on your phone, tablet, laptop, and work computer — all at the same time if you want. There is no device limit.\n\nIf you get a new phone or switch computers, just open insyncprofiles.net/editor on the new device and enter your key again. Your editor is always there.`,
+        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at insyncprofiles.net/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.\n\nIf you get a new phone or switch computers, just open insyncprofiles.net/editor on the new device and enter your key again. Your editor is always there.`,
         tip: "Keep your licence key somewhere safe — save it in your Notes app or email it to yourself. If you lose it, contact insyncprofiles@gmail.com and we'll help you out.",
         tags: ["One-time purchase", "No app needed", "Works on any device", "Unlimited devices"],
       },
