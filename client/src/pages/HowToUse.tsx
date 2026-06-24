@@ -253,27 +253,34 @@ Most support workers set up their profile once on their main device (usually the
         icon: "⚠️",
         title: "What Happens If You Clear Your Browsing Data",
         advantage: "Know this before it happens — so you're not caught off guard.",
-        detail: `Clearing your browser's cache, cookies, or site data will delete your profile from that device. This includes:
+        detail: `Your profile is stored in your browser's local storage — not on a server or in a cloud account. This means it lives on your device, in your browser. It is private and never uploaded anywhere automatically.
 
-• Clearing history and browsing data in Chrome, Safari, Firefox, or Edge
-• Using a browser's "Clear All Data" or "Reset" option
-• Uninstalling and reinstalling your browser
-• Some phone resets or factory resets
+The trade-off is that anything which wipes your browser's stored data will also wipe your profile from that device. This includes:
 
-If this happens:
-• Your licence key is not affected — it still works
-• Your shareable profile link is not affected — it still works
-• But your profile content (name, bio, photo, services, etc.) will be gone from that device
-• You'll need to fill in your profile again from scratch
+• Tapping "Clear browsing data" or "Clear all data" in Chrome, Safari, Firefox, or Edge
+• Choosing "Clear site data" for insyncprofiles.net specifically
+• Uninstalling and reinstalling your browser app
+• A factory reset or full phone wipe
+• Some phone security apps that clear browser storage automatically
+
+What is NOT affected:
+• Your licence key — it still works and can be entered again on any device
+• Your shareable profile link — it still opens and displays your profile to anyone who has it
+• Your profile photo if it was uploaded via the camera upload (stored separately)
+
+What IS affected:
+• The editor content on that device — your name, bio, services, experience, availability and all other fields will be blank when you reopen the editor
+• You will need to fill in your profile again from scratch on that device
 
 What to do if this happens:
-1. Open the editor and enter your licence key again
-2. Rebuild your profile — use your shareable link as a reference for what you had
-3. Save your profile again
+1. Open the editor at insyncprofiles.net and enter your licence key
+2. Use your shareable profile link as a reference — open it in another tab to see exactly what you had
+3. Re-enter your details and save your profile again
+4. Your shareable link will update automatically to reflect your rebuilt profile
 
-Your shareable link will update to reflect your newly saved profile.`,
-        tip: "Take a screenshot of your completed profile before clearing your browser data, or copy your bio and key details into a Notes app. This makes it easy to rebuild quickly if you ever need to.",
-        tags: ["Licence key safe", "Link still works", "Profile needs rebuilding", "Screenshot as backup"],
+Note: clearing your browser history (visited pages, search history) does NOT affect your profile. Only clearing site data or cache storage will remove it.`,
+        tip: "The easiest way to protect yourself is to copy your bio and key details into a Notes app on your phone after you finish building your profile. That way, if your browser data is ever cleared, you can paste everything back in within minutes rather than starting from memory.",
+        tags: ["Licence key safe", "Shareable link unaffected", "Editor needs rebuilding", "Notes app backup recommended"],
       },
     ],
   },
