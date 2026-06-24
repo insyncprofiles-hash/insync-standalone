@@ -22,7 +22,7 @@ const SECTIONS = [
         icon: "🛒",
         title: "Purchase the Template",
         advantage: "Buy once. Use forever. No subscription.",
-        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at in-syncprofiles.manus.space/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.\n\nYour licence key works on as many devices as you like. Enter the same key on your phone, tablet, laptop, and work computer — all at the same time if you want. There is no device limit.\n\nIf you get a new phone or switch computers, just open in-syncprofiles.manus.space/editor on the new device and enter your key again. Your editor is always there.`,
+        detail: `After purchasing from the Pricing page, you'll receive a licence key to activate your profile editor. Enter it at insyncprofiles.net/editor and you're in — nothing to download, nothing to install. Works in any browser on any device.\n\nYour licence key works on as many devices as you like. Enter the same key on your phone, tablet, laptop, and work computer — all at the same time if you want. There is no device limit.\n\nIf you get a new phone or switch computers, just open insyncprofiles.net/editor on the new device and enter your key again. Your editor is always there.`,
         tip: "Keep your licence key somewhere safe — save it in your Notes app or email it to yourself. If you lose it, contact insyncprofiles@gmail.com and we'll help you out.",
         tags: ["One-time purchase", "No app needed", "Works on any device", "Unlimited devices"],
       },
@@ -436,54 +436,66 @@ export default function HowToUse() {
                     className="rounded-2xl overflow-hidden"
                     style={{
                       background: isOpen ? solidCard : solidCard2,
-                      border: `1.5px solid ${isOpen ? `${accent}60` : `${accent}25`}`,
+                      border: `2px solid ${isOpen ? accent : `${accent}35`}`,
                       transition: "all 200ms ease-out",
+                      boxShadow: isOpen ? `0 4px 20px ${accent}25` : "none",
                     }}
                   >
                     {/* Step header */}
                     <button
                       onClick={() => setExpandedStep(isOpen ? null : key)}
                       className="w-full flex items-center gap-4 text-left"
-                      style={{ background: "none", border: "none", cursor: "pointer", padding: "18px 16px", minHeight: "80px" }}
+                      style={{
+                        background: isOpen ? `${accent}12` : "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: "22px 20px",
+                        minHeight: "96px",
+                        transition: "background 200ms ease-out",
+                      }}
                       aria-expanded={isOpen}
                     >
                       <span
-                        className="flex-shrink-0 rounded-xl flex items-center justify-center"
+                        className="flex-shrink-0 rounded-2xl flex items-center justify-center"
                         style={{
-                          width: "52px",
-                          height: "52px",
-                          background: isOpen ? accent : `${accent}20`,
+                          width: "64px",
+                          height: "64px",
+                          background: isOpen ? accent : `${accent}18`,
                           color: isOpen ? "#ffffff" : accent,
                           fontFamily: "'Outfit', sans-serif",
-                          fontSize: "15px",
-                          fontWeight: 700,
+                          fontSize: isOpen ? "28px" : "18px",
+                          fontWeight: 800,
                           transition: "all 200ms ease-out",
                           flexShrink: 0,
+                          boxShadow: isOpen ? `0 2px 12px ${accent}40` : "none",
                         }}
                       >
                         {isOpen ? step.icon : step.number}
                       </span>
                       <div className="flex-1 min-w-0">
                         <p
-                          style={{ color: headText, fontFamily: "'Outfit', sans-serif", margin: 0, fontSize: "16px", fontWeight: 600, lineHeight: 1.3 }}
+                          style={{ color: headText, fontFamily: "'Outfit', sans-serif", margin: 0, fontSize: "18px", fontWeight: 700, lineHeight: 1.3 }}
                         >
                           {step.title}
                         </p>
                         <p
-                          style={{ color: isOpen ? accent : dimText, fontFamily: "'Outfit', sans-serif", margin: "4px 0 0", fontSize: "13px", lineHeight: 1.4 }}
+                          style={{ color: isOpen ? accent : dimText, fontFamily: "'Outfit', sans-serif", margin: "6px 0 0", fontSize: "14px", lineHeight: 1.5 }}
                         >
                           {step.advantage}
                         </p>
                       </div>
                       <span
+                        className="flex-shrink-0 flex items-center justify-center rounded-full"
                         style={{
-                          color: isOpen ? accent : dimText,
-                          fontSize: "22px",
+                          width: "40px",
+                          height: "40px",
+                          background: isOpen ? accent : `${accent}18`,
+                          color: isOpen ? "#ffffff" : accent,
+                          fontSize: "20px",
                           transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                          transition: "transform 200ms ease-out",
-                          flexShrink: 0,
+                          transition: "all 200ms ease-out",
                           lineHeight: 1,
-                          paddingLeft: "8px",
+                          flexShrink: 0,
                         }}
                         aria-hidden="true"
                       >
