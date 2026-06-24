@@ -133,7 +133,7 @@ const SECTIONS = [
     subtitle: "Get your profile in front of clients and coordinators",
     steps: [
       {
-        number: "11b",
+        number: "11",
         icon: "💾",
         title: "Save Changes Before Sharing",
         advantage: "Your profile link and QR code only update when you save. Always save first — then share.",
@@ -160,7 +160,7 @@ const SECTIONS = [
         tags: ["Instant scan", "No app needed", "Print-ready PNG", "Works offline"],
       },
       {
-        number: "13b",
+        number: "14",
         icon: "📲",
         title: "Generate Your Social Media Card",
         advantage: "A professionally designed card that earns trust at first glance — built around what NDIS participants actually say they need to see.",
@@ -169,7 +169,7 @@ const SECTIONS = [
         tags: ["Trust-first design", "Location prominent", "Specialty checklist", "Video play button", "Download PNG"],
       },
       {
-        number: "14",
+        number: "15",
         icon: "📋",
         title: "Copy Your Auto-Written Caption",
         advantage: "Your caption is already written. No blank page. No wondering what to say.",
@@ -178,7 +178,7 @@ const SECTIONS = [
         tags: ["Auto-generated", "Includes hashtags", "Fully editable"],
       },
       {
-        number: "15",
+        number: "16",
         icon: "📸",
         title: "Save Your Post Card as an Image",
         advantage: "The post card image is what stops people scrolling. It's designed to stand out in a feed.",
@@ -187,7 +187,7 @@ const SECTIONS = [
         tags: ["iPhone ✓", "Android ✓", "Mac ✓", "Windows ✓"],
       },
       {
-        number: "16",
+        number: "17",
         icon: "📱",
         title: "Post on Facebook",
         advantage: "Facebook is where NDIS participants, families, and support coordinators actively search for workers.",
@@ -196,7 +196,7 @@ const SECTIONS = [
         tags: ["Facebook Feed ✓", "Facebook Groups ✓", "Facebook Bio Link ✓"],
       },
       {
-        number: "17",
+        number: "18",
         icon: "💼",
         title: "Share with Support Coordinators Directly",
         advantage: "Support coordinators match participants with workers. Getting on their radar directly is the fastest path to new clients.",
@@ -213,7 +213,7 @@ const SECTIONS = [
     subtitle: "What you need to know about how your profile is stored — and what happens if you switch devices",
     steps: [
       {
-        number: "17b",
+        number: "19",
         icon: "💾",
         title: "Where Your Profile Is Stored",
         advantage: "No account needed — your data stays on your device, private and offline.",
@@ -230,7 +230,7 @@ The trade-off is that your profile data lives on the specific device and browser
         tags: ["No account needed", "Private by default", "Works offline", "Instant load"],
       },
       {
-        number: "17c",
+        number: "20",
         icon: "📲",
         title: "Using Your Editor on a Different Device",
         advantage: "Your licence key works on any device — just be aware that your profile content won't transfer automatically.",
@@ -249,7 +249,7 @@ Most support workers set up their profile once on their main device (usually the
         tags: ["Unlimited devices", "Same licence key", "Start fresh on new device", "No sync needed"],
       },
       {
-        number: "17d",
+        number: "21",
         icon: "⚠️",
         title: "What Happens If You Clear Your Browsing Data",
         advantage: "Know this before it happens — so you're not caught off guard.",
@@ -291,7 +291,7 @@ Note: clearing your browser history (visited pages, search history) does NOT aff
     subtitle: "Your profile is a living document — update it as you grow",
     steps: [
       {
-        number: "18",
+        number: "22",
         icon: "🔄",
         title: "Updating Your Profile",
         advantage: "No limit on updates. Your profile grows with your career.",
@@ -300,7 +300,7 @@ Note: clearing your browser history (visited pages, search history) does NOT aff
         tags: ["Unlimited updates", "Instant changes", "No re-purchase needed"],
       },
       {
-        number: "19",
+        number: "23",
         icon: "💡",
         title: "Why This Template Makes You Stand Out",
         advantage: "In a sector where most workers have no digital presence, an accessible, professional profile is a significant competitive advantage.",
