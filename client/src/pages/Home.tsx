@@ -54,6 +54,7 @@ export interface ProfileData {
   vehicleOptions: VehicleOptions;
   showUpStyle: { communicate: string[]; connect: string[]; presence: string[] };
   yearsExperience: string;
+  customExperience: string;
 }
 
 export interface ServiceItem {
@@ -253,6 +254,7 @@ const DEFAULT_PROFILE: ProfileData = {
   vehicleOptions: DEFAULT_VEHICLE_OPTIONS,
   showUpStyle: { communicate: [], connect: [], presence: [] },
   yearsExperience: "",
+  customExperience: "",
 };
 
 // ── URL param helpers ─────────────────────────────────────────
@@ -306,6 +308,7 @@ function encodeProfileToURL(profile: ProfileData, videoUrl?: string | null): str
   if (profile.showUpStyle.connect.length > 0) params.set("susCon", profile.showUpStyle.connect.join(","));
   if (profile.showUpStyle.presence.length > 0) params.set("susPre", profile.showUpStyle.presence.join(","));
   if (profile.yearsExperience) params.set("yrsExp", profile.yearsExperience);
+  if (profile.customExperience) params.set("customExp", profile.customExperience);
   return `${window.location.origin}/view?${params.toString()}`;
 }
 function encodeProfileToURLWithSkin(profile: ProfileData, videoUrl?: string | null, skinId?: string): string {
@@ -360,6 +363,7 @@ function loadProfileFromURL(): Partial<ProfileData> | null {
     };
   }
   if (params.get("yrsExp")) overrides.yearsExperience = params.get("yrsExp")!;
+  if (params.get("customExp")) overrides.customExperience = params.get("customExp")!;
   return overrides;
 }
 
@@ -900,16 +904,19 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
         <DemoThreadConnector />
         <DemoThreadSection num={++threadNum} icon="📋" title="Experience" subtitle="My background, training, and specialist areas.">
           <div style={{ paddingTop: '16px' }}>
-            {checkedExperience.length > 0 ? (
+            {(checkedExperience.length > 0 || profile.customExperience) ? (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {checkedExperience.map(({ label }) => (
                   <span key={label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: 'rgba(74,144,217,0.1)', border: '1px solid rgba(74,144,217,0.3)', color: '#2a4a7a' }}>{label}</span>
                 ))}
+                {profile.customExperience && (
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: 'rgba(245,200,66,0.15)', border: '1px solid rgba(245,200,66,0.4)', color: '#7a5a00' }}>{profile.customExperience}</span>
+                )}
               </div>
             ) : (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: '#9aabcc', margin: 0, fontStyle: 'italic' }}>Tick your experience areas in the editor to show them here.</p>
             )}
-            {checkedExperience.length > 0 && (
+            {(checkedExperience.length > 0 || profile.customExperience) && (
               <p style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: '10px',
@@ -2895,6 +2902,20 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   </details>
                 );
                             })}
+
+              {/* Custom Experience field */}
+              <div style={{ marginTop: "12px", padding: "14px 16px", borderRadius: "14px", border: `1px solid ${A.border}`, background: "rgba(100,160,255,0.04)" }}>
+                <label style={{ display: "block", fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: A.gold, marginBottom: "8px" }}>✏️ Custom Experience</label>
+                <input
+                  style={{ ...THREAD_INPUT, width: "100%" }}
+                  value={profile.customExperience || ""}
+                  onChange={e => updateProfile({ customExperience: e.target.value })}
+                  placeholder="e.g. Acquired Brain Injury, Forensic NDIS, Palliative Care…"
+                  maxLength={80}
+                  aria-label="Custom experience area"
+                />
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, marginTop: "6px", lineHeight: 1.5 }}>Add one experience area not listed above — it will appear as a badge on your profile.</p>
+              </div>
 
               {/* Copy-to-Caption button */}
               {(() => {

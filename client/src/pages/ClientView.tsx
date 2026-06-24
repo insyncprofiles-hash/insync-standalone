@@ -221,6 +221,7 @@ function loadProfileFromURL(): Partial<ProfileData> {
         if (!overrides.profileImage && storedParams.get("photo")) {
           overrides.profileImage = storedParams.get("photo")!;
         }
+        if (storedParams.get("customExp")) overrides.customExperience = storedParams.get("customExp")!;
         return overrides;
       } catch {
         // Fall through to direct param parsing
@@ -306,6 +307,7 @@ function loadProfileFromURL(): Partial<ProfileData> {
   }
   // Cloudinary photo URL travels directly in the URL
   if (params.get("photo")) overrides.profileImage = params.get("photo")!;
+  if (params.get("customExp")) overrides.customExperience = params.get("customExp")!;
   // How I Show Up
   const susCom = params.get("susCom"); const susCon = params.get("susCon"); const susPre = params.get("susPre");
   if (susCom || susCon || susPre) {
@@ -504,6 +506,7 @@ export default function ClientView() {
       presence: ["Calm & grounded", "Consistent", "Strengths-based"],
     },
     yearsExperience: "",
+    customExperience: "",
     ...urlOverrides,
   };
 
@@ -540,6 +543,7 @@ export default function ClientView() {
 
   const checkedExperience = profile.experienceGroups
     .flatMap(g => g.items.filter(i => i.checked).map(i => ({ group: g.title, label: i.label })));
+  const hasExperience = checkedExperience.length > 0 || !!profile.customExperience;
 
   const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
   const availDays = DAYS.filter(d => profile.availability[d]);
@@ -1176,7 +1180,7 @@ export default function ClientView() {
           })()}
         </ThreadSection>
         {/* ── Thread connector + Experience ────────────────── */}
-        {checkedExperience.length > 0 && (
+        {hasExperience && (
           <>
             <ThreadConnector />
             <ThreadSection num={3} icon="📋" title="Experience" subtitle="My background, training, and specialist areas." textColor={P.text} cardBg={P.bg}>
@@ -1189,6 +1193,14 @@ export default function ClientView() {
                     color: P.text,
                   }}>{label}</span>
                 ))}
+                {profile.customExperience && (
+                  <span style={{
+                    fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
+                    padding: "6px 14px", borderRadius: "20px",
+                    background: "rgba(245,200,66,0.15)", border: "1px solid rgba(245,200,66,0.4)",
+                    color: P.text,
+                  }}>{profile.customExperience}</span>
+                )}
               </div>
             </ThreadSection>
           </>
@@ -1199,7 +1211,7 @@ export default function ClientView() {
         {(profile.showUpStyle.communicate.length > 0 || profile.showUpStyle.connect.length > 0 || profile.showUpStyle.presence.length > 0) && (
           <>
             <ThreadConnector />
-            <ThreadSection num={checkedExperience.length > 0 ? 4 : 3} icon="✨" title="How I Show Up" subtitle="My communication style, how I connect, and how I approach support." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection num={hasExperience ? 4 : 3} icon="✨" title="How I Show Up" subtitle="My communication style, how I connect, and how I approach support." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "16px" }}>
                 {([
                   { key: "communicate" as const, label: "How I Communicate" },
@@ -1233,7 +1245,7 @@ export default function ClientView() {
         {availDays.length > 0 && (
           <>
             <ThreadConnector />
-            <ThreadSection num={checkedExperience.length > 0 ? 4 : 3} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection num={hasExperience ? 4 : 3} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   {availDays.map(d => {
@@ -1262,7 +1274,7 @@ export default function ClientView() {
         {(profile.phone || profile.email || profile.whatsapp || profile.website) && (
           <>
             <ThreadConnector />
-            <ThreadSection num={checkedExperience.length > 0 ? 5 : 4} icon="✉️" title={profile.contactLabel || 'Contact'} subtitle="How to reach me." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection num={hasExperience ? 5 : 4} icon="✉️" title={profile.contactLabel || 'Contact'} subtitle="How to reach me." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 {profile.phone && (
                   <a href={`tel:${profile.phone}`} style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
