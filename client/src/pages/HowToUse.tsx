@@ -248,40 +248,6 @@ Most support workers set up their profile once on their main device (usually the
         tip: "If you want to edit from multiple devices regularly, do your main editing on one device and use the others just for sharing. This keeps things simple and avoids confusion about which version is current.",
         tags: ["Unlimited devices", "Same licence key", "Start fresh on new device", "No sync needed"],
       },
-      {
-        number: "21",
-        icon: "⚠️",
-        title: "What Happens If You Clear Your Browsing Data",
-        advantage: "Know this before it happens — so you're not caught off guard.",
-        detail: `Your profile is stored in your browser's local storage — not on a server or in a cloud account. This means it lives on your device, in your browser. It is private and never uploaded anywhere automatically.
-
-The trade-off is that anything which wipes your browser's stored data will also wipe your profile from that device. This includes:
-
-• Tapping "Clear browsing data" or "Clear all data" in Chrome, Safari, Firefox, or Edge
-• Choosing "Clear site data" for insyncprofiles.net specifically
-• Uninstalling and reinstalling your browser app
-• A factory reset or full phone wipe
-• Some phone security apps that clear browser storage automatically
-
-What is NOT affected:
-• Your licence key — it still works and can be entered again on any device
-• Your shareable profile link — it still opens and displays your profile to anyone who has it
-• Your profile photo if it was uploaded via the camera upload (stored separately)
-
-What IS affected:
-• The editor content on that device — your name, bio, services, experience, availability and all other fields will be blank when you reopen the editor
-• You will need to fill in your profile again from scratch on that device
-
-What to do if this happens:
-1. Open the editor at insyncprofiles.net and enter your licence key
-2. Use your shareable profile link as a reference — open it in another tab to see exactly what you had
-3. Re-enter your details and save your profile again
-4. Your shareable link will update automatically to reflect your rebuilt profile
-
-Note: clearing your browser history (visited pages, search history) does NOT affect your profile. Only clearing site data or cache storage will remove it.`,
-        tip: "The easiest way to protect yourself is to copy your bio and key details into a Notes app on your phone after you finish building your profile. That way, if your browser data is ever cleared, you can paste everything back in within minutes rather than starting from memory.",
-        tags: ["Licence key safe", "Shareable link unaffected", "Editor needs rebuilding", "Notes app backup recommended"],
-      },
     ],
   },
   {
@@ -477,44 +443,47 @@ export default function HowToUse() {
                     {/* Step header */}
                     <button
                       onClick={() => setExpandedStep(isOpen ? null : key)}
-                      className="w-full flex items-center gap-4 p-4 text-left"
-                      style={{ background: "none", border: "none", cursor: "pointer" }}
+                      className="w-full flex items-center gap-4 text-left"
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: "18px 16px", minHeight: "80px" }}
                       aria-expanded={isOpen}
                     >
                       <span
-                        className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                        className="flex-shrink-0 rounded-xl flex items-center justify-center"
                         style={{
+                          width: "52px",
+                          height: "52px",
                           background: isOpen ? accent : `${accent}20`,
                           color: isOpen ? "#ffffff" : accent,
                           fontFamily: "'Outfit', sans-serif",
-                          fontSize: "13px",
+                          fontSize: "15px",
                           fontWeight: 700,
                           transition: "all 200ms ease-out",
+                          flexShrink: 0,
                         }}
                       >
                         {isOpen ? step.icon : step.number}
                       </span>
                       <div className="flex-1 min-w-0">
                         <p
-                          className="font-semibold text-sm"
-                          style={{ color: headText, fontFamily: "'Outfit', sans-serif", margin: 0 }}
+                          style={{ color: headText, fontFamily: "'Outfit', sans-serif", margin: 0, fontSize: "16px", fontWeight: 600, lineHeight: 1.3 }}
                         >
                           {step.title}
                         </p>
                         <p
-                          className="text-xs mt-0.5"
-                          style={{ color: isOpen ? accent : dimText, fontFamily: "'Outfit', sans-serif", margin: 0 }}
+                          style={{ color: isOpen ? accent : dimText, fontFamily: "'Outfit', sans-serif", margin: "4px 0 0", fontSize: "13px", lineHeight: 1.4 }}
                         >
                           {step.advantage}
                         </p>
                       </div>
                       <span
                         style={{
-                          color: dimText,
-                          fontSize: "14px",
+                          color: isOpen ? accent : dimText,
+                          fontSize: "22px",
                           transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                           transition: "transform 200ms ease-out",
                           flexShrink: 0,
+                          lineHeight: 1,
+                          paddingLeft: "8px",
                         }}
                         aria-hidden="true"
                       >
