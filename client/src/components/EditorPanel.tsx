@@ -251,7 +251,7 @@ ${profile.website ? `🌐 ${profile.website}` : ""}
 
 ${profile.ctaText} ★
 
-#SupportWorker #NDIS #Accessibility #Inclusion #DisabilitySupport #PersonCentredCare #NDIS2024 #SupportWorkerLife`;
+#SupportWorker #NDIS #Accessibility #Inclusion #DisabilitySupport #PersonCentredCare #NDIS2024 #SupportWorkerLife #SupportWorkerTemplate #SupportWorkerCV #CareWorkerTemplate #CareWorkerCV #SWProfileTemplate`;
   };
 
   const panelStyle: React.CSSProperties = {
@@ -641,7 +641,7 @@ ${profile.ctaText} ★
                 Suggested Hashtags
               </p>
               <div className="flex flex-wrap gap-1.5" role="list" aria-label="Suggested hashtags">
-                {["#SupportWorker", "#NDIS", "#Accessibility", "#Inclusion", "#DisabilitySupport", "#PersonCentredCare", "#SupportWorkerLife", "#DisabilityInclusion", "#NDISProvider", "#CommunitySupport"].map(tag => (
+                {["#SupportWorker", "#NDIS", "#Accessibility", "#Inclusion", "#DisabilitySupport", "#PersonCentredCare", "#SupportWorkerLife", "#DisabilityInclusion", "#NDISProvider", "#CommunitySupport", "#SupportWorkerTemplate", "#SupportWorkerCV", "#CareWorkerTemplate", "#CareWorkerCV", "#SWProfileTemplate"].map(tag => (
                   <span
                     key={tag}
                     role="listitem"
