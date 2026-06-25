@@ -251,7 +251,7 @@ ${profile.website ? `🌐 ${profile.website}` : ""}
 
 ${profile.ctaText} ★
 
-#SupportWorker #NDIS #Accessibility #Inclusion #DisabilitySupport #PersonCentredCare #NDIS2024 #SupportWorkerLife #SupportWorkerTemplate #SupportWorkerCV #CareWorkerTemplate #CareWorkerCV #SWProfileTemplate`;
+#SupportWorker #NDIS #Accessibility #Inclusion #DisabilitySupport #PersonCentredCare #NDIS2024 #SupportWorkerLife`;
   };
 
   const panelStyle: React.CSSProperties = {
