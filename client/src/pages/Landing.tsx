@@ -601,7 +601,7 @@ export default function Landing() {
           style={{
             width: "100%",
             background: "#ffffff",
-            padding: "80px 24px 88px",
+            padding: "48px 24px 52px",
             textAlign: "center",
             position: "relative",
             overflow: "hidden",
@@ -611,25 +611,25 @@ export default function Landing() {
           <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 50%, #2dd4bf 100%)" }} />
           <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
             {/* Eyebrow */}
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(11px, 1.4vw, 13px)", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#2dd4bf", marginBottom: "22px", marginTop: 0 }}>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(11px, 1.4vw, 13px)", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#2dd4bf", marginBottom: "14px", marginTop: 0 }}>
               NDIS 2026 Reforms · Informed Choice · Participant Rights
             </p>
             {/* Main headline */}
             <h2
               id="reform-hero-heading"
-              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(32px, 5.5vw, 64px)", fontWeight: 700, lineHeight: 1.05, marginBottom: "14px", letterSpacing: "-0.02em" }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(32px, 5.5vw, 64px)", fontWeight: 700, lineHeight: 1.05, marginBottom: "10px", letterSpacing: "-0.02em" }}
             >
               More power to You
             </h2>
             {/* Subtitle */}
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(17px, 2.8vw, 26px)", fontWeight: 500, fontStyle: "italic", lineHeight: 1.45, marginBottom: "28px", opacity: 0.65, marginTop: 0 }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(17px, 2.8vw, 26px)", fontWeight: 500, fontStyle: "italic", lineHeight: 1.45, marginBottom: "18px", opacity: 0.65, marginTop: 0 }}>
               A Participant-Led Journey into the most important decisions of their life
             </p>
             {/* Divider */}
-            <div aria-hidden="true" style={{ width: "56px", height: "3px", background: "linear-gradient(90deg, #2dd4bf, #f5c842)", borderRadius: "99px", margin: "0 auto 32px" }} />
+            <div aria-hidden="true" style={{ width: "56px", height: "3px", background: "linear-gradient(90deg, #2dd4bf, #f5c842)", borderRadius: "99px", margin: "0 auto 20px" }} />
             {/* Sub-heading */}
             <h3
-              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "18px", letterSpacing: "-0.01em" }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-0.01em" }}
             >
               Who is going to{" "}
               <span style={{ background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
@@ -637,7 +637,7 @@ export default function Landing() {
               </span>
             </h3>
             {/* Body */}
-            <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.8, maxWidth: "580px", margin: "0 auto 36px", fontWeight: 400, opacity: 0.82 }}>
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.8, maxWidth: "580px", margin: "0 auto 28px", fontWeight: 400, opacity: 0.82 }}>
               Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is yours.
             </p>
             {/* CTAs */}
