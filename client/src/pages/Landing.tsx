@@ -595,46 +595,69 @@ export default function Landing() {
           </div>
         </section>}
 
-        {/* ── REFORM HERO STATEMENT ── */}
+        {/* ── WHITE BANNER HERO — Participant-Led Journey ── */}
         <section
           aria-labelledby="reform-hero-heading"
           style={{
-            padding: "48px 24px 56px",
-            maxWidth: "1200px",
-            margin: "0 auto",
+            width: "100%",
+            background: "#ffffff",
+            padding: "80px 24px 88px",
             textAlign: "center",
             position: "relative",
+            overflow: "hidden",
           }}
         >
-          {/* Glow */}
-          <div aria-hidden="true" style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "700px", height: "260px", background: `radial-gradient(ellipse at center, rgba(45,212,191,0.10) 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
-          <div style={{ position: "relative", zIndex: 1 }}>
-            {/* Reform tag */}
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(245,200,66,0.10)", border: "1px solid rgba(245,200,66,0.30)", borderRadius: "99px", padding: "5px 16px", marginBottom: "24px" }}>
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.gold, display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
-              <span style={{ color: C.gold, fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", fontFamily: "'Outfit', sans-serif" }}>NDIS 2026 Reforms · Informed Choice · Participant Rights</span>
-            </div>
-
+          {/* Top accent line */}
+          <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 50%, #2dd4bf 100%)" }} />
+          <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+            {/* Eyebrow */}
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(11px, 1.4vw, 13px)", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#2dd4bf", marginBottom: "22px", marginTop: 0 }}>
+              NDIS 2026 Reforms · Informed Choice · Participant Rights
+            </p>
+            {/* Main headline */}
             <h2
               id="reform-hero-heading"
-              style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(32px, 6vw, 64px)", fontWeight: 700, lineHeight: 1.05, marginBottom: "20px", letterSpacing: "-0.01em" }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(32px, 5.5vw, 64px)", fontWeight: 700, lineHeight: 1.05, marginBottom: "14px", letterSpacing: "-0.02em" }}
             >
-              Who is going to
-              <br />
-              <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
+              More power to You
+            </h2>
+            {/* Subtitle */}
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(17px, 2.8vw, 26px)", fontWeight: 500, fontStyle: "italic", lineHeight: 1.45, marginBottom: "28px", opacity: 0.65, marginTop: 0 }}>
+              A Participant-Led Journey into the most important decisions of their life
+            </p>
+            {/* Divider */}
+            <div aria-hidden="true" style={{ width: "56px", height: "3px", background: "linear-gradient(90deg, #2dd4bf, #f5c842)", borderRadius: "99px", margin: "0 auto 32px" }} />
+            {/* Sub-heading */}
+            <h3
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "18px", letterSpacing: "-0.01em" }}
+            >
+              Who is going to{" "}
+              <span style={{ background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
                 support me?
               </span>
-            </h2>
-
-            <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,255,255,0.70)", fontSize: "clamp(15px, 2vw, 19px)", lineHeight: 1.75, maxWidth: "640px", margin: "0 auto 32px", fontWeight: 400 }}>
-              Informed choice is a right — not a privilege. Yet most participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 NDIS reforms are changing that. InSync Profiles gives workers the tools to show who they are before the first shift.
+            </h3>
+            {/* Body */}
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.8, maxWidth: "600px", margin: "0 auto 36px", fontWeight: 400, opacity: 0.82 }}>
+              Most participants are still asked to choose a support worker based on a name, a gender, and a time slot. Choice without information is not really choice — it is a guess with paperwork behind it. The 2026 reforms are changing that.
             </p>
-
+            {/* CTAs */}
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/blog/who-is-going-to-support-me" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em" }}>Read the Article →</Link>
-              <Link href="/view" style={{ background: C.gold, color: "#0d1b2a", padding: "13px 32px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", border: "none" }}>See what a participant sees when choosing their support worker →</Link>
+              <Link
+                href="/blog/who-is-going-to-support-me"
+                style={{ background: "linear-gradient(135deg, #2dd4bf 0%, #f5c842 100%)", color: "#0d1b2a", padding: "14px 34px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 20px rgba(45,212,191,0.28)" }}
+              >
+                Read the Article →
+              </Link>
+              <Link
+                href="/view"
+                style={{ background: "transparent", color: "#0d1b2a", padding: "13px 30px", borderRadius: "99px", fontSize: "14px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: "2px solid rgba(13,27,42,0.35)" }}
+              >
+                See what a participant sees →
+              </Link>
             </div>
           </div>
+          {/* Bottom accent line */}
+          <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "4px", background: "linear-gradient(90deg, #f5c842 0%, #2dd4bf 50%, #f5c842 100%)" }} />
         </section>
 
         {/* ── HERO ── */}
