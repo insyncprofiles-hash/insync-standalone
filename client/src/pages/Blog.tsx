@@ -21,6 +21,24 @@ const C = {
 
 const POSTS = [
   {
+    slug: "more-power-to-you",
+    title: "More power to You — A Participant-Led Journey into the Most Important Decisions of Their Life",
+    excerpt: "Choosing a support worker is one of the biggest decisions a person can make. It’s not just about qualifications or availability. InSync Profiles puts real, accessible information in participants’ hands before that decision is made.",
+    date: "June 2026",
+    readTime: "4 min read",
+    category: "Participant Choice",
+    emoji: "💪",
+  },
+  {
+    slug: "flipping-the-script",
+    title: "Flipping the Script: Moving from Static Support Worker Profiles to Proactive Care Alliances",
+    excerpt: "The traditional support matching system is reactive. Coordinators pick a name from a spreadsheet and hope for the best. Interactive profiles change the dynamic entirely — turning a static document into a living demonstration of who a worker is and how they show up.",
+    date: "June 2026",
+    readTime: "8 min read",
+    category: "Person-Centred Care",
+    emoji: "🔄",
+  },
+  {
     slug: "who-is-going-to-support-me",
     title: "Who is going to support me?",
     excerpt: "Informed choice is a right — not a privilege. Yet most NDIS participants are still asked to choose a support worker based on a name, a gender, and a time slot. The 2026 reforms are changing that. Here's what informed choice actually requires.",
