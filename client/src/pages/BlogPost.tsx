@@ -367,7 +367,87 @@ function WhoIsGoingToSupportMeArticle() {
   );
 }
 
-// ── Article metadata registry ────────────────────────────────
+function FlippingTheScriptArticle() {
+  return (
+    <>
+      <p>
+        The traditional support matching system treats care like a passive wildcard. When a client's needs change, or when a provider releases a fresh intake brief, the standard response is highly reactive. Coordinators frantically look at a spreadsheet of basic worker certifications, pick a name, and hope for the best.
+      </p>
+      <p>
+        This reactive loop doesn't just create high turnover — it creates anxiety on both sides. A participant is forced to constantly retrain new people, while support workers step into homes sometimes completely blind to the specific, nuanced realities of that household.
+      </p>
+      <p>
+        True person-centred care requires a proactive system. By shifting away from rigid, text-heavy static profiles and using interactive digital templates, the care sector can transform how workers respond to client needs in real-time.
+      </p>
+
+      <h2>Scenario 1 — The Targeted Video Response to Intake Briefs</h2>
+      <p>
+        Imagine a local service provider onboarding a new NDIS participant. The client's intake brief specifies highly unique, non-negotiable requirements: they have severe sensory processing sensitivities, utilise an alternative communication device, and need a worker who understands how to navigate high-anxiety transitions without triggering a meltdown.
+      </p>
+      <p>
+        In the old system, a provider would post this shift, receive fifty generic support worker responses and spend days guessing who might have the actual soft skills to handle it.
+      </p>
+      <p>With interactive and accessibility-focused profiling, the dynamic shifts entirely:</p>
+      <ol>
+        <li><strong>The Brief as a Trigger</strong> — the support worker receives the details of the specific intake brief.</li>
+        <li><strong>The Proactive Pivot</strong> — instead of sending a standard stock outline, the worker records a short, targeted video response addressing those exact needs and uploads it directly into their profile.</li>
+        <li><strong>The Proof</strong> — in the video, the worker speaks directly to the client's family: <em>"I read that transitions are a major trigger point. In my previous work with neurodivergent clients, I use a visual schedule and a low-demand approach twenty minutes before we leave the house. Here is how I adjust my tone of voice to keep the environment calm..."</em></li>
+      </ol>
+      <p>
+        When the family reviews the worker's profile received by email, they aren't just reading that the worker is "experienced." They are seeing a live demonstration of the worker's strategy, tone, and reasoning — the persona — before they ever step foot in the home.
+      </p>
+
+      <h2>Scenario 2 — Show, Don't Tell: Demonstrating Real Skills and Achievements</h2>
+      <p>
+        A massive flaw in standard support matching is that the most critical care skills — physical transfers, meal preparation for dysphagia, implementing positive behaviour support plans — cannot be proven on a piece of paper. Anyone can write "experienced with manual handling" on a CV or profile.
+      </p>
+      <p>Interactive profiles allow workers to use their video space as a living portfolio to showcase real stories, achievements, and practical demonstrations:</p>
+      <ul>
+        <li><strong>Visual Proof of Competency</strong> — a worker can use their video to walk through exactly how they set up a safe environment for a ceiling hoist transfer, or how they prepare texture-modified meals according to speech pathology guidelines.</li>
+        <li><strong>Real Stories of Independence</strong> — instead of listing clinical jargon, a worker can share an anonymous, respectful story of an achievement: <em>"Last year, I worked with a young man who hadn't left his house in six months due to agoraphobia. By building a gradual, low-pressure community access routine over four months, we successfully visited his local cafe together."</em></li>
+      </ul>
+      <p>
+        Hearing a worker narrate their successes gives participants and coordinators deep insight into their values, their humility, and their commitment to fostering client independence rather than dependence.
+      </p>
+
+      <h2>A Dignified, Human-First Infrastructure</h2>
+      <p>
+        When support workers have the infrastructure to update and adapt their profiles dynamically, they stop being passive numbers in a database. They become active professionals who can tailor their presentation to match the exact human being they want to support.
+      </p>
+      <p>
+        The care sector can finally match the complexity of human needs with a flexible, transparent, and profoundly person-centred solution — one profile at a time.
+      </p>
+
+      <p>
+        <a href="/view" style={{ color: "#f5c842" }}>See what an interactive support worker profile looks like →</a>
+      </p>
+
+      <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {[
+            "#PersonCentredCare",
+            "#NDISSupportMatching",
+            "#SupportWorkerProfile",
+            "#InteractiveProfile",
+            "#ProactiveCare",
+            "#NDISParticipant",
+            "#SupportCoordinator",
+            "#ChoiceAndControl",
+            "#DisabilitySupport",
+            "#NDISAustralia",
+            "#InformedChoice",
+            "#SupportWorker",
+          ].map(tag => (
+            <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Article metadata registry ─────────────────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
   date: string;
@@ -379,6 +459,16 @@ const ARTICLES: Record<string, {
   keywords?: string;
   content: () => React.ReactElement;
 }> = {
+  "flipping-the-script": {
+    title: "Flipping the Script: Moving from Static Support Worker Profiles to Proactive Care Alliances",
+    date: "June 2026",
+    readTime: "8 min read",
+    category: "Person-Centred Care",
+    emoji: "🔄",
+    metaDescription: "The traditional support matching system is reactive, creating anxiety for participants and workers alike. Discover how interactive digital profiles transform care matching into a proactive, person-centred alliance.",
+    keywords: "NDIS support matching, interactive support worker profile, person-centred care NDIS, proactive care alliance, support worker video profile, NDIS participant choice, disability support matching Australia, InSync Profiles",
+    content: FlippingTheScriptArticle,
+  },
   "lanyard-card-benefits": {
     title: "From Invisible to Unmissable: Your Lanyard Card Is a Walking Billboard That Turns Every Moment Into a Client Connection",
     date: "June 2026",
