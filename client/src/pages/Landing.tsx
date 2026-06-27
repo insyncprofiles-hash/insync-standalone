@@ -654,7 +654,7 @@ export default function Landing() {
                 </span>
               </h3>
               <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.75, marginBottom: "24px", opacity: 0.78 }}>
-                Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is participant-led.
+                For too long, participants have been handed a name and told to trust it. No context. No way to know if this person actually gets your communication style, your goals, your life. The NDIS says choice and control belongs to you — but without real information, that principle has had nowhere to land. A support worker profile changes that. Read who they are, how they work, and what they understand about people like you — before you ever say yes. So the decision is participant-led.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <Link
