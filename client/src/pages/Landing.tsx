@@ -654,7 +654,7 @@ export default function Landing() {
                 </span>
               </h3>
               <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.75, marginBottom: "24px", opacity: 0.78 }}>
-                Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is yours.
+                Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is participant-led.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <Link
