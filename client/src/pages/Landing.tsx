@@ -654,7 +654,7 @@ export default function Landing() {
                 </span>
               </h3>
               <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.75, marginBottom: "24px", opacity: 0.78 }}>
-                For too long, participants have been handed a name and told to trust it. No context. No way to know if this person actually gets your communication style, your goals, your life. The NDIS says choice and control belongs to you — but without real information, that principle has had nowhere to land. An interactive and accessible support worker profile changes that. Read who they are, how they work, and what they understand about people like you — before you ever say yes. So the decision is participant-led.
+                For too long, participants have been handed a name and told to trust it. No context. No way to know if this person actually gets your communication style, your goals, your life. The NDIS says choice and control belongs to you — but without real information, that principle has had nowhere to land. An interactive and accessible support worker profile changes that. Read and hear who they are, how they work, and what they understand about people like you — before you ever say yes. So the decision is participant-led.
               </p>
               <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <Link
