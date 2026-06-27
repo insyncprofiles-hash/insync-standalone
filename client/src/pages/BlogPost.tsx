@@ -447,6 +447,76 @@ function FlippingTheScriptArticle() {
   );
 }
 
+function MorePowerToYouArticle() {
+  return (
+    <>
+      <p>
+        Choosing a support worker is one of the biggest decisions a person can make.
+      </p>
+      <p>
+        It’s not just about qualifications or availability. It’s someone you can spend hours with, trust, communicate with, and feel comfortable having in your life. That decision deserves more than a name on a list.
+      </p>
+
+      <h2>What InSync Profiles puts in your hands</h2>
+      <p>
+        InSync Profiles has built a participant-led tool that puts real information in people’s hands before they make that decision. Participants, carers, family members, and nominees can explore an interactive support worker profile designed to be accessible, inclusive, and easy to engage with — on any device, without needing an account or technical knowledge.
+      </p>
+      <p>
+        Every profile includes simple ways to connect and communicate:
+      </p>
+      <ul>
+        <li>Use the <strong>Message Me</strong> button to ask questions and find out more before committing to anything.</li>
+        <li>Use the <strong>Feedback</strong> button to let the support worker or provider know your decision, or to share feedback after support has been delivered.</li>
+      </ul>
+      <p>
+        These aren’t just features. They’re the infrastructure for a conversation that should have been possible from the start.
+      </p>
+
+      <h2>Choice and control needs something to choose from</h2>
+      <p>
+        The NDIS is built on the principle that participants have the right to choose who supports them. But choice and control only means something when people have something meaningful to choose from.
+      </p>
+      <p>
+        InSync Profiles supports the principles behind the core rights of NDIS participants by making information easier to access, reinforcing choice and control, and enabling genuinely informed decisions. When a participant can see a worker’s communication style, hear their voice, read how they approach support, and ask questions before a single shift is booked — that is what informed choice actually looks like in practice.
+      </p>
+
+      <h2>See it for yourself</h2>
+      <p>
+        Meet Jordan — a sample living support worker profile available online for everyone to experience. It’s not a mockup or a screenshot. It’s the real thing, built on the same template every InSync Profiles worker uses.
+      </p>
+      <p>
+        <a href="https://tinyurl.com/23yevwbf" target="_blank" rel="noopener noreferrer" style={{ color: "#f5c842" }}>View Jordan’s profile →</a>
+      </p>
+      <p>
+        Or visit <a href="/view" style={{ color: "#f5c842" }}>insyncprofiles.net/view</a> to see what a participant sees when they open a profile for the first time.
+      </p>
+
+      <p style={{ fontStyle: "italic", marginTop: "32px" }}>More power to You.</p>
+
+      <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {[
+            "#ParticipantPerspective",
+            "#SupportMatters",
+            "#NDISCompliance",
+            "#ChoiceAndControl",
+            "#NDISSupport",
+            "#NDISProvider",
+            "#InclusionAndDiversity",
+            "#InformedChoice",
+            "#ParticipantRights",
+            "#SupportWorker",
+            "#NDISAustralia",
+          ].map(tag => (
+            <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // ── Article metadata registry ─────────────────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
@@ -459,6 +529,16 @@ const ARTICLES: Record<string, {
   keywords?: string;
   content: () => React.ReactElement;
 }> = {
+  "more-power-to-you": {
+    title: "More power to You — A Participant-Led Journey into the Most Important Decisions of Their Life",
+    date: "June 2026",
+    readTime: "4 min read",
+    category: "Participant Choice",
+    emoji: "💪",
+    metaDescription: "Choosing a support worker is one of the biggest decisions a person can make. InSync Profiles puts real, accessible information in participants' hands before that decision is made.",
+    keywords: "NDIS participant choice, support worker profile, informed choice NDIS, participant-led support, NDIS choice and control, interactive support worker profile, accessible NDIS tool, InSync Profiles",
+    content: MorePowerToYouArticle,
+  },
   "flipping-the-script": {
     title: "Flipping the Script: Moving from Static Support Worker Profiles to Proactive Care Alliances",
     date: "June 2026",
