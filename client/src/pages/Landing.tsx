@@ -595,72 +595,87 @@ export default function Landing() {
           </div>
         </section>}
 
-        {/* ── WHITE BANNER HERO — Participant-Led Journey ── */}
+        {/* ── PARTICIPANT POWER BANNER ── */}
         <section
           aria-labelledby="reform-hero-heading"
           style={{
             width: "100%",
-            background: "#ffffff",
-            padding: "48px 24px 52px",
-            textAlign: "center",
+            background: "linear-gradient(135deg, #f8fffe 0%, #f0fdf9 40%, #fffbeb 100%)",
+            borderTop: "1px solid rgba(45,212,191,0.18)",
+            borderBottom: "1px solid rgba(245,200,66,0.18)",
+            padding: "0",
             position: "relative",
             overflow: "hidden",
           }}
         >
-          {/* Top accent line */}
-          <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: "4px", background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 50%, #2dd4bf 100%)" }} />
-          <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-            {/* Eyebrow */}
-            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "clamp(11px, 1.4vw, 13px)", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#2dd4bf", marginBottom: "14px", marginTop: 0 }}>
-              NDIS 2026 Reforms · Informed Choice · Participant Rights
-            </p>
-            {/* Main headline */}
-            <h2
-              id="reform-hero-heading"
-              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(32px, 5.5vw, 64px)", fontWeight: 700, lineHeight: 1.05, marginBottom: "10px", letterSpacing: "-0.02em" }}
-            >
-              More power to You
-            </h2>
-            {/* Subtitle */}
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(17px, 2.8vw, 26px)", fontWeight: 500, fontStyle: "italic", lineHeight: 1.45, marginBottom: "18px", opacity: 0.65, marginTop: 0 }}>
-              A Participant-Led Journey into the most important decisions of their life
-            </p>
-            {/* Divider */}
-            <div aria-hidden="true" style={{ width: "56px", height: "3px", background: "linear-gradient(90deg, #2dd4bf, #f5c842)", borderRadius: "99px", margin: "0 auto 20px" }} />
-            {/* Sub-heading */}
-            <h3
-              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(22px, 3.5vw, 40px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-0.01em" }}
-            >
-              Who is going to{" "}
-              <span style={{ background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
-                support me?
-              </span>
-            </h3>
-            {/* Body */}
-            <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.8, maxWidth: "580px", margin: "0 auto 28px", fontWeight: 400, opacity: 0.82 }}>
-              Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is yours.
-            </p>
-            {/* CTAs */}
-            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Link
-                href="/blog/who-is-going-to-support-me"
-                style={{ background: "linear-gradient(135deg, #2dd4bf 0%, #f5c842 100%)", color: "#0d1b2a", padding: "14px 34px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 20px rgba(45,212,191,0.28)" }}
-              >
-                Read the Article →
-              </Link>
-              <Link
-                href="/view"
-                style={{ background: "transparent", color: "#0d1b2a", padding: "13px 30px", borderRadius: "99px", fontSize: "14px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: "2px solid rgba(13,27,42,0.35)" }}
-              >
-                See what a participant sees →
-              </Link>
-            </div>
-          </div>
-          {/* Bottom accent line */}
-          <div aria-hidden="true" style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "4px", background: "linear-gradient(90deg, #f5c842 0%, #2dd4bf 50%, #f5c842 100%)" }} />
-        </section>
+          {/* Background decorative circles */}
+          <div aria-hidden="true" style={{ position: "absolute", top: "-80px", right: "-80px", width: "320px", height: "320px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div aria-hidden="true" style={{ position: "absolute", bottom: "-60px", left: "-60px", width: "260px", height: "260px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-        {/* ── HERO ── */}
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 32px", display: "flex", alignItems: "center", gap: "64px", flexWrap: "wrap" }}>
+
+            {/* LEFT — main message */}
+            <div style={{ flex: "1 1 420px", minWidth: "280px" }}>
+              {/* Eyebrow pill */}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(45,212,191,0.10)", border: "1px solid rgba(45,212,191,0.30)", borderRadius: "99px", padding: "4px 14px", marginBottom: "20px" }}>
+                <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#2dd4bf", display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
+                <span style={{ fontFamily: "'Outfit', sans-serif", color: "#0d7a6e", fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" }}>NDIS 2026 · Informed Choice · Participant Rights</span>
+              </div>
+
+              {/* Power headline */}
+              <h2
+                id="reform-hero-heading"
+                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 700, lineHeight: 1.0, marginBottom: "8px", letterSpacing: "-0.02em" }}
+              >
+                More power
+              </h2>
+              <h2
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 700, lineHeight: 1.0, marginBottom: "16px", letterSpacing: "-0.02em", background: "linear-gradient(90deg, #2dd4bf 0%, #0d9488 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+              >
+                to You.
+              </h2>
+
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", color: "#1a2e4a", fontSize: "clamp(16px, 2vw, 20px)", fontStyle: "italic", lineHeight: 1.5, marginBottom: "0", opacity: 0.70, fontWeight: 500 }}>
+                A Participant-Led Journey into the most important decisions of their life
+              </p>
+            </div>
+
+            {/* DIVIDER */}
+            <div aria-hidden="true" style={{ width: "1px", height: "160px", background: "linear-gradient(to bottom, transparent, rgba(45,212,191,0.35), rgba(245,200,66,0.35), transparent)", flexShrink: 0, alignSelf: "center" }} className="hidden-mobile" />
+
+            {/* RIGHT — article entry */}
+            <div style={{ flex: "1 1 320px", minWidth: "260px" }}>
+              <h3
+                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0d1b2a", fontSize: "clamp(20px, 2.8vw, 30px)", fontWeight: 700, lineHeight: 1.15, marginBottom: "12px", letterSpacing: "-0.01em" }}
+              >
+                Who is going to{" "}
+                <span style={{ background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
+                  support me?
+                </span>
+              </h3>
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(14px, 1.5vw, 16px)", lineHeight: 1.75, marginBottom: "24px", opacity: 0.78 }}>
+                Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is yours.
+              </p>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <Link
+                  href="/blog/who-is-going-to-support-me"
+                  style={{ background: "linear-gradient(135deg, #2dd4bf 0%, #0d9488 100%)", color: "#ffffff", padding: "12px 26px", borderRadius: "99px", fontSize: "13px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 16px rgba(45,212,191,0.30)" }}
+                >
+                  Read the Article →
+                </Link>
+                <Link
+                  href="/view"
+                  style={{ background: "transparent", color: "#0d1b2a", padding: "11px 22px", borderRadius: "99px", fontSize: "13px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: "1.5px solid rgba(13,27,42,0.25)" }}
+                >
+                  See what a participant sees →
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        
+                {/* ── HERO ── */}
         <section
           style={{
             padding: "0 24px 80px",
