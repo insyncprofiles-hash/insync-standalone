@@ -257,7 +257,7 @@ Most support workers set up their profile once on their main device (usually the
     subtitle: "Your profile is a living document — update it as you grow",
     steps: [
       {
-        number: "22",
+        number: "21",
         icon: "🔄",
         title: "Updating Your Profile",
         advantage: "No limit on updates. Your profile grows with your career.",
@@ -266,7 +266,7 @@ Most support workers set up their profile once on their main device (usually the
         tags: ["Unlimited updates", "Instant changes", "No re-purchase needed"],
       },
       {
-        number: "23",
+        number: "22",
         icon: "💡",
         title: "Why This Template Makes You Stand Out",
         advantage: "In a sector where most workers have no digital presence, an accessible, professional profile is a significant competitive advantage.",
