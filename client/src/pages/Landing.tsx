@@ -595,6 +595,70 @@ export default function Landing() {
           </div>
         </section>}
 
+        {/* ── FLIPPING THE SCRIPT HERO FEATURE ── */}
+        <section
+          aria-labelledby="flipping-script-heading"
+          style={{
+            width: "100%",
+            background: "linear-gradient(135deg, #071520 0%, #0a2535 50%, #0d1f10 100%)",
+            borderTop: "1px solid rgba(45,212,191,0.20)",
+            borderBottom: "1px solid rgba(245,200,66,0.15)",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Decorative orbs */}
+          <div aria-hidden="true" style={{ position: "absolute", top: "-60px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div aria-hidden="true" style={{ position: "absolute", bottom: "-80px", left: "-40px", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "64px 32px", display: "flex", alignItems: "flex-start", gap: "64px", flexWrap: "wrap" }}>
+
+            {/* LEFT — label + headline */}
+            <div style={{ flex: "1 1 400px", minWidth: "280px" }}>
+              {/* Category pill */}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(245,200,66,0.10)", border: "1px solid rgba(245,200,66,0.28)", borderRadius: "99px", padding: "4px 14px", marginBottom: "22px" }}>
+                <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#f5c842", display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
+                <span style={{ fontFamily: "'Outfit', sans-serif", color: "#f5c842", fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" }}>Featured Article · Person-Centred Care</span>
+              </div>
+
+              <h2
+                id="flipping-script-heading"
+                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffffff", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "16px", letterSpacing: "-0.02em" }}
+              >
+                Flipping the Script:
+                <br />
+                <span style={{ background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  From Static Profiles to Proactive Care Alliances
+                </span>
+              </h2>
+
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,255,255,0.55)", fontSize: "13px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "0" }}>
+                8 min read
+              </p>
+            </div>
+
+            {/* DIVIDER */}
+            <div aria-hidden="true" style={{ width: "1px", alignSelf: "stretch", background: "linear-gradient(to bottom, transparent, rgba(45,212,191,0.30), rgba(245,200,66,0.25), transparent)", flexShrink: 0 }} className="hidden-mobile" />
+
+            {/* RIGHT — intro + CTA */}
+            <div style={{ flex: "1 1 320px", minWidth: "260px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,255,255,0.78)", fontSize: "clamp(15px, 1.6vw, 17px)", lineHeight: 1.80, marginBottom: "12px" }}>
+                The traditional support matching system treats care like a passive wildcard. Coordinators pick a name from a spreadsheet and hope for the best. This reactive loop doesn't just create high turnover — it creates anxiety on both sides.
+              </p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,255,255,0.78)", fontSize: "clamp(15px, 1.6vw, 17px)", lineHeight: 1.80, marginBottom: "28px" }}>
+                True person-centred care requires a proactive system. Interactive profiles change the dynamic entirely — turning a static document into a living demonstration of who a worker is and how they show up.
+              </p>
+              <Link
+                href="/blog/flipping-the-script"
+                style={{ background: "linear-gradient(135deg, #f5c842 0%, #e8a800 100%)", color: "#0d1b2a", padding: "13px 28px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 20px rgba(245,200,66,0.30)" }}
+              >
+                Read the Full Article →
+              </Link>
+            </div>
+
+          </div>
+        </section>
+
         {/* ── HERO ── */}
         <section
           style={{
