@@ -637,8 +637,8 @@ export default function Landing() {
               </span>
             </h3>
             {/* Body */}
-            <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.8, maxWidth: "600px", margin: "0 auto 36px", fontWeight: 400, opacity: 0.82 }}>
-              Most participants are still asked to choose a support worker based on a name, a gender, and a time slot. Choice without information is not really choice — it is a guess with paperwork behind it. The 2026 reforms are changing that.
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "#1a2e4a", fontSize: "clamp(15px, 1.8vw, 18px)", lineHeight: 1.8, maxWidth: "580px", margin: "0 auto 36px", fontWeight: 400, opacity: 0.82 }}>
+              Now you can read about a worker before you say yes. Their communication style, how they approach your independence, what they actually understand about your needs. Real information, so the decision is yours.
             </p>
             {/* CTAs */}
             <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
