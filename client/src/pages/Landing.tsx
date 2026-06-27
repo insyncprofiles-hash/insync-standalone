@@ -611,19 +611,19 @@ export default function Landing() {
           <div aria-hidden="true" style={{ position: "absolute", top: "-60px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div aria-hidden="true" style={{ position: "absolute", bottom: "-80px", left: "-40px", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "64px 32px", display: "flex", alignItems: "flex-start", gap: "64px", flexWrap: "wrap" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px 32px", display: "flex", alignItems: "center", gap: "48px", flexWrap: "wrap" }}>
 
             {/* LEFT — label + headline */}
             <div style={{ flex: "1 1 400px", minWidth: "280px" }}>
               {/* Category pill */}
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(13,148,136,0.10)", border: "1px solid rgba(13,148,136,0.28)", borderRadius: "99px", padding: "4px 14px", marginBottom: "22px" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(13,148,136,0.10)", border: "1px solid rgba(13,148,136,0.28)", borderRadius: "99px", padding: "4px 14px", marginBottom: "14px" }}>
                 <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#0d9488", display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
                 <span style={{ fontFamily: "'Outfit', sans-serif", color: "#0d6e65", fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" }}>Featured Article · Person-Centred Care</span>
               </div>
 
               <h2
                 id="flipping-script-heading"
-                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#1a2e4a", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "16px", letterSpacing: "-0.02em" }}
+                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#1a2e4a", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-0.02em" }}
               >
                 Flipping the Script:
                 <br />
@@ -642,15 +642,15 @@ export default function Landing() {
 
             {/* RIGHT — intro + CTA */}
             <div style={{ flex: "1 1 320px", minWidth: "260px" }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(15px, 1.6vw, 17px)", lineHeight: 1.80, marginBottom: "12px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(13px, 1.3vw, 15px)", lineHeight: 1.70, marginBottom: "8px" }}>
                 The traditional support matching system treats care like a passive wildcard. Coordinators pick a name from a spreadsheet and hope for the best. This reactive loop doesn't just create high turnover — it creates anxiety on both sides.
               </p>
-              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(15px, 1.6vw, 17px)", lineHeight: 1.80, marginBottom: "28px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(13px, 1.3vw, 15px)", lineHeight: 1.70, marginBottom: "18px" }}>
                 True person-centred care requires a proactive system. Interactive profiles change the dynamic entirely — turning a static document into a living demonstration of who a worker is and how they show up.
               </p>
               <Link
                 href="/blog/flipping-the-script"
-                style={{ background: "linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)", color: "#ffffff", padding: "13px 28px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 20px rgba(245,200,66,0.30)" }}
+                style={{ background: "linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)", color: "#ffffff", padding: "10px 22px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 20px rgba(245,200,66,0.30)" }}
               >
                 Read the Full Article →
               </Link>
