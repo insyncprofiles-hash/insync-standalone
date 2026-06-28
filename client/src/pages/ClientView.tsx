@@ -506,11 +506,11 @@ function TranslateButton() {
       {/* Hidden anchor for Google Translate widget (keeps it off-screen) */}
       <div id="__gt_hidden__" style={{ position: 'fixed', left: '-9999px', top: '-9999px', width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true" />
 
-      <div data-no-print="true" style={{ position: 'fixed', bottom: '84px', left: '20px', zIndex: 210 }}>
+      <div data-no-print="true" style={{ position: 'fixed', bottom: '84px', right: '20px', zIndex: 210 }}>
         {/* Language picker popup */}
         {open && (
           <div style={{
-            position: 'absolute', bottom: '56px', left: 0,
+            position: 'absolute', bottom: '66px', right: 0,
             background: '#fff', borderRadius: '14px',
             boxShadow: '0 8px 40px rgba(0,0,0,0.18)',
             border: '1px solid rgba(0,0,0,0.08)',
@@ -550,7 +550,7 @@ function TranslateButton() {
           aria-label="Translate this page"
           title="Translate this page"
           style={{
-            width: '48px', height: '48px', borderRadius: '50%',
+            width: '58px', height: '58px', borderRadius: '50%',
             background: active ? 'linear-gradient(135deg, #0d9488 0%, #1a6bcc 100%)' : 'linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)',
             border: active ? '2px solid #f5c842' : 'none',
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
