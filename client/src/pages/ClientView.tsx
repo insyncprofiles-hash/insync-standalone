@@ -657,19 +657,19 @@ export default function ClientView() {
 
   // Apply skin background if active, otherwise use theme-aware gradient
   const THEME_BG_GRADIENTS: Record<string, string> = {
-    "sky-gold":       "#f0f5f5",
-    "ocean-amber":    "#f0f5f5",
-    "rainbow-prism":  "#f0f5f5",
-    "cobalt-gold":    "#f0f5f5",
-    "daylight":       "#f0f5f5",
-    "sage-linen":     "#f0f5f5",
-    "blush-cream":    "#f0f5f5",
-    "slate-mint":     "#f0f5f5",
+    "sky-gold":       "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "ocean-amber":    "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "rainbow-prism":  "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "cobalt-gold":    "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "daylight":       "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "sage-linen":     "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "blush-cream":    "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
+    "slate-mint":     "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)",
   };
   const bgStyle: React.CSSProperties = {
     background: activeSkin
       ? activeSkin.palette.bg
-      : (THEME_BG_GRADIENTS[theme.id] || "#f0f5f5"),
+      : (THEME_BG_GRADIENTS[theme.id] || "linear-gradient(160deg, #b2d8d8 0%, #c8e6e6 50%, #a8d4d4 100%)"),
   };
 
   const handleCTA = () => {
