@@ -495,9 +495,14 @@ function selectGoogleTranslateLanguage(langCode: string) {
   trySelect(10);
 }
 
+function getActiveTranslationFromCookie(): string | null {
+  const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+  return match ? match[1] : null;
+}
+
 function TranslateButton() {
   const [open, setOpen] = React.useState(false);
-  const [active, setActive] = React.useState<string | null>(null);
+  const [active, setActive] = React.useState<string | null>(() => getActiveTranslationFromCookie());
 
   const handleSelect = (code: string) => {
     setActive(code);
