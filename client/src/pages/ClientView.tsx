@@ -432,55 +432,67 @@ function ThreadConnector() {
 // ── Main component ────────────────────────────────────────────
 // ── Translate Button ────────────────────────────────────────────────────────
 const LANGUAGES = [
-  { code: "ar",    label: "العربية",        english: "Arabic" },
-  { code: "vi",    label: "Tiếng Việt",     english: "Vietnamese" },
-  { code: "zh-CN", label: "中文 (简体)",     english: "Chinese (Simplified)" },
-  { code: "zh-TW", label: "中文 (繁體)",     english: "Chinese (Traditional)" },
-  { code: "hi",    label: "हिन्दी",          english: "Hindi" },
-  { code: "pa",    label: "ਪੰਜਾਬੀ",          english: "Punjabi" },
-  { code: "tl",    label: "Filipino",       english: "Filipino / Tagalog" },
-  { code: "ko",    label: "한국어",           english: "Korean" },
-  { code: "ja",    label: "日本語",           english: "Japanese" },
-  { code: "th",    label: "ภาษาไทย",        english: "Thai" },
-  { code: "so",    label: "Soomaali",       english: "Somali" },
-  { code: "fa",    label: "فارسی / دری",    english: "Dari / Farsi" },
-  { code: "tr",    label: "Türkçe",         english: "Turkish" },
-  { code: "el",    label: "Ελληνικά",       english: "Greek" },
-  { code: "it",    label: "Italiano",       english: "Italian" },
-  { code: "es",    label: "Español",        english: "Spanish" },
-  { code: "pt",    label: "Português",      english: "Portuguese" },
-  { code: "fr",    label: "Français",       english: "French" },
-  { code: "de",    label: "Deutsch",        english: "German" },
-  { code: "ne",    label: "नेपाली",          english: "Nepali" },
-  { code: "si",    label: "සිංහල",          english: "Sinhala" },
-  { code: "ta",    label: "தமிழ்",           english: "Tamil" },
-  { code: "am",    label: "አማርኛ",           english: "Amharic" },
-  { code: "id",    label: "Bahasa Indonesia", english: "Indonesian" },
-  { code: "ms",    label: "Bahasa Melayu",  english: "Malay" },
+  { code: "ar",    label: "العربية",           english: "Arabic" },
+  { code: "vi",    label: "Tiếng Việt",        english: "Vietnamese" },
+  { code: "zh-CN", label: "中文 (简体)",          english: "Chinese (Simplified)" },
+  { code: "zh-TW", label: "中文 (繁體)",          english: "Chinese (Traditional)" },
+  { code: "hi",    label: "हिन्दी",              english: "Hindi" },
+  { code: "pa",    label: "ਪੰਜਾਬੀ",              english: "Punjabi" },
+  { code: "tl",    label: "Filipino",          english: "Filipino / Tagalog" },
+  { code: "ko",    label: "한국어",               english: "Korean" },
+  { code: "ja",    label: "日本語",               english: "Japanese" },
+  { code: "th",    label: "ภาษาไทย",            english: "Thai" },
+  { code: "so",    label: "Soomaali",          english: "Somali" },
+  { code: "fa",    label: "فارسی / دری",        english: "Dari / Farsi" },
+  { code: "tr",    label: "Türkçe",            english: "Turkish" },
+  { code: "el",    label: "Ελληνικά",          english: "Greek" },
+  { code: "it",    label: "Italiano",          english: "Italian" },
+  { code: "es",    label: "Español",           english: "Spanish" },
+  { code: "pt",    label: "Português",         english: "Portuguese" },
+  { code: "fr",    label: "Français",          english: "French" },
+  { code: "de",    label: "Deutsch",           english: "German" },
+  { code: "ne",    label: "नेपाली",              english: "Nepali" },
+  { code: "si",    label: "සිංහල",             english: "Sinhala" },
+  { code: "ta",    label: "தமிழ்",              english: "Tamil" },
+  { code: "am",    label: "አማርኛ",              english: "Amharic" },
+  { code: "id",    label: "Bahasa Indonesia",  english: "Indonesian" },
+  { code: "ms",    label: "Bahasa Melayu",     english: "Malay" },
 ];
 
-function translatePage(langCode: string) {
-  // Use Google Translate cookie method — works without the widget UI
-  const domain = window.location.hostname;
-  document.cookie = `googtrans=/en/${langCode}; path=/; domain=${domain}`;
-  document.cookie = `googtrans=/en/${langCode}; path=/`;
-  // If translate script not loaded yet, load it
-  if (!(window as any).google?.translate) {
-    (window as any).googleTranslateElementInit = function () {
-      new (window as any).google.translate.TranslateElement(
-        { pageLanguage: 'en', includedLanguages: LANGUAGES.map(l => l.code).join(','), autoDisplay: false },
-        '__gt_hidden__'
-      );
-    };
-    const script = document.createElement('script');
-    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    document.body.appendChild(script);
-    // Reload after short delay to apply cookie
-    setTimeout(() => window.location.reload(), 1200);
-  } else {
-    window.location.reload();
+// Inject Google Translate script once on module load
+if (typeof window !== "undefined") {
+  (window as any).googleTranslateElementInit = function () {
+    new (window as any).google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        includedLanguages: LANGUAGES.map(l => l.code).join(","),
+        autoDisplay: false,
+        layout: (window as any).google?.translate?.TranslateElement?.InlineLayout?.SIMPLE,
+      },
+      "__gt_container__"
+    );
+  };
+  if (!(window as any).__gtScriptLoaded) {
+    (window as any).__gtScriptLoaded = true;
+    const s = document.createElement("script");
+    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    s.async = true;
+    document.head.appendChild(s);
   }
+}
+
+function selectGoogleTranslateLanguage(langCode: string) {
+  // Find the hidden Google Translate select element and change its value
+  const trySelect = (attempts: number) => {
+    const combo = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
+    if (combo) {
+      combo.value = langCode;
+      combo.dispatchEvent(new Event("change"));
+    } else if (attempts > 0) {
+      setTimeout(() => trySelect(attempts - 1), 300);
+    }
+  };
+  trySelect(10);
 }
 
 function TranslateButton() {
@@ -490,38 +502,36 @@ function TranslateButton() {
   const handleSelect = (code: string) => {
     setActive(code);
     setOpen(false);
-    translatePage(code);
+    selectGoogleTranslateLanguage(code);
   };
 
   const handleReset = () => {
     setActive(null);
     setOpen(false);
-    document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    document.cookie = `googtrans=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-    window.location.reload();
+    selectGoogleTranslateLanguage("en");
   };
 
   return (
     <>
-      {/* Hidden anchor for Google Translate widget (keeps it off-screen) */}
-      <div id="__gt_hidden__" style={{ position: 'fixed', left: '-9999px', top: '-9999px', width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true" />
+      {/* Hidden Google Translate widget container */}
+      <div id="__gt_container__" style={{ position: "fixed", left: "-9999px", top: "-9999px", width: 0, height: 0, overflow: "hidden" }} aria-hidden="true" />
 
-      <div data-no-print="true" style={{ position: 'fixed', bottom: '84px', right: '20px', zIndex: 210 }}>
+      <div data-no-print="true" style={{ position: "fixed", bottom: "84px", right: "20px", zIndex: 210 }}>
         {/* Language picker popup */}
         {open && (
           <div style={{
-            position: 'absolute', bottom: '66px', right: 0,
-            background: '#fff', borderRadius: '14px',
-            boxShadow: '0 8px 40px rgba(0,0,0,0.18)',
-            border: '1px solid rgba(0,0,0,0.08)',
-            width: '220px', maxHeight: '320px',
-            overflowY: 'auto', padding: '8px 0',
+            position: "absolute", bottom: "66px", right: 0,
+            background: "#fff", borderRadius: "14px",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
+            border: "1px solid rgba(0,0,0,0.08)",
+            width: "230px", maxHeight: "320px",
+            overflowY: "auto", padding: "8px 0",
           }}>
-            <div style={{ padding: '8px 16px 6px', fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#888', borderBottom: '1px solid #f0f0f0', marginBottom: '4px' }}>
+            <div style={{ padding: "8px 16px 6px", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#888", borderBottom: "1px solid #f0f0f0", marginBottom: "4px" }}>
               Translate this page
             </div>
             {active && (
-              <button onClick={handleReset} style={{ width: '100%', textAlign: 'left', padding: '9px 16px', background: '#fff8e1', border: 'none', cursor: 'pointer', fontSize: '13px', color: '#b45309', fontWeight: 600 }}>
+              <button onClick={handleReset} style={{ width: "100%", textAlign: "left", padding: "9px 16px", background: "#fff8e1", border: "none", cursor: "pointer", fontSize: "13px", color: "#b45309", fontWeight: 600 }}>
                 ✕ Show original (English)
               </button>
             )}
@@ -530,15 +540,15 @@ function TranslateButton() {
                 key={lang.code}
                 onClick={() => handleSelect(lang.code)}
                 style={{
-                  width: '100%', textAlign: 'left', padding: '9px 16px',
-                  background: active === lang.code ? '#e8f5f5' : 'transparent',
-                  border: 'none', cursor: 'pointer',
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px',
-                  borderBottom: '1px solid #f5f5f5',
+                  width: "100%", textAlign: "left", padding: "9px 16px",
+                  background: active === lang.code ? "#e8f5f5" : "transparent",
+                  border: "none", cursor: "pointer",
+                  display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px",
+                  borderBottom: "1px solid #f5f5f5",
                 }}
               >
-                <span style={{ fontSize: '14px', color: '#1a1a1a', fontWeight: active === lang.code ? 700 : 400 }}>{lang.label}</span>
-                <span style={{ fontSize: '11px', color: '#888', flexShrink: 0 }}>{lang.english}</span>
+                <span style={{ fontSize: "14px", color: "#1a1a1a", fontWeight: active === lang.code ? 700 : 400 }}>{lang.label}</span>
+                <span style={{ fontSize: "11px", color: "#888", flexShrink: 0 }}>{lang.english}</span>
               </button>
             ))}
           </div>
@@ -550,17 +560,17 @@ function TranslateButton() {
           aria-label="Translate this page"
           title="Translate this page"
           style={{
-            width: '58px', height: '58px', borderRadius: '50%',
-            background: active ? 'linear-gradient(135deg, #0d9488 0%, #1a6bcc 100%)' : 'linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)',
-            border: active ? '2px solid #f5c842' : 'none',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(26,107,204,0.40)',
-            transform: 'scale(1)', transition: 'transform 0.16s cubic-bezier(0.23,1,0.32,1)',
+            width: "58px", height: "58px", borderRadius: "50%",
+            background: active ? "linear-gradient(135deg, #0d9488 0%, #1a6bcc 100%)" : "linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)",
+            border: active ? "2px solid #f5c842" : "none",
+            cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 4px 20px rgba(26,107,204,0.40)",
+            transform: "scale(1)", transition: "transform 0.16s cubic-bezier(0.23,1,0.32,1)",
           }}
-          onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.92)')}
-          onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
+          onMouseDown={e => (e.currentTarget.style.transform = "scale(0.92)")}
+          onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
             <line x1="2" y1="12" x2="22" y2="12" />
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
