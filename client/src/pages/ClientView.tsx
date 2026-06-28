@@ -4,7 +4,7 @@
    Matches the mockup: post card + Thread accordions
    No editing — pure display
    ============================================================ */
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useColorTheme } from "@/contexts/ColorThemeContext";
 import { getSkinById, ALL_SKINS } from "@/lib/skins";
 import {
@@ -430,6 +430,60 @@ function ThreadConnector() {
 }
 
 // ── Main component ────────────────────────────────────────────
+// ── Translate Button ────────────────────────────────────────────────────────
+function TranslateButton() {
+  const [open, setOpen] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+
+  const initTranslate = React.useCallback(() => {
+    if (loaded) return;
+    (window as any).googleTranslateElementInit = function () {
+      new (window as any).google.translate.TranslateElement(
+        { pageLanguage: 'en', layout: (window as any).google?.translate?.TranslateElement?.InlineLayout?.SIMPLE },
+        'google_translate_element_popup'
+      );
+    };
+    const script = document.createElement('script');
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.async = true;
+    document.body.appendChild(script);
+    setLoaded(true);
+  }, [loaded]);
+
+  const handleClick = () => {
+    if (!open) initTranslate();
+    setOpen(o => !o);
+  };
+
+  return (
+    <div
+      data-no-print="true"
+      style={{ position: 'fixed', bottom: '84px', left: '20px', zIndex: 210, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}
+    >
+      {open && (
+        <div
+          id="google_translate_element_popup"
+          style={{ background: '#fff', borderRadius: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.18)', padding: '12px 16px', minWidth: '220px', border: '1px solid rgba(0,0,0,0.08)' }}
+        />
+      )}
+      <button
+        onClick={handleClick}
+        aria-label="Translate this page"
+        title="Translate this page"
+        style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(26,107,204,0.40)', transform: 'scale(1)', transition: 'transform 0.16s cubic-bezier(0.23,1,0.32,1)' }}
+        onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.92)')}
+        onMouseUp={e => (e.currentTarget.style.transform = 'scale(1)')}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="2" y1="12" x2="22" y2="12" />
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 export default function ClientView() {
   const { theme } = useColorTheme();
   const P = useCardPalette();
@@ -1392,6 +1446,9 @@ export default function ClientView() {
           </div>
         </div>
       </div>
+
+      {/* ── Google Translate floating button ─────────────────── */}
+      <TranslateButton />
 
       {/* ── Sticky Back to Top button ────────────────────────── */}
       {showBackToTop && (
