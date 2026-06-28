@@ -431,139 +431,6 @@ function ThreadConnector() {
 
 // ── Main component ────────────────────────────────────────────
 // ── Translate Button ────────────────────────────────────────────────────────
-const LANGUAGES = [
-  { code: "ar",    label: "العربية",           english: "Arabic" },
-  { code: "vi",    label: "Tiếng Việt",        english: "Vietnamese" },
-  { code: "zh-CN", label: "中文 (简体)",          english: "Chinese (Simplified)" },
-  { code: "zh-TW", label: "中文 (繁體)",          english: "Chinese (Traditional)" },
-  { code: "hi",    label: "हिन्दी",              english: "Hindi" },
-  { code: "pa",    label: "ਪੰਜਾਬੀ",              english: "Punjabi" },
-  { code: "tl",    label: "Filipino",          english: "Filipino / Tagalog" },
-  { code: "ko",    label: "한국어",               english: "Korean" },
-  { code: "ja",    label: "日本語",               english: "Japanese" },
-  { code: "th",    label: "ภาษาไทย",            english: "Thai" },
-  { code: "so",    label: "Soomaali",          english: "Somali" },
-  { code: "fa",    label: "فارسی / دری",        english: "Dari / Farsi" },
-  { code: "tr",    label: "Türkçe",            english: "Turkish" },
-  { code: "el",    label: "Ελληνικά",          english: "Greek" },
-  { code: "it",    label: "Italiano",          english: "Italian" },
-  { code: "es",    label: "Español",           english: "Spanish" },
-  { code: "pt",    label: "Português",         english: "Portuguese" },
-  { code: "fr",    label: "Français",          english: "French" },
-  { code: "de",    label: "Deutsch",           english: "German" },
-  { code: "ne",    label: "नेपाली",              english: "Nepali" },
-  { code: "si",    label: "සිංහල",             english: "Sinhala" },
-  { code: "ta",    label: "தமிழ்",              english: "Tamil" },
-  { code: "am",    label: "አማርኛ",              english: "Amharic" },
-  { code: "id",    label: "Bahasa Indonesia",  english: "Indonesian" },
-  { code: "ms",    label: "Bahasa Melayu",     english: "Malay" },
-];
-
-function getActiveLangFromCookie(): string | null {
-  if (typeof document === "undefined") return null;
-  const match = document.cookie.match(/googtrans=%2Fen%2F([^;]+)/);
-  if (match) return decodeURIComponent(match[1]);
-  const match2 = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-  return match2 ? match2[1] : null;
-}
-
-function setTranslateCookie(langCode: string) {
-  const hostname = window.location.hostname;
-  const val = `/en/${langCode}`;
-  document.cookie = `googtrans=${val}; path=/`;
-  document.cookie = `googtrans=${val}; path=/; domain=${hostname}`;
-  document.cookie = `googtrans=${val}; path=/; domain=.${hostname}`;
-}
-
-function clearTranslateCookie() {
-  const hostname = window.location.hostname;
-  document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  document.cookie = `googtrans=; path=/; domain=${hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-  document.cookie = `googtrans=; path=/; domain=.${hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-}
-
-function TranslateButton() {
-  const [open, setOpen] = React.useState(false);
-  const [active, setActive] = React.useState<string | null>(() => getActiveLangFromCookie());
-
-  const handleSelect = (code: string) => {
-    setOpen(false);
-    setActive(code);
-    setTranslateCookie(code);
-    window.location.reload();
-  };
-
-  const handleReset = () => {
-    setOpen(false);
-    setActive(null);
-    clearTranslateCookie();
-    window.location.reload();
-  };
-
-  return (
-    <div data-no-print="true" style={{ position: "fixed", bottom: "84px", right: "20px", zIndex: 210 }}>
-      {/* Language picker popup */}
-      {open && (
-        <div style={{
-          position: "absolute", bottom: "66px", right: 0,
-          background: "#fff", borderRadius: "14px",
-          boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
-          border: "1px solid rgba(0,0,0,0.08)",
-          width: "230px", maxHeight: "320px",
-          overflowY: "auto", padding: "8px 0",
-        }}>
-          <div style={{ padding: "8px 16px 6px", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#888", borderBottom: "1px solid #f0f0f0", marginBottom: "4px" }}>
-            Translate this page
-          </div>
-          {active && (
-            <button onClick={handleReset} style={{ width: "100%", textAlign: "left", padding: "9px 16px", background: "#fff8e1", border: "none", cursor: "pointer", fontSize: "13px", color: "#b45309", fontWeight: 600 }}>
-              ✕ Show original (English)
-            </button>
-          )}
-          {LANGUAGES.map(lang => (
-            <button
-              key={lang.code}
-              onClick={() => handleSelect(lang.code)}
-              style={{
-                width: "100%", textAlign: "left", padding: "9px 16px",
-                background: active === lang.code ? "#e8f5f5" : "transparent",
-                border: "none", cursor: "pointer",
-                display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px",
-                borderBottom: "1px solid #f5f5f5",
-              }}
-            >
-              <span style={{ fontSize: "14px", color: "#1a1a1a", fontWeight: active === lang.code ? 700 : 400 }}>{lang.label}</span>
-              <span style={{ fontSize: "11px", color: "#888", flexShrink: 0 }}>{lang.english}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Globe button */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        aria-label="Translate this page"
-        title="Translate this page"
-        style={{
-          width: "58px", height: "58px", borderRadius: "50%",
-          background: active ? "linear-gradient(135deg, #0d9488 0%, #1a6bcc 100%)" : "linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)",
-          border: active ? "2px solid #f5c842" : "none",
-          cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 4px 20px rgba(26,107,204,0.40)",
-          transform: "scale(1)", transition: "transform 0.16s cubic-bezier(0.23,1,0.32,1)",
-        }}
-        onMouseDown={e => (e.currentTarget.style.transform = "scale(0.92)")}
-        onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="2" y1="12" x2="22" y2="12" />
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </svg>
-      </button>
-    </div>
-  );
-}
 
 export default function ClientView() {
   const { theme } = useColorTheme();
@@ -1529,7 +1396,7 @@ export default function ClientView() {
       </div>
 
       {/* ── Google Translate floating button ─────────────────── */}
-      <TranslateButton />
+      
 
       {/* ── Sticky Back to Top button ────────────────────────── */}
       {showBackToTop && (
