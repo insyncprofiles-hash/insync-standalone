@@ -508,7 +508,12 @@ function TranslateButton() {
   const handleReset = () => {
     setActive(null);
     setOpen(false);
-    selectGoogleTranslateLanguage("en");
+    // Clear Google Translate cookies and reload to restore original English
+    const hostname = window.location.hostname;
+    document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = `googtrans=; path=/; domain=${hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    document.cookie = `googtrans=; path=/; domain=.${hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    window.location.reload();
   };
 
   return (
