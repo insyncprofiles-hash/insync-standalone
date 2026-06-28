@@ -677,19 +677,19 @@ export default function ClientView() {
 
   // Apply skin background if active, otherwise use theme-aware gradient
   const THEME_BG_GRADIENTS: Record<string, string> = {
-    "sky-gold":       "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "ocean-amber":    "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "rainbow-prism":  "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "cobalt-gold":    "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "daylight":       "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "sage-linen":     "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "blush-cream":    "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
-    "slate-mint":     "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)",
+    "sky-gold":       "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "ocean-amber":    "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "rainbow-prism":  "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "cobalt-gold":    "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "daylight":       "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "sage-linen":     "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "blush-cream":    "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "slate-mint":     "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
   };
   const bgStyle: React.CSSProperties = {
     background: activeSkin
       ? activeSkin.palette.bg
-      : (THEME_BG_GRADIENTS[theme.id] || "linear-gradient(160deg, #f5c518 0%, #f7d44c 50%, #fef9c3 100%)"),
+      : (THEME_BG_GRADIENTS[theme.id] || "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0"),
   };
 
   const handleCTA = () => {
