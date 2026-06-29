@@ -643,6 +643,29 @@ export default function Pricing() {
             </p>
           </div>
 
+          {/* ── OWNERSHIP & FRAUD NOTICE ── */}
+          <div
+            style={{
+              marginTop: "20px",
+              background: "rgba(255,248,230,0.95)",
+              border: "1.5px solid rgba(176,125,10,0.35)",
+              borderRadius: "16px",
+              padding: "24px 28px",
+              maxWidth: "680px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+            role="note"
+            aria-label="Profile ownership notice"
+          >
+            <p style={{ margin: "0 0 10px", fontFamily: "'Outfit', sans-serif", fontSize: "14px", color: "#7a5200", lineHeight: 1.7 }}>
+              <strong>🔐 Each licence belongs to one individual support worker.</strong> The profile created with each licence belongs to that worker — not to any employer, provider, or organisation. Workers take their profile with them if they change jobs. When purchasing a team or bundle licence, you are providing access for your team, not ownership of their profiles.
+            </p>
+            <p style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: "#b45309", lineHeight: 1.7 }}>
+              <strong>⚠️ Important:</strong> Creating, editing, or presenting a profile on behalf of another person without their knowledge and direct consent may constitute fraud and misrepresentation under Australian consumer and privacy law. Each profile must be completed by the support worker it belongs to.
+            </p>
+          </div>
+
           {/* ── WHAT HAPPENS AFTER PURCHASE ── */}
           <div
             style={{
