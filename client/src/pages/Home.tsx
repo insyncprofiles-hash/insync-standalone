@@ -2471,6 +2471,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#92400e", lineHeight: 1.65, margin: "0 0 6px" }}>
                 Your employer may have provided this licence, but the profile you create belongs to you — not your employer, not your provider, not any organisation. Only you should complete this profile.
               </p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: "#78350f", lineHeight: 1.65, margin: "0 0 6px" }}>
+                The editor on this device remembers your last entries. To update your profile, simply open the editor on the same device — your data will be there. The link you save is what you share with participants and coordinators.
+              </p>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: "#b45309", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
                 If someone else has filled in information on your behalf without your knowledge or consent, that is a misrepresentation of your personal information and may constitute fraud. You have the right to correct or remove any information in this profile at any time.
               </p>
