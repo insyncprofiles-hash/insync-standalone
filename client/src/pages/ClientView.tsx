@@ -1048,7 +1048,7 @@ export default function ClientView() {
             <div style={{ padding: "0 20px 16px" }}>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8125em", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: P.accent, margin: "0 0 10px" }}>
                 🏅 Professional Credentials{" "}
-                <span style={{ fontWeight: 400, opacity: 0.6 }}>(Self-Reported)</span>
+                <span style={{ fontWeight: 400, opacity: 0.6 }}></span>
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                 {profile.badges.map(badge => (
