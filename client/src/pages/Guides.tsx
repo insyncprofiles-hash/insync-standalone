@@ -9,6 +9,7 @@ const GUIDES = [
     description:
       "How coordinators, providers, and support teams can share worker profiles via email, social media, and dedicated website pages — instantly, to the right people.",
     src: "/assets/guide_share_support.jpg",
+    downloadSrc: "/assets/guide_share_support.pdf",
     alt: "InSync Profiles guide: Share the Right Support — share via email, socials, or dedicate a page on your website",
   },
   {
@@ -18,6 +19,7 @@ const GUIDES = [
     description:
       "Real-world NDIS scenarios showing how InSync Profiles is used by LACs, Support Coordinators, Providers, Parents, Recovery Coaches, and SIL teams to help participants connect with the right worker.",
     src: "/assets/guide_when_familiar.jpg",
+    downloadSrc: "/assets/guide_when_familiar.pdf",
     alt: "InSync Profiles guide: When Support Becomes Familiar — NDIS scenarios showing how profiles are used across LAC, coordinator, provider, parent, recovery coach, and SIL contexts",
   },
 ];
@@ -101,7 +103,7 @@ export default function Guides() {
             {/* Download link */}
             <div style={{ padding: "16px 28px 24px", display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center" }}>
               <a
-                href={guide.src}
+                href={guide.downloadSrc ?? guide.src}
                 download
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "6px",
@@ -110,7 +112,7 @@ export default function Guides() {
                   textDecoration: "none", padding: "9px 20px", borderRadius: "99px",
                 }}
               >
-                ↓ Download Guide
+                ↓ Download PDF Guide
               </a>
             </div>
           </article>
