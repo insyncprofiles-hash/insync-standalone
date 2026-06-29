@@ -210,13 +210,13 @@ const SECTIONS = [
     id: "devices",
     icon: "📱",
     title: "Devices & Your Data",
-    subtitle: "What you need to know about how your profile is stored — and what happens if you switch devices",
+    subtitle: "What you need to know about how your profile is stored and how to update it",
     steps: [
       {
         number: "19",
         icon: "💾",
         title: "Where Your Profile Is Stored",
-        advantage: "No account needed — your data stays on your device, private and offline.",
+        advantage: "No account needed — your data stays on your device. Open the editor on the same device anytime to update your profile.",
         detail: `Your InSync Profile is stored in your browser's local storage — a private area on your device that only your browser can access. Nothing is sent to a server. No account, no password, no cloud sync.
 
 This means:
@@ -234,9 +234,11 @@ The trade-off is that your profile data lives on the specific device and browser
         icon: "📲",
         title: "Using Your Editor on a Different Device",
         advantage: "Your licence key works on any device — just be aware that your profile content won't transfer automatically.",
-        detail: `Your licence key has no device limit. You can enter it on your phone, tablet, laptop, and work computer — all at the same time if you want.
+        detail: `Your licence key has no device limit. You can enter it on any device.
 
-However, because your profile data is stored in your browser's local storage, it lives on the device where you originally set it up. If you open the editor on a different device, you'll need to fill in your profile details again from scratch.
+Your profile data is stored in your browser's local storage on the device where you set it up. This means the editor on your original device already has your entries — just open it and your profile is there, ready to update.
+
+If you open the editor on a different device, it will start blank — your entries do not automatically transfer across devices. different device, you'll need to fill in your profile details again from scratch.
 
 How to use the editor on a new device:
 1. Open insyncprofiles.net/editor on the new device
@@ -261,7 +263,7 @@ Most support workers set up their profile once on their main device (usually the
         icon: "🔄",
         title: "Updating Your Profile",
         advantage: "No limit on updates. Your profile grows with your career.",
-        detail: `Your template is always editable. Open your template link, make your changes, and generate a new shareable profile link. Share the new link wherever you've shared the old one.\n\nUpdate your profile when:\n• You gain a new certification or qualification\n• You add a new service\n• You change your availability\n• You get a new professional photo\n• You move to a new area\n• You want to highlight new experience\n\nThere is no limit to how many times you can update your profile.`,
+        detail: `Your template is always editable. Open the editor on the same device you set up your profile on — your entries will be there. Make your changes and save to generate an updated shareable link. Share the new link wherever you've shared the old one.\n\nUpdate your profile when:\n• You gain a new certification or qualification\n• You add a new service\n• You change your availability\n• You get a new professional photo\n• You move to a new area\n• You want to highlight new experience\n\nThere is no limit to how many times you can update your profile.`,
         tip: "Set a calendar reminder every 3 months to review your profile. Add any new experience, update your photo if it's more than a year old, and check that your availability is still accurate.",
         tags: ["Unlimited updates", "Instant changes", "No re-purchase needed"],
       },
