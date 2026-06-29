@@ -815,7 +815,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
           {/* Badges */}
           {profile.badges && profile.badges.length > 0 && (
             <div style={{ padding: '0 20px 16px' }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: '#9b59b6', margin: '0 0 10px' }}>🏅 Professional Credentials <span style={{ fontWeight: 400, opacity: 0.7 }}>(Self-Reported)</span></p>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color: '#9b59b6', margin: '0 0 10px' }}>🏅 Professional Credentials <span style={{ fontWeight: 400, opacity: 0.7 }}></span></p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 {profile.badges.map(badge => (
                   <div key={badge} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', background: 'rgba(200,160,230,0.12)', border: '1.5px solid rgba(200,140,220,0.30)', borderRadius: '14px' }}>
@@ -2948,7 +2948,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                             <FieldRow label="CTA Button Text" htmlFor="h-cta">
                 <input id="h-cta" style={THREAD_INPUT} value={profile.ctaText} onChange={e => updateProfile({ ctaText: e.target.value })} placeholder="MESSAGE TO BEGIN" />
               </FieldRow>
-              <FieldRow label="Professional Credentials (Self-Reported)" tooltip="These credentials are entered by the support worker and have not been independently verified. Always confirm qualifications directly with the individual.">
+              <FieldRow label="Professional Credentials" tooltip="These credentials are entered by the support worker and have not been independently verified. Always confirm qualifications directly with the individual.">
                 {profile.badges.map((badge, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                     <input
