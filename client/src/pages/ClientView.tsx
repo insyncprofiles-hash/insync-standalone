@@ -1357,7 +1357,7 @@ export default function ClientView() {
             margin: '0 auto', maxWidth: '680px', textAlign: 'center', padding: '0 16px',
           }}>
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.6875em', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
-            The information presented in this profile is self-reported and has not been independently verified by InSync Profiles. It is the responsibility of the support worker/provider to ensure all credentials, experience, and claims are accurate and supported by evidence upon request.
+            {"This profile is owned and managed by "}{name}{". It represents their own voice and is not created or controlled by any provider or organisation. The information presented in this profile is self-reported and has not been independently verified by InSync Profiles. It is the responsibility of the support worker/provider to ensure all credentials, experience, and claims are accurate and supported by evidence upon request."}
           </p>
           {/* Feedback button */}
           {profile.email && (
