@@ -1274,6 +1274,18 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
           })()}
 
           <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: 'rgba(0,0,0,0.35)', margin: 0 }}>Powered by <strong>InSync Profiles</strong></p>
+          {/* Ownership disclaimer */}
+          <p style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: '11px',
+            color: 'rgba(0,0,0,0.38)',
+            margin: '6px 0 0',
+            textAlign: 'center',
+            fontStyle: 'italic',
+            maxWidth: '480px',
+          }}>
+            This profile is owned and managed by {profile.name || "this support worker"}. It represents their own voice and is not created or controlled by any provider or organisation.
+          </p>
           {isDemo && (
             <a href='/pricing' style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 28px', borderRadius: '99px', background: 'linear-gradient(135deg, #4a90d9 0%, #f0c040 100%)', color: 'white', fontFamily: "'Outfit', sans-serif", fontSize: '14px', fontWeight: 800, textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase', boxShadow: '0 6px 24px rgba(74,144,217,0.35)' }}>Purchase a Licence →</a>
           )}
