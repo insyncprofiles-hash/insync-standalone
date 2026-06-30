@@ -706,7 +706,6 @@ export default function Landing() {
               {/* Social proof */}
               <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", marginBottom: "40px" }}>
                 {[
-                  { icon: "⭐", text: "5.0 rating" },
                   { icon: "✦",  text: "WCAG 2.1 AA" },
                   { icon: "🇦🇺", text: "Made in Australia" },
                 ].map(item => (
