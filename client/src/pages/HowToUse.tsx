@@ -305,6 +305,7 @@ export default function HowToUse() {
         paddingTop: "110px", // 60px top bar + 50px access bar
       }}
     >
+      <main id="main-content" aria-label="How to use InSync Profiles guide">
 
       {/* Hero */}
       <div
@@ -387,10 +388,10 @@ export default function HowToUse() {
               borderRadius: "99px",
               border: `1.5px solid ${activeSection === section.id ? accent : `${accent}30`}`,
               background: activeSection === section.id ? `${accent}18` : "transparent",
-              color: activeSection === section.id ? accent : dimText,
+              color: activeSection === section.id ? accent : "#2a3a4a",
               fontFamily: "'Outfit', sans-serif",
               fontSize: "12px",
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: "pointer",
               transition: "all 150ms ease-out",
               whiteSpace: "nowrap",
@@ -533,10 +534,10 @@ export default function HowToUse() {
                                   borderRadius: "99px",
                                   background: `${accent}15`,
                                   border: `1px solid ${accent}35`,
-                                  color: accent,
+                                  color: "#1a4fa0",
                                   fontFamily: "'Outfit', sans-serif",
-                                  fontSize: "11px",
-                                  fontWeight: 600,
+                                  fontSize: "12px",
+                                  fontWeight: 700,
                                 }}
                               >
                                 {tag}
@@ -614,6 +615,7 @@ export default function HowToUse() {
           </div>
         </div>
       </div>
+      </main>
     </div>
   );
 }
