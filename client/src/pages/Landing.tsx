@@ -625,10 +625,10 @@ export default function Landing() {
                 id="flipping-script-heading"
                 style={{ fontFamily: "'Cormorant Garamond', serif", color: "#1a2e4a", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-0.02em" }}
               >
-                Flipping the Script:
+Inclusive Care
                 <br />
                 <span style={{ background: "linear-gradient(90deg, #1a6bcc 0%, #0d9488 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  From Static Profiles to Proactive Care Alliances
+                  Alliances
                 </span>
               </h2>
 
