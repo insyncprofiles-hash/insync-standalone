@@ -689,9 +689,9 @@ export default function Landing() {
                 id="hero-heading"
                 style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(36px, 5.5vw, 60px)", fontWeight: 700, lineHeight: 1.08, marginBottom: "24px", letterSpacing: "-0.01em" }}
               >
-                Your Professional Profile<br />
+Inclusive Care<br />
                 <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
-                  Built for Support Work
+                  Alliances
                 </span>
               </h1>
 
