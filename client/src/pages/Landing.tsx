@@ -1415,6 +1415,8 @@ export default function Landing() {
           </div>
         </section>
 
+      </main>
+
         {/* ── FOOTER ── */}
         <footer
           style={{
@@ -1443,8 +1445,6 @@ export default function Landing() {
             ))}
           </div>
         </footer>
-
-      </main>
     </div>
   );
 }
