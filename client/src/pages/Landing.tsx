@@ -625,10 +625,10 @@ export default function Landing() {
                 id="flipping-script-heading"
                 style={{ fontFamily: "'Cormorant Garamond', serif", color: "#1a2e4a", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-0.02em" }}
               >
-Inclusive Care
+                Flipping the Script:
                 <br />
                 <span style={{ background: "linear-gradient(90deg, #1a6bcc 0%, #0d9488 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  Alliances
+                  From Static Profiles to Proactive Care Alliances
                 </span>
               </h2>
 
@@ -689,9 +689,9 @@ Inclusive Care
                 id="hero-heading"
                 style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(36px, 5.5vw, 60px)", fontWeight: 700, lineHeight: 1.08, marginBottom: "24px", letterSpacing: "-0.01em" }}
               >
-Inclusive Care<br />
+                Your Professional Profile<br />
                 <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
-                  Alliances
+                  Built for Support Work
                 </span>
               </h1>
 
