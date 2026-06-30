@@ -683,6 +683,7 @@ export default function ClientView() {
       paddingTop: "110px",
       fontSize: `calc(${fontScale}rem * ${a11yStyle.fontSize ? parseFloat(a11yStyle.fontSize as string) / 100 : 1})`,
     }}>
+      <main id="main-content" aria-label="Support worker profile">
       {/* ── Read Aloud — vibrant solid contrast button at very top ─── */}
       <div data-no-print="true" style={{ padding: "12px 16px 0", maxWidth: "680px", margin: "0 auto" }}>
         <button
@@ -833,7 +834,7 @@ export default function ClientView() {
               <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.875em", fontWeight: 700, color: P.text, margin: "0 0 6px", lineHeight: 1.05 }}>
                 {profile.name}
               </h1>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: P.accent, margin: "0 0 10px" }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: P.accent === "#4a90d9" ? "#1a5fa8" : P.accent, margin: "0 0 10px" }}>
                 {profile.title}
               </p>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.text, margin: 0, display: "flex", alignItems: "center", gap: "6px" }}>
@@ -995,7 +996,7 @@ export default function ClientView() {
               onClick={handleCTA}
               style={{
                 width: "100%", padding: "18px 24px",
-                background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
+                background: P.ctaFrom === "#4a90d9" ? "#1a5fa8" : P.ctaFrom,
                 border: "none", borderRadius: "50px", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
                 boxShadow: `0 6px 24px ${P.accent}55`,
@@ -1021,7 +1022,7 @@ export default function ClientView() {
                 href={`mailto:${profile.email}?subject=${encodeURIComponent("Feedback")}`}
                 style={{
                   width: "100%", padding: "16px 24px",
-                  background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
+                  background: P.ctaFrom === "#4a90d9" ? "#1a5fa8" : P.ctaFrom,
                   border: "none",
                   borderRadius: "50px", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
@@ -1336,7 +1337,7 @@ export default function ClientView() {
             style={{
               display: 'flex', alignItems: 'center', gap: '10px',
               padding: '14px 28px', borderRadius: '99px',
-              background: `linear-gradient(135deg, ${P.ctaFrom} 0%, ${P.ctaTo} 100%)`,
+              background: P.ctaFrom === "#4a90d9" ? "#1a5fa8" : P.ctaFrom,
               border: 'none', cursor: 'pointer',
               fontFamily: "'Outfit', sans-serif", fontSize: '0.875em', fontWeight: 800,
               color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase',
@@ -1386,17 +1387,19 @@ export default function ClientView() {
           )}
 
           {/* Brand footer */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', paddingTop: '16px', borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)', width: '100%', maxWidth: '680px' }}>
+          <footer role="contentinfo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', paddingTop: '16px', borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,0,0.08)', width: '100%', maxWidth: '680px' }}>
             <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.8125em', fontWeight: 800, color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.7)', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>InSync Profiles</p>
             <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.6875em', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)', margin: 0 }}>&copy; {new Date().getFullYear()} InSync Profiles. All rights reserved. &nbsp;·&nbsp; ABN 54 116 010 622</p>
             <a href="/privacy" style={{ fontFamily: "'Outfit', sans-serif", fontSize: '0.6875em', color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.4)', textDecoration: 'underline', marginTop: '2px' }}>Terms of Sale &amp; Refund Policy</a>
-          </div>
+          </footer>
         </div>
       </div>
 
       {/* ── Google Translate floating button ─────────────────── */}
       
+
+      </main>
 
       {/* ── Sticky Back to Top button ────────────────────────── */}
       {showBackToTop && (
@@ -1405,10 +1408,10 @@ export default function ClientView() {
           style={{
             position: 'fixed', bottom: '24px', right: '20px', zIndex: 200,
             width: '48px', height: '48px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, #4a90d9 0%, #f0c040 100%)',
+            background: '#1a5fa8',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(74,144,217,0.45)',
+            boxShadow: '0 4px 20px rgba(26,95,168,0.45)',
             transform: 'scale(1)', transition: 'transform 0.16s cubic-bezier(0.23,1,0.32,1)',
           }}
           onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.92)')}
