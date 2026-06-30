@@ -463,8 +463,9 @@ export default function HowToUse() {
                         style={{
                           width: "64px",
                           height: "64px",
-                          background: isOpen ? accent : `${accent}18`,
-                          color: isOpen ? "#ffffff" : accent,
+                          background: isOpen ? accent : "#ffffff",
+                          color: isOpen ? "#ffffff" : "#1a4fa0",
+                          border: isOpen ? "none" : `2px solid ${accent}40`,
                           fontFamily: "'Outfit', sans-serif",
                           fontSize: isOpen ? "28px" : "18px",
                           fontWeight: 800,
@@ -492,8 +493,9 @@ export default function HowToUse() {
                         style={{
                           width: "40px",
                           height: "40px",
-                          background: isOpen ? accent : `${accent}18`,
-                          color: isOpen ? "#ffffff" : accent,
+                          background: isOpen ? accent : "#ffffff",
+                          color: isOpen ? "#ffffff" : "#1a4fa0",
+                          border: isOpen ? "none" : `1.5px solid ${accent}40`,
                           fontSize: "20px",
                           transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                           transition: "all 200ms ease-out",
