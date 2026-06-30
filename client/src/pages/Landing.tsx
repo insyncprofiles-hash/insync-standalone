@@ -628,7 +628,7 @@ export default function Landing() {
                 Flipping the Script:
                 <br />
                 <span style={{ background: "linear-gradient(90deg, #1a6bcc 0%, #0d9488 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  From Static Profiles to Proactive Care Alliances
+                  From Static Profiles to Inclusive Care Alliances
                 </span>
               </h2>
 
