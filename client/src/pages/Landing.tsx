@@ -662,7 +662,7 @@ export default function Landing() {
             {/* PROMO CARD — 10 for 10 */}
             <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <img
-                src="/manus-storage/insync_10for10_promo_8b6814eb.png"
+                src="/insync_10for10_promo.png"
                 alt="10 for 10 promotional trial — 10 free interactive and accessible support worker profiles for 10 days. Open to Australia only. Promo opens Monday 6 July 2026."
                 style={{ width: "clamp(260px, 28vw, 380px)", height: "auto", borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.18)", display: "block", objectFit: "contain" }}
               />
