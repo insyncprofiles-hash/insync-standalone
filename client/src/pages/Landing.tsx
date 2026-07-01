@@ -611,7 +611,7 @@ export default function Landing() {
           <div aria-hidden="true" style={{ position: "absolute", top: "-60px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div aria-hidden="true" style={{ position: "absolute", bottom: "-80px", left: "-40px", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "36px 32px", display: "flex", alignItems: "center", gap: "40px", flexWrap: "wrap" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "36px 32px", display: "flex", alignItems: "center", gap: "40px", flexWrap: "wrap", justifyContent: "center" }}>
 
             {/* LEFT — label + headline */}
             <div style={{ flex: "1 1 400px", minWidth: "280px" }}>
@@ -660,12 +660,55 @@ export default function Landing() {
             <div aria-hidden="true" style={{ width: "1px", alignSelf: "stretch", background: "linear-gradient(to bottom, transparent, rgba(45,212,191,0.30), rgba(245,200,66,0.25), transparent)", flexShrink: 0 }} className="hidden-mobile" />
 
             {/* PROMO CARD — 10 for 10 */}
-            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img
-                src="/insync_10for10_promo.jpg"
-                alt="10 for 10 promotional trial — 10 free interactive and accessible support worker profiles for 10 days. Open to Australia only. Promo opens Monday 6 July 2026."
-                style={{ width: "clamp(260px, 28vw, 380px)", height: "auto", borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.18)", display: "block", objectFit: "contain" }}
-              />
+            <div style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label="Tap to zoom in and view the 10 for 10 promotional card"
+                onClick={() => {
+                  const overlay = document.getElementById('promo-zoom-overlay');
+                  if (overlay) overlay.style.display = 'flex';
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    const overlay = document.getElementById('promo-zoom-overlay');
+                    if (overlay) overlay.style.display = 'flex';
+                  }
+                }}
+                style={{ position: "relative", cursor: "zoom-in", display: "inline-block" }}
+              >
+                <img
+                  src="/insync_10for10_promo.jpg"
+                  alt="10 for 10 promotional trial — 10 free interactive and accessible support worker profiles for 10 days. Open to Australia only. Promo opens Monday 6 July 2026."
+                  style={{ width: "clamp(260px, 28vw, 360px)", height: "auto", borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.18)", display: "block", objectFit: "contain" }}
+                />
+                <div style={{ position: "absolute", bottom: "10px", right: "10px", background: "rgba(0,0,0,0.55)", color: "#fff", borderRadius: "6px", padding: "4px 10px", fontSize: "12px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, pointerEvents: "none" }} aria-hidden="true">
+                  🔍 Tap to zoom
+                </div>
+              </div>
+              {/* Zoom lightbox */}
+              <div
+                id="promo-zoom-overlay"
+                role="dialog"
+                aria-modal="true"
+                aria-label="10 for 10 promo card zoomed view"
+                onClick={() => {
+                  const overlay = document.getElementById('promo-zoom-overlay');
+                  if (overlay) overlay.style.display = 'none';
+                }}
+                style={{ display: "none", position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.85)", alignItems: "center", justifyContent: "center", padding: "20px", cursor: "zoom-out" }}
+              >
+                <img
+                  src="/insync_10for10_promo.jpg"
+                  alt="10 for 10 promotional trial — full view"
+                  style={{ maxWidth: "95vw", maxHeight: "92vh", borderRadius: "12px", boxShadow: "0 16px 64px rgba(0,0,0,0.6)", objectFit: "contain" }}
+                />
+                <button
+                  aria-label="Close zoomed view"
+                  onClick={(e) => { e.stopPropagation(); const o = document.getElementById('promo-zoom-overlay'); if(o) o.style.display='none'; }}
+                  style={{ position: "absolute", top: "16px", right: "20px", background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", fontSize: "28px", lineHeight: 1, borderRadius: "50%", width: "44px", height: "44px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+                >×</button>
+              </div>
             </div>
 
           </div>
