@@ -611,7 +611,7 @@ export default function Landing() {
           <div aria-hidden="true" style={{ position: "absolute", top: "-60px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div aria-hidden="true" style={{ position: "absolute", bottom: "-80px", left: "-40px", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "36px 32px", display: "flex", alignItems: "center", gap: "48px", flexWrap: "wrap" }}>
+          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "36px 32px", display: "flex", alignItems: "center", gap: "40px", flexWrap: "wrap" }}>
 
             {/* LEFT — label + headline */}
             <div style={{ flex: "1 1 400px", minWidth: "280px" }}>
@@ -641,7 +641,7 @@ export default function Landing() {
             <div aria-hidden="true" style={{ width: "1px", alignSelf: "stretch", background: "linear-gradient(to bottom, transparent, rgba(45,212,191,0.30), rgba(245,200,66,0.25), transparent)", flexShrink: 0 }} className="hidden-mobile" />
 
             {/* RIGHT — intro + CTA */}
-            <div style={{ flex: "1 1 320px", minWidth: "260px" }}>
+            <div style={{ flex: "1 1 280px", minWidth: "240px" }}>
               <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(13px, 1.3vw, 15px)", lineHeight: 1.70, marginBottom: "8px" }}>
                 The traditional support matching system treats care like a passive wildcard. Coordinators pick a name from a spreadsheet and hope for the best. This reactive loop doesn't just create high turnover — it creates anxiety on both sides.
               </p>
@@ -654,6 +654,18 @@ export default function Landing() {
               >
                 Read the Full Article →
               </Link>
+            </div>
+
+            {/* DIVIDER */}
+            <div aria-hidden="true" style={{ width: "1px", alignSelf: "stretch", background: "linear-gradient(to bottom, transparent, rgba(45,212,191,0.30), rgba(245,200,66,0.25), transparent)", flexShrink: 0 }} className="hidden-mobile" />
+
+            {/* PROMO CARD — 10 for 10 */}
+            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <img
+                src="/manus-storage/insync_10for10_promo_8b6814eb.png"
+                alt="10 for 10 promotional trial — 10 free interactive and accessible support worker profiles for 10 days. Open to Australia only. Promo opens Monday 6 July 2026."
+                style={{ width: "clamp(260px, 28vw, 380px)", height: "auto", borderRadius: "12px", boxShadow: "0 8px 32px rgba(0,0,0,0.18)", display: "block", objectFit: "contain" }}
+              />
             </div>
 
           </div>
