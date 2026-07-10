@@ -858,27 +858,26 @@ export default function ClientView() {
             </div>
           </div>
 
-          {/* Service pills — inline pastel pill style */}
+          {/* Service circles — pastel circle + label, matching reference image */}
           {selectedServices.length > 0 && (
             <div style={{ padding: "8px 20px 20px" }}>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center" }}>
+              <div style={{ display: "flex", justifyContent: "space-around", gap: "6px", flexWrap: "wrap" }}>
                 {selectedServices.slice(0, 5).map((svc, i) => {
-                  const PASTEL_PILLS = [
-                    { bg: "#dbeafe", border: "#93c5fd", text: "#1e3a5f" },
-                    { bg: "#dcfce7", border: "#86efac", text: "#14532d" },
-                    { bg: "#fef3c7", border: "#fcd34d", text: "#78350f" },
-                    { bg: "#f3e8ff", border: "#c4b5fd", text: "#4c1d95" },
-                    { bg: "#fee2e2", border: "#fca5a5", text: "#7f1d1d" },
-                  ];
-                  const p = PASTEL_PILLS[i % PASTEL_PILLS.length];
+                  const CIRCLE_COLORS = ["#fce4ec","#e3f2fd","#e8f5e9","#fff3e0","#f3e8ff"];
+                  const TEXT_COLORS  = ["#880e4f","#0d47a1","#1b5e20","#e65100","#4a148c"];
                   return (
-                    <div key={svc.id} style={{
-                      display: "flex", alignItems: "center", gap: "7px",
-                      padding: "9px 16px", borderRadius: "24px",
-                      background: p.bg, border: `1.5px solid ${p.border}`,
-                    }}>
-                      <span style={{ fontSize: "1.1em", lineHeight: 1 }}>{svc.icon}</span>
-                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, color: p.text, lineHeight: 1.2 }}>{svc.label}</span>
+                    <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "7px", flex: "1 1 60px", minWidth: "60px", maxWidth: "80px" }}>
+                      <div style={{
+                        width: "60px", height: "60px", borderRadius: "50%",
+                        background: CIRCLE_COLORS[i % CIRCLE_COLORS.length],
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "1.625em",
+                      }}>{svc.icon}</div>
+                      <p style={{
+                        fontFamily: "'Outfit', sans-serif", fontSize: "0.75em", fontWeight: 700,
+                        color: TEXT_COLORS[i % TEXT_COLORS.length], textAlign: "center",
+                        margin: 0, lineHeight: 1.25, maxWidth: "72px",
+                      }}>{svc.label}</p>
                     </div>
                   );
                 })}
@@ -1135,7 +1134,7 @@ export default function ClientView() {
         <ThreadConnector />
 
         {/* ── Thread 2: Services ───────────────────────────── */}
-        <ThreadSection num={2} icon="🧩" title="Services" subtitle="The supports I provide and who I support." textColor={P.text} cardBg={P.bg}>
+        <ThreadSection num={2} icon="🤝" title="Services" subtitle="The supports I provide and who I support." textColor={P.text} cardBg={P.bg}>
           <div style={{ paddingTop: "16px" }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
