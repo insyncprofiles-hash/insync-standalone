@@ -772,7 +772,7 @@ export default function ClientView() {
         animation: "shimmerDrift 8s ease-in-out infinite",
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "680px", margin: "0 auto", padding: "24px 16px 60px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "680px", margin: "0 auto", padding: "24px 8px 60px" }}>
 
         {/* ── Post Card — theme-aware gradient card ─── */}
         <div style={{
@@ -860,7 +860,7 @@ export default function ClientView() {
 
           {/* Service circles — pastel circle + label, matching reference image */}
           {selectedServices.length > 0 && (
-            <div style={{ padding: "8px 20px 20px" }}>
+            <div style={{ padding: "8px 10px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-around", gap: "6px", flexWrap: "wrap" }}>
                 {selectedServices.slice(0, 5).map((svc, i) => {
                   const CIRCLE_COLORS = ["#fce4ec","#e3f2fd","#e8f5e9","#fff3e0","#f3e8ff"];
