@@ -179,7 +179,7 @@ const ALL_AVAILABLE_SERVICES: ServiceItem[] = [
   { id: "personal-care", icon: "🤲", label: "Personal Care", selected: false, description: "Personal hygiene & daily routines" },
   { id: "emotional", icon: "🌿", label: "Emotional Support", selected: false, description: "Mental wellbeing & companionship" },
   { id: "community", icon: "👥", label: "Community Access", selected: false, description: "Social outings & participation" },
-  { id: "mental", icon: "🧠", label: "Mental Wellbeing", selected: false, description: "Mindfulness & emotional regulation" },
+  { id: "mental", icon: "🧠", label: "Mental Health", selected: false, description: "Mindfulness & emotional regulation" },
   { id: "daily-living", icon: "📋", label: "Daily Living Support", selected: false, description: "Household tasks & goal planning" },
   { id: "transport", icon: "🚗", label: "Transport Assistance", selected: false, description: "Driving to appointments & activities" },
   { id: "domestic", icon: "🧹", label: "Domestic Assistance", selected: false, description: "Cleaning, cooking & home tasks" },
