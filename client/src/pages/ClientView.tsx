@@ -412,10 +412,20 @@ function ThreadSection({ num, icon, title, subtitle, children }: ThreadSectionPr
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.625em", fontWeight: 700, color: "#1a2e4a", margin: "0 0 4px", lineHeight: 1.1 }}>{title}</h3>
           <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", color: "#4a5a7a", margin: 0, lineHeight: 1.3 }}>{subtitle}</p>
         </div>
-        {/* Chevron */}
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, transition: "transform 0.25s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
+        {/* Chevron — distinct circle button */}
+        <div style={{
+          flexShrink: 0,
+          width: "36px", height: "36px", borderRadius: "50%",
+          background: `${color}18`,
+          border: `2px solid ${color}60`,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          transition: "transform 0.25s, background 0.2s",
+          transform: open ? "rotate(180deg)" : "rotate(0deg)",
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
       </button>
       {open && (
         <div style={{ padding: "0 18px 20px 18px", borderTop: `1px solid ${color}18` }}>
