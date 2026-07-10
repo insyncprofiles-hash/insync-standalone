@@ -782,7 +782,7 @@ export default function ClientView() {
         animation: "shimmerDrift 8s ease-in-out infinite",
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: "680px", margin: "0 auto", padding: "24px 8px 60px" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: "680px", margin: "0 auto", padding: "24px clamp(0px, 2vw, 16px) 60px" }}>
 
         {/* ── Post Card — theme-aware gradient card ─── */}
         <div style={{
