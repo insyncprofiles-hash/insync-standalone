@@ -2621,10 +2621,10 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   style={{ ...THREAD_INPUT, minHeight: "90px", resize: "vertical" }}
                   value={profile.bio}
                   onChange={e => updateProfile({ bio: e.target.value })}
-                  maxLength={560}
+                  maxLength={850}
                   placeholder="Write a short bio..."
                 />
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", color: A.textDim, textAlign: "right", marginTop: "3px" }}>{profile.bio.length}/560</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", color: A.textDim, textAlign: "right", marginTop: "3px" }}>{profile.bio.length}/850</p>
               </FieldRow>
             </Section>
 
