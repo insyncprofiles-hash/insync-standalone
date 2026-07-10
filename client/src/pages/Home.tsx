@@ -741,16 +741,26 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
             </div>
           </div>
 
-          {/* Service circles */}
+          {/* Service pills */}
           {selectedServices.length > 0 && (
             <div style={{ padding: '8px 20px 20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-around', gap: '6px' }}>
-                {selectedServices.slice(0, 5).map((svc, i) => (
-                  <div key={svc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', flex: 1 }}>
-                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: PASTEL_BG[i % PASTEL_BG.length], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{svc.icon}</div>
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 600, color: '#5a6a8a', textAlign: 'center', margin: 0, lineHeight: 1.25, maxWidth: '62px' }}>{svc.label}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
+                {selectedServices.slice(0, 5).map((svc, i) => {
+                  const DEMO_PASTEL_PILLS = [
+                    { bg: '#dbeafe', border: '#93c5fd', text: '#1e3a5f' },
+                    { bg: '#dcfce7', border: '#86efac', text: '#14532d' },
+                    { bg: '#fef3c7', border: '#fcd34d', text: '#78350f' },
+                    { bg: '#f3e8ff', border: '#c4b5fd', text: '#4c1d95' },
+                    { bg: '#fee2e2', border: '#fca5a5', text: '#7f1d1d' },
+                  ];
+                  const p = DEMO_PASTEL_PILLS[i % DEMO_PASTEL_PILLS.length];
+                  return (
+                  <div key={svc.id} style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '9px 16px', borderRadius: '24px', background: p.bg, border: `1.5px solid ${p.border}` }}>
+                    <span style={{ fontSize: '1.1em', lineHeight: 1 }}>{svc.icon}</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, color: p.text, lineHeight: 1.2 }}>{svc.label}</span>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
