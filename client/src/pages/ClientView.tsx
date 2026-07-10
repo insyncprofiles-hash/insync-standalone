@@ -872,9 +872,9 @@ export default function ClientView() {
           {selectedServices.length > 0 && (
             <div style={{ padding: "8px 10px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-around", gap: "6px", flexWrap: "wrap" }}>
-                {selectedServices.slice(0, 5).map((svc, i) => {
-                  const CIRCLE_COLORS = ["#fce4ec","#e3f2fd","#e8f5e9","#fff3e0","#f3e8ff"];
-                  const TEXT_COLORS  = ["#880e4f","#0d47a1","#1b5e20","#e65100","#4a148c"];
+                {selectedServices.slice(0, 4).map((svc, i) => {
+                  const CIRCLE_COLORS = ["#fce4ec","#e3f2fd","#e8f5e9","#fff3e0"];
+                  const TEXT_COLORS  = ["#880e4f","#0d47a1","#1b5e20","#e65100"];
                   const isUp = i % 2 === 0;
                   return (
                     <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "7px", flex: "1 1 60px", minWidth: "60px", maxWidth: "80px", marginTop: isUp ? "0px" : "24px" }}>
