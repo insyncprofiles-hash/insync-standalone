@@ -748,8 +748,9 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                 {selectedServices.slice(0, 5).map((svc, i) => {
                   const CIRCLE_COLORS = ['#fce4ec','#e3f2fd','#e8f5e9','#fff3e0','#f3e8ff'];
                   const TEXT_COLORS  = ['#880e4f','#0d47a1','#1b5e20','#e65100','#4a148c'];
+                  const isUp = i % 2 === 0;
                   return (
-                    <div key={svc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', flex: '1 1 60px', minWidth: '60px', maxWidth: '80px' }}>
+                    <div key={svc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', flex: '1 1 60px', minWidth: '60px', maxWidth: '80px', marginTop: isUp ? '0px' : '24px' }}>
                       <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: CIRCLE_COLORS[i % CIRCLE_COLORS.length], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{svc.icon}</div>
                       <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: TEXT_COLORS[i % TEXT_COLORS.length], textAlign: 'center', margin: 0, lineHeight: 1.25, maxWidth: '72px' }}>{svc.label}</p>
                     </div>
