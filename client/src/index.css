@@ -42,33 +42,33 @@
 
 :root {
   --radius: 0.75rem;
-  /* Northern Lights palette — forest green, sky blue & gold */
-  --navy: oklch(0.13 0.06 155);       /* deep forest green replaces navy */
-  --navy-deep: oklch(0.08 0.05 155);  /* darkest forest green */
-  --navy-mid: oklch(0.17 0.06 155);   /* mid forest green */
-  --gold: oklch(0.82 0.14 75);
-  --gold-light: oklch(0.92 0.10 78);
-  --gold-dim: oklch(0.65 0.11 75);
+  /* Warm Pastel palette — soft blue, cream & gold (matching reference) */
+  --navy: oklch(0.22 0.07 240);       /* deep navy blue */
+  --navy-deep: oklch(0.15 0.06 240);  /* darkest navy */
+  --navy-mid: oklch(0.28 0.07 240);   /* mid navy */
+  --gold: oklch(0.75 0.14 75);
+  --gold-light: oklch(0.88 0.10 78);
+  --gold-dim: oklch(0.60 0.11 75);
 
-  --background: oklch(0.08 0.05 155); /* deep forest green background */
-  --foreground: oklch(0.97 0.01 130);
-  --card: oklch(0.12 0.06 220);       /* deep blue card */
-  --card-foreground: oklch(0.97 0.01 130);
-  --popover: oklch(0.12 0.06 220);
-  --popover-foreground: oklch(0.97 0.01 130);
-  --primary: oklch(0.82 0.14 75);
-  --primary-foreground: oklch(0.08 0.05 155);
-  --secondary: oklch(0.16 0.07 220);  /* rich blue secondary */
-  --secondary-foreground: oklch(0.92 0.10 78);
-  --muted: oklch(0.14 0.06 200);
-  --muted-foreground: oklch(0.65 0.06 155);
-  --accent: oklch(0.82 0.14 75);
-  --accent-foreground: oklch(0.08 0.05 155);
+  --background: oklch(0.98 0.005 240); /* near-white warm background */
+  --foreground: oklch(0.18 0.06 240);  /* dark navy text */
+  --card: oklch(1.0 0 0);              /* pure white card */
+  --card-foreground: oklch(0.18 0.06 240);
+  --popover: oklch(1.0 0 0);
+  --popover-foreground: oklch(0.18 0.06 240);
+  --primary: oklch(0.52 0.18 240);     /* medium blue */
+  --primary-foreground: oklch(1.0 0 0);
+  --secondary: oklch(0.94 0.02 240);   /* very light blue-grey */
+  --secondary-foreground: oklch(0.22 0.07 240);
+  --muted: oklch(0.95 0.01 240);
+  --muted-foreground: oklch(0.50 0.05 240);
+  --accent: oklch(0.52 0.18 240);      /* blue accent */
+  --accent-foreground: oklch(1.0 0 0);
   --destructive: oklch(0.60 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.82 0.14 75 / 25%);
-  --input: oklch(0.82 0.14 75 / 20%);
-  --ring: oklch(0.60 0.15 240 / 60%);
+  --border: oklch(0.88 0.03 240);
+  --input: oklch(0.92 0.02 240);
+  --ring: oklch(0.52 0.18 240 / 50%);
 }
 
 @layer base {
@@ -130,22 +130,22 @@
 
   /* Gold glow effect */
   .gold-glow {
-    box-shadow: 0 0 20px oklch(0.72 0.14 75 / 40%), 0 0 40px oklch(0.72 0.14 75 / 20%);
+    box-shadow: 0 0 20px oklch(0.75 0.14 75 / 35%), 0 0 40px oklch(0.75 0.14 75 / 15%);
   }
   .gold-glow-sm {
-    box-shadow: 0 0 10px oklch(0.72 0.14 75 / 35%), 0 0 20px oklch(0.72 0.14 75 / 15%);
+    box-shadow: 0 0 10px oklch(0.75 0.14 75 / 30%), 0 0 20px oklch(0.75 0.14 75 / 12%);
   }
   .gold-text {
-    color: oklch(0.72 0.14 75);
+    color: oklch(0.55 0.15 75);
   }
   .gold-border {
-    border: 1.5px solid oklch(0.72 0.14 75 / 60%);
+    border: 1.5px solid oklch(0.75 0.14 75 / 55%);
   }
   .navy-surface {
-    background: oklch(0.13 0.06 155); /* forest green surface */
+    background: oklch(0.96 0.01 240); /* light pastel surface */
   }
   .navy-deep-surface {
-    background: oklch(0.08 0.05 155); /* deep forest green */
+    background: oklch(0.92 0.02 240); /* slightly deeper pastel */
   }
 
   /* Editable field highlight */
@@ -248,25 +248,25 @@
   }
 
   /* Panel tabs */
-  /* Northern Lights glass surface — forest green + sky blue */
+  /* Warm pastel glass surface */
   .glass-surface {
-    background: rgba(6, 20, 10, 0.60);
-    backdrop-filter: blur(20px) saturate(1.5);
-    -webkit-backdrop-filter: blur(20px) saturate(1.5);
-    border: 1px solid rgba(100, 220, 130, 0.15);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(74, 144, 217, 0.18);
   }
   .glass-card {
-    background: rgba(14, 8, 35, 0.65);
-    backdrop-filter: blur(24px) saturate(1.6);
-    -webkit-backdrop-filter: blur(24px) saturate(1.6);
-    border: 1px solid rgba(160, 120, 255, 0.20);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(74, 144, 217, 0.15);
+    box-shadow: 0 4px 24px rgba(26,35,80,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
   }
   .aurora-glow {
-    box-shadow: 0 0 30px rgba(60, 200, 100, 0.30), 0 0 60px rgba(140, 80, 255, 0.20);
+    box-shadow: 0 0 20px rgba(74, 144, 217, 0.20), 0 0 40px rgba(212, 168, 32, 0.12);
   }
   .aurora-text {
-    background: linear-gradient(135deg, #c9a84c 0%, #f0d080 30%, #5dde8a 65%, #b07fe8 100%);
+    background: linear-gradient(135deg, #1a5fa8 0%, #4a90d9 40%, #d4a820 80%, #e8c040 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

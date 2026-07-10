@@ -379,6 +379,7 @@ interface ThreadSectionProps {
 }
 function ThreadSection({ num, icon, title, subtitle, children }: ThreadSectionProps) {
   const color = THREAD_COLORS[(num - 1) % THREAD_COLORS.length];
+  const [open, setOpen] = React.useState(true);
   return (
     <div style={{
       background: "#ffffff",
@@ -387,10 +388,15 @@ function ThreadSection({ num, icon, title, subtitle, children }: ThreadSectionPr
       boxShadow: "0 2px 16px rgba(0,0,0,0.07)",
       borderLeft: `4px solid ${color}`,
     }}>
-      <div style={{
-        display: "flex", alignItems: "center", gap: "14px",
-        padding: "16px 18px 16px 16px",
-      }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: "100%", display: "flex", alignItems: "center", gap: "14px",
+          padding: "16px 18px 16px 16px",
+          background: "none", border: "none", cursor: "pointer", textAlign: "left",
+        }}
+        aria-expanded={open}
+      >
         {/* Large icon circle */}
         <div style={{
           width: "60px", height: "60px", borderRadius: "50%", flexShrink: 0,
@@ -406,10 +412,16 @@ function ThreadSection({ num, icon, title, subtitle, children }: ThreadSectionPr
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.625em", fontWeight: 700, color: "#1a2e4a", margin: "0 0 4px", lineHeight: 1.1 }}>{title}</h3>
           <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", color: "#4a5a7a", margin: 0, lineHeight: 1.3 }}>{subtitle}</p>
         </div>
-      </div>
-      <div style={{ padding: "0 18px 20px 18px", borderTop: `1px solid ${color}18` }}>
-        {children}
-      </div>
+        {/* Chevron */}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, transition: "transform 0.25s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div style={{ padding: "0 18px 20px 18px", borderTop: `1px solid ${color}18` }}>
+          {children}
+        </div>
+      )}
     </div>
   );
 }
@@ -518,7 +530,7 @@ export default function ClientView() {
 
   // Apply skin background if active, otherwise use theme-aware gradient
   const THEME_BG_GRADIENTS: Record<string, string> = {
-    "sky-gold":       "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
+    "sky-gold":       "linear-gradient(145deg, #c8e6fa 0%, #e8f4fd 25%, #fdfcf8 55%, #fef9e7 80%, #fef3c7 100%)",
     "ocean-amber":    "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
     "rainbow-prism":  "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
     "cobalt-gold":    "url('data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3CfeColorMatrix type=\"saturate\" values=\"0\"/%3E%3CfeBlend in=\"SourceGraphic\" mode=\"multiply\"/%3E%3C/filter%3E%3Crect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.06\"/%3E%3C/svg%3E') #fef9c0",
@@ -1130,17 +1142,28 @@ export default function ClientView() {
           <div style={{ paddingTop: "16px" }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {selectedServices.map((svc, i) => (
-                  <div key={svc.id} style={{
-                    display: "flex", alignItems: "center", gap: "7px",
-                    padding: "8px 14px", borderRadius: "20px",
-                    background: `${P.circleColors[i % P.circleColors.length]}14`,
-                    border: `1.5px solid ${P.circleColors[i % P.circleColors.length]}40`,
-                  }}>
-                    <span style={{ fontSize: "1.125em" }}>{svc.icon}</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 600, color: P.text }}>{svc.label}</span>
-                  </div>
-                ))}
+                {selectedServices.map((svc, i) => {
+                  const PASTEL_PILLS = [
+                    { bg: "#dbeafe", border: "#93c5fd", text: "#1e3a5f" },
+                    { bg: "#dcfce7", border: "#86efac", text: "#14532d" },
+                    { bg: "#fef3c7", border: "#fcd34d", text: "#78350f" },
+                    { bg: "#f3e8ff", border: "#c4b5fd", text: "#4c1d95" },
+                    { bg: "#fee2e2", border: "#fca5a5", text: "#7f1d1d" },
+                    { bg: "#ccfbf1", border: "#5eead4", text: "#134e4a" },
+                    { bg: "#fce7f3", border: "#f9a8d4", text: "#831843" },
+                  ];
+                  const p = PASTEL_PILLS[i % PASTEL_PILLS.length];
+                  return (
+                    <div key={svc.id} style={{
+                      display: "flex", alignItems: "center", gap: "7px",
+                      padding: "8px 14px", borderRadius: "20px",
+                      background: p.bg, border: `1.5px solid ${p.border}`,
+                    }}>
+                      <span style={{ fontSize: "1.125em" }}>{svc.icon}</span>
+                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 600, color: p.text }}>{svc.label}</span>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.textMid, margin: 0 }}>No services listed.</p>
@@ -1192,16 +1215,16 @@ export default function ClientView() {
                   <span key={label} style={{
                     fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                     padding: "6px 14px", borderRadius: "20px",
-                    background: P.badgeBg, border: `1px solid ${P.badgeBorder}`,
-                    color: P.text,
+                    background: "#dbeafe", border: "1.5px solid #93c5fd",
+                    color: "#1e3a5f",
                   }}>{label}</span>
                 ))}
                 {profile.customExperience && (
                   <span style={{
                     fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                     padding: "6px 14px", borderRadius: "20px",
-                    background: "rgba(245,200,66,0.15)", border: "1px solid rgba(245,200,66,0.4)",
-                    color: P.text,
+                    background: "#fef3c7", border: "1.5px solid #fcd34d",
+                    color: "#78350f",
                   }}>{profile.customExperience}</span>
                 )}
               </div>
@@ -1231,8 +1254,8 @@ export default function ClientView() {
                           <span key={chip} style={{
                             fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                             padding: "6px 14px", borderRadius: "20px",
-                            background: `${P.ctaFrom}14`, border: `1.5px solid ${P.ctaFrom}35`,
-                            color: P.text,
+                            background: "#f3e8ff", border: "1.5px solid #c4b5fd",
+                            color: "#4c1d95",
                           }}>{chip}</span>
                         ))}
                       </div>
@@ -1260,8 +1283,8 @@ export default function ClientView() {
                         <span style={{
                           fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 700,
                           padding: "6px 14px", borderRadius: "20px",
-                          background: `${P.ctaFrom}18`, border: `1.5px solid ${P.ctaFrom}40`,
-                          color: P.text, minWidth: "52px", textAlign: "center", flexShrink: 0,
+                          background: "#ccfbf1", border: "1.5px solid #5eead4",
+                          color: "#134e4a", minWidth: "52px", textAlign: "center", flexShrink: 0,
                         }}>{d}</span>
                         <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", color: P.textMid }}>{from} – {to}</span>
                       </div>

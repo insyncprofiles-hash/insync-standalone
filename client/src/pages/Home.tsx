@@ -422,19 +422,29 @@ function DemoThreadConnector() {
 
 function DemoThreadSection({ num, icon, title, subtitle, children }: { num: number; icon: string; title: string; subtitle: string; children: React.ReactNode; defaultOpen?: boolean }) {
   const color = DEMO_THREAD_COLORS[(num - 1) % DEMO_THREAD_COLORS.length];
+  const [open, setOpen] = React.useState(true);
   return (
     <div style={{ background: '#ffffff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.07)', borderLeft: `4px solid ${color}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '16px 18px 16px 16px' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '14px', padding: '16px 18px 16px 16px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+        aria-expanded={open}
+      >
         <div style={{ width: '60px', height: '60px', borderRadius: '50%', flexShrink: 0, background: `${color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{icon}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', fontWeight: 700, letterSpacing: '0.10em', textTransform: 'uppercase', color, margin: '0 0 2px' }}>Thread {num}</p>
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '22px', fontWeight: 700, color: '#1a2e4a', margin: '0 0 3px', lineHeight: 1.1 }}>{title}</h3>
           <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: '#6a7a9a', margin: 0, lineHeight: 1.3 }}>{subtitle}</p>
         </div>
-      </div>
-      <div style={{ padding: '0 18px 20px 18px', borderTop: `1px solid ${color}18` }}>
-        {children}
-      </div>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0, transition: 'transform 0.25s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div style={{ padding: '0 18px 20px 18px', borderTop: `1px solid ${color}18` }}>
+          {children}
+        </div>
+      )}
     </div>
   );
 }
@@ -889,12 +899,24 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
           <div style={{ paddingTop: '16px' }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {selectedServices.map((svc, i) => (
-                  <div key={svc.id} style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '8px 14px', borderRadius: '20px', background: `${DEMO_THREAD_COLORS[i % DEMO_THREAD_COLORS.length]}14`, border: `1.5px solid ${DEMO_THREAD_COLORS[i % DEMO_THREAD_COLORS.length]}40` }}>
-                    <span style={{ fontSize: '16px' }}>{svc.icon}</span>
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 600, color: '#3d5c42' }}>{svc.label}</span>
-                  </div>
-                ))}
+                {selectedServices.map((svc, i) => {
+                  const PASTEL_PILLS = [
+                    { bg: '#dbeafe', border: '#93c5fd', text: '#1e3a5f' },
+                    { bg: '#dcfce7', border: '#86efac', text: '#14532d' },
+                    { bg: '#fef3c7', border: '#fcd34d', text: '#78350f' },
+                    { bg: '#f3e8ff', border: '#c4b5fd', text: '#4c1d95' },
+                    { bg: '#fee2e2', border: '#fca5a5', text: '#7f1d1d' },
+                    { bg: '#ccfbf1', border: '#5eead4', text: '#134e4a' },
+                    { bg: '#fce7f3', border: '#f9a8d4', text: '#831843' },
+                  ];
+                  const p = PASTEL_PILLS[i % PASTEL_PILLS.length];
+                  return (
+                    <div key={svc.id} style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '8px 14px', borderRadius: '20px', background: p.bg, border: `1.5px solid ${p.border}` }}>
+                      <span style={{ fontSize: '16px' }}>{svc.icon}</span>
+                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 600, color: p.text }}>{svc.label}</span>
+                    </div>
+                  );
+                })}
               </div>
             ) : <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '14px', color: '#7a9b7e', margin: 0 }}>No services listed yet.</p>}
           </div>
@@ -907,10 +929,10 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
             {(checkedExperience.length > 0 || profile.customExperience) ? (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {checkedExperience.map(({ label }) => (
-                  <span key={label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: 'rgba(74,144,217,0.1)', border: '1px solid rgba(74,144,217,0.3)', color: '#2a4a7a' }}>{label}</span>
+                  <span key={label} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: '#dbeafe', border: '1.5px solid #93c5fd', color: '#1e3a5f' }}>{label}</span>
                 ))}
                 {profile.customExperience && (
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: 'rgba(245,200,66,0.15)', border: '1px solid rgba(245,200,66,0.4)', color: '#7a5a00' }}>{profile.customExperience}</span>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: '#fef3c7', border: '1.5px solid #fcd34d', color: '#78350f' }}>{profile.customExperience}</span>
                 )}
               </div>
             ) : (
@@ -945,7 +967,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                     <div key={key}>
                       <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#4a90d9', margin: '0 0 8px' }}>{key === 'communicate' ? 'How I Communicate' : key === 'connect' ? 'How I Connect' : 'How I Show Up'}</p>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {profile.showUpStyle[key].map(chip => <span key={chip} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: 'rgba(74,144,217,0.1)', border: '1.5px solid rgba(74,144,217,0.25)', color: '#3d5c42' }}>{chip}</span>)}
+                        {profile.showUpStyle[key].map(chip => <span key={chip} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 600, padding: '5px 12px', borderRadius: '20px', background: '#f3e8ff', border: '1.5px solid #c4b5fd', color: '#4c1d95' }}>{chip}</span>)}
                       </div>
                     </div>
                   ) : null
@@ -964,7 +986,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
             {availDays.length > 0 ? (
               <>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
-                  {availDays.map(d => <span key={d} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, padding: '6px 14px', borderRadius: '20px', background: 'rgba(74,144,217,0.15)', border: '1.5px solid rgba(74,144,217,0.35)', color: '#2a4a7a' }}>{d}</span>)}
+                  {availDays.map(d => <span key={d} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, padding: '6px 14px', borderRadius: '20px', background: '#ccfbf1', border: '1.5px solid #5eead4', color: '#134e4a' }}>{d}</span>)}
                 </div>
                 {availDays.map(d => {
                   const dh = (profile.dayHours || {})[d];
