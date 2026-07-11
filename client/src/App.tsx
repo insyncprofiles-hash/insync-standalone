@@ -23,6 +23,7 @@ import BlogPost from "./pages/BlogPost";
 import Coordinators from "./pages/Coordinators";
 import Contact from "./pages/Contact";
 import Guides from "./pages/Guides";
+import Directory from "./pages/Directory";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/coordinators" component={Coordinators} />
       <Route path="/contact" component={Contact} />
       <Route path="/guides" component={Guides} />
+      <Route path="/directory" component={Directory} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
