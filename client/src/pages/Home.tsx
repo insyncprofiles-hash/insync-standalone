@@ -197,6 +197,9 @@ const ALL_AVAILABLE_SERVICES: ServiceItem[] = [
   { id: "plan-management", icon: "📊", label: "Plan Management Support", selected: false, description: "Helping navigate NDIS plans" },
   { id: "exercise", icon: "🏋", label: "Exercise & Fitness", selected: false, description: "Active lifestyle & physical health" },
   { id: "creative", icon: "🎨", label: "Creative Arts Therapy", selected: false, description: "Art, music & expressive therapies" },
+  { id: "household-tasks", icon: "🧹", label: "Household Tasks", selected: false, description: "Home organisation & household management" },
+  { id: "life-skills", icon: "📈", label: "Life Skills Development", selected: false, description: "Building independence & everyday skills" },
+  { id: "supported-employment", icon: "🏢", label: "Supported Employment", selected: false, description: "Workplace support & job coaching" },
 ];
 
 const DEFAULT_SERVICES: ServiceItem[] = ALL_AVAILABLE_SERVICES.slice(0, 5).map(s => ({ ...s, selected: true }));
