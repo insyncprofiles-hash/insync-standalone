@@ -222,6 +222,10 @@ function loadProfileFromURL(): Partial<ProfileData> {
           overrides.profileImage = storedParams.get("photo")!;
         }
         if (storedParams.get("customExp")) overrides.customExperience = storedParams.get("customExp")!;
+        const rRaw = storedParams.get("roleType");
+        if (rRaw && ["support-worker","allied-health","coordinator","other"].includes(rRaw)) {
+          overrides.roleType = rRaw as ProfileData["roleType"];
+        }
         return overrides;
       } catch {
         // Fall through to direct param parsing
@@ -308,6 +312,10 @@ function loadProfileFromURL(): Partial<ProfileData> {
   // Cloudinary photo URL travels directly in the URL
   if (params.get("photo")) overrides.profileImage = params.get("photo")!;
   if (params.get("customExp")) overrides.customExperience = params.get("customExp")!;
+  const roleRaw = params.get("roleType");
+  if (roleRaw && ["support-worker","allied-health","coordinator","other"].includes(roleRaw)) {
+    overrides.roleType = roleRaw as ProfileData["roleType"];
+  }
   // How I Show Up
   const susCom = params.get("susCom"); const susCon = params.get("susCon"); const susPre = params.get("susPre");
   if (susCom || susCon || susPre) {
@@ -479,6 +487,7 @@ export default function ClientView() {
     return () => { try { document.head.removeChild(link); } catch {} };
   }, [activeSkin]);
   const profile: ProfileData = {
+    roleType: "support-worker",
     name: "Pete James",
     title: "Support Worker",
     tagline: "Real support delivered, every time.",
@@ -556,12 +565,13 @@ export default function ClientView() {
   };
 
   const handleCTA = () => {
-    const name = profile.name || "this support worker";
+    const name = profile.name || (profile.roleType === "allied-health" ? "this practitioner" : profile.roleType === "coordinator" ? "this coordinator" : "this support worker");
+    const roleLabel = profile.roleType === "allied-health" ? "allied health practitioner" : profile.roleType === "coordinator" ? "support coordinator" : "support worker";
     if (profile.email) {
-      const subject = encodeURIComponent(`Support enquiry — ${name}`);
+      const subject = encodeURIComponent(profile.roleType === "allied-health" ? `Referral enquiry — ${name}` : `Support enquiry — ${name}`);
       window.location.href = `mailto:${profile.email}?subject=${subject}`;
     } else {
-      alert("No contact details have been added to this profile yet. Please ask the support worker to add their email in their profile settings.");
+      alert(`No contact details have been added to this profile yet. Please ask the ${roleLabel} to add their email in their profile settings.`);
     }
   };
 
@@ -705,7 +715,7 @@ export default function ClientView() {
       paddingTop: "110px",
       fontSize: `calc(${fontScale}rem * ${a11yStyle.fontSize ? parseFloat(a11yStyle.fontSize as string) / 100 : 1})`,
     }}>
-      <main id="main-content" aria-label="Support worker profile">
+      <main id="main-content" aria-label={profile.roleType === "allied-health" ? "Allied health practitioner profile" : profile.roleType === "coordinator" ? "Support coordinator profile" : "Support worker profile"}>
       {/* ── Read Aloud — vibrant solid contrast button at very top ─── */}
       <div data-no-print="true" style={{ padding: "12px 16px 0", maxWidth: "680px", margin: "0 auto" }}>
         <button
@@ -1388,7 +1398,7 @@ export default function ClientView() {
             margin: '0 auto', maxWidth: '680px', textAlign: 'center', padding: '0 16px',
           }}>
             <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.6875em', letterSpacing: '0.04em', textTransform: 'uppercase' }}>Profile Disclaimer</strong>
-            {"This profile is owned and managed by "}{profile.name || "this support worker"}{". It represents their own voice and is not created or controlled by any provider or organisation. The information presented in this profile is self-reported and has not been independently verified by InSync Profiles. It is the responsibility of the support worker to ensure all credentials, experience, and claims are accurate and supported by evidence upon request."}
+            {"This profile is owned and managed by "}{profile.name || (profile.roleType === "allied-health" ? "this practitioner" : profile.roleType === "coordinator" ? "this coordinator" : "this support worker")}{". It represents their own voice and is not created or controlled by any provider or organisation. The information presented in this profile is self-reported and has not been independently verified by InSync Profiles. It is the responsibility of the "}{profile.roleType === "allied-health" ? "practitioner" : profile.roleType === "coordinator" ? "coordinator" : "support worker"}{" to ensure all credentials, experience, and claims are accurate and supported by evidence upon request."}
           </p>
           {/* Feedback button */}
           {profile.email && (

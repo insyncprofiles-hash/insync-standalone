@@ -29,6 +29,7 @@ export interface VehicleOptions {
   weightCapacity: VehicleOption[];
 }
 export interface ProfileData {
+  roleType: "support-worker" | "allied-health" | "coordinator" | "other";
   name: string;
   title: string;
   tagline: string;
@@ -204,6 +205,49 @@ const ALL_AVAILABLE_SERVICES: ServiceItem[] = [
 
 const DEFAULT_SERVICES: ServiceItem[] = ALL_AVAILABLE_SERVICES.slice(0, 5).map(s => ({ ...s, selected: true }));
 
+// ── Allied health services catalogue ─────────────────────────
+const ALLIED_HEALTH_SERVICES: ServiceItem[] = [
+  { id: "ot", icon: "🖐", label: "Occupational Therapy", selected: false, description: "Functional assessments, home modifications & daily living" },
+  { id: "speech", icon: "🗣", label: "Speech Pathology", selected: false, description: "Communication, AAC, feeding & swallowing" },
+  { id: "physio", icon: "💪", label: "Physiotherapy", selected: false, description: "Movement, pain management & rehabilitation" },
+  { id: "psych", icon: "🧠", label: "Psychology", selected: false, description: "Mental health assessment, therapy & support" },
+  { id: "sw-allied", icon: "🤝", label: "Social Work", selected: false, description: "Psychosocial support, advocacy & coordination" },
+  { id: "dietitian", icon: "🥗", label: "Dietetics", selected: false, description: "Nutrition, meal planning & feeding support" },
+  { id: "music-therapy", icon: "🎵", label: "Music Therapy", selected: false, description: "Therapeutic music for communication & wellbeing" },
+  { id: "art-therapy", icon: "🎨", label: "Art Therapy", selected: false, description: "Creative expression & emotional processing" },
+  { id: "exercise-phys", icon: "🏃", label: "Exercise Physiology", selected: false, description: "Therapeutic exercise & physical rehabilitation" },
+  { id: "behaviour-support", icon: "💡", label: "Behaviour Support", selected: false, description: "Positive behaviour strategies & PBS plans" },
+  { id: "early-intervention", icon: "🌱", label: "Early Intervention", selected: false, description: "Developmental support for children 0–7" },
+  { id: "aac-specialist", icon: "📲", label: "AAC Specialist", selected: false, description: "Augmentative & alternative communication assessment" },
+  { id: "telehealth", icon: "💻", label: "Telehealth / Remote", selected: false, description: "Remote sessions via video call" },
+  { id: "home-visits", icon: "🏠", label: "Home Visits", selected: false, description: "In-home assessment & therapy delivery" },
+  { id: "school-visits", icon: "🏫", label: "School Visits", selected: false, description: "Therapy delivered in school settings" },
+  { id: "group-therapy", icon: "👥", label: "Group Therapy", selected: false, description: "Therapeutic group programs" },
+  { id: "sensory-processing", icon: "✨", label: "Sensory Processing", selected: false, description: "Sensory integration & regulation strategies" },
+  { id: "assistive-tech", icon: "🦾", label: "Assistive Technology", selected: false, description: "AT assessment, prescription & training" },
+  { id: "capacity-building", icon: "📈", label: "Capacity Building", selected: false, description: "Building independence & functional skills" },
+  { id: "carer-training", icon: "📚", label: "Carer / Family Training", selected: false, description: "Coaching families & carers in therapeutic strategies" },
+];
+
+// ── Coordinator services catalogue ────────────────────────────
+const COORDINATOR_SERVICES: ServiceItem[] = [
+  { id: "sc", icon: "🗺", label: "Support Coordination", selected: false, description: "Connecting participants with the right supports" },
+  { id: "sc-specialist", icon: "⭐", label: "Specialist Support Coordination", selected: false, description: "Complex needs & crisis coordination" },
+  { id: "lac", icon: "🤝", label: "Local Area Coordination", selected: false, description: "Community connection & plan navigation" },
+  { id: "plan-review", icon: "📋", label: "Plan Review Support", selected: false, description: "Preparing for and navigating NDIS plan reviews" },
+  { id: "provider-matching", icon: "🔗", label: "Provider Matching", selected: false, description: "Finding the right providers for each participant" },
+  { id: "capacity-coord", icon: "📈", label: "Capacity Building", selected: false, description: "Building participant independence & skills" },
+  { id: "crisis-coord", icon: "🚨", label: "Crisis Support", selected: false, description: "Urgent coordination during crises" },
+  { id: "housing-coord", icon: "🏠", label: "Housing & SIL Coordination", selected: false, description: "Supported Independent Living & housing navigation" },
+  { id: "aged-care-coord", icon: "🌿", label: "Aged Care Navigation", selected: false, description: "Home Care Package & aged care system navigation" },
+];
+
+function getServicesCatalogueForRole(role: ProfileData["roleType"]): ServiceItem[] {
+  if (role === "allied-health") return ALLIED_HEALTH_SERVICES;
+  if (role === "coordinator") return COORDINATOR_SERVICES;
+  return ALL_AVAILABLE_SERVICES;
+}
+
 const DEFAULT_VEHICLE_OPTIONS: VehicleOptions = {
   vehicleType: [
     { id: "sedan", label: "Standard Sedan", checked: false },
@@ -232,6 +276,7 @@ const DEFAULT_VEHICLE_OPTIONS: VehicleOptions = {
 };
 
 const DEFAULT_PROFILE: ProfileData = {
+  roleType: "support-worker",
   name: "",
   title: "",
   tagline: "",
@@ -312,6 +357,7 @@ function encodeProfileToURL(profile: ProfileData, videoUrl?: string | null): str
   if (profile.showUpStyle.presence.length > 0) params.set("susPre", profile.showUpStyle.presence.join(","));
   if (profile.yearsExperience) params.set("yrsExp", profile.yearsExperience);
   if (profile.customExperience) params.set("customExp", profile.customExperience);
+  if (profile.roleType && profile.roleType !== "support-worker") params.set("roleType", profile.roleType);
   return `${window.location.origin}/view?${params.toString()}`;
 }
 function encodeProfileToURLWithSkin(profile: ProfileData, videoUrl?: string | null, skinId?: string): string {
@@ -367,6 +413,10 @@ function loadProfileFromURL(): Partial<ProfileData> | null {
   }
   if (params.get("yrsExp")) overrides.yearsExperience = params.get("yrsExp")!;
   if (params.get("customExp")) overrides.customExperience = params.get("customExp")!;
+  const roleRaw = params.get("roleType");
+  if (roleRaw && ["support-worker","allied-health","coordinator","other"].includes(roleRaw)) {
+    overrides.roleType = roleRaw as ProfileData["roleType"];
+  }
   return overrides;
 }
 
@@ -2347,12 +2397,24 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
   // Section wrapper — accordion style matching mockup
   const SECTION_SUBTITLES: Record<string, string> = {
     "Identity":         "Who I am, what matters to me, and how I work.",
-    "Services":         "The supports I provide and who I support.",
-    "Availability":     "When I'm available and how to reach me.",
-    "Contact":          "How clients and coordinators can reach me.",
-    "Experience":       "My background, training, and specialist areas.",
+    "Services":         profile.roleType === "allied-health"
+      ? "The therapy and clinical services I provide."
+      : profile.roleType === "coordinator"
+      ? "The coordination and navigation services I provide."
+      : "The supports I provide and who I support.",
+    "Availability":     profile.roleType === "allied-health"
+      ? "When I'm available for sessions and how to refer."
+      : "When I'm available and how to reach me.",
+    "Contact":          profile.roleType === "allied-health"
+      ? "How participants, families and referrers can reach me."
+      : "How clients and coordinators can reach me.",
+    "Experience":       profile.roleType === "allied-health"
+      ? "My clinical background, training, and specialist areas."
+      : "My background, training, and specialist areas.",
     "Presentation":     "",
-    "Share & Distribute": "Share your profile with clients and coordinators.",
+    "Share & Distribute": profile.roleType === "allied-health"
+      ? "Share your profile with participants, families and referrers."
+      : "Share your profile with clients and coordinators.",
   };
   const SECTION_ICONS: Record<string, string> = {
     "Identity":         "✦",
@@ -2571,12 +2633,57 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 </div>
               </FieldRow>
 
+              <FieldRow label="I am a" htmlFor="h-roletype">
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                  {([
+                    { value: "support-worker", label: "Support Worker", icon: "🤲" },
+                    { value: "allied-health", label: "Allied Health Practitioner", icon: "🩺" },
+                    { value: "coordinator", label: "Support Coordinator / LAC", icon: "🗺" },
+                    { value: "other", label: "Other", icon: "✦" },
+                  ] as const).map(opt => {
+                    const active = profile.roleType === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        onClick={() => updateProfile({ roleType: opt.value, services: [] })}
+                        style={{
+                          display: "flex", alignItems: "center", gap: "6px",
+                          padding: "8px 14px",
+                          borderRadius: "20px",
+                          border: active ? `1.5px solid ${A.gold}` : "1.5px solid rgba(255,255,255,0.12)",
+                          background: active ? `${A.gold}22` : "rgba(255,255,255,0.04)",
+                          color: active ? A.gold : A.textMid,
+                          fontFamily: "'Outfit', sans-serif",
+                          fontSize: "13px",
+                          fontWeight: active ? 700 : 500,
+                          cursor: "pointer",
+                          transition: "all 0.15s",
+                        }}
+                        aria-pressed={active}
+                      >
+                        <span>{opt.icon}</span> {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, marginTop: "6px", marginBottom: 0 }}>
+                  {profile.roleType === "allied-health" && "Allied health services catalogue will be used for your profile."}
+                  {profile.roleType === "coordinator" && "Coordination services catalogue will be used for your profile."}
+                  {profile.roleType === "support-worker" && "Support worker services catalogue will be used for your profile."}
+                  {profile.roleType === "other" && "You can add and customise your own services below."}
+                </p>
+              </FieldRow>
+
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "16px" }}>
                 <FieldRow label="Name" htmlFor="h-name">
                   <input id="h-name" style={THREAD_INPUT} value={profile.name} onChange={e => updateProfile({ name: e.target.value })} placeholder="Your name" />
                 </FieldRow>
                 <FieldRow label="Title" htmlFor="h-title">
-                  <input id="h-title" style={THREAD_INPUT} value={profile.title} onChange={e => updateProfile({ title: e.target.value })} placeholder="e.g. Support Worker" />
+                  <input id="h-title" style={THREAD_INPUT} value={profile.title} onChange={e => updateProfile({ title: e.target.value })} placeholder={
+                    profile.roleType === "allied-health" ? "e.g. Occupational Therapist" :
+                    profile.roleType === "coordinator" ? "e.g. Support Coordinator" :
+                    "e.g. Support Worker"
+                  } />
                 </FieldRow>
               </div>
 
@@ -2610,7 +2717,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     style={{ ...THREAD_INPUT, paddingRight: "52px" }}
                     value={profile.tagline}
                     onChange={e => updateProfile({ tagline: e.target.value.slice(0, 55) })}
-                    placeholder="I get it. I see you. I'm here."
+                    placeholder={
+                      profile.roleType === "allied-health" ? "Helping people do what matters most." :
+                      profile.roleType === "coordinator" ? "Connecting the right supports to the right people." :
+                      "I get it. I see you. I'm here."
+                    }
                   />
                   <span style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)", fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: profile.tagline.length > 47 ? "#ff7070" : "rgba(255,255,255,0.3)", pointerEvents: "none" }}>
                     {profile.tagline.length}/55
@@ -2625,7 +2736,13 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   value={profile.bio}
                   onChange={e => updateProfile({ bio: e.target.value })}
                   maxLength={850}
-                  placeholder="Write a short bio..."
+                  placeholder={
+                    profile.roleType === "allied-health"
+                      ? "Tell participants and families who you are, your approach to therapy, and what they can expect from working with you..."
+                      : profile.roleType === "coordinator"
+                      ? "Tell participants and families who you are, how you work, and what they can expect from working with you..."
+                      : "Write a short bio..."
+                  }
                 />
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", color: A.textDim, textAlign: "right", marginTop: "3px" }}>{profile.bio.length}/850</p>
               </FieldRow>
@@ -2637,7 +2754,11 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
             <Section icon="⚙" title="Services" id="section-services">
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: A.textMid, margin: 0 }}>
-                  Up to 5 services appear on your post card.
+                  {profile.roleType === "allied-health"
+                    ? "Up to 5 clinical services appear on your profile card."
+                    : profile.roleType === "coordinator"
+                    ? "Up to 5 coordination services appear on your profile card."
+                    : "Up to 5 services appear on your post card."}
                 </p>
                 <span style={{
                   padding: "3px 10px",
@@ -2704,7 +2825,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
               {/* Add services catalogue */}
               {(() => {
-                const available = ALL_AVAILABLE_SERVICES.filter(s => !profile.services.find(ps => ps.id === s.id && ps.selected));
+                const catalogue = getServicesCatalogueForRole(profile.roleType);
+                const available = catalogue.filter(s => !profile.services.find(ps => ps.id === s.id && ps.selected));
                 if (available.length === 0) return null;
                 return (
                   <div>
