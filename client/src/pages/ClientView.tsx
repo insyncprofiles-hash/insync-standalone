@@ -1020,11 +1020,11 @@ export default function ClientView() {
           </div>
 
           {/* CTA button — blue-to-gold gradient pill */}
-          <div style={{ padding: "0 24px 12px" }}>
+          <div style={{ padding: "0 24px 16px" }}>
             <button
               onClick={handleCTA}
               style={{
-                width: "100%", padding: "18px 24px",
+                width: "100%", padding: "22px 24px",
                 background: P.ctaFrom === "#4a90d9" ? "#1a5fa8" : P.ctaFrom,
                 border: "none", borderRadius: "50px", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "12px",
@@ -1046,11 +1046,11 @@ export default function ClientView() {
 
           {/* Feedback — secondary CTA */}
           {profile.email && (
-            <div style={{ padding: "0 24px 16px" }}>
+            <div style={{ padding: "12px 24px 36px" }}>
               <a
                 href={`mailto:${profile.email}?subject=${encodeURIComponent("Feedback")}`}
                 style={{
-                  width: "100%", padding: "16px 24px",
+                  width: "100%", padding: "22px 24px",
                   background: P.ctaFrom === "#4a90d9" ? "#1a5fa8" : P.ctaFrom,
                   border: "none",
                   borderRadius: "50px", cursor: "pointer",
