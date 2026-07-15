@@ -131,13 +131,13 @@ export default function AlliedHealth() {
               The gap between sessions is where things either stick or fall apart. Where a strategy gets reinforced — or quietly abandoned because nobody else knew it existed.
             </p>
             <p style={{ fontSize: "clamp(17px, 2vw, 20px)", lineHeight: 1.9, color: C.textBody }}>
-              A living profile becomes the thread connecting scattered moments. Not a filing cabinet. Not a report. Something that travels with the participant's journey and stays retrievable when it's needed.
+              What if the information didn't disappear when the session ended? What if the strategy, the approach, the understanding of who this person is — stayed somewhere the whole support circle could find it?
             </p>
           </div>
 
           {/* Pull quote */}
           <blockquote style={{ borderLeft: `4px solid ${C.teal}`, paddingLeft: "24px", margin: "0 0 56px", fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(20px, 2.5vw, 26px)", color: C.textHead, fontStyle: "italic", lineHeight: 1.5 }}>
-            "The gap between sessions is where real change sticks."
+            "The gap between sessions is where things either stick or fall apart."
           </blockquote>
 
           {/* The fragmented picture */}
