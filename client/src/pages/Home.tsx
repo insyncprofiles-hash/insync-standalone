@@ -651,7 +651,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
       </div>
 
       {/* ── PROMINENT GOLD ACCESSIBILITY BAR — second row, full width ── */}
-      <div style={{ position: 'fixed', top: '54px', left: 0, right: 0, zIndex: 10002, background: 'linear-gradient(135deg, #b8860b 0%, #f5c842 60%, #ffe680 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px', gap: '12px', boxShadow: '0 4px 20px rgba(245,200,66,0.35)', minHeight: '56px' }}>
+      <div style={{ position: 'fixed', top: isDemo ? '108px' : '54px', left: 0, right: 0, zIndex: 10002, background: 'linear-gradient(135deg, #b8860b 0%, #f5c842 60%, #ffe680 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px', gap: '12px', boxShadow: '0 4px 20px rgba(245,200,66,0.35)', minHeight: '56px' }}>
         <svg width='28' height='28' viewBox='0 0 24 24' fill='none'>
           <circle cx='12' cy='5.5' r='2.2' fill='#0d1b2a'/>
           <path d='M12 9v5' stroke='#0d1b2a' strokeWidth='2.4' strokeLinecap='round'/>
@@ -687,7 +687,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
       <div
         id='demo-a11y-panel'
         style={{
-          position: 'fixed', top: '118px', left: '50%', transform: 'translateX(-50%)', zIndex: 10004,
+          position: 'fixed', top: isDemo ? '172px' : '118px', left: '50%', transform: 'translateX(-50%)', zIndex: 10004,
           width: '320px', background: 'white', borderRadius: '16px',
           border: '2px solid rgba(245,200,66,0.5)',
           boxShadow: '0 8px 32px rgba(0,0,0,0.18)', padding: '20px',
@@ -2450,7 +2450,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
         background: isGradient
           ? `linear-gradient(160deg, ${theme.postBg} 0%, ${theme.postBg}cc 45%, ${theme.postBg2} 100%)`
           : theme.bg,
-        paddingTop: "110px",
+        paddingTop: isDemo ? "170px" : "110px",
         ...a11yStyle,
       }}
     >
