@@ -2637,7 +2637,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {([
                     { value: "support-worker", label: "Support Worker", icon: "🤲" },
-                    { value: "allied-health", label: "Allied Health Practitioner", icon: "🩺" },
+                    { value: "allied-health", label: "Allied Health Practitioner", icon: "__PEOPLE__" },
                     { value: "coordinator", label: "Support Coordinator / LAC", icon: "🗺" },
                     { value: "other", label: "Other", icon: "✦" },
                   ] as const).map(opt => {
@@ -2661,7 +2661,21 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         }}
                         aria-pressed={active}
                       >
-                        <span>{opt.icon}</span> {opt.label}
+                        {opt.icon === "__PEOPLE__" ? (
+                          <svg width="18" height="14" viewBox="0 0 22 16" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
+                            {/* centre person */}
+                            <circle cx="11" cy="4" r="2.8" />
+                            <path d="M6.5 16c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5" />
+                            {/* left person */}
+                            <circle cx="4" cy="5" r="2.2" opacity="0.75" />
+                            <path d="M0 16c0-2 1.6-3.6 4-3.6" opacity="0.75" />
+                            {/* right person */}
+                            <circle cx="18" cy="5" r="2.2" opacity="0.75" />
+                            <path d="M22 16c0-2-1.6-3.6-4-3.6" opacity="0.75" />
+                          </svg>
+                        ) : (
+                          <span>{opt.icon}</span>
+                        )} {opt.label}
                       </button>
                     );
                   })}
