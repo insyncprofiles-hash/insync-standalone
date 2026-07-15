@@ -883,20 +883,17 @@ export default function ClientView() {
             <div style={{ padding: "8px 10px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-around", gap: "6px", flexWrap: "wrap" }}>
                 {selectedServices.slice(0, 4).map((svc, i) => {
-                  const CIRCLE_COLORS = ["#fce4ec","#e3f2fd","#e8f5e9","#fff3e0"];
-                  const TEXT_COLORS  = ["#880e4f","#0d47a1","#1b5e20","#e65100"];
                   const isUp = i % 2 === 0;
                   return (
-                    <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "7px", flex: "1 1 60px", minWidth: "60px", maxWidth: "80px", marginTop: isUp ? "0px" : "24px" }}>
-                      <div style={{
-                        width: "60px", height: "60px", borderRadius: "50%",
-                        background: CIRCLE_COLORS[i % CIRCLE_COLORS.length],
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: "1.625em",
-                      }}>{svc.icon}</div>
+                    <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1 1 60px", minWidth: "60px", maxWidth: "80px", marginTop: isUp ? "0px" : "24px" }}>
+                      {svc.iconImg ? (
+                        <img src={svc.iconImg} alt={svc.label} style={{ width: "60px", height: "60px", borderRadius: "12px", objectFit: "cover", display: "block" }} />
+                      ) : (
+                        <div style={{ width: "60px", height: "60px", borderRadius: "12px", background: "#1a5fa8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.625em" }}>{svc.icon}</div>
+                      )}
                       <p style={{
-                        fontFamily: "'Outfit', sans-serif", fontSize: "0.75em", fontWeight: 700,
-                        color: TEXT_COLORS[i % TEXT_COLORS.length], textAlign: "center",
+                        fontFamily: "'Outfit', sans-serif", fontSize: "0.7em", fontWeight: 700,
+                        color: "#1a5fa8", textAlign: "center",
                         margin: 0, lineHeight: 1.25, maxWidth: "72px",
                       }}>{svc.label}</p>
                     </div>
@@ -1159,28 +1156,22 @@ export default function ClientView() {
           <div style={{ paddingTop: "16px" }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {selectedServices.map((svc, i) => {
-                  const PASTEL_PILLS = [
-                    { bg: "#dbeafe", border: "#93c5fd", text: "#1e3a5f" },
-                    { bg: "#dcfce7", border: "#86efac", text: "#14532d" },
-                    { bg: "#fef3c7", border: "#fcd34d", text: "#78350f" },
-                    { bg: "#f3e8ff", border: "#c4b5fd", text: "#4c1d95" },
-                    { bg: "#fee2e2", border: "#fca5a5", text: "#7f1d1d" },
-                    { bg: "#ccfbf1", border: "#5eead4", text: "#134e4a" },
-                    { bg: "#fce7f3", border: "#f9a8d4", text: "#831843" },
-                  ];
-                  const p = PASTEL_PILLS[i % PASTEL_PILLS.length];
-                  return (
-                    <div key={svc.id} style={{
-                      display: "flex", alignItems: "center", gap: "7px",
-                      padding: "8px 14px", borderRadius: "20px",
-                      background: p.bg, border: `1.5px solid ${p.border}`,
-                    }}>
-                      <span style={{ fontSize: "1.125em" }}>{svc.icon}</span>
-                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9375em", fontWeight: 600, color: p.text }}>{svc.label}</span>
-                    </div>
-                  );
-                })}
+                {selectedServices.map((svc) => (
+                  <div key={svc.id} style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
+                    width: "80px",
+                  }}>
+                    {svc.iconImg ? (
+                      <img src={svc.iconImg} alt={svc.label} style={{ width: "64px", height: "64px", borderRadius: "14px", objectFit: "cover", display: "block" }} />
+                    ) : (
+                      <div style={{ width: "64px", height: "64px", borderRadius: "14px", background: "#1a5fa8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75em" }}>{svc.icon}</div>
+                    )}
+                    <span style={{
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.7em", fontWeight: 700,
+                      color: P.text, textAlign: "center", lineHeight: 1.25,
+                    }}>{svc.label}</span>
+                  </div>
+                ))}
               </div>
             ) : (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.textMid, margin: 0 }}>No services listed.</p>

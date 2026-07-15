@@ -88,11 +88,13 @@ export function generateStandaloneHTML(
 
   // Build service circles HTML
   const serviceCirclesHTML = selectedServices.slice(0, 5).map((svc, i) => {
-    const colors = ["#4a90d9","#2ecc71","#e67e22","#9b59b6","#e74c3c"];
-    const c = colors[i % colors.length];
+    const isUp = i % 2 === 0;
+    const iconHtml = svc.iconImg
+      ? `<img src="${svc.iconImg}" alt="${esc(svc.label)}" class="svc-icon-img" />`
+      : `<div class="svc-icon" style="background:#1a5fa818;border:2px solid #1a5fa850;">${esc(svc.icon)}</div>`;
     return `
-      <div class="svc-circle" data-theme-circle="${i}">
-        <div class="svc-icon" style="background:${c}18;border:2px solid ${c}50;">${esc(svc.icon)}</div>
+      <div class="svc-circle" data-theme-circle="${i}" style="margin-top:${isUp ? '0' : '20'}px">
+        ${iconHtml}
         <span class="svc-label">${esc(svc.label)}</span>
       </div>`;
   }).join("");
@@ -312,7 +314,8 @@ body{font-size:calc(16px * var(--fs))}
 /* ── Service circles ── */
 .services-row{padding:8px 16px 16px;display:flex;justify-content:space-around;gap:4px}
 .svc-circle{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
-.svc-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
+.svc-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.svc-icon-img{width:52px;height:52px;border-radius:12px;object-fit:cover;display:block;}
 .svc-label{font-size:10px;font-weight:600;text-align:center;color:#3a4a6a;line-height:1.2;max-width:60px}
 
 /* ── Tagline ── */
@@ -508,7 +511,12 @@ body{font-size:calc(16px * var(--fs))}
       </button>
       <div class="thread-body" style="display:none">
         <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:16px">
-          ${selectedServices.map(s => `<span class="badge">${esc(s.icon)} ${esc(s.label)}</span>`).join("")}
+          ${selectedServices.map(s => {
+            const iconHtml = s.iconImg
+              ? `<img src="${s.iconImg}" alt="${esc(s.label)}" style="width:52px;height:52px;border-radius:12px;object-fit:cover;display:block;" />`
+              : `<div style="width:52px;height:52px;border-radius:12px;background:#1a5fa8;display:flex;align-items:center;justify-content:center;font-size:22px;">${esc(s.icon)}</div>`;
+            return `<div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:68px;">${iconHtml}<span style="font-size:10px;font-weight:700;color:#1a2340;text-align:center;line-height:1.2;">${esc(s.label)}</span></div>`;
+          }).join("")}
         </div>
       </div>
     </div>

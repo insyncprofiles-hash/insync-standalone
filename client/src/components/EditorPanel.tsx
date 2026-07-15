@@ -422,7 +422,11 @@ ${profile.ctaText} ★
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-xl" aria-hidden="true">{service.icon}</span>
+                    {service.iconImg ? (
+                      <img src={service.iconImg} alt={service.label} style={{ width: "36px", height: "36px", borderRadius: "8px", objectFit: "cover", flexShrink: 0 }} aria-hidden="true" />
+                    ) : (
+                      <span className="text-xl" aria-hidden="true">{service.icon}</span>
+                    )}
                     <span className="font-semibold text-sm" style={{ color: service.selected ? "oklch(0.85 0.12 78)" : "oklch(0.70 0.04 155)", fontFamily: "'Outfit', sans-serif" }}>
                       {service.label}
                     </span>
