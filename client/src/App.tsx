@@ -21,6 +21,7 @@ import Admin from "./pages/Admin";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Coordinators from "./pages/Coordinators";
+import AlliedHealth from "./pages/AlliedHealth";
 import Contact from "./pages/Contact";
 import Guides from "./pages/Guides";
 import Directory from "./pages/Directory";
@@ -55,6 +56,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug">{(params) => <BlogPost slug={params.slug} />}</Route>
       <Route path="/coordinators" component={Coordinators} />
+      <Route path="/allied-health" component={AlliedHealth} />
       <Route path="/contact" component={Contact} />
       <Route path="/guides" component={Guides} />
       <Route path="/directory" component={Directory} />
