@@ -1038,7 +1038,7 @@ export default function ClientView() {
               <svg width="22" height="22" viewBox="0 0 24 24" fill="white" opacity="0.95" aria-hidden="true">
                 <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
               </svg>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, letterSpacing: "0.10em", color: "white", textTransform: "uppercase" }}>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "19px", fontWeight: 800, letterSpacing: "0.08em", color: "white", textTransform: "uppercase" }}>
                 {profile.ctaText}
               </span>
             </button>
@@ -1066,7 +1066,7 @@ export default function ClientView() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, letterSpacing: "0.10em", color: "white", textTransform: "uppercase" }}>
+                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "19px", fontWeight: 800, letterSpacing: "0.08em", color: "white", textTransform: "uppercase" }}>
                   Feedback
                 </span>
               </a>
@@ -1411,8 +1411,8 @@ export default function ClientView() {
                 background: 'transparent',
                 border: isDark ? '1.5px solid rgba(255,255,255,0.25)' : '1.5px solid rgba(0,0,0,0.18)',
                 textDecoration: 'none', cursor: 'pointer',
-                fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700,
-                color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.55)',
+                fontFamily: "'Outfit', sans-serif", fontSize: '17px', fontWeight: 700,
+                color: isDark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.7)',
                 letterSpacing: '0.06em', textTransform: 'uppercase',
                 transition: 'opacity 0.16s',
               }}
