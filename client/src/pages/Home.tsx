@@ -922,7 +922,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                 border: '1px solid rgba(200,140,220,0.18)',
                 borderRadius: '8px',
               }}>
-                ⚠️ <strong>Self-reported credentials are not verified by InSync Profiles.</strong> The onus is on the Support Worker to provide evidence of any claims upon request.
+                ⚠️ <strong>Self-reported credentials are not verified by InSync Profiles.</strong> The onus is on the profile holder to provide evidence of any claims upon request.
               </p>
             </div>
           )}
@@ -1018,7 +1018,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                 border: '1px solid rgba(74,144,217,0.18)',
                 borderRadius: '8px',
               }}>
-                ⚠️ <strong>Self-reported experience is not verified by InSync Profiles.</strong> The onus is on the Support Worker to provide evidence of any claims upon request.
+                ⚠️ <strong>Self-reported experience is not verified by InSync Profiles.</strong> The onus is on the profile holder to provide evidence of any claims upon request.
               </p>
             )}
           </div>
@@ -1374,7 +1374,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
             fontStyle: 'italic',
             maxWidth: '480px',
           }}>
-            This profile is owned and managed by {profile.name || "this support worker"}. It represents their own voice and is not created or controlled by any provider or organisation.
+            This profile is owned and managed by {profile.name || "this profile holder"}. It represents their own voice and is not created or controlled by any provider or organisation.
           </p>
           {isDemo && (
             <a href='/pricing' style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 28px', borderRadius: '99px', background: 'linear-gradient(135deg, #4a90d9 0%, #f0c040 100%)', color: 'white', fontFamily: "'Outfit', sans-serif", fontSize: '14px', fontWeight: 800, textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase', boxShadow: '0 6px 24px rgba(74,144,217,0.35)' }}>Purchase a Licence →</a>
@@ -3172,7 +3172,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                             <FieldRow label="CTA Button Text" htmlFor="h-cta">
                 <input id="h-cta" style={THREAD_INPUT} value={profile.ctaText} onChange={e => updateProfile({ ctaText: e.target.value })} placeholder="MESSAGE TO BEGIN" />
               </FieldRow>
-              <FieldRow label="Professional Credentials" tooltip="These credentials are entered by the support worker and have not been independently verified. Always confirm qualifications directly with the individual.">
+              <FieldRow label="Professional Credentials" tooltip="These credentials are self-reported by the profile holder and have not been independently verified. Always confirm qualifications directly with the individual.">
                 {profile.badges.map((badge, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
                     <input
@@ -3631,9 +3631,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <button
                     onClick={() => {
                       if (!hostedUrl) return;
-                      const subject = encodeURIComponent(`Meet ${profile.name || "Your Support Worker"} — InSync Profiles Profile`);
+                      const subject = encodeURIComponent(`Meet ${profile.name || "Your Support Role"} — InSync Profiles Profile`);
                       const body = encodeURIComponent(
-                        `Hi there,\n\nI'd like to introduce you to ${profile.name || "your support worker"}${profile.title ? `, ${profile.title}` : ""}${profile.location ? ` based in ${profile.location}` : ""}.\n\nYou can view their full profile, including services, availability, and how to get in touch, by clicking the link below:\n\n${shortUrl || hostedUrl}\n\nThe profile includes accessibility tools and a "Message to Begin" button so you can reach out directly.\n\nWarm regards,\n${profile.name || "Your Support Worker"}`
+                        `Hi there,\n\nI'd like to introduce you to ${profile.name || "your support contact"}${profile.title ? `, ${profile.title}` : ""}${profile.location ? ` based in ${profile.location}` : ""}.\n\nYou can view their full profile, including services, availability, and how to get in touch, by clicking the link below:\n\n${shortUrl || hostedUrl}\n\nThe profile includes accessibility tools and a "Message to Begin" button so you can reach out directly.\n\nWarm regards,\n${profile.name || "Your Support Contact"}`
                       );
                       window.location.href = `mailto:?subject=${subject}&body=${body}`;
                     }}
@@ -3651,7 +3651,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                   <button
                     onClick={() => {
                       if (!hostedUrl) return;
-                      const msg = encodeURIComponent(`Hi! I'd like to share my support worker profile with you. You can view my services, availability, and how to get in touch here: ${shortUrl || hostedUrl}`);
+                      const msg = encodeURIComponent(`Hi! I'd like to share my InSync Profile with you. You can view my services, availability, and how to get in touch here: ${shortUrl || hostedUrl}`);
                       window.open(`https://wa.me/?text=${msg}`, "_blank");
                     }}
                     disabled={!hostedUrl}
@@ -3681,8 +3681,8 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                       <button
                         onClick={() => {
                           navigator.share({
-                            title: `${profile.name || "Support Worker"} — InSync Profiles Profile`,
-                            text: profile.tagline || `Check out ${profile.name || "this support worker"}'s profile`,
+                            title: `${profile.name || "InSync Profile"} — InSync Profiles`,
+                            text: profile.tagline || `Check out ${profile.name || "this"} InSync Profile`,
                             url: shortUrl || hostedUrl,
                           }).catch(() => {});
                         }}
@@ -3699,7 +3699,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                     )}
                     {/* WhatsApp */}
                     <button
-                      onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Hi! Check out ${profile.name || "my"} support worker profile: ${shortUrl || hostedUrl}`)}`, "_blank")}
+                      onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(`Hi! Check out ${profile.name || "my"} InSync Profile: ${shortUrl || hostedUrl}`)}`, "_blank")}
                       style={{
                         flex: 1, minWidth: "120px", padding: "13px", borderRadius: "12px", border: "none",
                         background: "linear-gradient(135deg, #25d366, #128c7e)",

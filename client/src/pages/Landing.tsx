@@ -1,7 +1,7 @@
 /* ============================================================
    Landing.tsx — InSync Profiles Marketing Landing Page
    Design: Deep navy-to-teal gradient bg · Gold accent highlights
-           Bold, modern, confident — built for support workers
+           Bold, modern, confident — built for every support role
    Fonts: Cormorant Garamond (display) + Outfit (body)
    ============================================================ */
 import { Link } from "wouter";
@@ -26,7 +26,7 @@ function InfographicSection() {
   }, [lightboxOpen]);
 
   const IMG_SRC = "/assets/infographic_branded_v2_0438716f.png";
-  const IMG_ALT = "InSync Profiles infographic — Real choice starts when everyone is included. Shows families, children, and individuals with disability viewing a support worker's accessible digital profile. For clients: see the real person. For families: be informed, be involved. For children: easy to understand, fun to explore. For everyone: accessible design, clear information, inclusive for all abilities. One profile, every perspective, better matches, better outcomes.";
+  const IMG_ALT = "InSync Profiles infographic — Real choice starts when everyone is included. Shows families, children, and individuals with disability viewing an accessible digital profile for every support role. For clients: see the real person. For families: be informed, be involved. For children: easy to understand, fun to explore. For everyone: accessible design, clear information, inclusive for all abilities. One profile, every perspective, better matches, better outcomes.";
 
   return (
     <>
@@ -683,7 +683,7 @@ export default function Landing() {
               <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: C.bgGlass, border: `1px solid ${C.border}`, borderRadius: "99px", padding: "6px 16px", marginBottom: "28px" }}>
                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.teal, display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
                 <span style={{ color: C.textBody, fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em" }}>
-                  Aged Care · Disability Support · NDIS · Independent Support Workers
+                  Aged Care · Disability Support · NDIS · Allied Health · Support Coordination
                 </span>
               </div>
 
@@ -702,7 +702,7 @@ export default function Landing() {
               </p>
 
               <p style={{ color: C.textBody, fontSize: "clamp(14px, 2vw, 17px)", lineHeight: 1.8, marginBottom: "36px", maxWidth: "480px" }}>
-                InSync Profiles is an interactive, accessibility-first profile template for support workers and their potential clients. Share your services, availability, credentials, and communication style — all in one shareable link.
+                InSync Profiles is an interactive, accessibility-first profile for support workers, allied health practitioners, support coordinators, and every other support role — share your services, availability, credentials, and communication style in one shareable link.
               </p>
 
               {/* Social proof */}
@@ -839,14 +839,14 @@ export default function Landing() {
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "16px" }}>
                 <img
                   src={demoIndex === 0 ? "/assets/pete_james_headshot_c42b5c10.png" : "/assets/sophie_langford_headshot.jpg"}
-                  alt={demoIndex === 0 ? "Pete James — support worker profile photo, Central Coast NSW" : "Sophie Langford — support worker profile photo, Melbourne VIC"}
+                  alt={demoIndex === 0 ? "Pete James — InSync Profile photo, Central Coast NSW" : "Sophie Langford — InSync Profile photo, Melbourne VIC"}
                   draggable={false}
                   onContextMenu={e => e.preventDefault()}
                   style={{ width: "68px", height: "68px", borderRadius: "50%", objectFit: "cover", border: demoIndex === 0 ? "2.5px solid #7c9fd4" : "2.5px solid #e879a0", flexShrink: 0, pointerEvents: "none", transition: "border-color 300ms" }}
                 />
                 <div>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "21px", fontWeight: 700, color: "#1a2040", lineHeight: 1.1 }}>{demoIndex === 0 ? "Pete James" : "Sophie Langford"}</div>
-                  <div style={{ fontSize: "11px", fontWeight: 700, color: demoIndex === 0 ? "#4a6fa8" : "#c026d3", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "3px" }}>Support Worker</div>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: demoIndex === 0 ? "#4a6fa8" : "#c026d3", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "3px" }}>{demoIndex === 0 ? "Support Worker" : "Support Worker"}</div>
                   <div style={{ fontSize: "11px", color: "#7a7aaa", marginTop: "2px" }}>📍 {demoIndex === 0 ? "Central Coast, NSW" : "Melbourne, VIC"}</div>
                 </div>
               </div>
@@ -1065,7 +1065,7 @@ export default function Landing() {
               id="features-heading"
               style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 700, marginBottom: "14px" }}
             >
-              Everything a Support Worker Needs
+              Everything Every Support Role Needs
             </h2>
             <p style={{ color: C.textBody, fontSize: "16px", maxWidth: "520px", margin: "0 auto", lineHeight: 1.7 }}>
               One template. All the tools to present yourself professionally and connect with clients.
@@ -1125,7 +1125,7 @@ export default function Landing() {
               Most profiles assume the reader is neurotypical. InSync Profiles doesn't.
             </h2>
             <p style={{ color: C.textBody, fontSize: "16px", lineHeight: 1.85, marginBottom: "20px", maxWidth: "720px" }}>
-              Most support worker profiles assume the person reading them is neurotypical and literate. InSync Profiles is the only one that assumes the reader might have complex communication needs — and designs for that from the start. That directly reflects the values of the sector: person-centred, inclusive, communication-first.
+              Most profiles in this sector assume the person reading them is neurotypical and literate. InSync Profiles is the only one that assumes the reader might have complex communication needs — and designs for that from the start. That directly reflects the values of the sector: person-centred, inclusive, communication-first.
             </p>
             <p style={{ color: C.textBody, fontSize: "16px", lineHeight: 1.85, margin: 0, maxWidth: "720px" }}>
               It also makes the profile useful in face-to-face introductions. A worker can pull up their profile on a tablet and hand it to a client who uses AAC — and the client can respond right there on the same screen, without switching to a separate app. No context switch. No barrier. Just connection.
@@ -1180,6 +1180,7 @@ export default function Landing() {
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "20px", fontWeight: 700, color: C.textHead, lineHeight: 1.1 }}>Pete James</div>
                   <div style={{ fontSize: "11px", fontWeight: 700, color: C.teal, letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "3px" }}>Support Worker</div>
                   <div style={{ fontSize: "11px", color: C.textDim, marginTop: "2px" }}>📍 Central Coast, NSW</div>
+                  {/* demo card — role label kept as-is for sample context */}
                 </div>
               </div>
 
@@ -1400,7 +1401,7 @@ export default function Landing() {
               id="cta-heading"
               style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(30px, 4.5vw, 48px)", fontWeight: 700, marginBottom: "20px", lineHeight: 1.1 }}
             >
-              Ready to get your support workers<br />
+              Ready to get your team<br />
               <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 to stand out?
               </span>
