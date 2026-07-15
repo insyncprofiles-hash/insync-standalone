@@ -1288,7 +1288,7 @@ export default function ClientView() {
         {availDays.length > 0 && (
           <>
             <ThreadConnector />
-            <ThreadSection num={hasExperience ? 4 : 3} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection num={hasExperience ? 5 : 4} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   {availDays.map(d => {
@@ -1317,7 +1317,7 @@ export default function ClientView() {
         {(profile.phone || profile.email || profile.whatsapp || profile.website) && (
           <>
             <ThreadConnector />
-            <ThreadSection num={hasExperience ? 5 : 4} icon="✉️" title={profile.contactLabel || 'Contact'} subtitle="How to reach me." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection num={hasExperience ? 6 : 5} icon="✉️" title={profile.contactLabel || 'Contact'} subtitle="How to reach me." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 {profile.phone && (
                   <a href={`tel:${profile.phone}`} style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
