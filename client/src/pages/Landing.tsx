@@ -698,8 +698,40 @@ export default function Landing() {
               </h1>
 
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(18px, 2.5vw, 24px)", fontStyle: "italic", fontWeight: 600, color: C.gold, letterSpacing: "0.01em", marginBottom: "20px", lineHeight: 1.3 }}>
-                Beyond the “Sea of Sameness”
+                Beyond the "Sea of Sameness"
               </p>
+
+              {/* ── Inclusion sticker strip ── */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center", marginBottom: "24px" }}>
+                {[
+                  { emoji: "♿", label: "Accessibility-first" },
+                  { emoji: "🤝", label: "Participant-led" },
+                  { emoji: "💬", label: "Human connection" },
+                  { emoji: "✨", label: "Inclusive by design" },
+                ].map(({ emoji, label }) => (
+                  <div
+                    key={label}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(255,255,255,0.14)",
+                      borderRadius: "99px",
+                      padding: "6px 14px",
+                      fontSize: "12px",
+                      fontWeight: 700,
+                      color: "rgba(255,255,255,0.85)",
+                      fontFamily: "'Outfit', sans-serif",
+                      letterSpacing: "0.03em",
+                      backdropFilter: "blur(6px)",
+                    }}
+                  >
+                    <span aria-hidden="true" style={{ fontSize: "14px" }}>{emoji}</span>
+                    {label}
+                  </div>
+                ))}
+              </div>
 
               <p style={{ color: C.textBody, fontSize: "clamp(14px, 2vw, 17px)", lineHeight: 1.8, marginBottom: "36px", maxWidth: "480px" }}>
                 InSync Profiles is an interactive, accessibility-first profile for support workers, allied health practitioners, support coordinators, and every other support role — share your services, availability, credentials, and communication style in one shareable link.
