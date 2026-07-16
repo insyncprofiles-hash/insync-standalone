@@ -44,12 +44,21 @@ const SECTIONS = [
     subtitle: "Everything updates live as you type — no save button needed",
     steps: [
       {
+        number: "02b",
+        icon: "🎭",
+        title: "Choose Your Role Type",
+        advantage: "The editor adapts to your role — services catalogue, section labels, and language all change to match what you actually do.",
+        detail: `The very first thing to do in the editor is select your role under "I am a...":\n\n🤲 Support Worker — NDIS and aged care support workers. You get the full NDIS services catalogue (20 categories), disability experience areas, and support-focused language throughout.\n\n🩺 Allied Health Practitioner — Occupational therapists, physiotherapists, speech pathologists, psychologists, and other allied health professionals. You get a clinical services catalogue, AHPRA registration credential badge, and professional referral-focused language.\n\n🗺 Support Coordinator / LAC — Support coordinators and Local Area Coordinators. You get a coordination services catalogue, NDIS registration credential options, and language focused on plan management and participant connection.\n\nChanging your role updates the services catalogue, section descriptions, and sharing language automatically. You can switch roles at any time — your other profile details are preserved.`,
+        tip: "Pick your role before filling in anything else. It changes the services catalogue — if you select services first and then change role, your service list will reset.",
+        tags: ["Support Worker", "Allied Health", "Support Coordinator / LAC", "Role-specific catalogue"],
+      },
+      {
         number: "03",
         icon: "👤",
         title: "Fill In Your Profile Details",
         advantage: "Live preview — see exactly what clients will see as you type.",
-        detail: `Open the Edit Profile panel on the right side of the screen. In the Profile tab, fill in:\n\n• Full Name — appears on the post card and in the URL\n• Title — e.g. "Support Worker", "NDIS Support Worker", "Disability Support Specialist"\n• Tagline — your one-line statement (e.g. "I get it. I see you. I'm here.") — maximum 55 characters. It appears on your social card and at the top of your profile. Keep it short, human, and memorable. The 55-character limit is intentional — it forces you to say something real rather than something long. Count yours before you type: "I get it. I see you. I'm here." is 33 characters. "Calm, consistent support — always in your corner." is 49 characters.\n• Bio — up to 280 characters. Write in your own voice.\n• Location — suburb and state (e.g. Brisbane, Queensland)\n• Email — your professional contact email\n• Website — your personal or professional website (optional)\n• Phone — optional, only add if you want clients to call directly\n• Availability — toggle the days you work and set your hours\n• Languages — add any languages you speak beyond English\n\nEvery field updates the post card preview instantly.`,
-        tip: "Write your bio as if you're talking directly to a client or their family. Avoid jargon. Be specific about what you actually do.",
+        detail: `Open the Edit Profile panel on the right side of the screen. In the Profile tab, fill in:\n\n• Full Name — appears on the post card and in the URL\n• Title — e.g. "Support Worker", "Occupational Therapist", "Support Coordinator"\n• Tagline — your one-line statement (e.g. "I meet you where you are — and we go from there.") — maximum 55 characters. It appears on your social card and at the top of your profile. Keep it short, human, and memorable.\n• Bio — up to 280 characters. Write in your own voice.\n• Location — suburb and state (e.g. Brisbane, Queensland)\n• Email — your professional contact email\n• Website — your personal or professional website (optional)\n• Phone — optional, only add if you want clients to call directly\n• Availability — toggle the days you work and set your hours\n• Languages — add any languages you speak beyond English\n\nEvery field updates the post card preview instantly.`,
+        tip: "Write your bio as if you're talking directly to a participant or their family. Avoid jargon. Be specific about what you actually do and how you show up.",
         tags: ["Live preview", "No save needed", "Up to 280 char bio"],
       },
       {
@@ -65,28 +74,28 @@ const SECTIONS = [
         number: "05",
         icon: "✅",
         title: "Select Your Services",
-        advantage: "Show clients exactly what you offer — no guessing, no phone calls to find out.",
-        detail: `Go to the Services tab in the editor panel. You'll see your active services at the top — toggle any on or off. Each service has:\n\n• An icon (emoji)\n• A label (e.g. "Personal Care")\n• A short description you can edit\n\nScroll down to "Add a Service from Catalogue" to see all 20 NDIS service categories. Tap any to add it to your profile. You can also add a completely custom service using "Add a Custom Service".\n\nThe post card shows your top 5 active services as visual bubbles. Clients see at a glance what you do.`,
-        tip: "Be specific in your service descriptions. Instead of 'Personal Care', write 'Personal care including showering, dressing, and grooming — done with dignity and at your pace.'",
-        tags: ["20 NDIS categories", "Custom services", "Editable descriptions"],
+        advantage: "Show participants exactly what you offer — no guessing, no phone calls to find out.",
+        detail: `Go to the Services tab in the editor panel. The services catalogue shown depends on your role:\n\n🤲 Support Workers — 20 NDIS support categories including Personal Care, Community Access, Behaviour Support, Domestic Assistance, and more.\n\n🩺 Allied Health Practitioners — Clinical services including OT assessments, physiotherapy, speech pathology, psychology, early intervention, telehealth, and home visits.\n\n🗺 Support Coordinators / LACs — Coordination services including NDIS plan implementation, provider sourcing, plan reviews, crisis support, and capacity building.\n\nAll roles can also add completely custom services using "Add a Custom Service".\n\nYou'll see your active services at the top — toggle any on or off. Each service has an icon, a label, and a short description you can edit. The post card shows your top 5 active services as visual bubbles.`,
+        tip: "Be specific in your service descriptions. Instead of 'Personal Care', write 'Personal care including showering, dressing, and grooming — done with dignity and at your pace.' Allied health practitioners: include your assessment types and referral process.",
+        tags: ["Role-specific catalogue", "Custom services", "Editable descriptions"],
       },
       {
         number: "06",
         icon: "🏅",
         title: "Add Your Experience Areas",
-        advantage: "Clients and coordinators search for workers with specific experience. This is how they find you.",
-        detail: `Go to the Experience tab. You'll see experience grouped into categories:\n\n• Disability types (Autism, Cerebral Palsy, Down Syndrome, ABI, etc.)\n• Mental health (Anxiety, Depression, PTSD, Psychosocial disability, etc.)\n• Age groups (Children, Young adults, Older adults)\n• Communication (AAC users, Auslan, Non-verbal communication)\n• Behaviour support\n• Cultural backgrounds\n\nTick every area you have genuine experience with. These appear in your auto-generated caption as hashtags and keywords that support coordinators search for.`,
-        tip: "Only tick areas you have real experience with. Clients and coordinators will ask about these in interviews — be ready to back them up with examples.",
-        tags: ["Grouped by category", "Auto-adds to caption", "Searchable keywords"],
+        advantage: "Participants and coordinators search for workers with specific experience. This is how they find you.",
+        detail: `Go to the Experience tab. You'll see experience grouped into categories — the categories shown reflect your role:\n\n🤲 Support Workers & Coordinators:\n• Disability types (Autism, Cerebral Palsy, Down Syndrome, ABI, etc.)\n• Mental health (Anxiety, Depression, PTSD, Psychosocial disability, etc.)\n• Age groups (Children, Young adults, Older adults)\n• Communication (AAC users, Auslan, Non-verbal communication)\n• Behaviour support\n• Cultural backgrounds\n\n🩺 Allied Health Practitioners:\n• Clinical areas (Paediatrics, Neurological conditions, Mental health, Aged care)\n• Assessment types (Functional capacity, Home modification, Assistive technology)\n• Delivery modes (Telehealth, Home visits, School-based, Community)\n• Cultural and communication backgrounds\n\nTick every area you have genuine experience with. These appear in your auto-generated caption as hashtags and keywords that coordinators and referrers search for.`,
+        tip: "Only tick areas you have real experience with. Participants, families, and coordinators will ask about these — be ready to back them up with examples.",
+        tags: ["Role-specific categories", "Auto-adds to caption", "Searchable keywords"],
       },
       {
         number: "07",
         icon: "🏷️",
         title: "Add Your Professional Credentials (Self-Reported)",
-        advantage: "Credentials shown visually on the post card build instant credibility.",
-        detail: `In the Profile tab, scroll down to the Credentials section. Add badges for your certifications and checks:\n\n• NDIS Registered\n• First Aid Certified\n• Working With Children Check\n• Police Check\n• Manual Handling Certified\n• Medication Competency\n• Trauma-Informed Practice\n• Any other relevant qualification\n\nBadges appear as small tags at the bottom of your post card. Clients and coordinators look for these before making contact.`,
-        tip: "Add up to 6 badges. Keep them short — 3–4 words maximum. These are the first things a support coordinator checks.",
-        tags: ["Up to 6 badges", "Visible on post card", "Editable text"],
+        advantage: "Credentials shown visually on the post card build instant credibility — for every role.",
+        detail: `In the Profile tab, scroll down to the Credentials section. Add badges for your certifications and checks. Common credentials by role:\n\n🤲 Support Workers:\n• NDIS Registered\n• First Aid Certified\n• Working With Children Check\n• Police Check\n• Manual Handling Certified\n• Medication Competency\n• Trauma-Informed Practice\n\n🩺 Allied Health Practitioners:\n• AHPRA Registered\n• NDIS Registered Provider\n• Medicare Provider\n• First Aid Certified\n• Professional Indemnity Insurance\n• Telehealth Accredited\n\n🗺 Support Coordinators / LACs:\n• NDIS Registered\n• LAC Accredited\n• Police Check\n• Working With Children Check\n• Diploma of Community Services\n\nBadges appear as small tags at the bottom of your post card. Participants and coordinators look for these before making contact. You can also add any custom credential not listed above.`,
+        tip: "Add up to 6 badges. Keep them short — 3–4 words maximum. For allied health, AHPRA registration is the first thing referrers check.",
+        tags: ["Up to 6 badges", "Visible on post card", "Role-specific suggestions"],
       },
       {
         number: "08",
@@ -270,11 +279,11 @@ Most support workers set up their profile once on their main device (usually the
       {
         number: "22",
         icon: "💡",
-        title: "Why This Template Makes You Stand Out",
-        advantage: "In a sector where most workers have no digital presence, an accessible, professional profile is a significant competitive advantage.",
-        detail: `Most support workers in Australia have no dedicated online profile. InSync Profiles gives you:\n\n1. A professional first impression — before any conversation happens\n2. Accessibility built in — showing clients you've thought about their needs\n3. An AAC board — the first support worker profile to include one\n4. A shareable link — works in emails, messages, bio links, and social media\n5. An auto-written caption — no blank page when posting\n6. A 15-second video — clients see your face and hear your voice before meeting you\n7. Credentials displayed visually — not buried in a PDF\n8. Availability shown clearly — clients know when you're free before calling\n9. Multiple contact options — email, phone, website\nSupport coordinators and clients notice when a worker has invested in their professional presentation. It signals reliability, professionalism, and genuine commitment to the work.`,
-        tip: "When sharing your profile, add a line like: 'My profile includes accessibility tools for text size, contrast, dyslexia font, and an AAC board.' This one sentence will make you memorable to every coordinator who reads it.",
-        tags: ["Professional presence", "Accessibility signal", "Competitive advantage"],
+        title: "Why InSync Profiles Makes You Stand Out",
+        advantage: "In a sector where most practitioners have no dedicated online presence, an accessible, professional profile is a significant competitive advantage — whatever your role.",
+        detail: `Most support workers, allied health practitioners, and coordinators in Australia have no dedicated online profile. InSync Profiles gives every support role:\n\n1. A professional first impression — before any conversation happens\n2. Accessibility built in — showing participants you've thought about their needs before you've met them\n3. An AAC communication board — the first support profile to include one\n4. A shareable link — works in emails, messages, bio links, and social media\n5. An auto-written caption — no blank page when posting\n6. A 15-second video — participants see your face and hear your voice before meeting you\n7. Credentials displayed visually — not buried in a PDF\n8. Availability shown clearly — participants and referrers know when you're free\n9. Multiple contact options — email, phone, website\n\n🤲 For Support Workers: coordinators notice when a worker has invested in their professional presentation. It signals reliability and genuine commitment.\n\n🩺 For Allied Health: referrers and participants can see your specialties, credentials, and approach before making contact — reducing phone tag and mismatched referrals.\n\n🗺 For Coordinators: a profile that shows participants exactly how you work, what you coordinate, and how to reach you builds trust before the first plan meeting.`,
+        tip: "When sharing your profile, add a line like: 'My profile includes accessibility tools for text size, contrast, dyslexia font, and an AAC board.' This one sentence will make you memorable to every coordinator, referrer, and participant who reads it.",
+        tags: ["All support roles", "Accessibility signal", "Competitive advantage"],
       },
     ],
   },
@@ -322,7 +331,7 @@ export default function HowToUse() {
           How to Use InSync Profiles
         </h1>
         <p className="text-base max-w-2xl mx-auto mb-8" style={{ color: bodyText, fontFamily: "'Outfit', sans-serif", lineHeight: 1.6 }}>
-          Every feature explained. Every advantage shown. From first open to first client — a complete guide for support workers.
+          Every feature explained. Every advantage shown. From first open to first client — a complete guide for every support role.
         </p>
 
         {/* Quick stats */}
