@@ -709,7 +709,7 @@ export default function ClientView() {
 
   return (
     <>
-    <AccessibilityToolbar />
+    <AccessibilityToolbar workerEmail={profile.email || undefined} workerName={profile.name || undefined} />
     {/* High-contrast filter applied as a pointer-events-none overlay so it never traps position:fixed children */}
     {a11yStyle.filter && (
       <div style={{
