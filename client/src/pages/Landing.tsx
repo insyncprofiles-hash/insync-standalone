@@ -305,7 +305,7 @@ export default function Landing() {
           <Link href="/blog" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Blog</Link>
           <Link href="/guides" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Guides</Link>
           <Link href="/allied-health" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `linear-gradient(135deg, ${C.teal}22 0%, ${C.teal}11 100%)`, border: `1.5px solid ${C.teal}66`, color: C.teal, fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "8px 16px", borderRadius: "99px", letterSpacing: "0.01em" }}>🩺 Allied Health</Link>
-          <Link href="/coordinators" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: C.textBody, fontSize: "14px", fontWeight: 600, textDecoration: "none", padding: "8px 14px", borderRadius: "8px" }}>🔗 For Coordinators</Link>
+          <Link href="/coordinators" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `linear-gradient(135deg, ${C.gold}22 0%, ${C.gold}11 100%)`, border: `1.5px solid ${C.gold}66`, color: C.gold, fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "8px 16px", borderRadius: "99px", letterSpacing: "0.01em" }}>🔗 For Coordinators</Link>
           <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
         </nav>
 
