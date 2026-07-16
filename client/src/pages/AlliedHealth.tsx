@@ -221,6 +221,47 @@ export default function AlliedHealth() {
           </div>
         </section>
 
+        {/* ── SARAH TORENS DEMO PROFILE ── */}
+        <section style={{ padding: "0 24px 80px", maxWidth: "900px", margin: "0 auto" }}>
+          <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "64px" }}>
+            <p style={{ color: C.gold, fontSize: "11px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px", textAlign: "center" }}>Live Demo Profile</p>
+            <h2 style={{ color: C.textHead, fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 700, textAlign: "center", marginBottom: "8px" }}>Meet Sarah Torens, OT</h2>
+            <p style={{ color: C.textBody, fontSize: "16px", textAlign: "center", marginBottom: "40px", maxWidth: "560px", margin: "0 auto 40px" }}>See exactly how an allied health profile looks to participants and families — including video, services, availability, and resources.</p>
+            <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${C.border}`, borderRadius: "20px", padding: "32px", display: "flex", gap: "28px", alignItems: "flex-start", flexWrap: "wrap" }}>
+              {/* Photo + name */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", minWidth: "140px" }}>
+                <img
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663667622901/SgcmZj9RW7LdYQCSs9WS8N/sarah_profile_A-5KtEQXy8KQjwy4BSo2dDgq.png"
+                  alt="Sarah Torens, Occupational Therapist"
+                  style={{ width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover", border: `3px solid ${C.gold}` }}
+                />
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ color: C.textHead, fontWeight: 700, fontSize: "16px", margin: 0 }}>Sarah Torens</p>
+                  <p style={{ color: C.gold, fontSize: "13px", margin: "2px 0 0" }}>Occupational Therapist</p>
+                  <p style={{ color: C.textDim, fontSize: "12px", margin: "2px 0 0" }}>Queensland (Remote & Regional)</p>
+                </div>
+              </div>
+              {/* Details */}
+              <div style={{ flex: 1, minWidth: "200px" }}>
+                <p style={{ color: C.textBody, fontSize: "14px", lineHeight: 1.7, marginBottom: "16px" }}>Specialised in intellectual and developmental disability, flat feet, walking endurance, and remote service delivery. 7 years experience.</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "20px" }}>
+                  {["AHPRA Registered", "NDIS Worker Screening", "Blue Card", "Remote & Regional", "Telehealth Available"].map(b => (
+                    <span key={b} style={{ background: "rgba(245,200,66,0.12)", border: `1px solid ${C.goldDim}`, borderRadius: "99px", padding: "4px 12px", fontSize: "12px", color: C.gold, fontWeight: 600 }}>{b}</span>
+                  ))}
+                </div>
+                <a
+                  href="https://insyncprofiles.net/view?name=Sarah+Torens&title=Occupational+Therapist&tagline=I+meet+you+where+you+are+%E2%80%94+and+we+go+from+there.&roleType=allied-health&bio=Hi%2C+I%27m+Sarah+%E2%80%94+an+OT+based+in+Queensland+with+a+special+interest+in+working+with+children+and+young+people+with+intellectual+and+developmental+disabilities.%0A%0AI+believe+the+best+therapy+happens+when+the+person+in+front+of+me+is+actually+part+of+it.+That+means+starting+with+what+they+love%2C+what+lights+them+up%2C+and+what+matters+to+their+family+%E2%80%94+not+a+checklist.%0A%0AI+work+across+remote+and+regional+Queensland%2C+and+I%27m+experienced+in+supporting+participants+with+flat+feet%2C+low+muscle+tone%2C+and+building+walking+endurance+through+fun%2C+meaningful+activity.+I+use+sensory-based+approaches+and+love+finding+creative+ways+to+make+movement+feel+like+play.%0A%0AI%27m+registered+with+AHPRA+and+a+member+of+Occupational+Therapy+Australia.+I+hold+a+current+NDIS+Worker+Screening+Check%2C+Blue+Card%2C+and+full+professional+indemnity+insurance.&email=sarah.torens%40example.com.au&phone=0400+000+000&location=Queensland+%28Remote+%26+Regional%29&ctaText=MESSAGE+TO+BEGIN&video=https%3A%2F%2Fyoutube.com%2Fshorts%2F_e1uvuez1NI%3Fsi%3DjGkN2eZw0Zxkdj9z&photo=https%3A%2F%2Fd2xsxph8kpxj0f.cloudfront.net%2F310519663667622901%2FSgcmZj9RW7LdYQCSs9WS8N%2Fsarah_profile_A-5KtEQXy8KQjwy4BSo2dDgq.png&services=therapy-assist%2Ccommunity-access%2Cdaily-living%2Ctransport&exp=disability%3Aintellectual%2Cdisability%3Aautism%2Cdisability%3Aphysical%2Cage%3Achildren%2Cage%3Ayoung-adults%2Csetting%3Ahome%2Csetting%3Acommunity%2Csetting%3Atelehealth&availDays=Mon%2CTue%2CWed%2CThu%2CFri&availFrom=8%3A00+AM&availTo=5%3A00+PM&susCom=visual-supports%2Csimple-language%2Cwritten-summaries&susCon=sensory-aware%2Cstrengths-based%2Cfamily-centred&susPre=calm%2Cplayful%2Cconsistent&yrsExp=7&customExp=Specialised+in+remote+service+delivery%2C+flat+feet+%26+orthotics%2C+walking+endurance+programs%2C+sensory+processing%2C+and+AAC-friendly+communication+approaches.&badges=AHPRA+Registered%7CNDIS+Worker+Screening%7CBlue+Card%7CRemote+%26+Regional%7CTelehealth+Available&resources=NDIS%2520Occupational%2520Therapy%2520Explained%7Chttps%253A%252F%252Fwww.ndis.gov.au%252Fparticipants%252Freasonable-and-necessary-supports%252Ftherapies-and-supports%7COfficial%2520NDIS%2520guide%2520to%2520OT%2520supports%2520and%2520what%27s%2520funded%7EFlat%2520Feet%2520%2526%2520Orthotics%2520in%2520Children%7Chttps%253A%252F%252Fwww.rch.org.au%252Fkidsinfo%252Ffact_sheets%252FFlat_feet%252F%7CRoyal%2520Children%27s%2520Hospital%2520guide%2520for%2520families%7EBuilding%2520Walking%2520Endurance%2520%25E2%2580%2594%2520Tips%2520for%2520Families%7Chttps%253A%252F%252Fwww.cerebralpalsy.org.au%252Fresources%252F%7CPractical%2520strategies%2520to%2520support%2520walking%2520goals%2520at%2520home%7ESensory%2520Processing%2520%2526%2520Intellectual%2520Disability%7Chttps%253A%252F%252Fwww.otaus.com.au%252F%7COT%2520Australia%2520resources%2520for%2520practitioners%2520and%2520families"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: `linear-gradient(135deg, ${C.gold} 0%, #e8a800 100%)`, color: "#0d1b2a", padding: "12px 28px", borderRadius: "99px", fontSize: "15px", fontWeight: 800, textDecoration: "none", boxShadow: `0 4px 20px rgba(245,200,66,0.3)` }}
+                >
+                  View Sarah's Profile →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── CLOSING STATEMENT ── */}
         <section style={{ padding: "0 24px 100px", maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
           <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "64px" }}>
