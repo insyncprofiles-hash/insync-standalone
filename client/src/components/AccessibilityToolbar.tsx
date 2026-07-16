@@ -55,8 +55,11 @@ interface Props {
   workerEmail?: string;
   /** Worker name — kept for future use */
   workerName?: string;
+  /** Voice control callbacks — renders voice button below accessibility icon */
+  onVoiceToggle?: () => void;
+  voiceActive?: boolean;
 }
-export default function AccessibilityToolbar({ onSettingsChange }: Props) {
+export default function AccessibilityToolbar({ onSettingsChange, onVoiceToggle, voiceActive }: Props) {
   const [settings, setSettings] = useState<AccessibilitySettings>(loadSettings);
   const [open, setOpen] = useState(false);
   const [speaking, setSpeaking] = useState(false);
@@ -244,6 +247,50 @@ export default function AccessibilityToolbar({ onSettingsChange }: Props) {
         >
           <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "56px", height: "56px", objectFit: "contain", borderRadius: "50%" }} />
         </button>
+
+        {/* Voice Control button — below accessibility icon */}
+        {onVoiceToggle && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px" }}>
+            <button
+              onClick={onVoiceToggle}
+              aria-label={voiceActive ? "Turn off voice control" : "Turn on voice control"}
+              aria-pressed={voiceActive}
+              title={voiceActive ? "Voice Control ON — tap to turn off" : "Voice Control — tap to navigate by voice"}
+              style={{
+                width: "64px",
+                height: "64px",
+                borderRadius: "50%",
+                border: `3px solid ${voiceActive ? "#e05252" : "oklch(0.82 0.14 75)"}`,
+                background: voiceActive ? "#2a0a0a" : "oklch(0.13 0.06 155)",
+                color: voiceActive ? "#e05252" : "oklch(0.82 0.14 75)",
+                fontSize: "26px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: voiceActive
+                  ? "0 0 0 4px rgba(224,82,82,0.25), 0 4px 20px rgba(0,0,0,0.5)"
+                  : "0 4px 24px oklch(0.72 0.14 75 / 35%)",
+                animation: voiceActive ? "vc-pulse-a11y 1.5s ease-in-out infinite" : "none",
+                transition: "border-color 200ms, background 200ms, box-shadow 200ms",
+              }}
+            >
+              {voiceActive ? "⏹" : "🎙"}
+            </button>
+            <span style={{
+              fontSize: "9px",
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: 800,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              color: voiceActive ? "#e05252" : "oklch(0.82 0.14 75)",
+              textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+              whiteSpace: "nowrap",
+            }}>
+              {voiceActive ? "LISTENING" : "VOICE CONTROL"}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Accessibility panel */}

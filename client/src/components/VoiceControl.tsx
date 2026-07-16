@@ -12,6 +12,8 @@ export interface VoiceControlCallbacks {
   onStopReading: () => void;
   workerEmail?: string;
   workerName?: string;
+  /** Called when parent wants to toggle voice (button is now in AccessibilityToolbar) */
+  onToggleReady?: (toggle: () => void) => void;
 }
 
 // ── Command definitions ────────────────────────────────────────
@@ -68,8 +70,8 @@ export default function VoiceControl({
   onStopReading,
   workerEmail,
   workerName,
+  onToggleReady,
 }: VoiceControlCallbacks) {
-  // Don't hide on unsupported — show button always, warn on tap instead
   const [supported] = useState(() => true);
   const [active, setActive] = useState(false);
   const [toast, setToast] = useState<string>("");
@@ -188,6 +190,11 @@ export default function VoiceControl({
       showToast("🎙 Listening… say a command");
     }
   }, [active, supported, startListening, stopListening, showToast]);
+
+  // Expose toggle to parent (for button in AccessibilityToolbar)
+  useEffect(() => {
+    onToggleReady?.(toggle);
+  }, [toggle, onToggleReady]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -319,77 +326,34 @@ export default function VoiceControl({
         </div>
       )}
 
-      {/* ── Persistent Voice Control button (bottom-left) ── */}
-      <div style={{ position: "fixed", bottom: "24px", left: "20px", zIndex: 9000, display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
-        {/* Last heard — small label above button when active */}
-        {active && lastTranscript && (
-          <div style={{
-            background: "rgba(10,10,10,0.85)",
+      {/* Last heard — floating label near top when active */}
+      {active && lastTranscript && (
+        <div
+          role="status"
+          aria-live="polite"
+          style={{
+            position: "fixed",
+            top: "80px",
+            right: "90px",
+            background: "rgba(10,10,10,0.88)",
             border: "1px solid #c9a84c44",
             borderRadius: "12px",
-            padding: "3px 10px",
+            padding: "4px 12px",
             color: "#a89060",
             fontSize: "11px",
             fontFamily: "'Outfit', sans-serif",
-            maxWidth: "120px",
+            maxWidth: "160px",
             textAlign: "center",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-          }}>
-            "{lastTranscript}"
-          </div>
-        )}
-
-        <button
-          onClick={toggle}
-          aria-label={active ? "Turn off voice control" : "Turn on voice control — navigate profile by voice"}
-          aria-pressed={active}
-          title={active ? "Voice control ON — tap to turn off" : "Voice control — tap to navigate by voice"}
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            border: `3px solid ${active ? "#e05252" : "#F0C040"}`,
-            background: active ? "#2a0a0a" : "#1a3a6b",
-            color: active ? "#e05252" : "#F0C040",
-            fontSize: "26px",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: active
-              ? "0 0 0 4px rgba(224,82,82,0.25), 0 6px 20px rgba(0,0,0,0.6)"
-              : "0 6px 20px rgba(0,0,0,0.45), 0 0 0 3px rgba(240,192,64,0.25)",
-            animation: active ? "vc-pulse 1.5s ease-in-out infinite" : "none",
-            transition: "border-color 200ms, background 200ms, box-shadow 200ms",
+            zIndex: 9999,
+            pointerEvents: "none",
           }}
         >
-          {active ? "⏹" : "🎙"}
-        </button>
-
-        <span style={{
-          color: active ? "#e05252" : "#1a3a6b",
-          fontSize: "10px",
-          fontFamily: "'Outfit', sans-serif",
-          fontWeight: 800,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
-          background: active ? "transparent" : "#F0C040",
-          padding: "2px 8px",
-          borderRadius: "10px",
-        }}>
-          {active ? "LISTENING" : "VOICE"}
-        </span>
-      </div>
-
-      {/* Pulse animation */}
-      <style>{`
-        @keyframes vc-pulse {
-          0%, 100% { box-shadow: 0 0 0 4px rgba(224,82,82,0.2), 0 4px 16px rgba(0,0,0,0.5); }
-          50% { box-shadow: 0 0 0 10px rgba(224,82,82,0.08), 0 4px 16px rgba(0,0,0,0.5); }
-        }
-      `}</style>
+          "{lastTranscript}"
+        </div>
+      )}
     </>
   );
 }

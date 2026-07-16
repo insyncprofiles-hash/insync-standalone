@@ -708,6 +708,9 @@ export default function ClientView() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showAACBoard, setShowAACBoard] = useState(false);
   const videoPlayRef = useRef<(() => void) | null>(null);
+  // Voice control — toggle fn exposed from VoiceControl via onToggleReady
+  const [voiceActive, setVoiceActive] = useState(false);
+  const voiceToggleFnRef = useRef<(() => void) | null>(null);
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -784,7 +787,17 @@ export default function ClientView() {
 
   return (
     <>
-    <AccessibilityToolbar workerEmail={profile.email || undefined} workerName={profile.name || undefined} />
+    <AccessibilityToolbar
+      workerEmail={profile.email || undefined}
+      workerName={profile.name || undefined}
+      voiceActive={voiceActive}
+      onVoiceToggle={() => {
+        // Delegate to VoiceControl's internal toggle
+        voiceToggleFnRef.current?.();
+        // Optimistically flip the visual state (VoiceControl will confirm)
+        setVoiceActive(v => !v);
+      }}
+    />
     {/* High-contrast filter applied as a pointer-events-none overlay so it never traps position:fixed children */}
     {a11yStyle.filter && (
       <div style={{
@@ -1545,13 +1558,12 @@ export default function ClientView() {
 
       </main>
 
-      {/* ── VoiceControl — persistent bottom-left voice navigation ── */}
+      {/* ── VoiceControl — logic only, button is now inside AccessibilityToolbar ── */}
       <VoiceControl
         onScrollTo={(id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
         onPlayVideo={() => { videoPlayRef.current?.(); }}
         onOpenAAC={() => setShowAACBoard(true)}
         onOpenAccessibility={() => {
-          // Programmatically click the accessibility button to open the panel
           const btn = document.querySelector<HTMLButtonElement>('[aria-label="Accessibility options — text size, contrast, text to speech"]');
           btn?.click();
         }}
@@ -1566,6 +1578,7 @@ export default function ClientView() {
         onStopReading={() => { window.speechSynthesis?.cancel(); setTtsStatus('idle'); }}
         workerEmail={profile.email || undefined}
         workerName={profile.name || undefined}
+        onToggleReady={(fn) => { voiceToggleFnRef.current = fn; }}
       />
 
       {/* ── AAC Board — opened via VoiceControl or accessibility panel ── */}
