@@ -201,166 +201,15 @@ export default function AccessibilityToolbar({ onSettingsChange, onVoiceToggle, 
     whiteSpace: "nowrap" as const,
   });
 
+  // Listen for banner button to open panel
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    document.addEventListener("insync:open-a11y-panel", handler);
+    return () => document.removeEventListener("insync:open-a11y-panel", handler);
+  }, []);
+
   return (
     <>
-      {/* Floating trigger button */}
-      <div
-        data-no-print="true"
-        style={{
-          position: "fixed",
-          top: "116px",
-          right: "16px",
-          zIndex: 9999,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          gap: "8px",
-        }}
-      >
-        {/* TTS stop button — shown when speaking */}
-        {speaking && (
-          <button
-            onClick={stopSpeaking}
-            style={{
-              background: "oklch(0.65 0.20 25)",
-              border: "none",
-              borderRadius: "50px",
-              color: "white",
-              padding: "8px 16px",
-              fontSize: "13px",
-              fontFamily: "'Outfit', sans-serif",
-              fontWeight: 600,
-              cursor: "pointer",
-              boxShadow: "0 4px 20px oklch(0.65 0.20 25 / 40%)",
-              animation: "pulse-soft 1.5s ease-in-out infinite",
-            }}
-            aria-label="Stop reading aloud"
-          >
-            ⏹ Stop Reading
-          </button>
-        )}
-
-        {/* Main accessibility button */}
-        <button
-          ref={triggerRef}
-          onClick={() => setOpen(o => !o)}
-          aria-expanded={open}
-          aria-controls="a11y-panel"
-          aria-label="Accessibility options — text size, contrast, text to speech"
-          title="Accessibility Options"
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            background: open ? "oklch(0.82 0.14 75)" : "oklch(0.13 0.06 155)",
-            border: "2px solid oklch(0.82 0.14 75)",
-            boxShadow: "0 4px 24px oklch(0.72 0.14 75 / 35%)",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "all 200ms ease-out",
-            color: open ? "oklch(0.08 0.05 155)" : "oklch(0.82 0.14 75)",
-            fontSize: "24px",
-          }}
-        >
-          <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "56px", height: "56px", objectFit: "contain", borderRadius: "50%" }} />
-        </button>
-
-        {/* Voice Control button — below accessibility icon */}
-        {onVoiceToggle && (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "5px", position: "relative" }}>
-
-            {/* First-tap onboarding tooltip */}
-            {showVoiceTip && (
-              <div style={{
-                position: "absolute",
-                bottom: "calc(100% + 12px)",
-                right: 0,
-                width: "220px",
-                background: "rgba(13,27,42,0.97)",
-                border: "2px solid oklch(0.82 0.14 75)",
-                borderRadius: "14px",
-                padding: "14px 16px",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
-                zIndex: 10000,
-                fontFamily: "'Outfit', sans-serif",
-              }}>
-                <p style={{ color: "oklch(0.82 0.14 75)", fontSize: "12px", fontWeight: 800, margin: "0 0 10px", letterSpacing: "0.05em", textTransform: "uppercase" }}>Try saying...</p>
-                {[
-                  { cmd: "\"services\"" , desc: "jump to Services" },
-                  { cmd: "\"play video\"" , desc: "start the intro video" },
-                  { cmd: "\"read page\"" , desc: "read the profile aloud" },
-                  { cmd: "\"help\"" , desc: "see all commands" },
-                ].map(({ cmd, desc }) => (
-                  <div key={cmd} style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "7px" }}>
-                    <span style={{ color: "#ffffff", fontSize: "14px", fontWeight: 800, whiteSpace: "nowrap" }}>{cmd}</span>
-                    <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px" }}>{desc}</span>
-                  </div>
-                ))}
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "11px", margin: "10px 0 0", fontStyle: "italic" }}>Starting in a moment...</p>
-              </div>
-            )}
-
-            <button
-              onClick={handleVoiceToggle}
-              aria-label={voiceActive ? "Turn off voice control" : "Turn on voice control"}
-              aria-pressed={voiceActive}
-              style={{
-                width: "76px",
-                height: "76px",
-                borderRadius: "50%",
-                border: `3px solid ${voiceActive ? "#e05252" : "oklch(0.82 0.14 75)"}`,
-                background: voiceActive ? "#2a0a0a" : "oklch(0.13 0.06 155)",
-                color: voiceActive ? "#e05252" : "oklch(0.82 0.14 75)",
-                fontSize: "30px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: voiceActive
-                  ? "0 0 0 5px rgba(224,82,82,0.25), 0 4px 20px rgba(0,0,0,0.5)"
-                  : "0 4px 24px oklch(0.72 0.14 75 / 35%)",
-                animation: voiceActive ? "vc-pulse-a11y 1.5s ease-in-out infinite" : "none",
-                transition: "border-color 200ms, background 200ms, box-shadow 200ms",
-                flexShrink: 0,
-              }}
-            >
-              {voiceActive ? "⏹" : "🎤"}
-            </button>
-
-            {/* Label */}
-            <span style={{
-              fontSize: "11px",
-              fontFamily: "'Outfit', sans-serif",
-              fontWeight: 800,
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-              color: voiceActive ? "#e05252" : "oklch(0.82 0.14 75)",
-              textShadow: "0 1px 4px rgba(0,0,0,0.9)",
-              whiteSpace: "nowrap",
-            }}>
-              {voiceActive ? "LISTENING" : "VOICE CONTROL"}
-            </span>
-
-            {/* Persistent hint */}
-            {!voiceActive && (
-              <span style={{
-                fontSize: "10px",
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 600,
-                color: "rgba(255,255,255,0.55)",
-                textShadow: "0 1px 3px rgba(0,0,0,0.9)",
-                whiteSpace: "nowrap",
-                textAlign: "center",
-                lineHeight: 1.3,
-              }}>
-                Say “help” for commands
-              </span>
-            )}
-          </div>
-        )}
-      </div>
 
       {/* Accessibility panel */}
       {open && (
@@ -373,7 +222,7 @@ export default function AccessibilityToolbar({ onSettingsChange, onVoiceToggle, 
           aria-modal="false"
           style={{
             position: "fixed",
-            top: "168px",
+            top: "80px",
             right: "16px",
             zIndex: 9998,
             width: "min(360px, calc(100vw - 32px))",

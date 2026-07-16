@@ -711,6 +711,25 @@ export default function ClientView() {
   // Voice control — toggle fn exposed from VoiceControl via onToggleReady
   const [voiceActive, setVoiceActive] = useState(false);
   const voiceToggleFnRef = useRef<(() => void) | null>(null);
+  const [hasShownVoiceTip, setHasShownVoiceTip] = useState(false);
+  const [showVoiceTip, setShowVoiceTip] = useState(false);
+  const voiceTipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleVoiceToggle = useCallback(() => {
+    if (!hasShownVoiceTip && !voiceActive) {
+      setShowVoiceTip(true);
+      setHasShownVoiceTip(true);
+      voiceTipTimerRef.current = setTimeout(() => {
+        setShowVoiceTip(false);
+        voiceToggleFnRef.current?.();
+        setVoiceActive(true);
+      }, 4000);
+    } else {
+      setShowVoiceTip(false);
+      if (voiceTipTimerRef.current) clearTimeout(voiceTipTimerRef.current);
+      voiceToggleFnRef.current?.();
+      setVoiceActive(v => !v);
+    }
+  }, [hasShownVoiceTip, voiceActive]);
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -815,75 +834,7 @@ export default function ClientView() {
       fontSize: `calc(${fontScale}rem * ${a11yStyle.fontSize ? parseFloat(a11yStyle.fontSize as string) / 100 : 1})`,
     }}>
       <main id="main-content" aria-label={profile.roleType === "allied-health" ? "Allied health practitioner profile" : profile.roleType === "coordinator" ? "Support coordinator profile" : "Support worker profile"}>
-      {/* ── Read Aloud — vibrant solid contrast button at very top ─── */}
-      <div data-no-print="true" style={{ padding: "12px 16px 0", maxWidth: "680px", margin: "0 auto" }}>
-        <button
-          onClick={handleReadAloud}
-          style={{
-            width: "100%",
-            padding: "16px 24px",
-            borderRadius: "50px",
-            background: ttsStatus === "reading"
-              ? "#e53935"
-              : ttsStatus === "paused"
-              ? "#f57c00"
-              : "#6200ea",
-            border: "none",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "12px",
-            boxShadow: ttsStatus === "reading"
-              ? "0 4px 20px rgba(229,57,53,0.55)"
-              : ttsStatus === "paused"
-              ? "0 4px 20px rgba(245,124,0,0.55)"
-              : "0 4px 20px rgba(98,0,234,0.45)",
-            transform: "scale(1)",
-            transition: "transform 0.16s cubic-bezier(0.23,1,0.32,1)",
-          }}
-          onMouseDown={e => (e.currentTarget.style.transform = "scale(0.97)")}
-          onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
-          aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
-        >
-          <span style={{ fontSize: "1.375em", lineHeight: 1 }} aria-hidden="true">
-            {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
-          </span>
-          <span style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: "0.9375em",
-            fontWeight: 900,
-            letterSpacing: "0.10em",
-            color: "#ffffff",
-            textTransform: "uppercase",
-          }}>
-            {ttsStatus === "reading" ? "Pause Reading" : ttsStatus === "paused" ? "Resume Reading" : "Read Page Aloud"}
-          </span>
-        </button>
-        {ttsStatus !== "idle" && (
-          <button
-            onClick={stopReading}
-            style={{
-              marginTop: "8px",
-              width: "100%",
-              padding: "10px 24px",
-              borderRadius: "50px",
-              background: "#b71c1c",
-              border: "none",
-              cursor: "pointer",
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: "0.8125em",
-              fontWeight: 800,
-              color: "#ffffff",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-            }}
-            aria-label="Stop reading aloud"
-          >
-            ⏹ Stop Reading
-          </button>
-        )}
-      </div>
+      {/* Read Aloud + Accessibility + Voice Control are now in the black GET TO KNOW ME banner above */}
       {/* Shimmer overlay */}
       <div style={{
         position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0,
@@ -938,6 +889,144 @@ export default function ClientView() {
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
                 </p>
               </div>
+            </div>
+
+            {/* Right: Read Aloud + Accessibility + Voice Control buttons */}
+            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+
+              {/* Read Aloud */}
+              <button
+                onClick={handleReadAloud}
+                aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
+                style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                  background: ttsStatus === "reading" ? "#e53935" : ttsStatus === "paused" ? "#f57c00" : "#6200ea",
+                  border: "2px solid #F0C040",
+                  borderRadius: "12px",
+                  padding: "6px 10px",
+                  cursor: "pointer",
+                  minWidth: "52px",
+                }}
+              >
+                <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">
+                  {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
+                </span>
+                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                  {ttsStatus === "reading" ? "PAUSE" : ttsStatus === "paused" ? "RESUME" : "READ"}
+                </span>
+              </button>
+
+              {/* Stop reading — only when active */}
+              {ttsStatus !== "idle" && (
+                <button
+                  onClick={stopReading}
+                  aria-label="Stop reading aloud"
+                  style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                    background: "#b71c1c",
+                    border: "2px solid #F0C040",
+                    borderRadius: "12px",
+                    padding: "6px 10px",
+                    cursor: "pointer",
+                    minWidth: "52px",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">⏹</span>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase" }}>STOP</span>
+                </button>
+              )}
+
+              {/* Accessibility settings */}
+              <button
+                onClick={() => {
+                  // Trigger the AccessibilityToolbar panel open via a custom event
+                  document.dispatchEvent(new CustomEvent("insync:open-a11y-panel"));
+                }}
+                aria-label="Accessibility options"
+                style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                  background: "transparent",
+                  border: "2px solid #F0C040",
+                  borderRadius: "12px",
+                  padding: "4px 8px",
+                  cursor: "pointer",
+                  minWidth: "52px",
+                }}
+              >
+                <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#F0C040", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
+              </button>
+
+              {/* Voice Control */}
+              <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: "3px" }}>
+                {/* First-tap onboarding tooltip */}
+                {showVoiceTip && (
+                  <div style={{
+                    position: "absolute",
+                    top: "calc(100% + 10px)",
+                    right: 0,
+                    width: "220px",
+                    background: "rgba(13,27,42,0.97)",
+                    border: "2px solid #F0C040",
+                    borderRadius: "14px",
+                    padding: "14px 16px",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
+                    zIndex: 10000,
+                    fontFamily: "'Outfit', sans-serif",
+                  }}>
+                    <p style={{ color: "#F0C040", fontSize: "12px", fontWeight: 800, margin: "0 0 10px", letterSpacing: "0.05em", textTransform: "uppercase" }}>Try saying...</p>
+                    {[
+                      { cmd: '"services"', desc: "jump to Services" },
+                      { cmd: '"play video"', desc: "start the intro video" },
+                      { cmd: '"read page"', desc: "read the profile aloud" },
+                      { cmd: '"help"', desc: "see all commands" },
+                    ].map(({ cmd, desc }) => (
+                      <div key={cmd} style={{ display: "flex", alignItems: "baseline", gap: "8px", marginBottom: "7px" }}>
+                        <span style={{ color: "#ffffff", fontSize: "14px", fontWeight: 800, whiteSpace: "nowrap" }}>{cmd}</span>
+                        <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px" }}>{desc}</span>
+                      </div>
+                    ))}
+                    <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "11px", margin: "10px 0 0", fontStyle: "italic" }}>Starting in a moment...</p>
+                  </div>
+                )}
+                <button
+                  onClick={handleVoiceToggle}
+                  aria-label={voiceActive ? "Turn off voice control" : "Turn on voice control"}
+                  aria-pressed={voiceActive}
+                  style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                    background: voiceActive ? "#2a0a0a" : "transparent",
+                    border: `2px solid ${voiceActive ? "#e05252" : "#F0C040"}`,
+                    borderRadius: "12px",
+                    padding: "6px 10px",
+                    cursor: "pointer",
+                    minWidth: "52px",
+                    animation: voiceActive ? "vc-pulse-a11y 1.5s ease-in-out infinite" : "none",
+                  }}
+                >
+                  <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">{voiceActive ? "⏹" : "🎤"}</span>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: voiceActive ? "#e05252" : "#F0C040", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    {voiceActive ? "LISTENING" : "VOICE"}
+                  </span>
+                </button>
+                {/* Persistent hint for low vision */}
+                {!voiceActive && (
+                  <span style={{
+                    fontSize: "9px",
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 800,
+                    color: "#F0C040",
+                    background: "rgba(0,0,0,0.75)",
+                    border: "1px solid #F0C040",
+                    borderRadius: "6px",
+                    padding: "2px 6px",
+                    whiteSpace: "nowrap",
+                    textAlign: "center",
+                    lineHeight: 1.4,
+                  }}>Say “help”</span>
+                )}
+              </div>
+
             </div>
 
           </div>
