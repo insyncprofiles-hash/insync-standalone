@@ -995,8 +995,8 @@ export default function ClientView() {
                   aria-pressed={voiceActive}
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
-                    background: voiceActive ? "#2a0a0a" : "transparent",
-                    border: `2px solid ${voiceActive ? "#e05252" : "#F0C040"}`,
+                    background: voiceActive ? "#b71c1c" : "#1565C0",
+                    border: `2px solid ${voiceActive ? "#ef9a9a" : "#90CAF9"}`,
                     borderRadius: "12px",
                     padding: "6px 10px",
                     cursor: "pointer",
@@ -1005,21 +1005,21 @@ export default function ClientView() {
                   }}
                 >
                   <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">{voiceActive ? "⏹" : "🎤"}</span>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: voiceActive ? "#e05252" : "#F0C040", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
                     {voiceActive ? "LISTENING" : "VOICE"}
                   </span>
                 </button>
                 {/* Persistent hint for low vision */}
                 {!voiceActive && (
                   <span style={{
-                    fontSize: "9px",
+                    fontSize: "10px",
                     fontFamily: "'Outfit', sans-serif",
                     fontWeight: 800,
-                    color: "#F0C040",
-                    background: "rgba(0,0,0,0.75)",
-                    border: "1px solid #F0C040",
+                    color: "#ffffff",
+                    background: "#1565C0",
+                    border: "1.5px solid #90CAF9",
                     borderRadius: "6px",
-                    padding: "2px 6px",
+                    padding: "3px 7px",
                     whiteSpace: "nowrap",
                     textAlign: "center",
                     lineHeight: 1.4,
