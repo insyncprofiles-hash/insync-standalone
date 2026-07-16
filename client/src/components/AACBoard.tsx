@@ -333,14 +333,90 @@ export default function AACBoard({ profile = {}, onClose }: Props) {
             aria-label="Feelings tiles"
           >
             {[
-              { icon: "😊", label: "HAPPY", color: { bg: "#2d5a27", border: "#6abf5e", text: "#ffffff" } },
-              { icon: "😔", label: "SAD", color: { bg: "#1a3a6b", border: "#4a90d9", text: "#ffffff" } },
-              { icon: "😰", label: "ANXIOUS", color: { bg: "#1a3a6b", border: "#5aaad9", text: "#ffffff" } },
-              { icon: "😴", label: "TIRED", color: { bg: "#1a3a3a", border: "#4abfbf", text: "#ffffff" } },
-              { icon: "😤", label: "FRUSTRATED", color: { bg: "#6b2d1a", border: "#d97a4a", text: "#ffffff" } },
-              { icon: "😌", label: "CALM", color: { bg: "#1a5a5a", border: "#4abfbf", text: "#ffffff" } },
-              { icon: "🤕", label: "PAIN", color: { bg: "#6b1a1a", border: "#d94a4a", text: "#ffffff" } },
-              { icon: "🤔", label: "CONFUSED", color: { bg: "#5a4a00", border: "#d9b84a", text: "#ffffff" } },
+              { icon: "😊", label: "I feel happy", color: { bg: "#2d5a27", border: "#6abf5e", text: "#ffffff" } },
+              { icon: "😰", label: "I feel nervous", color: { bg: "#1a3a6b", border: "#5aaad9", text: "#ffffff" } },
+              { icon: "🤯", label: "I feel overwhelmed", color: { bg: "#6b1a1a", border: "#d94a4a", text: "#ffffff" } },
+              { icon: "😌", label: "I feel calm", color: { bg: "#1a5a5a", border: "#4abfbf", text: "#ffffff" } },
+              { icon: "😴", label: "I feel tired", color: { bg: "#1a3a3a", border: "#4abfbf", text: "#ffffff" } },
+              { icon: "🙂", label: "I feel excited", color: { bg: "#5a4a00", border: "#d9b84a", text: "#ffffff" } },
+              { icon: "😔", label: "I feel unsure", color: { bg: "#1a3a6b", border: "#4a90d9", text: "#ffffff" } },
+              { icon: "😤", label: "I feel frustrated", color: { bg: "#6b2d1a", border: "#d97a4a", text: "#ffffff" } },
+            ].map(tile => (
+              <AACTileButton
+                key={tile.label}
+                tile={tile}
+                spoken={spoken}
+                onTap={() => handleTile(tile.label)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* WHAT I NEED */}
+        <section aria-labelledby="needs-heading">
+          <h2
+            id="needs-heading"
+            style={{ color: "#c9a227", fontSize: "12px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}
+          >
+            What I Need
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(140px, 100%), 1fr))",
+              gap: "10px",
+              marginBottom: "28px",
+            }}
+            role="group"
+            aria-label="What I need tiles"
+          >
+            {[
+              { icon: "⏳", label: "I need more time", color: { bg: "#1a3a6b", border: "#4a90d9", text: "#ffffff" } },
+              { icon: "⏸️", label: "I need a break", color: { bg: "#6b2d1a", border: "#d97a4a", text: "#ffffff" } },
+              { icon: "🤫", label: "I need quiet", color: { bg: "#1a3a3a", border: "#4abfbf", text: "#ffffff" } },
+              { icon: "🙋", label: "I need help", color: { bg: "#2d5a27", border: "#6abf5e", text: "#ffffff" } },
+              { icon: "💭", label: "I need to think", color: { bg: "#5a4a00", border: "#d9b84a", text: "#ffffff" } },
+              { icon: "💪", label: "I want to try myself", color: { bg: "#1a5a5a", border: "#4abfbf", text: "#ffffff" } },
+              { icon: "🏠", label: "I want to stay home", color: { bg: "#1a3a6b", border: "#5aaad9", text: "#ffffff" } },
+              { icon: "🌳", label: "I want to go outside", color: { bg: "#2d5a27", border: "#6abf5e", text: "#ffffff" } },
+              { icon: "🎵", label: "I want music", color: { bg: "#5a4a00", border: "#d9b84a", text: "#ffffff" } },
+              { icon: "😴", label: "I want to rest", color: { bg: "#1a3a3a", border: "#4abfbf", text: "#ffffff" } },
+            ].map(tile => (
+              <AACTileButton
+                key={tile.label}
+                tile={tile}
+                spoken={spoken}
+                onTap={() => handleTile(tile.label)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* ABOUT THIS WORKER */}
+        <section aria-labelledby="worker-heading">
+          <h2
+            id="worker-heading"
+            style={{ color: "#c9a227", fontSize: "12px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}
+          >
+            About This Worker
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(160px, 100%), 1fr))",
+              gap: "10px",
+              marginBottom: "28px",
+            }}
+            role="group"
+            aria-label="About this worker tiles"
+          >
+            {[
+              { icon: "👍", label: "I like this worker", color: { bg: "#2d5a27", border: "#6abf5e", text: "#ffffff" } },
+              { icon: "🔄", label: "I want a different worker", color: { bg: "#6b1a1a", border: "#d94a4a", text: "#ffffff" } },
+              { icon: "❓", label: "I have a question", color: { bg: "#1a3a6b", border: "#4a90d9", text: "#ffffff" } },
+              { icon: "🔊", label: "Tell me more", color: { bg: "#5a4a00", border: "#d9b84a", text: "#ffffff" } },
+              { icon: "✅", label: "I understand", color: { bg: "#1a5a5a", border: "#4abfbf", text: "#ffffff" } },
+              { icon: "🤔", label: "I don't understand", color: { bg: "#6b2d1a", border: "#d97a4a", text: "#ffffff" } },
             ].map(tile => (
               <AACTileButton
                 key={tile.label}
