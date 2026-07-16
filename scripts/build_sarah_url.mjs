@@ -24,7 +24,7 @@ params.set("ctaText", "MESSAGE TO BEGIN");
 params.set("video", "https://youtube.com/shorts/_e1uvuez1NI?si=jGkN2eZw0Zxkdj9z");
 
 // Photo — using the generated courtyard image (uploaded to CDN)
-params.set("photo", "/manus-storage/sarah_torens_real_bbb59a2c.jpg");
+params.set("photo", "https://insyncprofiles.net/manus-storage/sarah_torens_real_bbb59a2c.jpg");
 
 // Services
 // OT-specific services (from ALLIED_HEALTH_SERVICES)
