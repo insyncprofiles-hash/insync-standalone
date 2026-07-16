@@ -198,29 +198,6 @@ export default function AlliedHealth() {
           </div>
         </section>
 
-        {/* ── WHAT A PROFILE CAN HOLD ── */}
-        <section style={{ padding: "0 24px 80px", maxWidth: "1060px", margin: "0 auto" }} aria-labelledby="profile-holds-heading">
-          <div style={{ textAlign: "center", marginBottom: "48px" }}>
-            <h2 id="profile-holds-heading" style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 700 }}>
-              What a living profile can hold
-            </h2>
-            <p style={{ color: C.textBody, fontSize: "18px", maxWidth: "520px", margin: "14px auto 0", lineHeight: 1.7 }}>
-              Not just reports. Not just handouts. Something that stays accessible when it's needed most.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "14px" }}>
-            {PROFILE_HOLDS.map((item) => (
-              <div key={item.label} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "22px 20px", display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                <span style={{ fontSize: "24px", flexShrink: 0, marginTop: "2px" }} aria-hidden="true">{item.icon}</span>
-                <div>
-                  <div style={{ color: C.textHead, fontSize: "17px", fontWeight: 700, marginBottom: "6px" }}>{item.label}</div>
-                  <div style={{ color: C.textBody, fontSize: "15px", lineHeight: 1.7 }}>{item.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* ── SARAH TORENS DEMO PROFILE ── */}
         <section style={{ padding: "0 24px 80px", maxWidth: "900px", margin: "0 auto" }}>
           <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "64px" }}>
@@ -239,6 +216,15 @@ export default function AlliedHealth() {
                   <p style={{ color: C.textHead, fontWeight: 700, fontSize: "16px", margin: 0 }}>Sarah Torens</p>
                   <p style={{ color: C.gold, fontSize: "13px", margin: "2px 0 0" }}>Occupational Therapist</p>
                   <p style={{ color: C.textDim, fontSize: "12px", margin: "2px 0 0" }}>Queensland (Remote & Regional)</p>
+                  <a
+                    href="https://bit.ly/456kq1e"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: "inline-block", marginTop: "10px", fontSize: "11px", color: C.gold, fontFamily: "'Outfit', monospace", letterSpacing: "0.04em", textDecoration: "none", background: "rgba(245,200,66,0.08)", border: `1px solid ${C.goldDim}`, borderRadius: "6px", padding: "4px 10px" }}
+                  >
+                    🔗 bit.ly/456kq1e
+                  </a>
+                  <p style={{ color: C.textDim, fontSize: "10px", margin: "4px 0 0", fontStyle: "italic" }}>One link. Opens her full profile.</p>
                 </div>
               </div>
               {/* Details */}
@@ -259,6 +245,29 @@ export default function AlliedHealth() {
                 </a>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── WHAT A PROFILE CAN HOLD ── */}
+        <section style={{ padding: "0 24px 80px", maxWidth: "1060px", margin: "0 auto" }} aria-labelledby="profile-holds-heading">
+          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+            <h2 id="profile-holds-heading" style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 700 }}>
+              What a living profile can hold
+            </h2>
+            <p style={{ color: C.textBody, fontSize: "18px", maxWidth: "520px", margin: "14px auto 0", lineHeight: 1.7 }}>
+              Not just reports. Not just handouts. Something that stays accessible when it's needed most.
+            </p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: "14px" }}>
+            {PROFILE_HOLDS.map((item) => (
+              <div key={item.label} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "22px 20px", display: "flex", gap: "16px", alignItems: "flex-start" }}>
+                <span style={{ fontSize: "24px", flexShrink: 0, marginTop: "2px" }} aria-hidden="true">{item.icon}</span>
+                <div>
+                  <div style={{ color: C.textHead, fontSize: "17px", fontWeight: 700, marginBottom: "6px" }}>{item.label}</div>
+                  <div style={{ color: C.textBody, fontSize: "15px", lineHeight: 1.7 }}>{item.desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
