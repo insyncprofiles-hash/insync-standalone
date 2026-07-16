@@ -12,7 +12,7 @@ params.set("tagline", "I meet you where you are — and we go from there.");
 params.set("roleType", "allied-health");
 
 // Bio
-params.set("bio", "Hi, I'm Sarah — an OT based in Queensland with a special interest in working with children and young people with intellectual and developmental disabilities.\n\nI believe the best therapy happens when the person in front of me is actually part of it. That means starting with what they love, what lights them up, and what matters to their family — not a checklist.\n\nI work across remote and regional Queensland, and I'm experienced in supporting participants with flat feet, low muscle tone, and building walking endurance through fun, meaningful activity. I use sensory-based approaches and love finding creative ways to make movement feel like play.\n\nI'm registered with AHPRA and a member of Occupational Therapy Australia. I hold a current NDIS Worker Screening Check, Blue Card, and full professional indemnity insurance.");
+params.set("bio", "Hi, I'm Sarah — an OT based in Queensland with a special interest in working with children and young people with intellectual and developmental disabilities.\n\nI believe the best therapy happens when the person in front of me is actually part of it. That means starting with what they love, what lights them up, and what matters to their family — not a checklist.\n\nAs an OT, I work on the things that matter in everyday life — building independence in daily living tasks, assessing functional capacity, recommending assistive technology, supporting sensory regulation, and helping participants and their families develop strategies they can use between sessions. I also work closely with schools, carers, and support teams to make sure the plan carries through everywhere it needs to.\n\nI work across remote and regional Queensland and I'm experienced in supporting participants with global developmental delay, low muscle tone, and building walking endurance through fun, meaningful activity.\n\nBefore I travel to your town, I'd love to hear from Ky and the family. If Ky wants to let me know anything — what he's excited about, what he's worried about, or just say hi — he can use the Speak to Message button or the AAC board on this page. No typing needed.\n\nI'm registered with AHPRA and a member of Occupational Therapy Australia. I hold a current NDIS Worker Screening Check, Blue Card, and full professional indemnity insurance.");
 
 // Contact
 params.set("email", "sarah.torens@example.com.au");
@@ -27,7 +27,8 @@ params.set("video", "https://youtube.com/shorts/_e1uvuez1NI?si=jGkN2eZw0Zxkdj9z"
 params.set("photo", "https://d2xsxph8kpxj0f.cloudfront.net/310519663667622901/SgcmZj9RW7LdYQCSs9WS8N/sarah_profile_A-5KtEQXy8KQjwy4BSo2dDgq.png");
 
 // Services
-params.set("services", "therapy-assist,community-access,daily-living,transport");
+// OT-specific services (from ALLIED_HEALTH_SERVICES)
+params.set('services', 'ot,sensory-processing,assistive-tech,capacity-building,home-visits,telehealth,carer-training,early-intervention');
 
 // Experience / specialties
 params.set("exp", [
@@ -55,7 +56,7 @@ params.set("susPre", "calm,playful,consistent");
 params.set("yrsExp", "7");
 
 // Custom experience note
-params.set("customExp", "Specialised in remote service delivery, flat feet & orthotics, walking endurance programs, sensory processing, and AAC-friendly communication approaches.");
+params.set("customExp", "Specialised in remote service delivery, functional capacity assessments, daily living skill building, sensory processing, assistive technology prescription, and supporting participants with GDD and intellectual disability to build walking endurance and independence.");
 
 // Badges
 params.set("badges", [
