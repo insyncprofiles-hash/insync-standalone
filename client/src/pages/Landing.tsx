@@ -693,7 +693,7 @@ export default function Landing() {
               >
                 Your Professional Profile<br />
                 <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
-                  Built for Support Work
+                  Built for Support
                 </span>
               </h1>
 
