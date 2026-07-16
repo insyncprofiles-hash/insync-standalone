@@ -165,6 +165,22 @@ export function generateStandaloneHTML(
       </div>
     </div>` : "";
 
+  // Build resources HTML
+  const resourcesHTML = (profile.resources && profile.resources.filter((r: { title: string; url: string }) => r.title && r.url).length > 0) ? `
+    <div class="thread-section" id="thread-resources">
+      <button class="thread-header" onclick="toggleThread('thread-resources')" aria-expanded="false">
+        <div class="thread-num-dot" style="background:#4a90d9">📎</div>
+        <div class="thread-header-text">
+          <span class="thread-title">Resources</span>
+          <span class="thread-subtitle">Guides and information for participants and families.</span>
+        </div>
+        <span class="thread-chevron">▼</span>
+      </button>
+      <div class="thread-body" style="display:none">
+        <div class="contact-links">${profile.resources.filter((r: { title: string; url: string }) => r.title && r.url).map((r: { title: string; url: string; description?: string }) => `<a href="${esc(r.url.startsWith('http') ? r.url : 'https://' + r.url)}" target="_blank" rel="noopener noreferrer" class="contact-link" style="flex-direction:column;align-items:flex-start;gap:2px"><span style="font-weight:700">📄 ${esc(r.title)}</span>${r.description ? `<span style="font-size:12px;color:#7a8aaa">${esc(r.description)}</span>` : ''}</a>`).join('')}</div>
+      </div>
+    </div>` : "";
+
   // Build AAC tiles HTML
   const aacServiceTilesHTML = aacServiceTiles.map(t => `
     <button class="aac-tile" style="background:${t.bg};border:2px solid ${t.border}" onclick="aacTap('${esc(t.label)}')" aria-label="${esc(t.label)}">
@@ -541,6 +557,7 @@ body{font-size:calc(16px * var(--fs))}
     ${expHTML ? `<div class="thread-connector"></div>${expHTML}` : ""}
     ${availHTML ? `<div class="thread-connector"></div>${availHTML}` : ""}
     ${contactHTML ? `<div class="thread-connector"></div>${contactHTML}` : ""}
+    ${resourcesHTML ? `<div class="thread-connector"></div>${resourcesHTML}` : ""}
 
     ${qrSection}
 

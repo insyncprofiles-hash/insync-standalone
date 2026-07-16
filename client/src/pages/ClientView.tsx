@@ -315,6 +315,14 @@ function loadProfileFromURL(): Partial<ProfileData> {
   // Cloudinary photo URL travels directly in the URL
   if (params.get("photo")) overrides.profileImage = params.get("photo")!;
   if (params.get("customExp")) overrides.customExperience = params.get("customExp")!;
+  if (params.get("resources")) {
+    try {
+      overrides.resources = params.get("resources")!.split("~").map((part, i) => {
+        const [t, u, d] = part.split("|");
+        return { id: `res-${i}`, title: decodeURIComponent(t || ""), url: decodeURIComponent(u || ""), description: d ? decodeURIComponent(d) : undefined };
+      }).filter((r: { title: string; url: string }) => r.title && r.url);
+    } catch {}
+  }
   const roleRaw = params.get("roleType");
   if (roleRaw && ["support-worker","allied-health","coordinator","other"].includes(roleRaw)) {
     overrides.roleType = roleRaw as ProfileData["roleType"];
@@ -1336,6 +1344,33 @@ export default function ClientView() {
                     </span>
                   </a>
                 )}
+              </div>
+            </ThreadSection>
+          </>
+        )}
+
+        {/* ── Resources ───────────────────────────────────────── */}
+        {(profile.resources && profile.resources.filter((r: { title: string; url: string }) => r.title && r.url).length > 0) && (
+          <>
+            <ThreadConnector />
+            <ThreadSection num={99} icon="📎" title="Resources" subtitle="Guides and information for participants and families." textColor={P.text} cardBg={P.bg}>
+              <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                {profile.resources.filter((r: { title: string; url: string }) => r.title && r.url).map((res: { id: string; title: string; url: string; description?: string }) => (
+                  <a
+                    key={res.id}
+                    href={res.url.startsWith('http') ? res.url : `https://${res.url}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 16px', background: P.badgeBg, borderRadius: '12px', border: `1.5px solid ${P.badgeBorder}`, textDecoration: 'none' }}
+                  >
+                    <span style={{ fontSize: '20px', flexShrink: 0, marginTop: '1px' }}>📄</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '14px', fontWeight: 700, color: P.text, margin: '0 0 2px' }}>{res.title}</p>
+                      {res.description && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: P.textDim, margin: 0, lineHeight: 1.4 }}>{res.description}</p>}
+                    </div>
+                    <span style={{ flexShrink: 0, fontSize: '12px', color: P.accent, fontWeight: 700, alignSelf: 'center' }}>View →</span>
+                  </a>
+                ))}
               </div>
             </ThreadSection>
           </>

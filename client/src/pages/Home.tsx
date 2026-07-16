@@ -56,6 +56,7 @@ export interface ProfileData {
   showUpStyle: { communicate: string[]; connect: string[]; presence: string[] };
   yearsExperience: string;
   customExperience: string;
+  resources: ResourceLink[];
 }
 
 export interface ServiceItem {
@@ -65,6 +66,13 @@ export interface ServiceItem {
   label: string;
   selected: boolean;
   description: string;
+}
+
+export interface ResourceLink {
+  id: string;
+  title: string;
+  url: string;
+  description?: string;
 }
 
 export interface ExperienceItem {
@@ -304,6 +312,7 @@ const DEFAULT_PROFILE: ProfileData = {
   showUpStyle: { communicate: [], connect: [], presence: [] },
   yearsExperience: "",
   customExperience: "",
+  resources: [],
 };
 
 // ── URL param helpers ─────────────────────────────────────────
@@ -359,6 +368,10 @@ function encodeProfileToURL(profile: ProfileData, videoUrl?: string | null): str
   if (profile.yearsExperience) params.set("yrsExp", profile.yearsExperience);
   if (profile.customExperience) params.set("customExp", profile.customExperience);
   if (profile.roleType && profile.roleType !== "support-worker") params.set("roleType", profile.roleType);
+  if (profile.resources && profile.resources.length > 0) {
+    const resParts = profile.resources.map(r => `${encodeURIComponent(r.title)}|${encodeURIComponent(r.url)}${r.description ? '|' + encodeURIComponent(r.description) : ''}`);
+    params.set("resources", resParts.join("~"));
+  }
   return `${window.location.origin}/view?${params.toString()}`;
 }
 function encodeProfileToURLWithSkin(profile: ProfileData, videoUrl?: string | null, skinId?: string): string {
@@ -414,6 +427,14 @@ function loadProfileFromURL(): Partial<ProfileData> | null {
   }
   if (params.get("yrsExp")) overrides.yearsExperience = params.get("yrsExp")!;
   if (params.get("customExp")) overrides.customExperience = params.get("customExp")!;
+  if (params.get("resources")) {
+    try {
+      overrides.resources = params.get("resources")!.split("~").map((part, i) => {
+        const [t, u, d] = part.split("|");
+        return { id: `res-${i}`, title: decodeURIComponent(t || ""), url: decodeURIComponent(u || ""), description: d ? decodeURIComponent(d) : undefined };
+      }).filter(r => r.title && r.url);
+    } catch {}
+  }
   const roleRaw = params.get("roleType");
   if (roleRaw && ["support-worker","allied-health","coordinator","other"].includes(roleRaw)) {
     overrides.roleType = roleRaw as ProfileData["roleType"];
@@ -1110,6 +1131,33 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
           )}
           </div>
         </DemoThreadSection>
+
+        {/* ── Thread: Resources (only shown if resources exist) ── */}
+        {(profile.resources && profile.resources.filter(r => r.title && r.url).length > 0) && (
+          <>
+            <DemoThreadConnector />
+            <DemoThreadSection num={++threadNum} icon="📎" title="Resources" subtitle="Guides and information for participants and families.">
+              <div style={{ paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {profile.resources.filter(r => r.title && r.url).map(res => (
+                  <a
+                    key={res.id}
+                    href={res.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 16px', background: 'rgba(74,144,217,0.06)', borderRadius: '12px', border: '1.5px solid rgba(74,144,217,0.18)', textDecoration: 'none' }}
+                  >
+                    <span style={{ fontSize: '20px', flexShrink: 0, marginTop: '1px' }}>📄</span>
+                    <div>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '14px', fontWeight: 700, color: '#1a2e4a', margin: '0 0 2px' }}>{res.title}</p>
+                      {res.description && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: '#6a7a9a', margin: 0, lineHeight: 1.4 }}>{res.description}</p>}
+                    </div>
+                    <span style={{ marginLeft: 'auto', flexShrink: 0, fontSize: '12px', color: '#4a90d9', fontWeight: 700, alignSelf: 'center' }}>View →</span>
+                  </a>
+                ))}
+              </div>
+            </DemoThreadSection>
+          </>
+        )}
 
         {/* Footer */}
         <div style={{ textAlign: 'center', marginTop: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
@@ -3165,7 +3213,58 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
               })()}
             </Section>
             <ThreadConnector height={32} />
-            {/* ══ 6. PRESENTATION ══ */}
+            {/* ══ 6. RESOURCES ══ */}
+            <Section icon="📎" title="Resources" id="section-resources">
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, marginBottom: "14px", lineHeight: 1.5 }}>Add links to therapy guides, participant information sheets, or other useful resources. These will appear on your profile.</p>
+              {(profile.resources || []).map((res, i) => (
+                <div key={res.id} style={{ marginBottom: "12px", padding: "12px 14px", borderRadius: "12px", border: `1px solid ${A.border}`, background: "rgba(100,160,255,0.04)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                    <input
+                      style={{ ...THREAD_INPUT, flex: 1, fontWeight: 600 }}
+                      value={res.title}
+                      onChange={e => { const updated = [...(profile.resources || [])]; updated[i] = { ...updated[i], title: e.target.value }; updateProfile({ resources: updated }); }}
+                      placeholder="Resource title (e.g. Sensory Diet Guide)"
+                      aria-label="Resource title"
+                    />
+                    <button
+                      onClick={() => { const updated = (profile.resources || []).filter((_, idx) => idx !== i); updateProfile({ resources: updated }); }}
+                      style={{ flexShrink: 0, width: "32px", height: "32px", borderRadius: "8px", border: "1px solid #fca5a5", background: "#fff5f5", color: "#ef4444", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}
+                      aria-label="Remove resource"
+                    >✕</button>
+                  </div>
+                  <input
+                    style={{ ...THREAD_INPUT, width: "100%", fontSize: "12px" }}
+                    value={res.url}
+                    onChange={e => { const updated = [...(profile.resources || [])]; updated[i] = { ...updated[i], url: e.target.value }; updateProfile({ resources: updated }); }}
+                    placeholder="https://"
+                    type="url"
+                    aria-label="Resource URL"
+                  />
+                  <input
+                    style={{ ...THREAD_INPUT, width: "100%", fontSize: "12px", marginTop: "6px" }}
+                    value={res.description || ""}
+                    onChange={e => { const updated = [...(profile.resources || [])]; updated[i] = { ...updated[i], description: e.target.value }; updateProfile({ resources: updated }); }}
+                    placeholder="Short description (optional)"
+                    aria-label="Resource description"
+                    maxLength={120}
+                  />
+                </div>
+              ))}
+              {(profile.resources || []).length < 10 && (
+                <button
+                  onClick={() => {
+                    const newRes = { id: `res-${Date.now()}`, title: "", url: "", description: "" };
+                    updateProfile({ resources: [...(profile.resources || []), newRes] });
+                  }}
+                  style={{ width: "100%", padding: "10px 16px", borderRadius: "12px", border: `1px dashed ${A.gold}88`, background: `${A.gold}11`, color: A.gold, fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
+                  aria-label="Add resource link"
+                >
+                  + Add Resource Link
+                </button>
+              )}
+            </Section>
+            <ThreadConnector height={32} />
+            {/* ══ 7. PRESENTATION ══ */}
             <Section icon="🎨" title="Presentation" id="section-presentation">
                             <FieldRow label="CTA Button Text" htmlFor="h-cta">
                 <input id="h-cta" style={THREAD_INPUT} value={profile.ctaText} onChange={e => updateProfile({ ctaText: e.target.value })} placeholder="MESSAGE TO BEGIN" />
