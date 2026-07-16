@@ -1161,7 +1161,7 @@ export default function ClientView() {
                   }
                   return (
                     <iframe
-                      src={playing ? toEmbedUrlFull(videoUrl) + "?autoplay=1" : toEmbedUrlFull(videoUrl)}
+                      src={playing ? toEmbedUrlFull(videoUrl) + "?autoplay=1&loop=0&rel=0" : toEmbedUrlFull(videoUrl) + "?loop=0&rel=0"}
                       title={`${profile.name} intro video`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
