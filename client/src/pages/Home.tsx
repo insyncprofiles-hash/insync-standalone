@@ -3217,7 +3217,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
             <Section icon="📎" title="Resources" id="section-resources">
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", color: A.textDim, marginBottom: "6px", lineHeight: 1.5 }}>Add links that appear on your profile. Paste any public URL — webpages, Google Docs, PDFs, or shared Drive files.</p>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, marginBottom: "14px", lineHeight: 1.6, opacity: 0.75 }}>
-                <strong style={{ fontWeight: 700 }}>Ideas:</strong> therapy guides · sensory diet plans · NDIS fact sheets · participant info sheets · activity calendars · communication resources · referral forms · your website or Linktree
+                <strong style={{ fontWeight: 700 }}>Ideas:</strong> therapy guides · sensory diet plans · NDIS fact sheets · participant info sheets · activity calendars · communication resources · referral forms · YouTube videos · your website or Linktree
               </p>
               {(profile.resources || []).map((res, i) => (
                 <div key={res.id} style={{ marginBottom: "12px", padding: "12px 14px", borderRadius: "12px", border: `1px solid ${A.border}`, background: "rgba(100,160,255,0.04)" }}>
