@@ -583,7 +583,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
-        background: 'linear-gradient(160deg, #C8E6FA 0%, #e8f4ff 45%, #F7E08A 100%)',
+        background: 'linear-gradient(160deg, #0a1a3a 0%, #0d2a5e 35%, #1a4a8a 65%, #b8860b 100%)',
         display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
         overflowY: 'auto',
         padding: '120px 16px 60px',
