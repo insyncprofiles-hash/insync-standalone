@@ -199,38 +199,43 @@ export default function AlliedHealth() {
         </section>
 
         {/* ── SARAH TORENS DEMO PROFILE ── */}
-        <section style={{ padding: "0 24px 80px", maxWidth: "900px", margin: "0 auto" }}>
+        <section style={{ padding: "0 16px 80px", maxWidth: "600px", margin: "0 auto" }}>
           <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: "64px" }}>
             <p style={{ color: C.gold, fontSize: "11px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "16px", textAlign: "center" }}>Live Demo Profile</p>
             <h2 style={{ color: C.textHead, fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 700, textAlign: "center", marginBottom: "8px" }}>Meet Sarah Torens, OT</h2>
-            <p style={{ color: C.textBody, fontSize: "16px", textAlign: "center", marginBottom: "40px", maxWidth: "560px", margin: "0 auto 40px" }}>See exactly how an allied health profile looks to participants and families — including video, services, availability, and resources.</p>
-            <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${C.border}`, borderRadius: "20px", padding: "clamp(20px, 5vw, 32px)", display: "flex", gap: "28px", alignItems: "flex-start", flexWrap: "wrap", justifyContent: "center" }}>
-              {/* Photo + name */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", minWidth: "140px" }}>
-                <img
-                  src="https://insyncprofiles.net/manus-storage/sarah_torens_real_bbb59a2c.jpg"
-                  alt="Sarah Torens, Occupational Therapist"
-                  style={{ width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover", border: `3px solid ${C.gold}` }}
-                />
-                <div style={{ textAlign: "center" }}>
-                  <p style={{ color: C.textHead, fontWeight: 700, fontSize: "16px", margin: 0 }}>Sarah Torens</p>
-                  <p style={{ color: C.gold, fontSize: "13px", margin: "2px 0 0" }}>Occupational Therapist</p>
-                  <p style={{ color: C.textDim, fontSize: "12px", margin: "2px 0 0" }}>Queensland (Remote & Regional)</p>
-                  <a
-                    href="https://bit.ly/456kq1e"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ display: "inline-block", marginTop: "10px", fontSize: "11px", color: C.gold, fontFamily: "'Outfit', monospace", letterSpacing: "0.04em", textDecoration: "none", background: "rgba(245,200,66,0.08)", border: `1px solid ${C.goldDim}`, borderRadius: "6px", padding: "4px 10px" }}
-                  >
-                    🔗 bit.ly/456kq1e
-                  </a>
-                  <p style={{ color: C.textDim, fontSize: "10px", margin: "4px 0 0", fontStyle: "italic" }}>One link. Opens her full profile.</p>
-                </div>
+            <p style={{ color: C.textBody, fontSize: "15px", textAlign: "center", maxWidth: "480px", margin: "0 auto 32px" }}>See exactly how an allied health profile looks to participants and families — including video, services, availability, and resources.</p>
+            <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${C.border}`, borderRadius: "20px", padding: "32px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px" }}>
+              {/* Photo centred at top */}
+              <div
+                style={{
+                  width: "130px", height: "130px", borderRadius: "50%",
+                  border: `3px solid ${C.gold}`,
+                  backgroundImage: "url('https://insyncprofiles.net/manus-storage/sarah_torens_real_bbb59a2c.jpg')",
+                  backgroundSize: "cover", backgroundPosition: "center top",
+                  flexShrink: 0
+                }}
+                role="img"
+                aria-label="Sarah Torens, Occupational Therapist"
+              />
+              {/* Name + Bitly centred */}
+              <div style={{ textAlign: "center" }}>
+                <p style={{ color: C.textHead, fontWeight: 700, fontSize: "18px", margin: 0 }}>Sarah Torens</p>
+                <p style={{ color: C.gold, fontSize: "14px", margin: "4px 0 2px" }}>Occupational Therapist</p>
+                <p style={{ color: C.textDim, fontSize: "12px", margin: 0 }}>Queensland (Remote & Regional)</p>
+                <a
+                  href="https://bit.ly/456kq1e"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "inline-block", marginTop: "12px", fontSize: "12px", color: C.gold, fontFamily: "'Outfit', monospace", letterSpacing: "0.04em", textDecoration: "none", background: "rgba(245,200,66,0.10)", border: `1px solid ${C.goldDim}`, borderRadius: "8px", padding: "6px 14px" }}
+                >
+                  🔗 bit.ly/456kq1e
+                </a>
+                <p style={{ color: C.textDim, fontSize: "10px", margin: "4px 0 0", fontStyle: "italic" }}>One link. Opens her full profile.</p>
               </div>
               {/* Details */}
-              <div style={{ flex: 1, minWidth: "min(200px, 100%)", width: "100%" }}>
-                <p style={{ color: C.textBody, fontSize: "14px", lineHeight: 1.7, marginBottom: "16px" }}>Specialised in intellectual and developmental disability, flat feet, walking endurance, and remote service delivery. 7 years experience.</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "20px" }}>
+              <div style={{ width: "100%" }}>
+                <p style={{ color: C.textBody, fontSize: "14px", lineHeight: 1.7, marginBottom: "16px", textAlign: "center" }}>Specialised in intellectual and developmental disability, flat feet, walking endurance, and remote service delivery. 7 years experience.</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "20px", justifyContent: "center" }}>
                   {["AHPRA Registered", "NDIS Worker Screening", "Blue Card", "Remote & Regional", "Telehealth Available"].map(b => (
                     <span key={b} style={{ background: "rgba(245,200,66,0.12)", border: `1px solid ${C.goldDim}`, borderRadius: "99px", padding: "4px 12px", fontSize: "12px", color: C.gold, fontWeight: 600 }}>{b}</span>
                   ))}
