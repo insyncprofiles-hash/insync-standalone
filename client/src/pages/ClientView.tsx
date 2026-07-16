@@ -709,8 +709,19 @@ export default function ClientView() {
   const [showAACBoard, setShowAACBoard] = useState(false);
   const videoPlayRef = useRef<(() => void) | null>(null);
   const [videoPlaying, setVideoPlaying] = React.useState(false);
-  // Wire videoPlayRef at component level so VoiceControl can trigger it reliably
-  React.useEffect(() => { videoPlayRef.current = () => setVideoPlaying(true); }, []);
+  const videoElementRef = useRef<HTMLVideoElement | null>(null);
+  // Wire videoPlayRef at component level — handles both YouTube and mp4
+  React.useEffect(() => {
+    videoPlayRef.current = () => {
+      // If there's a native video element (mp4), play it directly
+      if (videoElementRef.current) {
+        videoElementRef.current.play().catch(() => {});
+      } else {
+        // YouTube path — set playing state to swap thumbnail for iframe
+        setVideoPlaying(true);
+      }
+    };
+  }, []);
   // Voice control — toggle fn exposed from VoiceControl via onToggleReady
   const [voiceActive, setVoiceActive] = useState(false);
   const voiceToggleFnRef = useRef<(() => void) | null>(null);
@@ -1162,6 +1173,7 @@ export default function ClientView() {
                 })()
               ) : videoUrl ? (
                 <video
+                  ref={videoElementRef}
                   src={videoUrl}
                   controls
                   playsInline
