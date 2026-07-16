@@ -67,7 +67,8 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
 
   // ── Speak to Message state ──────────────────────────────────
   const [sttSupported] = useState(() => !!("webkitSpeechRecognition" in window || "SpeechRecognition" in window));
-  const [sttStatus, setSttStatus] = useState<"idle" | "listening" | "done">("idle");
+  const [sttStatus, setSttStatus] = useState<"idle" | "listening" | "done" | "error">("idle");
+  const [sttError, setSttError] = useState<string>("");
   const [spokenText, setSpokenText] = useState("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
@@ -160,8 +161,23 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
         .join(" ");
       setSpokenText(transcript);
     };
-    rec.onend = () => setSttStatus("done");
-    rec.onerror = () => setSttStatus("idle");
+    rec.onend = () => {
+      // If we got text, mark done. If nothing was captured, go to error so user can retry.
+      setSttStatus(prev => prev === "listening" ? (spokenText.trim() ? "done" : "error") : prev);
+      if (!spokenText.trim()) setSttError("Nothing was heard. Tap Try Again and speak after the mic turns red.");
+    };
+    rec.onerror = (e: SpeechRecognitionErrorEvent) => {
+      setSttStatus("error");
+      if (e.error === "not-allowed" || e.error === "permission-denied") {
+        setSttError("Microphone permission was denied. Tap the 🔒 icon in your browser address bar, allow microphone, then try again.");
+      } else if (e.error === "no-speech") {
+        setSttError("No speech was detected. Tap Try Again and speak clearly after the mic turns red.");
+      } else if (e.error === "network") {
+        setSttError("Network error. Please check your connection and try again.");
+      } else {
+        setSttError("Something went wrong. Tap Try Again.");
+      }
+    };
     rec.start();
   }, []);
 
@@ -180,6 +196,7 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
   const resetStt = useCallback(() => {
     recognitionRef.current?.stop();
     setSttStatus("idle");
+    setSttError("");
     setSpokenText("");
   }, []);
 
@@ -497,8 +514,35 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
                       </p>
                     )}
 
+                    {/* Error state */}
+                    {sttStatus === "error" && (
+                      <div style={{ background: "#1a0a0a", border: "1.5px solid #e05252", borderRadius: "10px", padding: "10px 12px" }}>
+                        <p style={{ color: "#e05252", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: "0 0 8px", lineHeight: 1.5 }}>
+                          ⚠️ {sttError}
+                        </p>
+                        <button
+                          onClick={resetStt}
+                          aria-label="Try speaking again"
+                          style={{
+                            width: "100%",
+                            padding: "10px 12px",
+                            borderRadius: "10px",
+                            border: "2px solid #c9a84c",
+                            background: "#1a1a1a",
+                            color: "#c9a84c",
+                            fontSize: "14px",
+                            fontFamily: "'Outfit', sans-serif",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                          }}
+                        >
+                          🎙 Try Again
+                        </button>
+                      </div>
+                    )}
+
                     {/* Mic button */}
-                    {sttStatus !== "done" && (
+                    {sttStatus !== "done" && sttStatus !== "error" && (
                       <button
                         onClick={sttStatus === "listening" ? stopListening : startListening}
                         aria-label={sttStatus === "listening" ? "Stop recording" : "Start speaking your message"}
@@ -508,12 +552,12 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
                           justifyContent: "center",
                           gap: "8px",
                           width: "100%",
-                          padding: "12px 16px",
+                          padding: "16px",
                           borderRadius: "12px",
                           border: `2px solid ${sttStatus === "listening" ? "#e05252" : "#c9a84c"}`,
                           background: sttStatus === "listening" ? "#2a0a0a" : "#1a1a1a",
                           color: sttStatus === "listening" ? "#e05252" : "#c9a84c",
-                          fontSize: "14px",
+                          fontSize: "16px",
                           fontFamily: "'Outfit', sans-serif",
                           fontWeight: 700,
                           cursor: "pointer",
@@ -521,7 +565,7 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
                           animation: sttStatus === "listening" ? "pulse-soft 1.2s ease-in-out infinite" : "none",
                         }}
                       >
-                        <span style={{ fontSize: "20px" }} aria-hidden="true">{sttStatus === "listening" ? "⏹" : "🎙"}</span>
+                        <span style={{ fontSize: "24px" }} aria-hidden="true">{sttStatus === "listening" ? "⏹" : "🎙"}</span>
                         {sttStatus === "listening" ? "Tap to Stop" : "Tap to Speak"}
                       </button>
                     )}
