@@ -14,6 +14,8 @@ import {
 } from "./Home";
 import { useA11y } from "@/hooks/useA11y";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
+import VoiceControl from "@/components/VoiceControl";
+import AACBoard from "@/components/AACBoard";
 
 // ── Defaults (same as Home.tsx) ───────────────────────────────
 const DEFAULT_VIDEO = "/assets/pete_james_intro_with_music_c9095da0.mp4"; // Pete James demo intro video (with music)
@@ -422,12 +424,13 @@ interface ThreadSectionProps {
   children: React.ReactNode;
   textColor: string;
   cardBg: string;
+  id?: string;
 }
-function ThreadSection({ num, icon, title, subtitle, children }: ThreadSectionProps) {
+function ThreadSection({ num, icon, title, subtitle, children, id }: ThreadSectionProps) {
   const color = THREAD_COLORS[(num - 1) % THREAD_COLORS.length];
   const [open, setOpen] = React.useState(true);
   return (
-    <div style={{
+    <div id={id} style={{
       background: "#ffffff",
       borderRadius: "16px",
       overflow: "hidden",
@@ -702,6 +705,8 @@ export default function ClientView() {
   // Read Aloud (TTS)
   const [ttsStatus, setTtsStatus] = useState<"idle" | "reading" | "paused">("idle");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showAACBoard, setShowAACBoard] = useState(false);
+  const videoPlayRef = useRef<(() => void) | null>(null);
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -949,6 +954,8 @@ export default function ClientView() {
                 (() => {
                   const ytId = isYouTubeUrl(videoUrl) ? getYouTubeId(videoUrl) : null;
                   const [playing, setPlaying] = React.useState(false);
+                  // Wire up external play trigger for VoiceControl
+                  React.useEffect(() => { videoPlayRef.current = () => setPlaying(true); }, []);
                   if (ytId && !playing) {
                     return (
                       <div
@@ -1158,7 +1165,7 @@ export default function ClientView() {
         <ThreadConnector />
 
         {/* ── Thread 1: Identity ───────────────────────────── */}
-        <ThreadSection num={1} icon="🫆" title="Identity" subtitle="Who I am, what matters to me, and how I work." textColor={P.text} cardBg={P.bg}>
+        <ThreadSection id="thread-identity" num={1} icon="🫆" title="Identity" subtitle="Who I am, what matters to me, and how I work." textColor={P.text} cardBg={P.bg}>
           <div style={{ paddingTop: "16px" }}>
             {profile.bio && (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.text, lineHeight: 1.6, margin: "0 0 12px" }}>
@@ -1188,7 +1195,7 @@ export default function ClientView() {
         <ThreadConnector />
 
         {/* ── Thread 2: Services ───────────────────────────── */}
-        <ThreadSection num={2} icon="🤝" title="Services" subtitle="The supports I provide and who I support." textColor={P.text} cardBg={P.bg}>
+        <ThreadSection id="thread-services" num={2} icon="🤝" title="Services" subtitle="The supports I provide and who I support." textColor={P.text} cardBg={P.bg}>
           <div style={{ paddingTop: "16px" }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -1253,7 +1260,7 @@ export default function ClientView() {
         {hasExperience && (
           <>
             <ThreadConnector />
-            <ThreadSection num={3} icon="📋" title="Experience" subtitle="My background, training, and specialist areas." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection id="thread-experience" num={3} icon="📋" title="Experience" subtitle="My background, training, and specialist areas." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexWrap: "wrap", gap: "6px" }}>
                 {checkedExperience.map(({ label }) => (
                   <span key={label} style={{
@@ -1281,7 +1288,7 @@ export default function ClientView() {
         {(profile.showUpStyle.communicate.length > 0 || profile.showUpStyle.connect.length > 0 || profile.showUpStyle.presence.length > 0) && (
           <>
             <ThreadConnector />
-            <ThreadSection num={hasExperience ? 4 : 3} icon="✨" title="How I Show Up" subtitle="My communication style, how I connect, and how I approach support." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection id="thread-approach" num={hasExperience ? 4 : 3} icon="✨" title="How I Show Up" subtitle="My communication style, how I connect, and how I approach support." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "16px" }}>
                 {([
                   { key: "communicate" as const, label: "How I Communicate" },
@@ -1315,7 +1322,7 @@ export default function ClientView() {
         {availDays.length > 0 && (
           <>
             <ThreadConnector />
-            <ThreadSection num={hasExperience ? 5 : 4} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection id="thread-availability" num={hasExperience ? 5 : 4} icon="📅" title="Availability" subtitle="When I'm available to support you." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   {availDays.map(d => {
@@ -1344,7 +1351,7 @@ export default function ClientView() {
         {(profile.phone || profile.email || profile.whatsapp || profile.website) && (
           <>
             <ThreadConnector />
-            <ThreadSection num={hasExperience ? 6 : 5} icon="✉️" title={profile.contactLabel || 'Contact'} subtitle="How to reach me." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection id="thread-contact" num={hasExperience ? 6 : 5} icon="✉️" title={profile.contactLabel || 'Contact'} subtitle="How to reach me." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 {profile.phone && (
                   <a href={`tel:${profile.phone}`} style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
@@ -1381,7 +1388,7 @@ export default function ClientView() {
         {(profile.resources && profile.resources.filter((r: { title: string; url: string }) => r.title && r.url).length > 0) && (
           <>
             <ThreadConnector />
-            <ThreadSection num={99} icon="📎" title="Resources" subtitle="Guides and information for participants and families." textColor={P.text} cardBg={P.bg}>
+            <ThreadSection id="thread-resources" num={99} icon="📎" title="Resources" subtitle="Guides and information for participants and families." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 {profile.resources.filter((r: { title: string; url: string }) => r.title && r.url).map((res: { id: string; title: string; url: string; description?: string }) => (
                   <a
@@ -1494,6 +1501,34 @@ export default function ClientView() {
       
 
       </main>
+
+      {/* ── VoiceControl — persistent bottom-left voice navigation ── */}
+      <VoiceControl
+        onScrollTo={(id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+        onPlayVideo={() => { videoPlayRef.current?.(); }}
+        onOpenAAC={() => setShowAACBoard(true)}
+        onOpenAccessibility={() => {
+          // Programmatically click the accessibility button to open the panel
+          const btn = document.querySelector<HTMLButtonElement>('[aria-label="Accessibility options — text size, contrast, text to speech"]');
+          btn?.click();
+        }}
+        onMessage={() => {
+          const email = profile.email || 'support@insyncprofiles.net';
+          window.location.href = `mailto:${email}?subject=${encodeURIComponent('Hi, I\'d like to get started')}`;
+        }}
+        onFeedback={() => {
+          if (profile.email) window.location.href = `mailto:${profile.email}`;
+        }}
+        onReadPage={handleReadAloud}
+        onStopReading={() => { window.speechSynthesis?.cancel(); setTtsStatus('idle'); }}
+        workerEmail={profile.email || undefined}
+        workerName={profile.name || undefined}
+      />
+
+      {/* ── AAC Board — opened via VoiceControl or accessibility panel ── */}
+      {showAACBoard && (
+        <AACBoard profile={profile} onClose={() => setShowAACBoard(false)} />
+      )}
 
       {/* ── Sticky Back to Top button ────────────────────────── */}
       {showBackToTop && (
