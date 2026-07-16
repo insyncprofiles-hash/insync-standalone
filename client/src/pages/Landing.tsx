@@ -702,9 +702,21 @@ export default function Landing() {
               </p>
 
               {/* ── Inclusion sticker strip ── */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center", marginBottom: "24px" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center", marginBottom: "24px" }}>
+                {/* Accessibility-first — gold icon image */}
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "8px",
+                  background: "linear-gradient(135deg, #2dd4bf 0%, #7c3aed 100%)",
+                  borderRadius: "99px", padding: "7px 16px 7px 8px",
+                  fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 800,
+                  color: "#ffffff", letterSpacing: "0.04em",
+                  boxShadow: "0 2px 16px rgba(124,58,237,0.35)",
+                }}>
+                  <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "28px", height: "28px", objectFit: "contain", borderRadius: "50%", flexShrink: 0 }} />
+                  Accessibility-first
+                </div>
+                {/* Remaining stickers */}
                 {[
-                  { emoji: "♿", label: "Accessibility-first" },
                   { emoji: "🤝", label: "Participant-led" },
                   { emoji: "💬", label: "Human connection" },
                   { emoji: "✨", label: "Inclusive by design" },
@@ -712,22 +724,15 @@ export default function Landing() {
                   <div
                     key={label}
                     style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      background: "rgba(255,255,255,0.06)",
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      borderRadius: "99px",
-                      padding: "6px 14px",
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: "rgba(255,255,255,0.85)",
-                      fontFamily: "'Outfit', sans-serif",
-                      letterSpacing: "0.03em",
-                      backdropFilter: "blur(6px)",
+                      display: "inline-flex", alignItems: "center", gap: "7px",
+                      background: "linear-gradient(135deg, #2dd4bf 0%, #7c3aed 100%)",
+                      borderRadius: "99px", padding: "7px 16px",
+                      fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 800,
+                      color: "#ffffff", letterSpacing: "0.04em",
+                      boxShadow: "0 2px 16px rgba(124,58,237,0.35)",
                     }}
                   >
-                    <span aria-hidden="true" style={{ fontSize: "14px" }}>{emoji}</span>
+                    <span aria-hidden="true" style={{ fontSize: "15px" }}>{emoji}</span>
                     {label}
                   </div>
                 ))}
