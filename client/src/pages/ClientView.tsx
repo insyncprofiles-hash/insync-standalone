@@ -894,21 +894,23 @@ export default function ClientView() {
             {/* Right: Read Aloud + Accessibility + Voice Control buttons */}
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
 
+              {/* Shared button style — all 3 buttons identical size */}
               {/* Read Aloud */}
               <button
                 onClick={handleReadAloud}
                 aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
                 style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                   background: ttsStatus === "reading" ? "#e53935" : ttsStatus === "paused" ? "#f57c00" : "#6200ea",
                   border: "2px solid #F0C040",
                   borderRadius: "12px",
-                  padding: "6px 10px",
+                  padding: "0",
                   cursor: "pointer",
-                  minWidth: "52px",
+                  width: "58px", height: "58px",
+                  flexShrink: 0,
                 }}
               >
-                <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">
+                <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">
                   {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
                 </span>
                 <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
@@ -922,16 +924,17 @@ export default function ClientView() {
                   onClick={stopReading}
                   aria-label="Stop reading aloud"
                   style={{
-                    display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                     background: "#b71c1c",
                     border: "2px solid #F0C040",
                     borderRadius: "12px",
-                    padding: "6px 10px",
+                    padding: "0",
                     cursor: "pointer",
-                    minWidth: "52px",
+                    width: "58px", height: "58px",
+                    flexShrink: 0,
                   }}
                 >
-                  <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">⏹</span>
+                  <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">⏹</span>
                   <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase" }}>STOP</span>
                 </button>
               )}
@@ -939,21 +942,21 @@ export default function ClientView() {
               {/* Accessibility settings */}
               <button
                 onClick={() => {
-                  // Trigger the AccessibilityToolbar panel open via a custom event
                   document.dispatchEvent(new CustomEvent("insync:open-a11y-panel"));
                 }}
                 aria-label="Accessibility options"
                 style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                   background: "transparent",
                   border: "2px solid #F0C040",
                   borderRadius: "12px",
-                  padding: "4px 8px",
+                  padding: "0",
                   cursor: "pointer",
-                  minWidth: "52px",
+                  width: "58px", height: "58px",
+                  flexShrink: 0,
                 }}
               >
-                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "32px", height: "32px", objectFit: "contain" }} />
+                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "34px", height: "34px", objectFit: "contain" }} />
                 <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#F0C040", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
               </button>
 
@@ -994,13 +997,14 @@ export default function ClientView() {
                   aria-label={voiceActive ? "Turn off voice control" : "Turn on voice control"}
                   aria-pressed={voiceActive}
                   style={{
-                    display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
+                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                     background: voiceActive ? "#b71c1c" : "#1565C0",
                     border: `2px solid ${voiceActive ? "#ef9a9a" : "#90CAF9"}`,
                     borderRadius: "12px",
-                    padding: "6px 10px",
+                    padding: "0",
                     cursor: "pointer",
-                    minWidth: "52px",
+                    width: "58px", height: "58px",
+                    flexShrink: 0,
                     animation: voiceActive ? "vc-pulse-a11y 1.5s ease-in-out infinite" : "none",
                   }}
                 >
