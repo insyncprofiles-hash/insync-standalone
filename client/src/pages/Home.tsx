@@ -2799,7 +2799,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                           background: "rgba(60,200,100,0.10)",
                           border: "1px solid rgba(60,200,100,0.28)",
                         }}>
-                          <span style={{ fontSize: "18px", flexShrink: 0 }}>{svc.icon}</span>
+                          {svc.iconImg
+                            ? <img src={svc.iconImg} alt={svc.label} style={{ width: '32px', height: '32px', borderRadius: '7px', objectFit: 'cover', flexShrink: 0 }} />
+                            : <span style={{ fontSize: "18px", flexShrink: 0 }}>{svc.icon}</span>}
                           <span style={{ flex: 1, fontFamily: "'Outfit', sans-serif", fontSize: "14px", fontWeight: 600, color: A.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{svc.label}</span>
                           <button onClick={() => setExpandedServiceId(isExpanded ? null : svc.id)}
                             style={{ background: isExpanded ? "rgba(60,200,100,0.25)" : "transparent", border: "1px solid rgba(60,200,100,0.35)", borderRadius: "6px", color: A.green, fontSize: "11px", padding: "3px 9px", cursor: "pointer", fontFamily: "'Outfit', sans-serif", fontWeight: 700, flexShrink: 0 }}
@@ -2848,7 +2850,9 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                           onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(100,160,255,0.18)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(100,160,255,0.45)"; }}
                           onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(100,160,255,0.08)"; (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(100,160,255,0.22)"; }}
                         >
-                          <span style={{ fontSize: "14px" }}>{svc.icon}</span>{svc.label}
+                          {svc.iconImg
+                            ? <img src={svc.iconImg} alt="" aria-hidden="true" style={{ width: '20px', height: '20px', borderRadius: '4px', objectFit: 'cover', flexShrink: 0 }} />
+                            : <span style={{ fontSize: "14px" }}>{svc.icon}</span>}{svc.label}
                         </button>
                       ))}
                     </div>
