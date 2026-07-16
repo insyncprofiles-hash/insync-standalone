@@ -124,6 +124,15 @@ const SECTIONS = [
         tags: ["Text size control", "High contrast", "Dyslexia font", "Screen reader", "Reduce motion"],
       },
       {
+        number: "09b",
+        icon: "🎤",
+        title: "Voice Control — Navigate the Profile Hands-Free",
+        advantage: "Participants can navigate the entire profile using only their voice — no tapping, no scrolling, no typing required.",
+        detail: `Tap the blue VOICE button in the black banner at the top of the profile to activate voice control. The button turns active and the mic begins listening immediately.\n\nSay "help" at any time to see the full command list on screen.\n\nAll voice commands:\n\nNavigation\n\u2022 "services" — jump to Services section\n\u2022 "experience" — jump to Experience section\n\u2022 "how I show up" — jump to Approach section\n\u2022 "availability" — jump to Availability section\n\u2022 "resources" — jump to Resources section\n\u2022 "contact" — jump to Contact section\n\u2022 "top" — go back to the top of the page\n\u2022 "scroll down" / "down" — scroll the page down\n\u2022 "scroll up" / "up" — scroll the page up\n\nMedia\n\u2022 "play video" — play the intro video\n\nAccessibility\n\u2022 "read page" — read the entire page aloud\n\u2022 "stop" — stop reading aloud\n\u2022 "AAC board" — open the AAC communication board\n\nContact\n\u2022 "message" — open Message to Begin email\n\u2022 "feedback" — open feedback email\n\nHelp\n\u2022 "help" — show the full command guide overlay\n\nVoice control works on Android Chrome and most modern browsers. The mic automatically pauses while a video is playing and resumes when the video stops.`,
+        tip: "Tell participants about voice control in your bio or caption: 'My profile has voice navigation — just tap VOICE and say what you need.' This is especially valuable for participants with motor impairments, low vision, or anyone who finds touchscreens difficult.",
+        tags: ["Hands-free navigation", "Android Chrome", "Say help for guide", "Auto-pauses during video"],
+      },
+      {
         number: "10",
         icon: "🗣️",
         title: "AAC Communication Board",
