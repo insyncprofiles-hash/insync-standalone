@@ -19,27 +19,30 @@ import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 const DEFAULT_VIDEO = "/assets/pete_james_intro_with_music_c9095da0.mp4"; // Pete James demo intro video (with music)
 
 const ALL_AVAILABLE_SERVICES: ServiceItem[] = [
-  { id: "personal-care",   icon: "🤲", label: "Personal Care",          selected: false, description: "Personal hygiene & daily routines" },
-  { id: "emotional",       icon: "🌿", label: "Emotional Support",       selected: false, description: "Mental wellbeing & companionship" },
-  { id: "community",       icon: "👥", label: "Community Access",        selected: false, description: "Social outings & participation" },
-  { id: "mental",          icon: "🧠", label: "Mental Wellbeing",        selected: false, description: "Mindfulness & emotional regulation" },
-  { id: "daily-living",    icon: "📋", label: "Daily Living Support",    selected: false, description: "Household tasks & goal planning" },
-  { id: "transport",       icon: "🚗", label: "Transport Assistance",    selected: false, description: "Driving to appointments & activities" },
-  { id: "domestic",        icon: "🧹", label: "Domestic Assistance",     selected: false, description: "Cleaning, cooking & home tasks" },
-  { id: "medication",      icon: "💊", label: "Medication Support",      selected: false, description: "Prompting & administering medication" },
-  { id: "behaviour",       icon: "💡", label: "Behaviour Support",       selected: false, description: "Positive behaviour strategies" },
-  { id: "overnight",       icon: "🌙", label: "Overnight Support",          selected: false, description: "Overnight care & active nights" },
-  { id: "meal-prep",       icon: "🍽️", label: "Meal Preparation",           selected: false, description: "Planning & preparing nutritious meals" },
-  { id: "social-skills",   icon: "🤝", label: "Social Skills Development", selected: false, description: "Building confidence & connections" },
-  { id: "employment",      icon: "💼", label: "Employment Support",      selected: false, description: "Job readiness & workplace assistance" },
-  { id: "therapy-assist",  icon: "🎯", label: "Therapy Assistance",      selected: false, description: "Supporting OT, physio & speech goals" },
-  { id: "aac-comm",        icon: "🗣", label: "AAC Communication",       selected: false, description: "Augmentative & alternative communication" },
-  { id: "auslan",          icon: "🤟", label: "Auslan / Sign Language",  selected: false, description: "Auslan-fluent support" },
-  { id: "respite",         icon: "🏠", label: "In-Home Respite",         selected: false, description: "Carer relief & family support" },
-  { id: "school-leaver",   icon: "🎓", label: "School Leaver Support",   selected: false, description: "SLES & transition to adulthood" },
-  { id: "plan-management", icon: "📊", label: "Plan Management Support", selected: false, description: "Helping navigate NDIS plans" },
-  { id: "exercise",        icon: "🏋", label: "Exercise & Fitness",      selected: false, description: "Active lifestyle & physical health" },
-  { id: "creative",        icon: "🎨", label: "Creative Arts Therapy",   selected: false, description: "Art, music & expressive therapies" },
+  { id: "personal-care",   icon: "🤲", iconImg: "/manus-storage/sw_01_personal_care_6783f933.png",        label: "Personal Care",      selected: false, description: "Personal hygiene & daily routines" },
+  { id: "emotional",       icon: "🌿", iconImg: "/manus-storage/sw_02_emotional_support_b764a5f0.png",    label: "Emotional Support",  selected: false, description: "Mental wellbeing & companionship" },
+  { id: "community",       icon: "👥", iconImg: "/manus-storage/sw_03_community_access_48f59b4c.png",     label: "Community Access",   selected: false, description: "Social outings & participation" },
+  { id: "mental",          icon: "🧠", iconImg: "/manus-storage/sw_04_mental_health_a676b72b.png",        label: "Mental Health",      selected: false, description: "Mindfulness & emotional regulation" },
+  { id: "daily-living",    icon: "📋", iconImg: "/manus-storage/sw_05_daily_living_938faf13.png",         label: "Daily Living",       selected: false, description: "Household tasks & goal planning" },
+  { id: "transport",       icon: "🚗", iconImg: "/manus-storage/sw_06_transport_b57f3f20.png",            label: "Transport",          selected: false, description: "Driving to appointments & activities" },
+  { id: "domestic",        icon: "🧹", iconImg: "/manus-storage/sw_07_domestic_e0c6cfd1.png",             label: "Domestic",           selected: false, description: "Cleaning, cooking & home tasks" },
+  { id: "medication",      icon: "💊", iconImg: "/manus-storage/sw_08_medication_217a11bf.png",           label: "Medication",         selected: false, description: "Prompting & administering medication" },
+  { id: "behaviour",       icon: "💡", iconImg: "/manus-storage/sw_09_behaviour_d2a2e3e8.png",            label: "Behaviour Support",  selected: false, description: "Positive behaviour strategies" },
+  { id: "overnight",       icon: "🌙", iconImg: "/manus-storage/sw_10_overnight_477385a4.png",            label: "Overnight",          selected: false, description: "Overnight care & active nights" },
+  { id: "meal-prep",       icon: "🍽️", iconImg: "/manus-storage/sw_11_meal_prep_35236f8b.png",            label: "Meal Prep",          selected: false, description: "Planning & preparing nutritious meals" },
+  { id: "social-skills",   icon: "🤝", iconImg: "/manus-storage/sw_12_social_skills_d762aaa6.png",        label: "Social Skills",      selected: false, description: "Building confidence & connections" },
+  { id: "employment",      icon: "💼", iconImg: "/manus-storage/sw_13_employment_752e11d1.png",           label: "Employment",         selected: false, description: "Job readiness & workplace assistance" },
+  { id: "therapy-assist",  icon: "🎯", iconImg: "/manus-storage/sw_14_therapy_b32a56d7.png",             label: "Therapy",            selected: false, description: "Supporting OT, physio & speech goals" },
+  { id: "aac-comm",        icon: "🗣", iconImg: "/manus-storage/sw_15_aac_addf5189.png",                  label: "AAC",                selected: false, description: "Augmentative & alternative communication" },
+  { id: "auslan",          icon: "🤟", iconImg: "/manus-storage/sw_16_auslan_58634a96.png",               label: "Auslan",             selected: false, description: "Auslan-fluent support" },
+  { id: "respite",         icon: "🏠", iconImg: "/manus-storage/sw_17_in_home_respite_18bd3154.png",      label: "In-Home Respite",    selected: false, description: "Carer relief & family support" },
+  { id: "school-leaver",   icon: "🎓", iconImg: "/manus-storage/sw_18_school_leaver_ccbfcd0f.png",        label: "School Leaver",      selected: false, description: "SLES & transition to adulthood" },
+  { id: "plan-management", icon: "📊", iconImg: "/manus-storage/sw_19_plan_management_bef46fac.png",      label: "Plan Management",    selected: false, description: "Helping navigate NDIS plans" },
+  { id: "exercise",        icon: "🏋", iconImg: "/manus-storage/sw_20_exercise_3781cd07.png",             label: "Exercise",           selected: false, description: "Active lifestyle & physical health" },
+  { id: "creative",        icon: "🎨", iconImg: "/manus-storage/sw_21_creative_arts_a9cc36e0.png",        label: "Creative Arts",      selected: false, description: "Art, music & expressive therapies" },
+  { id: "household-tasks", icon: "🧹", iconImg: "/manus-storage/sw_22_household_tasks_542f60f8.png",      label: "Household Tasks",    selected: false, description: "Home organisation & household management" },
+  { id: "life-skills",     icon: "📈", iconImg: "/manus-storage/sw_23_life_skills_10919ace.png",          label: "Life Skills",        selected: false, description: "Building independence & everyday skills" },
+  { id: "supported-employment", icon: "🏢", iconImg: "/manus-storage/sw_24_supported_employment_edc2b57b.png", label: "Supported Employment", selected: false, description: "Workplace support & job coaching" },
 ];
 
 const DEFAULT_EXPERIENCE_GROUPS: ExperienceGroup[] = [
@@ -882,23 +885,20 @@ export default function ClientView() {
           {selectedServices.length > 0 && (
             <div style={{ padding: "8px 10px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-around", gap: "6px", flexWrap: "wrap" }}>
-                {selectedServices.slice(0, 4).map((svc, i) => {
-                  const isUp = i % 2 === 0;
-                  return (
-                    <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1 1 60px", minWidth: "60px", maxWidth: "80px", marginTop: isUp ? "0px" : "24px" }}>
-                      {svc.iconImg ? (
-                        <img src={svc.iconImg} alt={svc.label} style={{ width: "60px", height: "60px", borderRadius: "12px", objectFit: "cover", display: "block" }} />
-                      ) : (
-                        <div style={{ width: "60px", height: "60px", borderRadius: "12px", background: "#1a5fa8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.625em" }}>{svc.icon}</div>
-                      )}
-                      <p style={{
-                        fontFamily: "'Outfit', sans-serif", fontSize: "0.7em", fontWeight: 700,
-                        color: "#1a5fa8", textAlign: "center",
-                        margin: 0, lineHeight: 1.25, maxWidth: "72px",
-                      }}>{svc.label}</p>
-                    </div>
-                  );
-                })}
+                {selectedServices.slice(0, 4).map((svc) => (
+                  <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1 1 68px", minWidth: "60px", maxWidth: "80px" }}>
+                    <img
+                      src={svc.iconImg || `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='64' height='64' rx='12' fill='%231a5fa8'/><text x='32' y='44' font-size='28' text-anchor='middle'>${encodeURIComponent(svc.icon)}</text></svg>`}
+                      alt={svc.label}
+                      style={{ width: "64px", height: "64px", borderRadius: "12px", objectFit: "cover", display: "block" }}
+                    />
+                    <p style={{
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.7em", fontWeight: 700,
+                      color: "#1a5fa8", textAlign: "center",
+                      margin: 0, lineHeight: 1.25, maxWidth: "76px",
+                    }}>{svc.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
