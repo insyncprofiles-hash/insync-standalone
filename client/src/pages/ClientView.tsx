@@ -953,7 +953,7 @@ export default function ClientView() {
                   minWidth: "52px",
                 }}
               >
-                <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "32px", height: "32px", objectFit: "contain" }} />
                 <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#F0C040", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
               </button>
 
