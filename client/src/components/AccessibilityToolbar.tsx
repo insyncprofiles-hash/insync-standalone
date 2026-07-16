@@ -60,25 +60,10 @@ interface Props {
   voiceActive?: boolean;
 }
 export default function AccessibilityToolbar({ onSettingsChange, onVoiceToggle, voiceActive }: Props) {
-  const [hasShownVoiceTip, setHasShownVoiceTip] = useState(false);
-  const [showVoiceTip, setShowVoiceTip] = useState(false);
-  const voiceTipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  // Voice toggle is fully managed by ClientView — pass through directly
   const handleVoiceToggle = useCallback(() => {
-    if (!hasShownVoiceTip && !voiceActive) {
-      // First tap — show tip for 4 seconds before activating
-      setShowVoiceTip(true);
-      setHasShownVoiceTip(true);
-      voiceTipTimerRef.current = setTimeout(() => {
-        setShowVoiceTip(false);
-        onVoiceToggle?.();
-      }, 4000);
-    } else {
-      setShowVoiceTip(false);
-      if (voiceTipTimerRef.current) clearTimeout(voiceTipTimerRef.current);
-      onVoiceToggle?.();
-    }
-  }, [hasShownVoiceTip, voiceActive, onVoiceToggle]);
+    onVoiceToggle?.();
+  }, [onVoiceToggle]);
   const [settings, setSettings] = useState<AccessibilitySettings>(loadSettings);
   const [open, setOpen] = useState(false);
   const [speaking, setSpeaking] = useState(false);
