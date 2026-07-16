@@ -69,10 +69,8 @@ export default function VoiceControl({
   workerEmail,
   workerName,
 }: VoiceControlCallbacks) {
-  const [supported] = useState(() =>
-    typeof window !== "undefined" &&
-    ("webkitSpeechRecognition" in window || "SpeechRecognition" in window)
-  );
+  // Don't hide on unsupported — show button always, warn on tap instead
+  const [supported] = useState(() => true);
   const [active, setActive] = useState(false);
   const [toast, setToast] = useState<string>("");
   const [showHelp, setShowHelp] = useState(false);
@@ -171,8 +169,11 @@ export default function VoiceControl({
   }, []);
 
   const toggle = useCallback(() => {
-    if (!supported) {
-      showToast("Voice control needs Chrome or Safari");
+    // Check at tap time (not init time) — more reliable on Android
+    const hasSR = typeof window !== 'undefined' &&
+      ((window as any).webkitSpeechRecognition || (window as any).SpeechRecognition);
+    if (!hasSR) {
+      showToast("Voice needs Chrome or Safari");
       return;
     }
     if (active) {
@@ -197,8 +198,6 @@ export default function VoiceControl({
       recognitionRef.current?.stop();
     };
   }, []);
-
-  if (!supported) return null;
 
   return (
     <>
@@ -348,20 +347,20 @@ export default function VoiceControl({
           aria-pressed={active}
           title={active ? "Voice control ON — tap to turn off" : "Voice control — tap to navigate by voice"}
           style={{
-            width: "56px",
-            height: "56px",
+            width: "64px",
+            height: "64px",
             borderRadius: "50%",
-            border: `2.5px solid ${active ? "#e05252" : "#c9a84c88"}`,
-            background: active ? "rgba(42,10,10,0.95)" : "rgba(10,10,20,0.88)",
-            color: active ? "#e05252" : "#c9a84c",
-            fontSize: "22px",
+            border: `3px solid ${active ? "#e05252" : "#F0C040"}`,
+            background: active ? "#2a0a0a" : "#1a3a6b",
+            color: active ? "#e05252" : "#F0C040",
+            fontSize: "26px",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             boxShadow: active
-              ? "0 0 0 4px rgba(224,82,82,0.2), 0 4px 16px rgba(0,0,0,0.5)"
-              : "0 4px 16px rgba(0,0,0,0.4)",
+              ? "0 0 0 4px rgba(224,82,82,0.25), 0 6px 20px rgba(0,0,0,0.6)"
+              : "0 6px 20px rgba(0,0,0,0.45), 0 0 0 3px rgba(240,192,64,0.25)",
             animation: active ? "vc-pulse 1.5s ease-in-out infinite" : "none",
             transition: "border-color 200ms, background 200ms, box-shadow 200ms",
           }}
@@ -370,13 +369,15 @@ export default function VoiceControl({
         </button>
 
         <span style={{
-          color: active ? "#e05252" : "#c9a84c",
+          color: active ? "#e05252" : "#1a3a6b",
           fontSize: "10px",
           fontFamily: "'Outfit', sans-serif",
-          fontWeight: 700,
+          fontWeight: 800,
           letterSpacing: "0.06em",
           textTransform: "uppercase",
-          textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+          background: active ? "transparent" : "#F0C040",
+          padding: "2px 8px",
+          borderRadius: "10px",
         }}>
           {active ? "LISTENING" : "VOICE"}
         </span>

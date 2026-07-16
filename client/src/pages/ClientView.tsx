@@ -719,77 +719,66 @@ export default function ClientView() {
     setTtsStatus("idle");
   }, []);
   const handleReadAloud = useCallback(() => {
-    if (!window.speechSynthesis) return;
-    if (ttsStatus === "reading") {
-      window.speechSynthesis.pause();
-      setTtsStatus("paused");
-      return;
-    }
-    if (ttsStatus === "paused") {
-      window.speechSynthesis.resume();
-      setTtsStatus("reading");
-      return;
-    }
-    // Cancel any ongoing speech first
-    window.speechSynthesis.cancel();
+    const synth = window.speechSynthesis;
+    if (!synth) return;
 
-    // Collect readable text from the main content area only (skip nav/buttons)
+    // If already reading, stop completely (pause is unreliable on Android)
+    if (ttsStatus === "reading" || ttsStatus === "paused") {
+      synth.cancel();
+      setTtsStatus("idle");
+      return;
+    }
+
+    // Collect text from main content only
     const mainEl = document.getElementById('main-content');
     const rawText = mainEl ? mainEl.innerText : document.body.innerText;
-    // Trim to 5000 chars and clean up excess whitespace
-    const text = rawText.replace(/\s+/g, ' ').trim().slice(0, 5000);
+    const text = rawText.replace(/\s+/g, ' ').trim().slice(0, 4000);
     if (!text) return;
 
-    const doSpeak = () => {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.9;
-      utterance.lang = 'en-AU';
-      // Set status immediately — Android Chrome onstart is unreliable
-      setTtsStatus("reading");
-      utterance.onend = () => setTtsStatus("idle");
-      utterance.onerror = (e) => {
-        // 'interrupted' fires when we cancel intentionally — ignore it
-        if ((e as SpeechSynthesisErrorEvent).error !== 'interrupted') {
-          setTtsStatus("idle");
-        }
-      };
-      window.speechSynthesis.speak(utterance);
+    // Mark reading immediately so button updates right away
+    setTtsStatus("reading");
 
-      // Android Chrome workaround: speechSynthesis can stall after ~15s
-      // Periodically call resume() to keep it alive
-      const keepAlive = setInterval(() => {
-        if (window.speechSynthesis.paused) return;
-        if (!window.speechSynthesis.speaking) {
-          clearInterval(keepAlive);
-          return;
-        }
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }, 10000);
-      utterance.onend = () => { clearInterval(keepAlive); setTtsStatus("idle"); };
-      utterance.onerror = (e) => {
-        clearInterval(keepAlive);
-        if ((e as SpeechSynthesisErrorEvent).error !== 'interrupted') setTtsStatus("idle");
+    const speak = () => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.85;
+      utterance.lang = 'en-AU';
+
+      // Pick an English voice if available
+      const voices = synth.getVoices();
+      const voice = voices.find(v => v.lang.startsWith('en-AU'))
+        || voices.find(v => v.lang.startsWith('en'))
+        || null;
+      if (voice) utterance.voice = voice;
+
+      utterance.onend = () => setTtsStatus("idle");
+      utterance.onerror = (e: any) => {
+        if (e.error !== 'interrupted' && e.error !== 'canceled') setTtsStatus("idle");
       };
+
+      // Android Chrome keepAlive: re-trigger every 10s to prevent stalling
+      let keepAlive: ReturnType<typeof setInterval> | null = setInterval(() => {
+        if (!synth.speaking) { if (keepAlive) clearInterval(keepAlive); return; }
+        if (!synth.paused) { synth.pause(); synth.resume(); }
+      }, 10000);
+      const cleanup = () => { if (keepAlive) { clearInterval(keepAlive); keepAlive = null; } };
+      utterance.onend = () => { cleanup(); setTtsStatus("idle"); };
+      utterance.onerror = (e: any) => {
+        cleanup();
+        if (e.error !== 'interrupted' && e.error !== 'canceled') setTtsStatus("idle");
+      };
+
+      synth.speak(utterance);
     };
 
-    // Android Chrome requires voices to be loaded before speak() works
-    const voices = window.speechSynthesis.getVoices();
+    // Android Chrome: voices may not be ready on first call
+    const voices = synth.getVoices();
     if (voices.length > 0) {
-      // Voices already loaded — use a tiny timeout to let the cancel() settle
-      setTimeout(doSpeak, 50);
+      speak();
     } else {
-      // Wait for voices to load (first call on Android)
-      const onVoicesChanged = () => {
-        window.speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
-        setTimeout(doSpeak, 50);
-      };
-      window.speechSynthesis.addEventListener('voiceschanged', onVoicesChanged);
-      // Fallback: if voiceschanged never fires, try anyway after 500ms
-      setTimeout(() => {
-        window.speechSynthesis.removeEventListener('voiceschanged', onVoicesChanged);
-        doSpeak();
-      }, 500);
+      const handler = () => { synth.removeEventListener('voiceschanged', handler); speak(); };
+      synth.addEventListener('voiceschanged', handler);
+      // Safety fallback — try after 600ms regardless
+      setTimeout(() => { synth.removeEventListener('voiceschanged', handler); speak(); }, 600);
     }
   }, [ttsStatus]);
 
