@@ -729,19 +729,17 @@ export default function ClientView() {
   const [showVoiceTip, setShowVoiceTip] = useState(false);
   const voiceTipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const handleVoiceToggle = useCallback(() => {
-    if (!hasShownVoiceTip && !voiceActive) {
+    // Always toggle immediately — tooltip is informational only, not a gate
+    if (voiceTipTimerRef.current) clearTimeout(voiceTipTimerRef.current);
+    setShowVoiceTip(false);
+    voiceToggleFnRef.current?.();
+    const nowActive = !voiceActive;
+    setVoiceActive(nowActive);
+    // Show tip on first activation only, auto-dismiss after 4s
+    if (!hasShownVoiceTip && nowActive) {
       setShowVoiceTip(true);
       setHasShownVoiceTip(true);
-      voiceTipTimerRef.current = setTimeout(() => {
-        setShowVoiceTip(false);
-        voiceToggleFnRef.current?.();
-        setVoiceActive(true);
-      }, 4000);
-    } else {
-      setShowVoiceTip(false);
-      if (voiceTipTimerRef.current) clearTimeout(voiceTipTimerRef.current);
-      voiceToggleFnRef.current?.();
-      setVoiceActive(v => !v);
+      voiceTipTimerRef.current = setTimeout(() => setShowVoiceTip(false), 4000);
     }
   }, [hasShownVoiceTip, voiceActive]);
   useEffect(() => {
