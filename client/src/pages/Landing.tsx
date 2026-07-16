@@ -306,7 +306,6 @@ export default function Landing() {
           <Link href="/guides" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Guides</Link>
           <Link href="/allied-health" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `linear-gradient(135deg, ${C.teal}22 0%, ${C.teal}11 100%)`, border: `1.5px solid ${C.teal}66`, color: C.teal, fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "8px 16px", borderRadius: "99px", letterSpacing: "0.01em" }}>🩺 Allied Health</Link>
           <Link href="/coordinators" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: C.textBody, fontSize: "14px", fontWeight: 600, textDecoration: "none", padding: "8px 14px", borderRadius: "8px" }}>🔗 For Coordinators</Link>
-          <Link href="/skins" style={{ display: "inline-flex", alignItems: "center", gap: "5px", color: C.gold, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 14px", borderRadius: "8px" }}>Skin Packs <span style={{ fontSize: "9px", fontWeight: 800, background: `rgba(245,200,66,0.15)`, color: C.gold, padding: "2px 6px", borderRadius: "20px", letterSpacing: "0.08em", border: `1px solid rgba(245,200,66,0.3)` }}>SOON</span></Link>
           <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
         </nav>
 
@@ -371,7 +370,6 @@ export default function Landing() {
             { href: "/allied-health", label: "🩺 Allied Health" },
             { href: "/coordinators", label: "🔗 For Coordinators" },
             { href: "/contact",    label: "✉️ Contact" },
-            { href: "/skins",      label: "🎨 Skin Packs — Coming Soon" },
           ].map(link => (
             <Link
               key={link.label}
@@ -436,7 +434,6 @@ export default function Landing() {
               { href: "/guides",       label: "Guides",            teal: false },
               { href: "/allied-health", label: "🩺 Allied Health", teal: true },
               { href: "/coordinators", label: "🔗 For Coordinators", teal: false },
-              { href: "/skins",      label: "Skin Packs",      teal: false },
               { href: "/privacy",    label: "Legal & Privacy", teal: false },
               { href: "/contact",    label: "Contact",         teal: false },
               { href: "/demo",       label: "Try Demo",        teal: false },
@@ -1440,7 +1437,6 @@ export default function Landing() {
               { href: "/how-to-use", label: "How It Works" },
               { href: "/scenarios",  label: "Scenarios" },
               { href: "/blog",       label: "Blog" },
-              { href: "/skins",      label: "Skin Packs" },
               { href: "/guides",     label: "Guides" },
               { href: "/privacy",    label: "Legal & Privacy" },
               { href: "/contact",    label: "Contact" },
