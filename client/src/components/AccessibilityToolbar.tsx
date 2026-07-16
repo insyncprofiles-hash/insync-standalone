@@ -51,13 +51,12 @@ function applySettings(s: AccessibilitySettings) {
 
 interface Props {
   onSettingsChange?: (s: AccessibilitySettings) => void;
-  /** Worker email address — enables Speak to Message feature */
+  /** Worker email address — kept for future use */
   workerEmail?: string;
-  /** Worker name — used in compose prompt */
+  /** Worker name — kept for future use */
   workerName?: string;
 }
-
-export default function AccessibilityToolbar({ onSettingsChange, workerEmail, workerName }: Props) {
+export default function AccessibilityToolbar({ onSettingsChange }: Props) {
   const [settings, setSettings] = useState<AccessibilitySettings>(loadSettings);
   const [open, setOpen] = useState(false);
   const [speaking, setSpeaking] = useState(false);
@@ -65,12 +64,7 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // ── Speak to Message state ──────────────────────────────────
-  const [sttSupported] = useState(() => !!("webkitSpeechRecognition" in window || "SpeechRecognition" in window));
-  const [sttStatus, setSttStatus] = useState<"idle" | "listening" | "done" | "error">("idle");
-  const [sttError, setSttError] = useState<string>("");
-  const [spokenText, setSpokenText] = useState("");
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+
 
   // Apply settings to DOM whenever they change
   useEffect(() => {
@@ -142,66 +136,6 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
     setTtsStatus("idle");
     setSpeaking(false);
   }, []);
-
-  // ── Speak to Message handlers ───────────────────────────────
-  const startListening = useCallback(() => {
-    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SR) return;
-    const rec: SpeechRecognition = new SR();
-    rec.lang = "en-AU";
-    rec.continuous = false;
-    rec.interimResults = true;
-    rec.maxAlternatives = 1;
-    recognitionRef.current = rec;
-    setSttStatus("listening");
-    setSpokenText("");
-    rec.onresult = (e: SpeechRecognitionEvent) => {
-      const transcript = Array.from(e.results)
-        .map(r => r[0].transcript)
-        .join(" ");
-      setSpokenText(transcript);
-    };
-    rec.onend = () => {
-      // If we got text, mark done. If nothing was captured, go to error so user can retry.
-      setSttStatus(prev => prev === "listening" ? (spokenText.trim() ? "done" : "error") : prev);
-      if (!spokenText.trim()) setSttError("Nothing was heard. Tap Try Again and speak after the mic turns red.");
-    };
-    rec.onerror = (e: SpeechRecognitionErrorEvent) => {
-      setSttStatus("error");
-      if (e.error === "not-allowed" || e.error === "permission-denied") {
-        setSttError("Microphone permission was denied. Tap the 🔒 icon in your browser address bar, allow microphone, then try again.");
-      } else if (e.error === "no-speech") {
-        setSttError("No speech was detected. Tap Try Again and speak clearly after the mic turns red.");
-      } else if (e.error === "network") {
-        setSttError("Network error. Please check your connection and try again.");
-      } else {
-        setSttError("Something went wrong. Tap Try Again.");
-      }
-    };
-    rec.start();
-  }, []);
-
-  const stopListening = useCallback(() => {
-    recognitionRef.current?.stop();
-    setSttStatus("done");
-  }, []);
-
-  const sendSpokenMessage = useCallback(() => {
-    if (!workerEmail || !spokenText.trim()) return;
-    const subject = encodeURIComponent(`Message for ${workerName || "you"}`);
-    const body = encodeURIComponent(spokenText.trim());
-    window.location.href = `mailto:${workerEmail}?subject=${subject}&body=${body}`;
-  }, [workerEmail, workerName, spokenText]);
-
-  const resetStt = useCallback(() => {
-    recognitionRef.current?.stop();
-    setSttStatus("idle");
-    setSttError("");
-    setSpokenText("");
-  }, []);
-
-  // Stop recognition on unmount
-  useEffect(() => () => { recognitionRef.current?.stop(); }, []);
 
   // Stop speech when component unmounts
   useEffect(() => () => { window.speechSynthesis?.cancel(); }, []);
@@ -495,140 +429,7 @@ export default function AccessibilityToolbar({ onSettingsChange, workerEmail, wo
               </div>
             </section>
 
-            {/* ── Speak to Message ── */}
-            {workerEmail && (
-              <section aria-labelledby="a11y-stt-label">
-                <p id="a11y-stt-label" style={{ color: "#c9a84c", fontSize: "11px", fontFamily: "'Outfit', sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "8px" }}>
-                  🎙 Speak to Message
-                </p>
-                {!sttSupported ? (
-                  <p style={{ color: "#a89060", fontSize: "12px", fontFamily: "'Outfit', sans-serif", padding: "10px 12px", background: "#1a1a1a", borderRadius: "10px", border: "1.5px solid #c9a84c44" }}>
-                    Voice input isn't available in this browser. Try Chrome or Safari.
-                  </p>
-                ) : (
-                  <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {/* Instructions */}
-                    {sttStatus === "idle" && !spokenText && (
-                      <p style={{ color: "#a89060", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: 0 }}>
-                        Tap the mic, speak your message, then send it to {workerName || "the worker"}.
-                      </p>
-                    )}
 
-                    {/* Error state */}
-                    {sttStatus === "error" && (
-                      <div style={{ background: "#1a0a0a", border: "1.5px solid #e05252", borderRadius: "10px", padding: "10px 12px" }}>
-                        <p style={{ color: "#e05252", fontSize: "12px", fontFamily: "'Outfit', sans-serif", margin: "0 0 8px", lineHeight: 1.5 }}>
-                          ⚠️ {sttError}
-                        </p>
-                        <button
-                          onClick={resetStt}
-                          aria-label="Try speaking again"
-                          style={{
-                            width: "100%",
-                            padding: "10px 12px",
-                            borderRadius: "10px",
-                            border: "2px solid #c9a84c",
-                            background: "#1a1a1a",
-                            color: "#c9a84c",
-                            fontSize: "14px",
-                            fontFamily: "'Outfit', sans-serif",
-                            fontWeight: 700,
-                            cursor: "pointer",
-                          }}
-                        >
-                          🎙 Try Again
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Mic button */}
-                    {sttStatus !== "done" && sttStatus !== "error" && (
-                      <button
-                        onClick={sttStatus === "listening" ? stopListening : startListening}
-                        aria-label={sttStatus === "listening" ? "Stop recording" : "Start speaking your message"}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "8px",
-                          width: "100%",
-                          padding: "16px",
-                          borderRadius: "12px",
-                          border: `2px solid ${sttStatus === "listening" ? "#e05252" : "#c9a84c"}`,
-                          background: sttStatus === "listening" ? "#2a0a0a" : "#1a1a1a",
-                          color: sttStatus === "listening" ? "#e05252" : "#c9a84c",
-                          fontSize: "16px",
-                          fontFamily: "'Outfit', sans-serif",
-                          fontWeight: 700,
-                          cursor: "pointer",
-                          transition: "all 160ms ease-out",
-                          animation: sttStatus === "listening" ? "pulse-soft 1.2s ease-in-out infinite" : "none",
-                        }}
-                      >
-                        <span style={{ fontSize: "24px" }} aria-hidden="true">{sttStatus === "listening" ? "⏹" : "🎙"}</span>
-                        {sttStatus === "listening" ? "Tap to Stop" : "Tap to Speak"}
-                      </button>
-                    )}
-
-                    {/* Live / final transcript */}
-                    {spokenText && (
-                      <div style={{
-                        background: "#111",
-                        border: "1.5px solid #c9a84c44",
-                        borderRadius: "10px",
-                        padding: "10px 12px",
-                        minHeight: "60px",
-                      }}>
-                        <p style={{ color: "#f0d080", fontSize: "13px", fontFamily: "'Outfit', sans-serif", margin: 0, lineHeight: 1.5 }}>
-                          {spokenText}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Send / Re-record / Clear buttons */}
-                    {sttStatus === "done" && spokenText && (
-                      <div style={{ display: "flex", gap: "6px" }}>
-                        <button
-                          onClick={sendSpokenMessage}
-                          aria-label="Send spoken message as email"
-                          style={{
-                            flex: 2,
-                            padding: "10px 12px",
-                            borderRadius: "10px",
-                            border: "none",
-                            background: "#c9a84c",
-                            color: "#0a0a0a",
-                            fontSize: "13px",
-                            fontFamily: "'Outfit', sans-serif",
-                            fontWeight: 700,
-                            cursor: "pointer",
-                          }}
-                        >
-                          ✉ Send Message
-                        </button>
-                        <button
-                          onClick={resetStt}
-                          aria-label="Clear and start again"
-                          style={{
-                            flex: 1,
-                            padding: "10px 8px",
-                            borderRadius: "10px",
-                            border: "1.5px solid #c9a84c44",
-                            background: "transparent",
-                            color: "#a89060",
-                            fontSize: "12px",
-                            fontFamily: "'Outfit', sans-serif",
-                            cursor: "pointer",
-                          }}
-                        >
-                          ↺ Redo
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </section>
-            )}
 
             {/* Reset */}
             <button
