@@ -708,6 +708,9 @@ export default function ClientView() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showAACBoard, setShowAACBoard] = useState(false);
   const videoPlayRef = useRef<(() => void) | null>(null);
+  const [videoPlaying, setVideoPlaying] = React.useState(false);
+  // Wire videoPlayRef at component level so VoiceControl can trigger it reliably
+  React.useEffect(() => { videoPlayRef.current = () => setVideoPlaying(true); }, []);
   // Voice control — toggle fn exposed from VoiceControl via onToggleReady
   const [voiceActive, setVoiceActive] = useState(false);
   const voiceToggleFnRef = useRef<(() => void) | null>(null);
@@ -1102,9 +1105,9 @@ export default function ClientView() {
               {videoUrl && isIframeUrl(videoUrl) ? (
                 (() => {
                   const ytId = isYouTubeUrl(videoUrl) ? getYouTubeId(videoUrl) : null;
-                  const [playing, setPlaying] = React.useState(false);
-                  // Wire up external play trigger for VoiceControl
-                  React.useEffect(() => { videoPlayRef.current = () => setPlaying(true); }, []);
+                  // Use component-level videoPlaying state (wired to videoPlayRef for VoiceControl)
+                  const playing = videoPlaying;
+                  const setPlaying = setVideoPlaying;
                   if (ytId && !playing) {
                     return (
                       <div
