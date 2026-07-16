@@ -82,6 +82,7 @@ export default function VoiceControl({
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const restartTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeRef = useRef(false);
+  const startListeningRef = useRef<(() => void) | null>(null);
 
   const showToast = useCallback((msg: string) => {
     setToast(msg);
@@ -93,8 +94,34 @@ export default function VoiceControl({
     switch (action) {
       case "play_video":
         // Scroll to top so video is visible, then play
+        // Also pause voice recognition so mic doesn't pick up video audio
         window.scrollTo({ top: 0, behavior: "smooth" });
-        setTimeout(() => onPlayVideo(), 700);
+        setTimeout(() => {
+          onPlayVideo();
+          // Pause recognition for 30s while video plays (video audio would trigger false commands)
+          if (activeRef.current && recognitionRef.current) {
+            activeRef.current = false;
+            recognitionRef.current?.stop();
+            recognitionRef.current = null;
+            setActive(false);
+            showToast("🎬 Video playing — voice paused");
+            // Listen for video to end/pause, then re-enable voice
+            const resumeVoice = () => {
+              if (!activeRef.current) {
+                activeRef.current = true;
+                setActive(true);
+                startListeningRef.current?.();
+                showToast("🎙 Voice control resumed");
+              }
+              document.removeEventListener("insync:video-ended", resumeVoice);
+              document.removeEventListener("insync:video-paused", resumeVoice);
+            };
+            document.addEventListener("insync:video-ended", resumeVoice, { once: true });
+            document.addEventListener("insync:video-paused", resumeVoice, { once: true });
+            // Safety fallback — re-enable after 60s even if no event fires
+            setTimeout(() => resumeVoice(), 60000);
+          }
+        }, 700);
         break;
       case "scroll_services": onScrollTo("thread-services"); break;
       case "scroll_experience": onScrollTo("thread-experience"); break;
@@ -167,6 +194,11 @@ export default function VoiceControl({
       showToast("⚠️ Could not start voice control");
     }
   }, [supported, showToast, executeCommand]);
+
+  // Keep ref up to date so executeCommand can call it without circular deps
+  useEffect(() => {
+    startListeningRef.current = startListening;
+  }, [startListening]);
 
   const stopListening = useCallback(() => {
     if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
