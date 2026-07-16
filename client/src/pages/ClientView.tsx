@@ -18,6 +18,29 @@ import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 // ── Defaults (same as Home.tsx) ───────────────────────────────
 const DEFAULT_VIDEO = "/assets/pete_james_intro_with_music_c9095da0.mp4"; // Pete James demo intro video (with music)
 
+const ALLIED_HEALTH_SERVICES: ServiceItem[] = [
+  { id: "ot", icon: "🖐", iconImg: "/assets/icons/svc-ot.png", label: "OT", selected: false, description: "Functional assessments, home modifications & daily living" },
+  { id: "speech", icon: "🗣", iconImg: "/assets/icons/svc-speech.png", label: "Speech Pathology", selected: false, description: "Communication, AAC, feeding & swallowing" },
+  { id: "physio", icon: "💪", iconImg: "/assets/icons/svc-physio.png", label: "Physio", selected: false, description: "Movement, pain management & rehabilitation" },
+  { id: "psych", icon: "🧠", iconImg: "/assets/icons/svc-psychology.png", label: "Psychology", selected: false, description: "Mental health assessment, therapy & support" },
+  { id: "sw-allied", icon: "🤝", iconImg: "/assets/icons/svc-social-work.png", label: "Social Work", selected: false, description: "Psychosocial support, advocacy & coordination" },
+  { id: "dietitian", icon: "🥗", iconImg: "/assets/icons/svc-dietitian.png", label: "Dietitian", selected: false, description: "Nutrition, meal planning & feeding support" },
+  { id: "music-therapy", icon: "🎵", iconImg: "/assets/icons/svc-music-therapy.png", label: "Music Therapy", selected: false, description: "Therapeutic music for communication & wellbeing" },
+  { id: "art-therapy", icon: "🎨", iconImg: "/assets/icons/svc-art-therapy.png", label: "Art Therapy", selected: false, description: "Creative expression & emotional processing" },
+  { id: "exercise-phys", icon: "🏃", iconImg: "/assets/icons/svc-exercise-physiology.png", label: "Exercise Physiology", selected: false, description: "Therapeutic exercise & physical rehabilitation" },
+  { id: "behaviour-support", icon: "💡", iconImg: "/assets/icons/svc-behaviour-support-ah.png", label: "Behaviour Support", selected: false, description: "Positive behaviour strategies & PBS plans" },
+  { id: "early-intervention", icon: "🌱", iconImg: "/assets/icons/svc-early-intervention.png", label: "Early Intervention", selected: false, description: "Developmental support for children 0–7" },
+  { id: "aac-specialist", icon: "📲", iconImg: "/assets/icons/svc-aac-specialist.png", label: "AAC Specialist", selected: false, description: "Augmentative & alternative communication assessment" },
+  { id: "telehealth", icon: "💻", iconImg: "/assets/icons/svc-telehealth.png", label: "Telehealth", selected: false, description: "Remote sessions via video call" },
+  { id: "home-visits", icon: "🏠", iconImg: "/assets/icons/svc-home-visits.png", label: "Home Visits", selected: false, description: "In-home assessment & therapy delivery" },
+  { id: "school-visits", icon: "🏫", iconImg: "/assets/icons/svc-school-visits.png", label: "School Visits", selected: false, description: "Therapy delivered in school settings" },
+  { id: "group-therapy", icon: "👥", iconImg: "/assets/icons/svc-group-therapy.png", label: "Group Therapy", selected: false, description: "Therapeutic group programs" },
+  { id: "sensory-processing", icon: "✨", iconImg: "/assets/icons/svc-sensory.png", label: "Sensory Processing", selected: false, description: "Sensory integration & regulation strategies" },
+  { id: "assistive-tech", icon: "🦾", iconImg: "/assets/icons/svc-assistive-tech.png", label: "Assistive Tech", selected: false, description: "AT assessment, prescription & training" },
+  { id: "capacity-building", icon: "📈", iconImg: "/assets/icons/svc-capacity-building.png", label: "Capacity Building", selected: false, description: "Building independence & functional skills" },
+  { id: "carer-training", icon: "📚", iconImg: "/assets/icons/svc-carer-training.png", label: "Carer Training", selected: false, description: "Coaching families & carers in therapeutic strategies" },
+];
+
 const ALL_AVAILABLE_SERVICES: ServiceItem[] = [
   { id: "personal-care",   icon: "🤲", iconImg: "/assets/icons/svc-personal-care.png",        label: "Personal Care",      selected: false, description: "Personal hygiene & daily routines" },
   { id: "emotional",       icon: "🌿", iconImg: "/assets/icons/svc-emotional.png",    label: "Emotional Support",  selected: false, description: "Mental wellbeing & companionship" },
@@ -156,7 +179,9 @@ function loadProfileFromURL(): Partial<ProfileData> {
         if (storedParams.get("title"))     overrides.title = storedParams.get("title")!;
         if (storedParams.get("services")) {
           const ids = storedParams.get("services")!.split(",");
-          overrides.services = ALL_AVAILABLE_SERVICES.map(s => ({ ...s, selected: ids.includes(s.id) }));
+          const storedRole = storedParams.get("roleType") || "support-worker";
+          const storedCatalogue = storedRole === "allied-health" ? ALLIED_HEALTH_SERVICES : ALL_AVAILABLE_SERVICES;
+          overrides.services = storedCatalogue.map(s => ({ ...s, selected: ids.includes(s.id) }));
         }
         if (storedParams.get("exp")) {
           const pairs = storedParams.get("exp")!.split(",").map((p: string) => p.split(":"));
@@ -252,7 +277,9 @@ function loadProfileFromURL(): Partial<ProfileData> {
   if (params.get("title")) overrides.title = params.get("title")!;
   if (params.get("services")) {
     const ids = params.get("services")!.split(",");
-    overrides.services = ALL_AVAILABLE_SERVICES.map(s => ({ ...s, selected: ids.includes(s.id) }));
+    const roleForServices = params.get("roleType") || "support-worker";
+    const serviceCatalogue = roleForServices === "allied-health" ? ALLIED_HEALTH_SERVICES : ALL_AVAILABLE_SERVICES;
+    overrides.services = serviceCatalogue.map(s => ({ ...s, selected: ids.includes(s.id) }));
   }
   if (params.get("exp")) {
     const pairs = params.get("exp")!.split(",").map(p => p.split(":"));
