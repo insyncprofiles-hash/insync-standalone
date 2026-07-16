@@ -581,6 +581,7 @@ export default function ClientView() {
     },
     yearsExperience: "",
     customExperience: "",
+    resources: [],
     ...urlOverrides,
   };
 

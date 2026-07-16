@@ -77,7 +77,8 @@ export default function VoiceControl({
   const [toast, setToast] = useState<string>("");
   const [showHelp, setShowHelp] = useState(false);
   const [lastTranscript, setLastTranscript] = useState<string>("");
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null);
   const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const restartTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeRef = useRef(false);
@@ -111,19 +112,18 @@ export default function VoiceControl({
 
   const startListening = useCallback(() => {
     if (!supported) return;
-    const SpeechRecognition =
-      (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition ||
-      window.SpeechRecognition;
-    const rec = new SpeechRecognition();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const SR: any = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+    const rec = new SR();
     rec.continuous = true;
     rec.interimResults = false;
     rec.lang = "en-AU";
     rec.maxAlternatives = 3;
 
-    rec.onresult = (e: SpeechRecognitionEvent) => {
-      const results = Array.from(e.results).slice(e.resultIndex);
-      for (const result of results) {
-        const transcripts = Array.from(result).map(r => r.transcript);
+    rec.onresult = (e: any) => {
+      const results = Array.from(e.results as any[]).slice(e.resultIndex);
+      for (const result of results as any[]) {
+        const transcripts = Array.from(result as any[]).map((r: any) => r.transcript);
         setLastTranscript(transcripts[0]);
         for (const t of transcripts) {
           const cmd = matchCommand(t);
@@ -136,7 +136,7 @@ export default function VoiceControl({
       }
     };
 
-    rec.onerror = (e: SpeechRecognitionErrorEvent) => {
+    rec.onerror = (e: any) => {
       if (e.error === "not-allowed") {
         showToast("⚠️ Microphone permission needed");
         setActive(false);
