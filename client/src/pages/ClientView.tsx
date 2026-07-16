@@ -958,9 +958,10 @@ export default function ClientView() {
                         aria-label={`Play ${profile.name} intro video`}
                       >
                         <img
-                          src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`}
+                          src={`https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`}
                           alt={`${profile.name} intro video thumbnail`}
-                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+                          onError={(e) => { (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`; }}
                         />
                         {/* Dark overlay */}
                         <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.25)" }} />
