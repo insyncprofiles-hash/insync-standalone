@@ -1052,16 +1052,16 @@ export default function Landing() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "linear-gradient(135deg, #dceeff 0%, #f7e0f5 45%, #fff3c8 100%)",
+                background: "linear-gradient(135deg, #f5c842 0%, #f97316 100%)",
                 color: "#1a2e4a",
-                fontSize: "13px",
+                fontSize: "14px",
                 fontWeight: 800,
                 textDecoration: "none",
-                padding: "10px 22px",
+                padding: "13px 28px",
                 borderRadius: "99px",
-                border: "1.5px solid rgba(180,160,220,0.50)",
-                boxShadow: "0 4px 20px rgba(147,100,200,0.18)",
-                letterSpacing: "0.01em",
+                border: "none",
+                boxShadow: "0 6px 28px rgba(245,200,66,0.45), 0 2px 8px rgba(0,0,0,0.25)",
+                letterSpacing: "0.02em",
               }}
             >
               <span style={{ fontSize: "14px" }} aria-hidden="true">📱</span>
