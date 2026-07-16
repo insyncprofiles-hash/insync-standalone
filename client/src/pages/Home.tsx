@@ -809,17 +809,17 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
           {selectedServices.length > 0 && (
             <div style={{ padding: '8px 20px 20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-around', gap: '6px', flexWrap: 'wrap' }}>
-                {selectedServices.slice(0, 4).map((svc, i) => {
-                  const CIRCLE_COLORS = ['#fce4ec','#e3f2fd','#e8f5e9','#fff3e0'];
-                  const TEXT_COLORS  = ['#880e4f','#0d47a1','#1b5e20','#e65100'];
-                  const isUp = i % 2 === 0;
-                  return (
-                    <div key={svc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', flex: '1 1 60px', minWidth: '60px', maxWidth: '80px', marginTop: isUp ? '0px' : '24px' }}>
-                      <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: CIRCLE_COLORS[i % CIRCLE_COLORS.length], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{svc.icon}</div>
-                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: TEXT_COLORS[i % TEXT_COLORS.length], textAlign: 'center', margin: 0, lineHeight: 1.25, maxWidth: '72px' }}>{svc.label}</p>
-                    </div>
-                  );
-                })}
+                {selectedServices.slice(0, 4).map((svc) => (
+                  <div key={svc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '7px', flex: '1 1 64px', minWidth: '60px', maxWidth: '80px' }}>
+                    <img
+                      src={svc.iconImg || `/assets/icons/svc-${svc.id}.png`}
+                      alt={svc.label}
+                      style={{ width: '64px', height: '64px', borderRadius: '12px', objectFit: 'cover', display: 'block' }}
+                      onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    />
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: '#1a5fa8', textAlign: 'center', margin: 0, lineHeight: 1.25, maxWidth: '76px' }}>{svc.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -967,25 +967,18 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
         <DemoThreadSection num={++threadNum} icon="🤝" title="Services" subtitle="The supports I provide and who I support.">
           <div style={{ paddingTop: '16px' }}>
             {selectedServices.length > 0 ? (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {selectedServices.map((svc, i) => {
-                  const PASTEL_PILLS = [
-                    { bg: '#dbeafe', border: '#93c5fd', text: '#1e3a5f' },
-                    { bg: '#dcfce7', border: '#86efac', text: '#14532d' },
-                    { bg: '#fef3c7', border: '#fcd34d', text: '#78350f' },
-                    { bg: '#f3e8ff', border: '#c4b5fd', text: '#4c1d95' },
-                    { bg: '#fee2e2', border: '#fca5a5', text: '#7f1d1d' },
-                    { bg: '#ccfbf1', border: '#5eead4', text: '#134e4a' },
-                    { bg: '#fce7f3', border: '#f9a8d4', text: '#831843' },
-                  ];
-                  const p = PASTEL_PILLS[i % PASTEL_PILLS.length];
-                  return (
-                    <div key={svc.id} style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '8px 14px', borderRadius: '20px', background: p.bg, border: `1.5px solid ${p.border}` }}>
-                      <span style={{ fontSize: '16px' }}>{svc.icon}</span>
-                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 600, color: p.text }}>{svc.label}</span>
-                    </div>
-                  );
-                })}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', paddingTop: '4px' }}>
+                {selectedServices.map((svc) => (
+                  <div key={svc.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', width: '68px' }}>
+                    <img
+                      src={svc.iconImg || `/assets/icons/svc-${svc.id}.png`}
+                      alt={svc.label}
+                      style={{ width: '56px', height: '56px', borderRadius: '12px', objectFit: 'cover', display: 'block' }}
+                      onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    />
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: '#1a5fa8', textAlign: 'center', lineHeight: 1.2 }}>{svc.label}</span>
+                  </div>
+                ))}
               </div>
             ) : <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '14px', color: '#7a9b7e', margin: 0 }}>No services listed yet.</p>}
           </div>
