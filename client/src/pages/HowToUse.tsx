@@ -45,7 +45,7 @@ const SECTIONS = [
     steps: [
       {
         number: "02b",
-        icon: "🎭",
+        icon: "__PEOPLE__",
         title: "Choose Your Role Type",
         advantage: "The editor adapts to your role — services catalogue, section labels, and language all change to match what you actually do.",
         detail: `The very first thing to do in the editor is select your role under "I am a...":\n\n🤲 Support Worker — NDIS and aged care support workers. You get the full NDIS services catalogue (20 categories), disability experience areas, and support-focused language throughout.\n\n🩺 Allied Health Practitioner — Occupational therapists, physiotherapists, speech pathologists, psychologists, and other allied health professionals. You get a clinical services catalogue, AHPRA registration credential badge, and professional referral-focused language.\n\n🗺 Support Coordinator / LAC — Support coordinators and Local Area Coordinators. You get a coordination services catalogue, NDIS registration credential options, and language focused on plan management and participant connection.\n\nChanging your role updates the services catalogue, section descriptions, and sharing language automatically. You can switch roles at any time — your other profile details are preserved.`,
@@ -483,7 +483,18 @@ export default function HowToUse() {
                           boxShadow: isOpen ? `0 2px 12px ${accent}40` : "none",
                         }}
                       >
-                        {isOpen ? step.icon : step.number}
+                        {isOpen ? (
+                          step.icon === "__PEOPLE__" ? (
+                            <svg width="28" height="22" viewBox="0 0 22 16" fill="currentColor" aria-hidden="true">
+                              <circle cx="11" cy="4" r="2.8" />
+                              <path d="M6.5 16c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5" />
+                              <circle cx="4" cy="5" r="2.2" opacity="0.75" />
+                              <path d="M0 16c0-2 1.6-3.6 4-3.6" opacity="0.75" />
+                              <circle cx="18" cy="5" r="2.2" opacity="0.75" />
+                              <path d="M22 16c0-2-1.6-3.6-4-3.6" opacity="0.75" />
+                            </svg>
+                          ) : step.icon
+                        ) : step.number}
                       </span>
                       <div className="flex-1 min-w-0">
                         <p
