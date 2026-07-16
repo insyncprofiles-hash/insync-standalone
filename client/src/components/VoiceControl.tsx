@@ -91,7 +91,11 @@ export default function VoiceControl({
 
   const executeCommand = useCallback((action: string) => {
     switch (action) {
-      case "play_video": onPlayVideo(); break;
+      case "play_video":
+        // Scroll to top so video is visible, then play
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => onPlayVideo(), 700);
+        break;
       case "scroll_services": onScrollTo("thread-services"); break;
       case "scroll_experience": onScrollTo("thread-experience"); break;
       case "scroll_approach": onScrollTo("thread-approach"); break;
