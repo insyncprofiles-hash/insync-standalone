@@ -488,9 +488,14 @@ export default function AboutMeEditor() {
           {profileType !== null && (
             <button
               onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
-              style={{ background: "none", border: "none", fontFamily: C.bodyFont, fontSize: "12px", color: "#fde68a", cursor: "pointer", padding: 0, textDecoration: "underline" }}
+              style={{
+                background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.5)",
+                fontFamily: C.headFont, fontWeight: 800, fontSize: "13px",
+                color: "#fffbeb", cursor: "pointer", padding: "6px 14px",
+                borderRadius: "20px",
+              }}
             >
-              Change type
+              ↩ Change type
             </button>
           )}
           <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
@@ -633,6 +638,29 @@ export default function AboutMeEditor() {
 
       {/* Tab content */}
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "24px 20px" }}>
+
+        {/* Profile type indicator — always visible so user knows what mode they're in */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          background: isAgedCare ? "#fef3c7" : C.accentLight,
+          border: `2px solid ${isAgedCare ? "#a16207" : C.border}`,
+          borderRadius: "14px", padding: "12px 18px", marginBottom: "24px",
+        }}>
+          <span style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: isAgedCare ? "#92400e" : C.accent }}>
+            {isAgedCare ? "🏥 Aged Care profile" : "♿ Disability / NDIS profile"}
+          </span>
+          <button
+            onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
+            style={{
+              background: isAgedCare ? "#92400e" : C.accent,
+              border: "none", fontFamily: C.headFont, fontWeight: 800,
+              fontSize: "13px", color: "#fffbeb", cursor: "pointer",
+              padding: "6px 16px", borderRadius: "20px",
+            }}
+          >
+            ↩ Change
+          </button>
+        </div>
 
         {/* WHO I AM */}
         {activeTab === "who" && (
