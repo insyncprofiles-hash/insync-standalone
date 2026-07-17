@@ -177,11 +177,12 @@ export default function VoiceControl({
     };
 
     rec.onend = () => {
-      // Auto-restart if still active
+      // Auto-restart if still active — use startListeningRef to create a FRESH instance
+      // (calling rec.start() on an aborted instance throws and breaks the loop)
       if (activeRef.current) {
         restartTimerRef.current = setTimeout(() => {
           if (activeRef.current) {
-            try { rec.start(); } catch {}
+            startListeningRef.current?.();
           }
         }, 300);
       }
