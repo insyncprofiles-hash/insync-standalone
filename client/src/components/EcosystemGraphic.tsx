@@ -24,8 +24,8 @@ function nodePos(r: number, angleDeg: number) {
 
 // Profile types — 5 nodes, 72° apart
 const profileTypes = [
-  { id: "support-worker",       label: ["Support Worker", "Profile"],            emoji: "🤝", color: "#4b7aa8", colorLight: "#7aafd4", colorDark: "#1e3d58", textColor: "#ffffff", href: "/demo",            angle: -90 },
-  { id: "allied-health",        label: ["Allied Health", "Profile"],             emoji: "🩺", color: "#c89e6c", colorLight: "#e8c98a", colorDark: "#7a5820", textColor: "#1a0800", href: "/alliedhealth/demo", angle: -18 },
+  { id: "support-worker",       label: ["Support Worker", "Profile"],            emoji: "🤝", color: "#4b7aa8", colorLight: "#7aafd4", colorDark: "#1e3d58", textColor: "#ffffff", href: "/view",            angle: -90 },
+  { id: "allied-health",        label: ["Allied Health", "Profile"],             emoji: "🩺", color: "#c89e6c", colorLight: "#e8c98a", colorDark: "#7a5820", textColor: "#1a0800", href: "/alliedhealth/view", angle: -18 },
   { id: "coordinator",          label: ["Support Coordinator", "Profile"],       emoji: "📋", color: "#9f5e38", colorLight: "#c8845a", colorDark: "#4a2010", textColor: "#ffffff", href: "/coordinators",    angle: 54  },
   { id: "about-me-disability",  label: ["About Me Profile", "(Disability/NDIS)"],emoji: "♿", color: "#746e4a", colorLight: "#a09a70", colorDark: "#302e18", textColor: "#ffffff", href: "/about-me/editor", angle: 126 },
   { id: "about-me-aged",        label: ["About Me Profile", "(Aged Care)"],      emoji: "🌿", color: "#6b3fa0", colorLight: "#9a6ad0", colorDark: "#2e1060", textColor: "#ffffff", href: "/about-me/editor", angle: 198 },
