@@ -635,40 +635,56 @@ export default function Landing() {
           }}
           aria-labelledby="hero-heading"
         >
-          {/* ── DIAGONAL CORNER STICKER: About Me Profile ── */}
+          {/* ── IRREGULAR STARBURST STICKER: About Me Profile ── */}
           <a
             href="/about-me/editor"
-            aria-label="Create a free About Me Profile for NDIS participants and aged persons"
+            aria-label="About Me Profile — A free resource for NDIS Participants and Aged Persons"
             style={{
               position: "absolute",
-              bottom: "60px",
-              right: "-12px",
+              bottom: "40px",
+              right: "-8px",
               zIndex: 10,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              width: "148px",
-              height: "148px",
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
-              boxShadow: "0 8px 40px rgba(245,200,66,0.55), 0 2px 12px rgba(0,0,0,0.25)",
+              width: "160px",
+              height: "160px",
               textDecoration: "none",
-              transform: "rotate(12deg)",
-              border: "3px solid rgba(255,255,255,0.35)",
               cursor: "pointer",
-              transition: "transform 200ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms",
+              transform: "rotate(10deg)",
+              transition: "transform 200ms cubic-bezier(0.23,1,0.32,1)",
+              filter: "drop-shadow(0 8px 24px rgba(245,200,66,0.60)) drop-shadow(0 2px 8px rgba(0,0,0,0.30))",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(12deg) scale(1.08)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(12deg) scale(1)"; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(10deg) scale(1.10)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(10deg) scale(1)"; }}
           >
-            <span style={{ fontSize: "22px", lineHeight: 1, marginBottom: "4px" }}>✨</span>
-            <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 900, fontSize: "11px", color: "#0f4c45", textAlign: "center", lineHeight: 1.25, letterSpacing: "0.01em" }}>
-              Free<br />About Me<br />Profile
-            </span>
-            <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "9px", color: "#0f4c45", textAlign: "center", lineHeight: 1.3, marginTop: "5px", opacity: 0.8 }}>
-              NDIS Participants<br />&amp; Aged Persons
-            </span>
+            {/* Irregular starburst SVG background */}
+            <svg viewBox="0 0 160 160" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} aria-hidden="true">
+              <defs>
+                <linearGradient id="stickerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#f5c842" />
+                  <stop offset="100%" stopColor="#f59e0b" />
+                </linearGradient>
+              </defs>
+              {/* Irregular starburst / blob path */}
+              <path
+                d="M80,8 L91,34 L118,22 L108,48 L136,52 L116,70 L134,92 L108,90 L106,118 L82,104 L62,124 L58,96 L30,104 L36,78 L10,66 L34,54 L24,28 L52,38 Z"
+                fill="url(#stickerGrad)"
+                stroke="rgba(255,255,255,0.40)"
+                strokeWidth="2.5"
+              />
+            </svg>
+            {/* Text content centred over the starburst */}
+            <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2px", padding: "0 14px", textAlign: "center" }}>
+              <span style={{ fontSize: "20px", lineHeight: 1 }}>✨</span>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 900, fontSize: "12px", color: "#0f4c45", lineHeight: 1.2, letterSpacing: "0.01em" }}>
+                About Me<br />Profile
+              </span>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "8.5px", color: "#0f4c45", lineHeight: 1.3, marginTop: "3px", opacity: 0.85 }}>
+                A Resource for<br />NDIS Participants<br />&amp; Aged Persons
+              </span>
+            </div>
           </a>
 
           {/* Glow orbs */}
