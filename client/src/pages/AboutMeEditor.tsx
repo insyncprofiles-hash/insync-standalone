@@ -285,6 +285,7 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
 
 export default function AboutMeEditor() {
   const [profile, setProfile] = useState<AboutMeProfile>(EMPTY);
+  const [profileType, setProfileType] = useState<"disability" | "agedcare" | null>(null);
   const [activeTab, setActiveTab] = useState("who");
   const [shareUrl, setShareUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
@@ -301,6 +302,8 @@ export default function AboutMeEditor() {
       if (stored) setProfile(JSON.parse(stored));
       const photo = localStorage.getItem(PHOTO_KEY);
       if (photo) setProfile(p => ({ ...p, photo }));
+      const pt = localStorage.getItem("insync_aboutme_type");
+      if (pt === "disability" || pt === "agedcare") setProfileType(pt);
     } catch {}
   }, []);
 
@@ -406,17 +409,24 @@ export default function AboutMeEditor() {
     return { id, listeningFor, onDictate: startDictation };
   }, [listeningFor, startDictation]);
 
+  function chooseProfileType(type: "disability" | "agedcare") {
+    setProfileType(type);
+    try { localStorage.setItem("insync_aboutme_type", type); } catch {}
+  }
+
+  const isAgedCare = profileType === "agedcare";
+
   const tabs = [
-    { id: "who",        label: "Who I Am",       emoji: "👤" },
-    { id: "emergency",  label: "Emergency",      emoji: "🆘" },
-    { id: "comms",      label: "Communication",  emoji: "💬" },
-    { id: "video",      label: "When I'm Well",  emoji: "🎬" },
-    { id: "function",   label: "What I Can Do",  emoji: "💪" },
-    { id: "triggers",   label: "Triggers",       emoji: "🌿" },
-    { id: "approaches", label: "Approaches",     emoji: "🤝" },
-    { id: "prefs",      label: "Preferences",    emoji: "🌻" },
-    { id: "ndis",       label: "NDIS Info",      emoji: "📋" },
-    { id: "share",      label: "Share",          emoji: "🔗" },
+    { id: "who",        label: "Who I Am",                        emoji: "👤" },
+    { id: "emergency",  label: "Emergency",                       emoji: "🆘" },
+    { id: "comms",      label: "Communication",                   emoji: "💬" },
+    { id: "video",      label: "When I'm Well",                   emoji: "🎬" },
+    { id: "function",   label: "What I Can Do",                   emoji: "💪" },
+    { id: "triggers",   label: "Triggers",                        emoji: "🌿" },
+    { id: "approaches", label: "Approaches",                      emoji: "🤝" },
+    { id: "prefs",      label: "Preferences",                     emoji: "🌻" },
+    { id: "ndis",       label: isAgedCare ? "Care Info" : "NDIS Info", emoji: "📋" },
+    { id: "share",      label: "Share",                           emoji: "🔗" },
   ];
 
   return (
@@ -435,6 +445,14 @@ export default function AboutMeEditor() {
               Saved
             </span>
           )}
+          {profileType !== null && (
+            <button
+              onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
+              style={{ background: "none", border: "none", fontFamily: C.bodyFont, fontSize: "12px", color: "#fde68a", cursor: "pointer", padding: 0, textDecoration: "underline" }}
+            >
+              Change type
+            </button>
+          )}
           <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
             Back to InSync Profiles
           </Link>
@@ -449,7 +467,109 @@ export default function AboutMeEditor() {
         </p>
       </div>
 
-      {/* Tab bar */}
+      {/* ── INTRO / PURPOSE SCREEN ─────────────────────────────── */}
+      {profileType === null && (
+        <div style={{ maxWidth: "720px", margin: "0 auto", padding: "32px 20px" }}>
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
+            <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "26px", color: C.accent, margin: "0 0 10px" }}>
+              Who is this profile for?
+            </p>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accentMid, margin: 0 }}>
+              Choose the type that best describes the person. You can always change this later.
+            </p>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+
+            {/* Card 1 — Disability / NDIS */}
+            <button
+              onClick={() => chooseProfileType("disability")}
+              style={{
+                width: "100%", textAlign: "left", background: "#ffffff",
+                border: `3px solid ${C.border}`, borderRadius: "20px",
+                padding: "28px 28px", cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(15,76,69,0.10)",
+                transition: "transform 150ms ease-out, box-shadow 150ms ease-out",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
+                <span style={{ fontSize: "36px" }}>♿</span>
+                <div>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: C.accent, margin: 0 }}>
+                    Disability / NDIS
+                  </p>
+                  <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, margin: "4px 0 0" }}>
+                    For NDIS participants, people with disability, and their families
+                  </p>
+                </div>
+              </div>
+              <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "13px", color: C.accent, margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                Example uses
+              </p>
+              <ul style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#44403c", margin: 0, paddingLeft: "20px", lineHeight: "1.7" }}>
+                <li>Hospital admission — give nursing staff instant context about communication and care needs</li>
+                <li>New support worker introduction — share before the first shift so they arrive prepared</li>
+                <li>NDIS provider intake — replace lengthy intake forms with a personal, human profile</li>
+                <li>School or therapy transition — help new teachers and therapists understand the person quickly</li>
+                <li>Respite or short-term accommodation — ensure consistent care from day one</li>
+              </ul>
+              <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
+                <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: C.accent, padding: "10px 24px", borderRadius: "20px" }}>
+                  Choose Disability / NDIS
+                </span>
+              </div>
+            </button>
+
+            {/* Card 2 — Aged Care */}
+            <button
+              onClick={() => chooseProfileType("agedcare")}
+              style={{
+                width: "100%", textAlign: "left", background: "#ffffff",
+                border: "3px solid #a16207", borderRadius: "20px",
+                padding: "28px 28px", cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(120,80,0,0.10)",
+                transition: "transform 150ms ease-out, box-shadow 150ms ease-out",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
+                <span style={{ fontSize: "36px" }}>🌿</span>
+                <div>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: "#78350f", margin: 0 }}>
+                    Aged Care
+                  </p>
+                  <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#92400e", margin: "4px 0 0" }}>
+                    For aged care residents, Home Care Package recipients, and Support at Home (SAH) recipients
+                  </p>
+                </div>
+              </div>
+              <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "13px", color: "#78350f", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                Example uses
+              </p>
+              <ul style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#44403c", margin: 0, paddingLeft: "20px", lineHeight: "1.7" }}>
+                <li>Residential care admission — help facility staff understand the person before they arrive</li>
+                <li>New home care worker — share before the first visit so they know routines, preferences and needs</li>
+                <li>Hospital stay — give ward staff key information about communication, mobility and daily care</li>
+                <li>Transition between services — carry personal context across providers without repeating everything</li>
+                <li>Respite care — ensure consistent, person-centred care during short stays</li>
+              </ul>
+              <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
+                <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: "#92400e", padding: "10px 24px", borderRadius: "20px" }}>
+                  Choose Aged Care
+                </span>
+              </div>
+            </button>
+
+          </div>
+
+          <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, textAlign: "center", marginTop: "24px" }}>
+            Both profile types are completely free. No login required.
+          </p>
+        </div>
+      )}
+
+      {/* Tab bar — only shown once a type is selected */}
+      {profileType !== null && (
+        <>
       <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "0 4px", gap: "2px" }}>
         {tabs.map(tab => (
           <button
@@ -518,7 +638,14 @@ export default function AboutMeEditor() {
               {...dp("gender")}
             />
             <Field label="Date of Birth" hint="e.g. 12 March 1985" value={profile.dob} onChange={v => set("dob", v)} {...dp("dob")} />
-            <Field label="Primary Disability / Diagnosis" hint="Broad description only — e.g. Autism, Cerebral Palsy, Dementia. Do not include clinical detail." value={profile.diagnosis} onChange={v => set("diagnosis", v)} multiline rows={2} {...dp("diagnosis")} />
+            <Field
+              label={isAgedCare ? "Health and Mobility Notes" : "Primary Disability / Diagnosis"}
+              hint={isAgedCare ? "Broad description only — e.g. Dementia, Parkinson's, post-stroke. Do not include clinical detail." : "Broad description only — e.g. Autism, Cerebral Palsy, Dementia. Do not include clinical detail."}
+              value={profile.diagnosis}
+              onChange={v => set("diagnosis", v)}
+              multiline rows={2}
+              {...dp("diagnosis")}
+            />
           </div>
         )}
 
@@ -698,20 +825,52 @@ export default function AboutMeEditor() {
         {/* NDIS INFO */}
         {activeTab === "ndis" && (
           <div>
-            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>NDIS Information</h2>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "8px" }}>Optional — for sharing with NDIS providers and coordinators.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>
+              {isAgedCare ? "Care Information" : "NDIS Information"}
+            </h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "8px" }}>
+              {isAgedCare ? "Optional — for sharing with aged care providers and case managers." : "Optional — for sharing with NDIS providers and coordinators."}
+            </p>
             <div style={{ background: C.redLight, border: `2px solid ${C.redBorder}`, borderRadius: "12px", padding: "14px", marginBottom: "24px" }}>
               <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.red, margin: "0 0 4px" }}>Privacy note</p>
               <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.red, margin: 0 }}>
-                Your NDIS number and plan details will be visible to anyone with your profile link. Only include this if you're comfortable sharing it with providers.
+                {isAgedCare
+                  ? "Your care ID and plan details will be visible to anyone with your profile link. Only include this if you're comfortable sharing it with providers."
+                  : "Your NDIS number and plan details will be visible to anyone with your profile link. Only include this if you're comfortable sharing it with providers."}
               </p>
             </div>
 
-            <Field label="NDIS Number" value={profile.ndisNumber} onChange={v => set("ndisNumber", v)} {...dp("ndisNumber")} />
-            <Field label="Plan Dates" hint="e.g. 1 July 2025 to 30 June 2026" value={profile.planDates} onChange={v => set("planDates", v)} {...dp("planDates")} />
-            <Field label="Support Coordinator Name" value={profile.coordinatorName} onChange={v => set("coordinatorName", v)} {...dp("coordinatorName")} />
-            <Field label="Support Coordinator Phone" value={profile.coordinatorPhone} onChange={v => set("coordinatorPhone", v)} {...dp("coordinatorPhone")} />
-            <Field label="Support Coordinator Email" value={profile.coordinatorEmail} onChange={v => set("coordinatorEmail", v)} {...dp("coordinatorEmail")} />
+            <Field
+              label={isAgedCare ? "Care ID / Reference Number" : "NDIS Number"}
+              value={profile.ndisNumber}
+              onChange={v => set("ndisNumber", v)}
+              {...dp("ndisNumber")}
+            />
+            <Field
+              label={isAgedCare ? "Care Plan Dates" : "Plan Dates"}
+              hint="e.g. 1 July 2025 to 30 June 2026"
+              value={profile.planDates}
+              onChange={v => set("planDates", v)}
+              {...dp("planDates")}
+            />
+            <Field
+              label={isAgedCare ? "Case Manager Name" : "Support Coordinator Name"}
+              value={profile.coordinatorName}
+              onChange={v => set("coordinatorName", v)}
+              {...dp("coordinatorName")}
+            />
+            <Field
+              label={isAgedCare ? "Case Manager Phone" : "Support Coordinator Phone"}
+              value={profile.coordinatorPhone}
+              onChange={v => set("coordinatorPhone", v)}
+              {...dp("coordinatorPhone")}
+            />
+            <Field
+              label={isAgedCare ? "Case Manager Email" : "Support Coordinator Email"}
+              value={profile.coordinatorEmail}
+              onChange={v => set("coordinatorEmail", v)}
+              {...dp("coordinatorEmail")}
+            />
           </div>
         )}
 
@@ -823,6 +982,8 @@ export default function AboutMeEditor() {
         )}
 
       </div>
+        </>
+      )} {/* end profileType !== null */}
 
       {/* Footer */}
       <div style={{ background: C.accentLight, borderTop: `2px solid ${C.borderLight}`, padding: "28px 20px", textAlign: "center", marginTop: "40px" }}>
