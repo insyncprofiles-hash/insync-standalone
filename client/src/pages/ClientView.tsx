@@ -1357,7 +1357,7 @@ export default function ClientView() {
                 {selectedServices.map((svc) => (
                   <div key={svc.id} style={{
                     display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
-                    width: "80px",
+                    width: "90px",
                   }}>
                     {svc.iconImg ? (
                       <img src={svc.iconImg} alt={svc.label} style={{ width: "64px", height: "64px", borderRadius: "14px", objectFit: "cover", display: "block" }} />
@@ -1365,7 +1365,7 @@ export default function ClientView() {
                       <div style={{ width: "64px", height: "64px", borderRadius: "14px", background: "#1a5fa8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75em" }}>{svc.icon}</div>
                     )}
                     <span style={{
-                      fontFamily: "'Outfit', sans-serif", fontSize: "0.7em", fontWeight: 700,
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.9em", fontWeight: 700,
                       color: P.text, textAlign: "center", lineHeight: 1.25,
                     }}>{svc.label}</span>
                   </div>

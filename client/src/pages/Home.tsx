@@ -838,7 +838,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                       style={{ width: '64px', height: '64px', borderRadius: '12px', objectFit: 'cover', display: 'block' }}
                       onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                     />
-                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: '#1a5fa8', textAlign: 'center', margin: 0, lineHeight: 1.25, maxWidth: '76px' }}>{svc.label}</p>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, color: '#1a5fa8', textAlign: 'center', margin: 0, lineHeight: 1.25, maxWidth: '76px' }}>{svc.label}</p>
                   </div>
                 ))}
               </div>
@@ -997,7 +997,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                       style={{ width: '56px', height: '56px', borderRadius: '12px', objectFit: 'cover', display: 'block' }}
                       onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                     />
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 700, color: '#1a5fa8', textAlign: 'center', lineHeight: 1.2 }}>{svc.label}</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, color: '#1a5fa8', textAlign: 'center', lineHeight: 1.2 }}>{svc.label}</span>
                   </div>
                 ))}
               </div>

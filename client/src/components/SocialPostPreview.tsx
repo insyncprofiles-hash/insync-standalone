@@ -303,12 +303,12 @@ export default function SocialPostPreview({ profile, onServiceToggle, onSharePro
                 </div>
                 <span style={{
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: "10px",
+                  fontSize: "13px",
                   fontWeight: 600,
                   color: isSelected ? P.serviceLabel : P.textDim,
                   textAlign: "center",
                   lineHeight: 1.2,
-                  maxWidth: "56px",
+                  maxWidth: "68px",
                 }}>
                   {service.label}
                 </span>
