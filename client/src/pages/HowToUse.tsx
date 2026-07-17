@@ -115,6 +115,15 @@ const SECTIONS = [
         tags: ["Text size control", "High contrast", "Dyslexia font", "Screen reader", "Reduce motion"],
       },
       {
+        number: "09b",
+        icon: "🎤",
+        title: "Voice Control — Navigate the Profile Hands-Free",
+        advantage: "Participants can navigate the entire profile using only their voice — no tapping, no scrolling, no typing required.",
+        detail: "Tap the blue VOICE button in the black banner at the top of the profile to activate voice control. The button turns blue and the mic begins listening immediately.\n\nSay 'help' at any time to see the full command list on screen.\n\nNavigation commands:\n- 'services' - jump to Services section\n- 'experience' - jump to Experience section\n- 'how I show up' - jump to Approach section\n- 'availability' - jump to Availability section\n- 'resources' - jump to Resources section\n- 'contact' - jump to Contact section\n- 'top' - go back to the top of the page\n- 'scroll down' or 'down' - scroll the page down\n- 'scroll up' or 'up' - scroll the page up\n\nMedia commands:\n- 'play video' - play the intro video\n\nAccessibility commands:\n- 'read page' - read the entire page aloud\n- 'stop' - stop reading aloud\n- 'AAC board' - open the AAC communication board\n\nContact commands:\n- 'message' - open Message to Begin email\n- 'feedback' - open feedback email\n\nHelp:\n- 'help' - show the full command guide overlay\n\nVoice control works on Android Chrome and most modern browsers.",
+        tip: "Tell participants about voice control in your bio or caption: My profile has voice navigation - just tap VOICE and say what you need. This is especially valuable for participants with motor impairments, low vision, or anyone who finds touchscreens difficult.",
+        tags: ["Hands-free navigation", "Android Chrome", "Say help for guide"],
+      },
+      {
         number: "10",
         icon: "🗣️",
         title: "AAC Communication Board",
