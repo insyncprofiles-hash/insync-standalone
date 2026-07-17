@@ -8,7 +8,7 @@ import { useState, useRef, useCallback } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 import VoiceControl from "@/components/VoiceControl";
-import AACBoard from "@/components/AACBoard";
+import { useA11y } from "@/hooks/useA11y";
 
 // ── HELPERS ───────────────────────────────────────────────────
 
@@ -130,8 +130,8 @@ export default function AboutMeView() {
 
   // Accessibility state
   const [voiceActive, setVoiceActive] = useState(false);
-  const [showAACBoard, setShowAACBoard] = useState(false);
   const voiceToggleRef = useRef<(() => void) | null>(null);
+  const { wrapperStyle: a11yStyle } = useA11y();
 
   const handleVoiceToggle = useCallback(() => {
     voiceToggleRef.current?.();
@@ -140,13 +140,12 @@ export default function AboutMeView() {
   // Colours
   const teal = "#0d9488";
   const tealDark = "#0f766e";
-  const sage = "#4ade80";
-  const warmWhite = "#f0fdf4";
+  const greyWhite = "#f5f5f5";
   const cardBg = "#ffffff";
 
   if (!name) {
     return (
-      <div style={{ minHeight: "100vh", background: warmWhite, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
+      <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
         <div style={{ textAlign: "center", maxWidth: "400px" }}>
           <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "24px", color: "#134e4a", marginBottom: "12px" }}>No profile found</p>
           <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", color: "#5eead4", marginBottom: "24px" }}>
@@ -161,7 +160,7 @@ export default function AboutMeView() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: warmWhite, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: greyWhite, fontFamily: a11yStyle.fontFamily || "'Nunito', sans-serif", fontSize: a11yStyle.fontSize, filter: a11yStyle.filter }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Accessibility toolbar */}
@@ -175,7 +174,7 @@ export default function AboutMeView() {
       <VoiceControl
         onScrollTo={() => {}}
         onPlayVideo={() => {}}
-        onOpenAAC={() => setShowAACBoard(true)}
+        onOpenAAC={() => {}}
         onOpenAccessibility={() => {}}
         onMessage={() => {}}
         onFeedback={() => {}}
@@ -184,9 +183,6 @@ export default function AboutMeView() {
         onToggleReady={fn => { voiceToggleRef.current = fn; }}
         onActiveChange={setVoiceActive}
       />
-
-      {/* AAC Board */}
-      {showAACBoard && <AACBoard onClose={() => setShowAACBoard(false)} />}
 
       {/* Header banner */}
       <div style={{ background: `linear-gradient(135deg, ${teal} 0%, ${tealDark} 100%)`, padding: "28px 20px 32px" }}>

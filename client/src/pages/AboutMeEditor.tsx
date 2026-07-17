@@ -133,7 +133,7 @@ function useDictation() {
 // ── COLOURS ───────────────────────────────────────────────────
 
 const C = {
-  bg: "#fffbeb",           // pale gold background
+  bg: "#f5f5f5",           // grey-white background
   card: "#ffffff",
   border: "#0f766e",       // deep teal border
   borderLight: "#99f6e4",  // light teal
