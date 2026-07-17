@@ -14,6 +14,8 @@ export interface VoiceControlCallbacks {
   workerName?: string;
   /** Called when parent wants to toggle voice (button is now in AccessibilityToolbar) */
   onToggleReady?: (toggle: () => void) => void;
+  /** Called whenever the real active state changes so parent button stays in sync */
+  onActiveChange?: (active: boolean) => void;
 }
 
 // ── Command definitions ────────────────────────────────────────
@@ -71,9 +73,17 @@ export default function VoiceControl({
   workerEmail,
   workerName,
   onToggleReady,
+  onActiveChange,
 }: VoiceControlCallbacks) {
   const [supported] = useState(() => true);
-  const [active, setActive] = useState(false);
+  const [active, setActiveRaw] = useState(false);
+  const onActiveChangeRef = useRef(onActiveChange);
+  useEffect(() => { onActiveChangeRef.current = onActiveChange; }, [onActiveChange]);
+  // Always notify parent when active state changes
+  const setActive = useCallback((val: boolean) => {
+    setActiveRaw(val);
+    onActiveChangeRef.current?.(val);
+  }, []);
   const [toast, setToast] = useState<string>("");
   const [showHelp, setShowHelp] = useState(false);
   const [lastTranscript, setLastTranscript] = useState<string>("");

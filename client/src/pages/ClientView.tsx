@@ -729,19 +729,11 @@ export default function ClientView() {
   const [showVoiceTip, setShowVoiceTip] = useState(false);
   const voiceTipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const handleVoiceToggle = useCallback(() => {
-    // Always toggle immediately — tooltip is informational only, not a gate
+    // Just call the toggle — VoiceControl will call onActiveChange with the real new state
     if (voiceTipTimerRef.current) clearTimeout(voiceTipTimerRef.current);
     setShowVoiceTip(false);
     voiceToggleFnRef.current?.();
-    const nowActive = !voiceActive;
-    setVoiceActive(nowActive);
-    // Show tip on first activation only, auto-dismiss after 4s
-    if (!hasShownVoiceTip && nowActive) {
-      setShowVoiceTip(true);
-      setHasShownVoiceTip(true);
-      voiceTipTimerRef.current = setTimeout(() => setShowVoiceTip(false), 4000);
-    }
-  }, [hasShownVoiceTip, voiceActive]);
+  }, []);
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 400);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -1687,6 +1679,16 @@ export default function ClientView() {
         workerEmail={profile.email || undefined}
         workerName={profile.name || undefined}
         onToggleReady={(fn) => { voiceToggleFnRef.current = fn; }}
+        onActiveChange={(isActive) => {
+          setVoiceActive(isActive);
+          // Show tip on first activation only
+          if (isActive && !hasShownVoiceTip) {
+            setShowVoiceTip(true);
+            setHasShownVoiceTip(true);
+            if (voiceTipTimerRef.current) clearTimeout(voiceTipTimerRef.current);
+            voiceTipTimerRef.current = setTimeout(() => setShowVoiceTip(false), 4000);
+          }
+        }}
       />
 
       {/* ── AAC Board — opened via VoiceControl or accessibility panel ── */}
