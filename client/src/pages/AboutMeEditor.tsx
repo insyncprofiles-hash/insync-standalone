@@ -1020,28 +1020,6 @@ export default function AboutMeEditor() {
                   )}
                 </div>
 
-                {/* Full URL section */}
-                <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "20px", marginBottom: "24px" }}>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 10px" }}>Full Profile Link</p>
-                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                    <input
-                      readOnly
-                      value={shareUrl}
-                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.border}`, fontFamily: C.bodyFont, fontSize: "11px", color: "#1c1917", background: "#fff", outline: "none" }}
-                    />
-                    <button
-                      onClick={copyLink}
-                      style={{
-                        padding: "12px 20px", borderRadius: "12px", border: "none",
-                        background: copied ? "#16a34a" : C.teal, color: "#fff",
-                        fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", cursor: "pointer",
-                        transition: "background 200ms ease-out", whiteSpace: "nowrap",
-                      }}
-                    >
-                      {copied ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
 
                 <div style={{ background: "#ffffff", border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
                   <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: 0 }}>QR Code</p>
