@@ -7,7 +7,7 @@
    - Dictation for dropdown selection
    - Large tap targets, high contrast labels
    ============================================================ */
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "wouter";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -300,42 +300,54 @@ export default function AboutMeEditor() {
     } catch {}
   }, []);
 
+  // Debounced save — only write to localStorage 600ms after last change
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
-    try {
-      const { photo, ...rest } = profile;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
-      if (photo) localStorage.setItem(PHOTO_KEY, photo);
-    } catch {}
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      try {
+        const { photo, ...rest } = profile;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
+        if (photo) localStorage.setItem(PHOTO_KEY, photo);
+      } catch {}
+    }, 600);
+    return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
   }, [profile]);
 
+  // Debounced share URL update — same pattern
+  const urlTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
-    if (profile.name) {
-      const params = profileToParams(profile);
-      setShareUrl(`${window.location.origin}/about-me/view?${params}`);
-    } else {
-      setShareUrl("");
-    }
+    if (urlTimerRef.current) clearTimeout(urlTimerRef.current);
+    urlTimerRef.current = setTimeout(() => {
+      if (profile.name) {
+        const params = profileToParams(profile);
+        setShareUrl(`${window.location.origin}/about-me/view?${params}`);
+      } else {
+        setShareUrl("");
+      }
+    }, 600);
+    return () => { if (urlTimerRef.current) clearTimeout(urlTimerRef.current); };
   }, [profile]);
 
-  function set(field: keyof AboutMeProfile, value: string) {
+  const set = useCallback((field: keyof AboutMeProfile, value: string) => {
     setProfile(p => ({ ...p, [field]: value }));
-  }
+  }, []);
 
-  function setEC(index: number, field: keyof EmergencyContact, value: string) {
+  const setEC = useCallback((index: number, field: keyof EmergencyContact, value: string) => {
     setProfile(p => {
       const contacts = [...p.emergencyContacts];
       contacts[index] = { ...contacts[index], [field]: value };
       return { ...p, emergencyContacts: contacts };
     });
-  }
+  }, []);
 
-  function addEC() {
+  const addEC = useCallback(() => {
     setProfile(p => ({ ...p, emergencyContacts: [...p.emergencyContacts, { name: "", relationship: "", phone: "" }] }));
-  }
+  }, []);
 
-  function removeEC(index: number) {
+  const removeEC = useCallback((index: number) => {
     setProfile(p => ({ ...p, emergencyContacts: p.emergencyContacts.filter((_, i) => i !== index) }));
-  }
+  }, []);
 
   function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -349,10 +361,10 @@ export default function AboutMeEditor() {
     navigator.clipboard.writeText(shareUrl).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
   }
 
-  // Shared dictation props helper
-  function dp(id: string) {
+  // Shared dictation props helper — memoised so Field props are stable
+  const dp = useCallback((id: string) => {
     return { id, listeningFor, onDictate: startDictation };
-  }
+  }, [listeningFor, startDictation]);
 
   const tabs = [
     { id: "who",        label: "Who I Am",       emoji: "👤" },
