@@ -103,12 +103,22 @@ export default function VoiceControl({
   const executeCommand = useCallback((action: string) => {
     switch (action) {
       case "play_video":
-        // Scroll to top so video is visible, then play
-        // Mic stays on — YouTube iframe audio does not reliably trigger false commands
+        // Stop voice recognition immediately so the mic doesn't pick up
+        // YouTube audio and keep re-triggering play/pause
+        activeRef.current = false;
+        setActive(false);
+        if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
+        if (recognitionRef.current) {
+          recognitionRef.current.onend = null;
+          recognitionRef.current.onerror = null;
+          recognitionRef.current.onresult = null;
+          try { recognitionRef.current.abort(); } catch {}
+          recognitionRef.current = null;
+        }
         window.scrollTo({ top: 0, behavior: "smooth" });
         setTimeout(() => {
           onPlayVideo();
-          showToast("▶️ Playing video");
+          showToast("▶️ Playing video — voice control paused");
         }, 700);
         break;
       case "scroll_services": onScrollTo("thread-services"); break;
