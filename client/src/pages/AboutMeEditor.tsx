@@ -546,12 +546,12 @@ export default function AboutMeEditor() {
                 Example uses
               </p>
               <ul style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#44403c", margin: 0, paddingLeft: "20px", lineHeight: "1.7" }}>
-                <li>Residential care admission — help facility staff understand the person before they arrive</li>
                 <li>New home care worker — share before the first visit so they know routines, preferences and needs</li>
                 <li>Hospital stay — give ward staff key information about communication, mobility and daily care</li>
                 <li>Transition to Home — share needs and routines with incoming home support workers as the person returns home</li>
                 <li>Transition between services — carry personal context across providers without repeating everything</li>
                 <li>Respite care — ensure consistent, person-centred care during short stays</li>
+                <li>Residential care admission — help facility staff understand the person before they arrive</li>
               </ul>
               <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
                 <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: "#92400e", padding: "10px 24px", borderRadius: "20px" }}>
