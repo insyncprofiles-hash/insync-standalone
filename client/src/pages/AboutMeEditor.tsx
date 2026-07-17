@@ -538,7 +538,7 @@ export default function AboutMeEditor() {
                     Aged Care
                   </p>
                   <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#92400e", margin: "4px 0 0" }}>
-                    For aged care residents, Home Care Package recipients, and Support at Home (SAH) recipients
+                    For aged care residents, Support at Home (SAH) recipients, and people transitioning to home
                   </p>
                 </div>
               </div>
@@ -549,6 +549,7 @@ export default function AboutMeEditor() {
                 <li>Residential care admission — help facility staff understand the person before they arrive</li>
                 <li>New home care worker — share before the first visit so they know routines, preferences and needs</li>
                 <li>Hospital stay — give ward staff key information about communication, mobility and daily care</li>
+                <li>Transition to Home — share needs and routines with incoming home support workers as the person returns home</li>
                 <li>Transition between services — carry personal context across providers without repeating everything</li>
                 <li>Respite care — ensure consistent, person-centred care during short stays</li>
               </ul>
