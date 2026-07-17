@@ -45,46 +45,51 @@ export default function Ecosystem() {
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
 
-          <a href="/editor" style={{ textDecoration: "none" }}>
-            <div style={{ background: "#eff6ff", border: "2px solid #1e40af", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
-              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#1e3a8a", margin: "0 0 6px" }}>🤝 Support Worker Profile</p>
-              <p style={{ fontFamily: B, fontSize: "13px", color: "#1e40af", margin: 0, lineHeight: 1.6 }}>
+          {/* Support Worker — steel blue #4b7aa8 */}
+          <a href="/view" style={{ textDecoration: "none" }}>
+            <div style={{ background: "#dbeafe", border: "3px solid #4b7aa8", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
+              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#1e3d58", margin: "0 0 6px" }}>🤝 Support Worker Profile</p>
+              <p style={{ fontFamily: B, fontSize: "13px", color: "#1e3d58", margin: 0, lineHeight: 1.6 }}>
                 For support workers, DSWs, and personal care workers. Share your services, availability, communication style, and credentials in one accessible link.
               </p>
             </div>
           </a>
 
-          <a href="/allied-health" style={{ textDecoration: "none" }}>
-            <div style={{ background: "#f0fdfa", border: "2px solid #0f766e", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
-              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#0f766e", margin: "0 0 6px" }}>🩺 Allied Health Profile</p>
-              <p style={{ fontFamily: B, fontSize: "13px", color: "#0f766e", margin: 0, lineHeight: 1.6 }}>
+          {/* Allied Health — warm gold #c89e6c */}
+          <a href="https://insyncprofiles.net/view?name=Sarah+Torens&title=Occupational+Therapist&roleType=allied-health" style={{ textDecoration: "none" }}>
+            <div style={{ background: "#fef9ee", border: "3px solid #c89e6c", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
+              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#7a5820", margin: "0 0 6px" }}>🩺 Allied Health Profile</p>
+              <p style={{ fontFamily: B, fontSize: "13px", color: "#7a5820", margin: 0, lineHeight: 1.6 }}>
                 For OTs, physiotherapists, speech pathologists, psychologists, and other allied health practitioners. Participant-ready profiles with accessibility built in.
               </p>
             </div>
           </a>
 
+          {/* Support Coordinator — copper #9f5e38 */}
           <a href="/coordinators" style={{ textDecoration: "none" }}>
-            <div style={{ background: "#f5f3ff", border: "2px solid #7c3aed", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
-              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#7c3aed", margin: "0 0 6px" }}>📋 Support Coordinator Profile</p>
-              <p style={{ fontFamily: B, fontSize: "13px", color: "#7c3aed", margin: 0, lineHeight: 1.6 }}>
+            <div style={{ background: "#fdf0e8", border: "3px solid #9f5e38", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
+              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#4a2010", margin: "0 0 6px" }}>📋 Support Coordinator Profile</p>
+              <p style={{ fontFamily: B, fontSize: "13px", color: "#4a2010", margin: 0, lineHeight: 1.6 }}>
                 For support coordinators and specialist support coordinators. Help participants and families understand who you are and how you work before the first meeting.
               </p>
             </div>
           </a>
 
+          {/* About Me Disability — olive/khaki #746e4a */}
           <a href="/about-me/editor" style={{ textDecoration: "none" }}>
-            <div style={{ background: "#eff6ff", border: "2px solid #1d4ed8", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
-              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#1e3a8a", margin: "0 0 6px" }}>♿ About Me Profile — Disability / NDIS</p>
-              <p style={{ fontFamily: B, fontSize: "13px", color: "#1d4ed8", margin: 0, lineHeight: 1.6 }}>
+            <div style={{ background: "#f5f4ec", border: "3px solid #746e4a", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
+              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#302e18", margin: "0 0 6px" }}>♿ About Me Profile — Disability / NDIS</p>
+              <p style={{ fontFamily: B, fontSize: "13px", color: "#302e18", margin: 0, lineHeight: 1.6 }}>
                 For NDIS participants, people with disability, and their families. A free, private profile that travels with the person into hospitals, new services, and first appointments.
               </p>
             </div>
           </a>
 
+          {/* About Me Aged Care — burnt violet #6b3fa0 */}
           <a href="/about-me/editor" style={{ textDecoration: "none" }}>
-            <div style={{ background: "#fef3c7", border: "2px solid #b45309", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
-              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#92400e", margin: "0 0 6px" }}>🌿 About Me Profile — Aged Care</p>
-              <p style={{ fontFamily: B, fontSize: "13px", color: "#b45309", margin: 0, lineHeight: 1.6 }}>
+            <div style={{ background: "#f3eeff", border: "3px solid #6b3fa0", borderRadius: "16px", padding: "20px", cursor: "pointer" }}>
+              <p style={{ fontFamily: H, fontWeight: 900, fontSize: "16px", color: "#2e1060", margin: "0 0 6px" }}>🌿 About Me Profile — Aged Care</p>
+              <p style={{ fontFamily: B, fontSize: "13px", color: "#2e1060", margin: 0, lineHeight: 1.6 }}>
                 For aged care residents, Support at Home (SAH) recipients, and people transitioning to home. Free, private, and person-centred — no login required.
               </p>
             </div>
