@@ -135,11 +135,11 @@ function useDictation() {
 const C = {
   bg: "#fffbeb",           // pale gold background
   card: "#ffffff",
-  border: "#d97706",       // amber border
-  borderLight: "#fde68a",  // light amber
-  accent: "#92400e",       // dark amber/brown — high contrast on pale gold
-  accentMid: "#b45309",
-  accentLight: "#fef3c7",
+  border: "#0f766e",       // deep teal border
+  borderLight: "#99f6e4",  // light teal
+  accent: "#0f4c45",       // deep teal — high contrast on pale gold
+  accentMid: "#0f766e",
+  accentLight: "#f0fdfa",  // very light teal tint
   teal: "#0f766e",         // teal for action buttons
   tealLight: "#ccfbf1",
   red: "#991b1b",
