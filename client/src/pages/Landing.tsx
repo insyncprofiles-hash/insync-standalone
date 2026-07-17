@@ -791,9 +791,33 @@ export default function Landing() {
               </div>
 
               {/* CTAs */}
-              <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", justifyContent: "center", marginBottom: "16px" }}>
                 <Link href="/pricing" style={{ background: `linear-gradient(135deg, ${C.gold} 0%, #e8a800 100%)`, color: "#0d1b2a", padding: "15px 36px", borderRadius: "99px", fontSize: "15px", fontWeight: 800, textDecoration: "none", display: "inline-block", boxShadow: `0 6px 32px ${C.goldGlow}`, letterSpacing: "0.01em" }}>See Pricing →</Link>
                 <Link href="/demo" style={{ background: "transparent", color: C.teal, padding: "15px 36px", borderRadius: "99px", fontSize: "15px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: `1.5px solid ${C.tealDim}` }}>Try the Demo</Link>
+              </div>
+
+              {/* About Me large sticker CTA */}
+              <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                <div style={{ width: "100%", height: "1px", background: `linear-gradient(90deg, transparent, ${C.border}, transparent)`, marginBottom: "8px" }} />
+                <p style={{ fontFamily: "'Outfit', sans-serif", color: C.textDim, fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", margin: 0 }}>For participants, carers &amp; SAH recipients</p>
+                <Link
+                  href="/about-me/editor"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: "10px",
+                    background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
+                    color: "#0f4c45", fontFamily: "'Outfit', sans-serif", fontWeight: 900,
+                    fontSize: "clamp(17px, 2.5vw, 22px)", textDecoration: "none",
+                    padding: "18px 40px", borderRadius: "99px",
+                    boxShadow: "0 8px 40px rgba(245,200,66,0.50), 0 2px 8px rgba(0,0,0,0.20)",
+                    letterSpacing: "0.01em", width: "100%", justifyContent: "center",
+                  }}
+                >
+                  <span style={{ fontSize: "24px" }}>✨</span>
+                  Create a Free About Me Profile
+                </Link>
+                <span style={{ fontFamily: "'Outfit', sans-serif", color: C.textDim, fontSize: "12px", fontWeight: 600 }}>
+                  insyncprofiles.net/about-me/editor · No login · Always free
+                </span>
               </div>
 
             </div>
