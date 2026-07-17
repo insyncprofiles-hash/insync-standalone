@@ -137,6 +137,23 @@ export default function AboutMeView() {
     voiceToggleRef.current?.();
   }, []);
 
+  // Video ref — used by voice command to play the YouTube iframe
+  const videoIframeRef = useRef<HTMLIFrameElement | null>(null);
+
+  const handlePlayVideo = useCallback(() => {
+    const iframe = videoIframeRef.current;
+    if (!iframe) return;
+    // Scroll the video into view first
+    iframe.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Use YouTube iframe API postMessage to play
+    setTimeout(() => {
+      iframe.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
+        "*"
+      );
+    }, 600);
+  }, []);
+
   // Colours
   const teal = "#0d9488";
   const tealDark = "#0f766e";
@@ -173,7 +190,7 @@ export default function AboutMeView() {
       {/* Voice control */}
       <VoiceControl
         onScrollTo={() => {}}
-        onPlayVideo={() => {}}
+        onPlayVideo={handlePlayVideo}
         onOpenAAC={() => {}}
         onOpenAccessibility={() => {}}
         onMessage={() => {}}
@@ -257,7 +274,8 @@ export default function AboutMeView() {
               {videoDescription && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#5eead4", fontStyle: "italic", marginBottom: "14px" }}>{videoDescription}</p>}
               <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, borderRadius: "12px", overflow: "hidden" }}>
                 <iframe
-                  src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                  ref={videoIframeRef}
+                  src={`https://www.youtube.com/embed/${videoId}?rel=0&enablejsapi=1`}
                   style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
