@@ -540,18 +540,18 @@ export default function AboutMeEditor() {
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
                 <span style={{ fontSize: "36px" }}>♿</span>
                 <div>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: C.accent, margin: 0 }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#0f4c45", margin: 0 }}>
                     Disability / NDIS
                   </p>
-                  <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, margin: "4px 0 0" }}>
+                  <p style={{ fontFamily: C.bodyFont, fontSize: "16px", color: "#1c1917", margin: "4px 0 0", fontWeight: 700 }}>
                     For NDIS participants, people with disability, and their families
                   </p>
                 </div>
               </div>
-              <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "13px", color: C.accent, margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#0f4c45", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                 Example uses
               </p>
-              <ul style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#44403c", margin: 0, paddingLeft: "20px", lineHeight: "1.7" }}>
+              <ul style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", margin: 0, paddingLeft: "20px", lineHeight: "1.9", fontWeight: 700 }}>
                 <li>Hospital admission — give nursing staff instant context about communication and care needs</li>
                 <li>New support worker introduction — share before the first shift so they arrive prepared</li>
                 <li>NDIS provider intake — replace lengthy intake forms with a personal, human profile</li>
@@ -579,18 +579,18 @@ export default function AboutMeEditor() {
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
                 <span style={{ fontSize: "36px" }}>🌿</span>
                 <div>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: "#78350f", margin: 0 }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#78350f", margin: 0 }}>
                     Aged Care
                   </p>
-                  <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#92400e", margin: "4px 0 0" }}>
+                  <p style={{ fontFamily: C.bodyFont, fontSize: "16px", color: "#1c1917", margin: "4px 0 0", fontWeight: 700 }}>
                     For aged care residents, Support at Home (SAH) recipients, and people transitioning to home
                   </p>
                 </div>
               </div>
-              <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "13px", color: "#78350f", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#78350f", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                 Example uses
               </p>
-              <ul style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#44403c", margin: 0, paddingLeft: "20px", lineHeight: "1.7" }}>
+              <ul style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", margin: 0, paddingLeft: "20px", lineHeight: "1.9", fontWeight: 700 }}>
                 <li>New home care worker — share before the first visit so they know routines, preferences and needs</li>
                 <li>Hospital stay — give ward staff key information about communication, mobility and daily care</li>
                 <li>Transition to Home — share needs and routines with incoming home support workers as the person returns home</li>
@@ -607,7 +607,7 @@ export default function AboutMeEditor() {
 
           </div>
 
-          <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, textAlign: "center", marginTop: "24px" }}>
+          <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#1c1917", textAlign: "center", marginTop: "24px", fontWeight: 700 }}>
             Both profile types are completely free. No login required.
           </p>
         </div>
