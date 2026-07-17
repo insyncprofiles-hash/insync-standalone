@@ -429,6 +429,46 @@ export default function AboutMeEditor() {
     { id: "share",      label: "Share",                           emoji: "🔗" },
   ];
 
+  // Helper: prev/next tab navigation buttons rendered at the bottom of each tab
+  function TabNav({ current }: { current: string }) {
+    const idx = tabs.findIndex(t => t.id === current);
+    const prev = idx > 0 ? tabs[idx - 1] : null;
+    const next = idx < tabs.length - 1 ? tabs[idx + 1] : null;
+    return (
+      <div style={{ display: "flex", gap: "12px", marginTop: "36px", paddingTop: "24px", borderTop: `2px solid ${C.borderLight}` }}>
+        {prev ? (
+          <button
+            onClick={() => { setActiveTab(prev.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            style={{
+              flex: 1, padding: "16px 20px", borderRadius: "16px",
+              border: `2px solid ${C.border}`, background: C.accentLight,
+              color: C.accent, fontFamily: C.headFont, fontWeight: 900,
+              fontSize: "16px", cursor: "pointer", display: "flex",
+              alignItems: "center", justifyContent: "center", gap: "8px",
+            }}
+          >
+            <span style={{ fontSize: "20px" }}>←</span> {prev.emoji} {prev.label}
+          </button>
+        ) : <div style={{ flex: 1 }} />}
+        {next && (
+          <button
+            onClick={() => { setActiveTab(next.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            style={{
+              flex: 1, padding: "16px 20px", borderRadius: "16px",
+              border: "none", background: C.accent,
+              color: "#fffbeb", fontFamily: C.headFont, fontWeight: 900,
+              fontSize: "16px", cursor: "pointer", display: "flex",
+              alignItems: "center", justifyContent: "center", gap: "8px",
+              boxShadow: "0 4px 14px rgba(15,76,69,0.25)",
+            }}
+          >
+            {next.emoji} {next.label} <span style={{ fontSize: "20px" }}>→</span>
+          </button>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
@@ -571,18 +611,19 @@ export default function AboutMeEditor() {
       {/* Tab bar — only shown once a type is selected */}
       {profileType !== null && (
         <>
-      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "0 4px", gap: "2px" }}>
+      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "8px 8px", gap: "4px" }}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: "12px 12px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+              padding: "10px 14px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
               fontFamily: C.headFont, fontWeight: activeTab === tab.id ? 900 : 600, fontSize: "13px",
-              color: activeTab === tab.id ? C.accent : "#78716c",
-              background: "none",
-              borderBottom: activeTab === tab.id ? `3px solid ${C.accent}` : "3px solid transparent",
+              color: activeTab === tab.id ? "#ffffff" : "#57534e",
+              background: activeTab === tab.id ? C.accent : "transparent",
+              borderRadius: "12px",
               transition: "all 150ms ease-out",
+              boxShadow: activeTab === tab.id ? "0 2px 8px rgba(15,76,69,0.25)" : "none",
             }}
           >
             {tab.emoji} {tab.label}
@@ -617,9 +658,14 @@ export default function AboutMeEditor() {
                 <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 10px" }}>A warm, recent photo helps new staff connect immediately.</p>
                 <button
                   onClick={() => photoInputRef.current?.click()}
-                  style={{ padding: "10px 20px", borderRadius: "20px", border: `2px solid ${C.border}`, background: C.accentLight, color: C.accent, fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", cursor: "pointer" }}
+                  style={{
+                    padding: "12px 28px", borderRadius: "16px",
+                    border: `2px solid ${C.border}`, background: C.accent,
+                    color: "#fffbeb", fontFamily: C.headFont, fontWeight: 900,
+                    fontSize: "15px", cursor: "pointer",
+                  }}
                 >
-                  Choose Photo
+                  📷 Choose Photo
                 </button>
                 <input ref={photoInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhoto} />
               </div>
@@ -647,6 +693,7 @@ export default function AboutMeEditor() {
               multiline rows={2}
               {...dp("diagnosis")}
             />
+            <TabNav current="who" />
           </div>
         )}
 
@@ -696,10 +743,16 @@ export default function AboutMeEditor() {
 
             <button
               onClick={addEC}
-              style={{ padding: "12px 24px", borderRadius: "20px", border: `2px solid ${C.border}`, background: C.accentLight, color: C.accent, fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", cursor: "pointer" }}
+              style={{
+                width: "100%", padding: "16px 24px", borderRadius: "16px",
+                border: `2px dashed ${C.border}`, background: C.accentLight,
+                color: C.accent, fontFamily: C.headFont, fontWeight: 900,
+                fontSize: "16px", cursor: "pointer", marginBottom: "8px",
+              }}
             >
-              + Add Another Contact
+              + Add Another Emergency Contact
             </button>
+            <TabNav current="emergency" />
           </div>
         )}
 
@@ -728,6 +781,7 @@ export default function AboutMeEditor() {
             <Field label="Key Words I Use" hint="Words or phrases that are important to know" value={profile.keyWords} onChange={v => set("keyWords", v)} multiline rows={3} {...dp("keyWords")} />
             <Field label="How I Show Yes and No" hint="e.g. Nod for yes, turn head for no. Thumbs up/down." value={profile.yesNoSignals} onChange={v => set("yesNoSignals", v)} multiline rows={2} {...dp("yesNoSignals")} />
             <Field label="How to Know I'm in Pain or Distress" hint="Signs — facial expressions, sounds, body language, behaviour changes" value={profile.distressSignals} onChange={v => set("distressSignals", v)} multiline rows={3} {...dp("distressSignals")} />
+            <TabNav current="comms" />
           </div>
         )}
 
@@ -767,6 +821,7 @@ export default function AboutMeEditor() {
                 </div>
               </div>
             )}
+            <TabNav current="video" />
           </div>
         )}
 
@@ -780,6 +835,7 @@ export default function AboutMeEditor() {
             <Field label="What I Need Help With" hint="e.g. Transfers, showering, dressing, complex communication" value={profile.needsHelp} onChange={v => set("needsHelp", v)} multiline rows={4} {...dp("needsHelp")} />
             <Field label="Mobility Aids / Equipment" hint="e.g. Manual wheelchair, walking frame, CPAP machine, hearing aids" value={profile.mobilityAids} onChange={v => set("mobilityAids", v)} multiline rows={2} {...dp("mobilityAids")} />
             <Field label="Sensory Needs" hint="e.g. Sensitive to loud noise, needs dim lighting, dislikes certain textures" value={profile.sensoryNeeds} onChange={v => set("sensoryNeeds", v)} multiline rows={3} {...dp("sensoryNeeds")} />
+            <TabNav current="function" />
           </div>
         )}
 
@@ -793,6 +849,7 @@ export default function AboutMeEditor() {
             <Field label="Early Warning Signs" hint="Signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} {...dp("earlyWarnings")} />
             <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} {...dp("whatHelps")} />
             <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} {...dp("whatMakesWorse")} />
+            <TabNav current="triggers" />
           </div>
         )}
 
@@ -805,6 +862,7 @@ export default function AboutMeEditor() {
             <Field label="Please Do This" hint="Approaches, strategies, or communication styles that work well" value={profile.doThis} onChange={v => set("doThis", v)} multiline rows={4} {...dp("doThis")} />
             <Field label="Please Never Do This" hint="Things that cause harm, distress, or are against the person's wishes" value={profile.neverDo} onChange={v => set("neverDo", v)} multiline rows={4} {...dp("neverDo")} />
             <Field label="Cultural or Religious Considerations" hint="e.g. Dietary requirements, prayer times, gender preferences for personal care" value={profile.culturalConsiderations} onChange={v => set("culturalConsiderations", v)} multiline rows={3} {...dp("culturalConsiderations")} />
+            <TabNav current="approaches" />
           </div>
         )}
 
@@ -820,6 +878,7 @@ export default function AboutMeEditor() {
             <Field label="Environment" hint="Preferred lighting, temperature, noise level, space requirements" value={profile.environment} onChange={v => set("environment", v)} multiline rows={2} {...dp("environment")} />
             <Field label="What a Good Day Looks Like" hint="Describe what the person is like when happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} {...dp("goodDayLooksLike")} />
             <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} {...dp("whatMatters")} />
+            <TabNav current="prefs" />
           </div>
         )}
 
@@ -872,6 +931,7 @@ export default function AboutMeEditor() {
               onChange={v => set("coordinatorEmail", v)}
               {...dp("coordinatorEmail")}
             />
+            <TabNav current="ndis" />
           </div>
         )}
 
@@ -963,22 +1023,25 @@ export default function AboutMeEditor() {
                   </p>
                 </div>
 
-                <div style={{ marginTop: "24px", textAlign: "center" }}>
+                <div style={{ marginTop: "24px" }}>
                   <a
                     href={shareUrl}
                     target="_blank"
                     rel="noreferrer"
                     style={{
-                      display: "inline-block", padding: "14px 36px", borderRadius: "24px",
+                      display: "block", width: "100%", padding: "18px 36px",
+                      borderRadius: "16px", boxSizing: "border-box",
                       background: C.accent, color: "#fffbeb", fontFamily: C.headFont, fontWeight: 900,
-                      fontSize: "16px", textDecoration: "none",
+                      fontSize: "18px", textDecoration: "none", textAlign: "center",
+                      boxShadow: "0 4px 16px rgba(15,76,69,0.30)",
                     }}
                   >
-                    View My Profile
+                    View My Profile →
                   </a>
                 </div>
               </>
             )}
+            <TabNav current="share" />
           </div>
         )}
 
