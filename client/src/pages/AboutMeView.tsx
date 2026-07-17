@@ -491,6 +491,36 @@ export default function AboutMeView() {
 
       </div>
 
+      {/* CTA for participants, carers, SAH recipients */}
+      <div style={{ background: "linear-gradient(135deg, #0f4c45 0%, #0f766e 60%, #134e4a 100%)", borderTop: "3px solid #f5c842", padding: "36px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: "520px", margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Nunito', sans-serif", color: "#f5c842", fontSize: "11px", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "10px" }}>Free · No Login · Always Private</p>
+          <h3 style={{ fontFamily: "'Nunito', sans-serif", color: "#fffbeb", fontSize: "clamp(20px, 5vw, 26px)", fontWeight: 900, lineHeight: 1.2, marginBottom: "12px" }}>
+            Are you a participant, carer,<br />or SAH recipient?
+          </h3>
+          <p style={{ fontFamily: "'Nunito', sans-serif", color: "rgba(255,251,235,0.85)", fontSize: "15px", lineHeight: 1.65, marginBottom: "24px" }}>
+            Create your own free About Me Profile — a human story that travels with you into hospitals, new services, and first appointments. Fill it in once, share it with anyone who needs it.
+          </p>
+          <a
+            href="https://insyncprofiles.net/about-me/editor"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
+              color: "#0f4c45", fontFamily: "'Nunito', sans-serif", fontWeight: 900,
+              fontSize: "clamp(15px, 4vw, 18px)", textDecoration: "none",
+              padding: "14px 32px", borderRadius: "99px",
+              boxShadow: "0 4px 24px rgba(245,200,66,0.45)",
+            }}
+          >
+            <span style={{ fontSize: "20px" }}>✨</span>
+            Create My Free Profile
+          </a>
+          <p style={{ fontFamily: "'Nunito', sans-serif", color: "rgba(255,251,235,0.50)", fontSize: "12px", marginTop: "12px", fontWeight: 600 }}>
+            insyncprofiles.net/about-me/editor
+          </p>
+        </div>
+      </div>
+
       {/* Footer */}
       <div style={{ background: "#f0fdfa", borderTop: "1.5px solid #99f6e4", padding: "28px 20px", textAlign: "center" }}>
         <a href="https://insyncprofiles.net" style={{ display: "inline-block", marginBottom: "12px" }}>
