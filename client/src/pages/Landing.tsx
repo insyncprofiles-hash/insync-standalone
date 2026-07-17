@@ -313,18 +313,6 @@ export default function Landing() {
           <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
         </nav>
 
-        {/* Mobile About Me button — shown only on mobile, hidden on desktop */}
-        <Link
-          href="/about-me/editor"
-          className="mobile-aboutme-btn"
-          style={{ display: "none" }}
-        >
-          <span className="mobile-aboutme-inner">
-            <span className="mobile-aboutme-title">✨ About Me Profile</span>
-            <span className="mobile-aboutme-tag">Continuity for Aged &amp; Disabled Persons</span>
-          </span>
-        </Link>
-
         {/* Mobile hamburger button — shown only on mobile */}
         <button
           className="mobile-menu-btn"
