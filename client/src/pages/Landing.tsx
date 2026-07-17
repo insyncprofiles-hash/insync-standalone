@@ -646,7 +646,7 @@ export default function Landing() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "36px" }}>
               {[
                 { emoji: "♿", role: "Participants & aged persons", desc: "Never have to start from scratch or explain themselves under pressure again. Their story goes with them." },
-                { emoji: "💚", role: "Families & burnt-out carers", desc: "Fill it in once and let it do the advocating. No more repeating the same story to every new worker, every new shift." },
+                { emoji: "👨‍👩‍👧", role: "Families & burnt-out carers", desc: "Fill it in once and let it do the advocating. No more repeating the same story to every new worker, every new shift." },
                 { emoji: "🤝", role: "Support workers & care staff", desc: "Arrive already knowing the person — their communication style, their routines, what helps and what doesn’t. The relationship starts with dignity, not a blank page." },
                 { emoji: "📋", role: "Coordinators & providers", desc: "Receive thorough, person-centred information before the first meeting. Intake becomes a genuine conversation, not a rapid-fire round of questions the person has already answered a dozen times before." },
               ].map(({ emoji, role, desc }) => (
