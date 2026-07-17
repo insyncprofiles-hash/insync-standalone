@@ -84,7 +84,7 @@ export default function AboutMeView() {
 
   const name = p("name");
   const preferredName = p("preferredName");
-  const pronouns = p("pronouns");
+  const gender = p("gender");
   const dob = p("dob");
   const diagnosis = p("diagnosis");
   const communicationStyle = p("communicationStyle");
@@ -202,7 +202,7 @@ export default function AboutMeView() {
             <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "26px", color: "#ffffff", margin: "0 0 4px" }}>
               About {displayName}
             </p>
-            {pronouns && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#ccfbf1", margin: "0 0 4px" }}>{pronouns}</p>}
+            {gender && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#ccfbf1", margin: "0 0 4px" }}>{gender}</p>}
             {diagnosis && (
               <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: "16px", background: "rgba(255,255,255,0.2)", fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#ffffff" }}>
                 {diagnosis}
@@ -242,12 +242,12 @@ export default function AboutMeView() {
         )}
 
         {/* WHO I AM */}
-        {(dob || diagnosis || preferredName || pronouns) && (
+        {(dob || diagnosis || preferredName || gender) && (
           <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
             <Section title="Who I Am" emoji="👤" accent={teal}>
               <InfoRow label="Full Name" value={name} />
               {preferredName && preferredName !== name && <InfoRow label="Preferred Name" value={preferredName} />}
-              <InfoRow label="Pronouns" value={pronouns} />
+              <InfoRow label="Gender" value={gender} />
               <InfoRow label="Date of Birth" value={dob} />
               <InfoRow label="Diagnosis" value={diagnosis} />
             </Section>

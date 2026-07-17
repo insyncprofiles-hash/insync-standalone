@@ -21,7 +21,7 @@ interface AboutMeProfile {
   // Who I Am
   name: string;
   preferredName: string;
-  pronouns: string;
+  gender: string;
   dob: string;
   diagnosis: string;
   photo: string; // base64
@@ -66,7 +66,7 @@ interface AboutMeProfile {
 }
 
 const EMPTY: AboutMeProfile = {
-  name: "", preferredName: "", pronouns: "", dob: "", diagnosis: "", photo: "",
+  name: "", preferredName: "",   gender: "", dob: "", diagnosis: "", photo: "",
   emergencyContacts: [{ name: "", relationship: "", phone: "" }],
   communicationStyle: "verbal", aacDevice: "", keyWords: "", yesNoSignals: "", distressSignals: "",
   videoUrl: "", videoDescription: "",
@@ -83,7 +83,7 @@ const PHOTO_KEY = "insync_aboutme_photo";
 function profileToParams(p: AboutMeProfile): string {
   const sp = new URLSearchParams();
   const fields: (keyof AboutMeProfile)[] = [
-    "name","preferredName","pronouns","dob","diagnosis",
+    "name","preferredName","gender","dob","diagnosis",
     "communicationStyle","aacDevice","keyWords","yesNoSignals","distressSignals",
     "videoUrl","videoDescription",
     "canDo","needsHelp","mobilityAids","sensoryNeeds",
@@ -334,7 +334,11 @@ export default function AboutMeEditor() {
 
             <Field label="Full Name *" value={profile.name} onChange={v => set("name", v)} />
             <Field label="Preferred Name / Nickname" hint="What they like to be called day-to-day" value={profile.preferredName} onChange={v => set("preferredName", v)} />
-            <Field label="Pronouns" hint="e.g. She/her, He/him, They/them" value={profile.pronouns} onChange={v => set("pronouns", v)} />
+            <Select label="Gender" value={profile.gender} onChange={v => set("gender", v)} options={[
+              { value: "", label: "Select..." },
+              { value: "Female", label: "Female" },
+              { value: "Male", label: "Male" },
+            ]} />
             <Field label="Date of Birth" value={profile.dob} onChange={v => set("dob", v)} />
             <Field label="Primary Disability / Diagnosis" hint="Broad description only — e.g. Autism, Cerebral Palsy, Dementia. Do not include clinical detail." value={profile.diagnosis} onChange={v => set("diagnosis", v)} multiline rows={2} />
           </div>
