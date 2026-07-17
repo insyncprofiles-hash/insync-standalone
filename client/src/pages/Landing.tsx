@@ -635,58 +635,6 @@ export default function Landing() {
           }}
           aria-labelledby="hero-heading"
         >
-          {/* ── IRREGULAR STARBURST STICKER: About Me Profile ── */}
-          <a
-            href="/about-me/editor"
-            aria-label="About Me Profile — A free resource for NDIS Participants and Aged Persons"
-            style={{
-              position: "fixed",
-              bottom: "80px",
-              right: "12px",
-              zIndex: 999,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "140px",
-              height: "140px",
-              textDecoration: "none",
-              cursor: "pointer",
-              transform: "rotate(10deg)",
-              transition: "transform 200ms cubic-bezier(0.23,1,0.32,1)",
-              filter: "drop-shadow(0 8px 24px rgba(245,200,66,0.65)) drop-shadow(0 2px 8px rgba(0,0,0,0.35))",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(10deg) scale(1.10)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(10deg) scale(1)"; }}
-          >
-            {/* Irregular starburst SVG background */}
-            <svg viewBox="0 0 160 160" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} aria-hidden="true">
-              <defs>
-                <linearGradient id="stickerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#f5c842" />
-                  <stop offset="100%" stopColor="#f59e0b" />
-                </linearGradient>
-              </defs>
-              {/* Irregular starburst / blob path */}
-              <path
-                d="M80,8 L91,34 L118,22 L108,48 L136,52 L116,70 L134,92 L108,90 L106,118 L82,104 L62,124 L58,96 L30,104 L36,78 L10,66 L34,54 L24,28 L52,38 Z"
-                fill="url(#stickerGrad)"
-                stroke="rgba(255,255,255,0.40)"
-                strokeWidth="2.5"
-              />
-            </svg>
-            {/* Text content centred over the starburst */}
-            <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "2px", padding: "0 14px", textAlign: "center" }}>
-              <span style={{ fontSize: "20px", lineHeight: 1 }}>✨</span>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 900, fontSize: "12px", color: "#0f4c45", lineHeight: 1.2, letterSpacing: "0.01em" }}>
-                About Me<br />Profile
-              </span>
-              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "8.5px", color: "#0f4c45", lineHeight: 1.3, marginTop: "3px", opacity: 0.85 }}>
-                A Resource for<br />NDIS Participants<br />&amp; Aged Persons
-              </span>
-            </div>
-          </a>
-
           {/* Glow orbs */}
           <div aria-hidden="true" style={{ position: "absolute", top: "60px", left: "30%", transform: "translateX(-50%)", width: "600px", height: "300px", background: `radial-gradient(ellipse at center, ${C.tealDim} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
           <div aria-hidden="true" style={{ position: "absolute", top: "120px", left: "10%", width: "300px", height: "200px", background: `radial-gradient(ellipse at center, ${C.goldGlow} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
