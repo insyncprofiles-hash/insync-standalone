@@ -1010,8 +1010,8 @@ export default function ClientView() {
                   aria-pressed={voiceActive}
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-                    background: voiceActive ? "#b71c1c" : "#1565C0",
-                    border: `2px solid ${voiceActive ? "#ef9a9a" : "#90CAF9"}`,
+                    background: voiceActive ? "#1565C0" : "#b71c1c",
+                    border: `2px solid ${voiceActive ? "#90CAF9" : "#ef9a9a"}`,
                     borderRadius: "12px",
                     padding: "0",
                     cursor: "pointer",
