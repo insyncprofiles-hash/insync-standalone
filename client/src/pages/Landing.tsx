@@ -640,21 +640,21 @@ export default function Landing() {
             href="/about-me/editor"
             aria-label="About Me Profile — A free resource for NDIS Participants and Aged Persons"
             style={{
-              position: "absolute",
-              bottom: "40px",
-              right: "-8px",
-              zIndex: 10,
+              position: "fixed",
+              bottom: "80px",
+              right: "12px",
+              zIndex: 999,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              width: "160px",
-              height: "160px",
+              width: "140px",
+              height: "140px",
               textDecoration: "none",
               cursor: "pointer",
               transform: "rotate(10deg)",
               transition: "transform 200ms cubic-bezier(0.23,1,0.32,1)",
-              filter: "drop-shadow(0 8px 24px rgba(245,200,66,0.60)) drop-shadow(0 2px 8px rgba(0,0,0,0.30))",
+              filter: "drop-shadow(0 8px 24px rgba(245,200,66,0.65)) drop-shadow(0 2px 8px rgba(0,0,0,0.35))",
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(10deg) scale(1.10)"; }}
             onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(10deg) scale(1)"; }}
