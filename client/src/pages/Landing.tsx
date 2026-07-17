@@ -310,6 +310,15 @@ export default function Landing() {
           <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
         </nav>
 
+        {/* Mobile About Me button — shown only on mobile, hidden on desktop */}
+        <Link
+          href="/about-me/editor"
+          className="mobile-aboutme-btn"
+          style={{ display: "none" }}
+        >
+          ✨ About Me Profile
+        </Link>
+
         {/* Mobile hamburger button — shown only on mobile */}
         <button
           className="mobile-menu-btn"
@@ -400,12 +409,30 @@ export default function Landing() {
         .mobile-menu-btn { display: none; }
         .mobile-top-nav { display: none; }
         .footer-nav-links { display: flex; }
+        .mobile-aboutme-btn { display: none; }
         @media (max-width: 768px) {
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
           .mobile-top-nav { display: block !important; }
           .footer-nav-links { display: none !important; }
+          .mobile-aboutme-btn {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #f5c842 0%, #f59e0b 100%);
+            color: #0f4c45;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 900;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 99px;
+            box-shadow: 0 2px 12px rgba(245,200,66,0.45);
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+            flex-shrink: 0;
+          }
         }
         @keyframes fadeInDown {
           from { opacity: 0; transform: translateY(-8px); }
