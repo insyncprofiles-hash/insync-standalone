@@ -299,7 +299,10 @@ export default function Landing() {
 
         {/* Desktop nav links — hidden on mobile */}
         <nav aria-label="Page navigation" className="desktop-nav" style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-          <Link href="/about-me/editor" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)", color: "#0f4c45", fontSize: "15px", fontWeight: 900, textDecoration: "none", padding: "9px 20px", borderRadius: "99px", letterSpacing: "0.01em", boxShadow: "0 2px 12px rgba(245,200,66,0.40)", flexShrink: 0 }}>✨ About Me Profile</Link>
+          <Link href="/about-me/editor" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: "2px", background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)", color: "#0f4c45", textDecoration: "none", padding: "7px 20px 8px", borderRadius: "99px", letterSpacing: "0.01em", boxShadow: "0 2px 12px rgba(245,200,66,0.40)", flexShrink: 0 }}>
+            <span style={{ fontSize: "15px", fontWeight: 900, display: "flex", alignItems: "center", gap: "6px" }}>✨ About Me Profile</span>
+            <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.04em", opacity: 0.8, lineHeight: 1 }}>Continuity for Aged &amp; Disabled Persons</span>
+          </Link>
           <Link href="/pricing" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px", transition: "color 150ms" }}>Pricing</Link>
           <Link href="/how-to-use" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>How It Works</Link>
           <Link href="/scenarios" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Scenarios</Link>
@@ -316,7 +319,10 @@ export default function Landing() {
           className="mobile-aboutme-btn"
           style={{ display: "none" }}
         >
-          ✨ About Me Profile
+          <span className="mobile-aboutme-inner">
+            <span className="mobile-aboutme-title">✨ About Me Profile</span>
+            <span className="mobile-aboutme-tag">Continuity for Aged &amp; Disabled Persons</span>
+          </span>
         </Link>
 
         {/* Mobile hamburger button — shown only on mobile */}
@@ -419,19 +425,36 @@ export default function Landing() {
           .mobile-aboutme-btn {
             display: inline-flex !important;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
             background: linear-gradient(135deg, #f5c842 0%, #f59e0b 100%);
             color: #0f4c45;
             font-family: 'Outfit', sans-serif;
-            font-size: 13px;
-            font-weight: 900;
             text-decoration: none;
-            padding: 8px 14px;
+            padding: 6px 14px 8px;
             border-radius: 99px;
             box-shadow: 0 2px 12px rgba(245,200,66,0.45);
+            flex-shrink: 0;
+          }
+          .mobile-aboutme-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+          }
+          .mobile-aboutme-title {
+            font-size: 13px;
+            font-weight: 900;
             letter-spacing: 0.01em;
             white-space: nowrap;
-            flex-shrink: 0;
+            line-height: 1.2;
+          }
+          .mobile-aboutme-tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            opacity: 0.75;
+            white-space: nowrap;
+            line-height: 1;
           }
         }
         @keyframes fadeInDown {
@@ -455,6 +478,26 @@ export default function Landing() {
             borderBottom: `1px solid ${C.border}`,
             background: "rgba(13,27,42,0.95)",
           }}>
+            {/* About Me Profile — gold pill with tagline, first in mobile nav strip */}
+            <Link
+              href="/about-me/editor"
+              style={{
+                display: "inline-flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "2px",
+                background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
+                color: "#0f4c45",
+                textDecoration: "none",
+                padding: "5px 14px 7px",
+                borderRadius: "99px",
+                boxShadow: "0 2px 8px rgba(245,200,66,0.40)",
+                flexShrink: 0,
+              }}
+            >
+              <span style={{ fontSize: "13px", fontWeight: 900, whiteSpace: "nowrap", lineHeight: 1.2 }}>✨ About Me Profile</span>
+              <span style={{ fontSize: "9px", fontWeight: 700, opacity: 0.75, whiteSpace: "nowrap", lineHeight: 1, letterSpacing: "0.03em" }}>Continuity for Aged &amp; Disabled Persons</span>
+            </Link>
             {[
               { href: "/pricing",    label: "Pricing",        teal: false },
               { href: "/how-to-use", label: "How It Works",    teal: false },
