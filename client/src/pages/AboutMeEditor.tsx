@@ -515,7 +515,7 @@ export default function AboutMeEditor() {
               </ul>
               <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
                 <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: C.accent, padding: "10px 24px", borderRadius: "20px" }}>
-                  Go to Disability / NDIS
+                  Go to Disability
                 </span>
               </div>
             </button>
