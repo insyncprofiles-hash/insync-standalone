@@ -1169,8 +1169,7 @@ export default function ClientView() {
                   playsInline
                   style={{ width: "100%", display: "block", borderRadius: "14px", background: "#000" }}
                   aria-label={`${profile.name} intro video`}
-                  onEnded={() => document.dispatchEvent(new CustomEvent("insync:video-ended"))}
-                  onPause={() => document.dispatchEvent(new CustomEvent("insync:video-paused"))}
+
                 />
               ) : (
                 /* No video — show quote card placeholder */
