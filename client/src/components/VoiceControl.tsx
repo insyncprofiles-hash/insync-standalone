@@ -116,10 +116,10 @@ export default function VoiceControl({
               document.removeEventListener("insync:video-ended", resumeVoice);
               document.removeEventListener("insync:video-paused", resumeVoice);
             };
+            // Only resume when the video fully ends — NOT on pause (pausing mid-video would restart the mic too early)
             document.addEventListener("insync:video-ended", resumeVoice, { once: true });
-            document.addEventListener("insync:video-paused", resumeVoice, { once: true });
-            // Safety fallback — re-enable after 60s even if no event fires
-            setTimeout(() => resumeVoice(), 60000);
+            // Safety fallback — re-enable after 5 minutes even if no event fires
+            setTimeout(() => resumeVoice(), 300000);
           }
         }, 700);
         break;
@@ -202,8 +202,15 @@ export default function VoiceControl({
 
   const stopListening = useCallback(() => {
     if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
-    recognitionRef.current?.stop();
-    recognitionRef.current = null;
+    restartTimerRef.current = null;
+    if (recognitionRef.current) {
+      // Null out handlers FIRST so onend auto-restart never fires after a manual stop
+      recognitionRef.current.onend = null;
+      recognitionRef.current.onerror = null;
+      recognitionRef.current.onresult = null;
+      try { recognitionRef.current.abort(); } catch {}
+      recognitionRef.current = null;
+    }
   }, []);
 
   const toggle = useCallback(() => {
@@ -238,7 +245,13 @@ export default function VoiceControl({
       activeRef.current = false;
       if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
       if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-      recognitionRef.current?.stop();
+      if (recognitionRef.current) {
+        recognitionRef.current.onend = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.onresult = null;
+        try { recognitionRef.current.abort(); } catch {}
+        recognitionRef.current = null;
+      }
     };
   }, []);
 

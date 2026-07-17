@@ -305,7 +305,7 @@ export default function Landing() {
           <Link href="/blog" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Blog</Link>
           <Link href="/guides" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Guides</Link>
           <Link href="/allied-health" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `linear-gradient(135deg, ${C.teal}22 0%, ${C.teal}11 100%)`, border: `1.5px solid ${C.teal}66`, color: C.teal, fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "8px 16px", borderRadius: "99px", letterSpacing: "0.01em" }}>🩺 Allied Health</Link>
-          <Link href="/coordinators" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: `linear-gradient(135deg, ${C.gold}22 0%, ${C.gold}11 100%)`, border: `1.5px solid ${C.gold}66`, color: C.gold, fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "8px 16px", borderRadius: "99px", letterSpacing: "0.01em" }}>🔗 For Coordinators</Link>
+          <Link href="/coordinators" style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: C.textBody, fontSize: "14px", fontWeight: 600, textDecoration: "none", padding: "8px 14px", borderRadius: "8px" }}>🔗 For Coordinators</Link>
           <Link href="/demo" style={{ background: `linear-gradient(135deg, ${C.teal} 0%, ${C.gold} 100%)`, color: "#0d1b2a", fontSize: "15px", fontWeight: 800, textDecoration: "none", padding: "9px 22px", borderRadius: "99px", letterSpacing: "0.02em" }}>Try Demo</Link>
         </nav>
 
@@ -1052,16 +1052,16 @@ export default function Landing() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "linear-gradient(135deg, #f5c842 0%, #f97316 100%)",
+                background: "linear-gradient(135deg, #dceeff 0%, #f7e0f5 45%, #fff3c8 100%)",
                 color: "#1a2e4a",
-                fontSize: "14px",
+                fontSize: "13px",
                 fontWeight: 800,
                 textDecoration: "none",
-                padding: "13px 28px",
+                padding: "10px 22px",
                 borderRadius: "99px",
-                border: "none",
-                boxShadow: "0 6px 28px rgba(245,200,66,0.45), 0 2px 8px rgba(0,0,0,0.25)",
-                letterSpacing: "0.02em",
+                border: "1.5px solid rgba(180,160,220,0.50)",
+                boxShadow: "0 4px 20px rgba(147,100,200,0.18)",
+                letterSpacing: "0.01em",
               }}
             >
               <span style={{ fontSize: "14px" }} aria-hidden="true">📱</span>
