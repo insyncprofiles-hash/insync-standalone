@@ -1056,6 +1056,22 @@ export default function AboutMeEditor() {
       )} {/* end profileType !== null */}
 
       {/* Footer */}
+      {/* Privacy notice */}
+      <div style={{ background: "#f0fdf4", border: "1.5px solid #bbf7d0", borderRadius: "12px", margin: "0 16px 24px", padding: "18px 20px" }}>
+        <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#166534", margin: "0 0 8px", display: "flex", alignItems: "center", gap: "6px" }}>
+          🔒 Your privacy is protected
+        </p>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#15803d", margin: "0 0 6px", lineHeight: 1.7, fontWeight: 600 }}>
+          <strong>InSync Profiles does not store, collect, or have access to any information you enter here.</strong>
+        </p>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#166534", margin: 0, lineHeight: 1.7 }}>
+          Everything you fill in is saved <strong>only on this device</strong>, privately in your browser's local storage. Nothing is sent to any server. To access your profile again, return to this page on the same device and browser — your information will be waiting exactly as you left it.
+        </p>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: "#15803d", margin: "8px 0 0", lineHeight: 1.6, opacity: 0.85 }}>
+          💡 <em>Tip: Save your short link or QR code from the Share tab — this is the only way to access your profile on a different device or after clearing your browser.</em>
+        </p>
+      </div>
+
       <div style={{ background: C.accentLight, borderTop: `2px solid ${C.borderLight}`, padding: "28px 20px", textAlign: "center", marginTop: "40px" }}>
         <a href="https://insyncprofiles.net" style={{ display: "inline-block", marginBottom: "12px" }}>
           <img
