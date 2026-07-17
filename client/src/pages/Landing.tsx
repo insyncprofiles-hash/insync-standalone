@@ -635,6 +635,42 @@ export default function Landing() {
           }}
           aria-labelledby="hero-heading"
         >
+          {/* ── DIAGONAL CORNER STICKER: About Me Profile ── */}
+          <a
+            href="/about-me/editor"
+            aria-label="Create a free About Me Profile for NDIS participants and aged persons"
+            style={{
+              position: "absolute",
+              bottom: "60px",
+              right: "-12px",
+              zIndex: 10,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "148px",
+              height: "148px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
+              boxShadow: "0 8px 40px rgba(245,200,66,0.55), 0 2px 12px rgba(0,0,0,0.25)",
+              textDecoration: "none",
+              transform: "rotate(12deg)",
+              border: "3px solid rgba(255,255,255,0.35)",
+              cursor: "pointer",
+              transition: "transform 200ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms",
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(12deg) scale(1.08)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "rotate(12deg) scale(1)"; }}
+          >
+            <span style={{ fontSize: "22px", lineHeight: 1, marginBottom: "4px" }}>✨</span>
+            <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 900, fontSize: "11px", color: "#0f4c45", textAlign: "center", lineHeight: 1.25, letterSpacing: "0.01em" }}>
+              Free<br />About Me<br />Profile
+            </span>
+            <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "9px", color: "#0f4c45", textAlign: "center", lineHeight: 1.3, marginTop: "5px", opacity: 0.8 }}>
+              NDIS Participants<br />&amp; Aged Persons
+            </span>
+          </a>
+
           {/* Glow orbs */}
           <div aria-hidden="true" style={{ position: "absolute", top: "60px", left: "30%", transform: "translateX(-50%)", width: "600px", height: "300px", background: `radial-gradient(ellipse at center, ${C.tealDim} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
           <div aria-hidden="true" style={{ position: "absolute", top: "120px", left: "10%", width: "300px", height: "200px", background: `radial-gradient(ellipse at center, ${C.goldGlow} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
@@ -725,29 +761,7 @@ export default function Landing() {
                 <Link href="/demo" style={{ background: "transparent", color: C.teal, padding: "15px 36px", borderRadius: "99px", fontSize: "15px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: `1.5px solid ${C.tealDim}` }}>Try the Demo</Link>
               </div>
 
-              {/* About Me large sticker CTA */}
-              <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-                <div style={{ width: "100%", height: "1px", background: `linear-gradient(90deg, transparent, ${C.border}, transparent)`, marginBottom: "8px" }} />
-                <p style={{ fontFamily: "'Outfit', sans-serif", color: C.textDim, fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", margin: 0 }}>For participants, carers &amp; SAH recipients</p>
-                <Link
-                  href="/about-me/editor"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: "10px",
-                    background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
-                    color: "#0f4c45", fontFamily: "'Outfit', sans-serif", fontWeight: 900,
-                    fontSize: "clamp(17px, 2.5vw, 22px)", textDecoration: "none",
-                    padding: "18px 40px", borderRadius: "99px",
-                    boxShadow: "0 8px 40px rgba(245,200,66,0.50), 0 2px 8px rgba(0,0,0,0.20)",
-                    letterSpacing: "0.01em", width: "100%", justifyContent: "center",
-                  }}
-                >
-                  <span style={{ fontSize: "24px" }}>✨</span>
-                  Create a Free About Me Profile
-                </Link>
-                <span style={{ fontFamily: "'Outfit', sans-serif", color: C.textDim, fontSize: "12px", fontWeight: 600 }}>
-                  insyncprofiles.net/about-me/editor · No login · Always free
-                </span>
-              </div>
+              {/* About Me diagonal corner sticker — positioned absolutely in hero */}
 
             </div>
 
