@@ -747,7 +747,14 @@ export default function AboutMeEditor() {
       </div>
 
       {/* Footer */}
-      <div style={{ background: C.accentLight, borderTop: `2px solid ${C.borderLight}`, padding: "20px", textAlign: "center", marginTop: "40px" }}>
+      <div style={{ background: C.accentLight, borderTop: `2px solid ${C.borderLight}`, padding: "28px 20px", textAlign: "center", marginTop: "40px" }}>
+        <a href="https://insyncprofiles.net" style={{ display: "inline-block", marginBottom: "12px" }}>
+          <img
+            src="/assets/insync-logo-transparent_9e0df532.png"
+            alt="InSync Profiles"
+            style={{ width: "72px", height: "72px", objectFit: "contain" }}
+          />
+        </a>
         <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: 0 }}>
           About Me Profiles are free — always. Created by{" "}
           <a href="https://insyncprofiles.net" style={{ color: C.accent, textDecoration: "none", fontWeight: 800 }}>InSync Profiles</a>.

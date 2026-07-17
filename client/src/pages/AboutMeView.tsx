@@ -478,7 +478,14 @@ export default function AboutMeView() {
       </div>
 
       {/* Footer */}
-      <div style={{ background: "#f0fdfa", borderTop: "1.5px solid #99f6e4", padding: "20px", textAlign: "center" }}>
+      <div style={{ background: "#f0fdfa", borderTop: "1.5px solid #99f6e4", padding: "28px 20px", textAlign: "center" }}>
+        <a href="https://insyncprofiles.net" style={{ display: "inline-block", marginBottom: "12px" }}>
+          <img
+            src="/assets/insync-logo-transparent_9e0df532.png"
+            alt="InSync Profiles"
+            style={{ width: "72px", height: "72px", objectFit: "contain" }}
+          />
+        </a>
         <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: "#5eead4", margin: "0 0 6px" }}>
           About Me Profile — free for participants, families and carers
         </p>
