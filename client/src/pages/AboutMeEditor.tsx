@@ -718,17 +718,6 @@ export default function AboutMeEditor() {
 
             <Field label="Full Name *" value={profile.name} onChange={v => set("name", v)} {...dp("name")} />
             <Field label="Preferred Name / Nickname" hint="What they like to be called day-to-day" value={profile.preferredName} onChange={v => set("preferredName", v)} {...dp("preferredName")} />
-            <SelectField
-              label="Gender"
-              value={profile.gender}
-              onChange={v => set("gender", v)}
-              options={[
-                { value: "", label: "Select..." },
-                { value: "Female", label: "Female" },
-                { value: "Male", label: "Male" },
-              ]}
-              {...dp("gender")}
-            />
             <Field label="Date of Birth" hint="e.g. 12 March 1985" value={profile.dob} onChange={v => set("dob", v)} {...dp("dob")} />
             <Field
               label={isAgedCare ? "Health and Mobility Notes" : "Primary Disability / Diagnosis"}
