@@ -299,6 +299,7 @@ export default function Landing() {
 
         {/* Desktop nav links — hidden on mobile */}
         <nav aria-label="Page navigation" className="desktop-nav" style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+          <Link href="/about-me/editor" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)", color: "#0f4c45", fontSize: "15px", fontWeight: 900, textDecoration: "none", padding: "9px 20px", borderRadius: "99px", letterSpacing: "0.01em", boxShadow: "0 2px 12px rgba(245,200,66,0.40)", flexShrink: 0 }}>✨ About Me</Link>
           <Link href="/pricing" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px", transition: "color 150ms" }}>Pricing</Link>
           <Link href="/how-to-use" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>How It Works</Link>
           <Link href="/scenarios" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Scenarios</Link>
@@ -361,7 +362,8 @@ export default function Landing() {
           role="menu"
           aria-label="Mobile navigation"
         >
-          {[
+          {          [
+            { href: "/about-me/editor", label: "✨ About Me Profile — Free" },
             { href: "/scenarios",  label: "🌊 The New Wave" },
             { href: "/pricing",    label: "Pricing" },
             { href: "/how-to-use", label: "How It Works" },
