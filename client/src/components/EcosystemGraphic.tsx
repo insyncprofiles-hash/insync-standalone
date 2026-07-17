@@ -3,15 +3,15 @@ import { useState } from "react";
 // ── InSync Profiles Ecosystem Graphic ─────────────────────────────────────
 // Larger canvas, bigger circles, well-spaced angles, high-contrast text
 
-const W = 1100;
-const H = 1100;
+const W = 1200;
+const H = 1200;
 const CX = W / 2;
 const CY = H / 2;
 
-const PROFILE_R  = 230; // radius of inner ring (profile nodes)
-const DEST_R_POS = 460; // radius of outer ring (destination nodes)
-const PROFILE_CR = 72;  // profile circle radius — big enough for 2-line text
-const DEST_CR    = 62;  // destination circle radius
+const PROFILE_R  = 255; // radius of inner ring (profile nodes)
+const DEST_R_POS = 490; // radius of outer ring (destination nodes)
+const PROFILE_CR = 92;  // profile circle radius — big enough for 2-line text
+const DEST_CR    = 64;  // destination circle radius
 
 function toRad(deg: number) { return (deg * Math.PI) / 180; }
 function nodePos(r: number, angleDeg: number) {
@@ -216,30 +216,30 @@ export default function EcosystemGraphic() {
                 style={{ transition: "all 180ms ease-out" }}
               />
               {/* Emoji */}
-              <text x={pos.x} y={pos.y - 22} textAnchor="middle" fontSize="22" dominantBaseline="middle">
+              <text x={pos.x} y={pos.y - 30} textAnchor="middle" fontSize="28" dominantBaseline="middle">
                 {profile.emoji}
               </text>
               {/* Line 1 */}
               <text
-                x={pos.x} y={pos.y + 6}
+                x={pos.x} y={pos.y + 8}
                 textAnchor="middle"
                 fontFamily="'Outfit','Nunito',sans-serif"
                 fontWeight="900"
-                fontSize="13"
+                fontSize="15"
                 fill={profile.textColor}
-                style={{ textShadow: "0 1px 3px rgba(0,0,0,0.6)" }}
+                style={{ textShadow: "0 1px 4px rgba(0,0,0,0.7)" }}
               >
                 {profile.label[0]}
               </text>
               {/* Line 2 */}
               <text
-                x={pos.x} y={pos.y + 22}
+                x={pos.x} y={pos.y + 27}
                 textAnchor="middle"
                 fontFamily="'Outfit','Nunito',sans-serif"
                 fontWeight="900"
-                fontSize="12"
+                fontSize="14"
                 fill={profile.textColor}
-                style={{ textShadow: "0 1px 3px rgba(0,0,0,0.6)" }}
+                style={{ textShadow: "0 1px 4px rgba(0,0,0,0.7)" }}
               >
                 {profile.label[1]}
               </text>
