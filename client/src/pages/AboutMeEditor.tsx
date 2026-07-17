@@ -2,10 +2,12 @@
    About Me Editor — Participant / Aged Care Profile Editor
    Free tool for NDIS participants, aged care residents,
    families and carers to create a shareable About Me profile.
-   Warm teal/sage design — distinct from the worker profile.
-   Data stored in localStorage, shared via URL params.
+   Pale gold design with full accessibility:
+   - Dictation (speech-to-text) on every text field
+   - Dictation for dropdown selection
+   - Large tap targets, high contrast labels
    ============================================================ */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "wouter";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -18,46 +20,37 @@ interface EmergencyContact {
 }
 
 interface AboutMeProfile {
-  // Who I Am
   name: string;
   preferredName: string;
   gender: string;
   dob: string;
   diagnosis: string;
-  photo: string; // base64
-  // Emergency Contacts
+  photo: string;
   emergencyContacts: EmergencyContact[];
-  // Communication
-  communicationStyle: string; // verbal/non-verbal/AAC/mixed
+  communicationStyle: string;
   aacDevice: string;
   keyWords: string;
   yesNoSignals: string;
   distressSignals: string;
-  // When I'm Well
   videoUrl: string;
   videoDescription: string;
-  // What I Can Do
   canDo: string;
   needsHelp: string;
   mobilityAids: string;
   sensoryNeeds: string;
-  // Triggers & What Helps
   triggers: string;
   earlyWarnings: string;
   whatHelps: string;
   whatMakesWorse: string;
-  // Approaches That Work
   doThis: string;
   neverDo: string;
   culturalConsiderations: string;
-  // My Preferences
   foodPreferences: string;
   music: string;
   routine: string;
   environment: string;
   goodDayLooksLike: string;
   whatMatters: string;
-  // NDIS Info
   ndisNumber: string;
   planDates: string;
   coordinatorName: string;
@@ -66,7 +59,7 @@ interface AboutMeProfile {
 }
 
 const EMPTY: AboutMeProfile = {
-  name: "", preferredName: "",   gender: "", dob: "", diagnosis: "", photo: "",
+  name: "", preferredName: "", gender: "", dob: "", diagnosis: "", photo: "",
   emergencyContacts: [{ name: "", relationship: "", phone: "" }],
   communicationStyle: "verbal", aacDevice: "", keyWords: "", yesNoSignals: "", distressSignals: "",
   videoUrl: "", videoDescription: "",
@@ -93,22 +86,211 @@ function profileToParams(p: AboutMeProfile): string {
     "ndisNumber","planDates","coordinatorName","coordinatorPhone","coordinatorEmail",
   ];
   fields.forEach(f => { if (p[f]) sp.set(f, p[f] as string); });
-  // Emergency contacts as JSON
   const filled = p.emergencyContacts.filter(c => c.name || c.phone);
   if (filled.length) sp.set("ec", JSON.stringify(filled));
   return sp.toString();
 }
 
-// ── COMPONENT ─────────────────────────────────────────────────
+// ── DICTATION HOOK ────────────────────────────────────────────
+
+function useDictation() {
+  const [listeningFor, setListeningFor] = useState<string | null>(null);
+  const recognitionRef = useRef<any>(null);
+
+  const startDictation = useCallback((fieldId: string, onResult: (text: string) => void) => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser. Please use Chrome on Android or desktop.");
+      return;
+    }
+    // Stop any existing session
+    if (recognitionRef.current) {
+      recognitionRef.current.onend = null;
+      recognitionRef.current.abort();
+    }
+    if (listeningFor === fieldId) {
+      setListeningFor(null);
+      return;
+    }
+    const rec = new SpeechRecognition();
+    rec.continuous = false;
+    rec.interimResults = false;
+    rec.lang = "en-AU";
+    rec.onresult = (e: any) => {
+      const transcript = e.results[0]?.[0]?.transcript || "";
+      if (transcript) onResult(transcript);
+    };
+    rec.onend = () => setListeningFor(null);
+    rec.onerror = () => setListeningFor(null);
+    recognitionRef.current = rec;
+    setListeningFor(fieldId);
+    rec.start();
+  }, [listeningFor]);
+
+  return { listeningFor, startDictation };
+}
+
+// ── COLOURS ───────────────────────────────────────────────────
+
+const C = {
+  bg: "#fffbeb",           // pale gold background
+  card: "#ffffff",
+  border: "#d97706",       // amber border
+  borderLight: "#fde68a",  // light amber
+  accent: "#92400e",       // dark amber/brown — high contrast on pale gold
+  accentMid: "#b45309",
+  accentLight: "#fef3c7",
+  teal: "#0f766e",         // teal for action buttons
+  tealLight: "#ccfbf1",
+  red: "#991b1b",
+  redLight: "#fff7ed",
+  redBorder: "#f97316",
+  headFont: "'Nunito', sans-serif" as const,
+  bodyFont: "'Nunito', sans-serif" as const,
+};
+
+// ── DICTATION BUTTON ──────────────────────────────────────────
+
+function DictationBtn({ fieldId, listeningFor, onStart }: {
+  fieldId: string;
+  listeningFor: string | null;
+  onStart: () => void;
+}) {
+  const isListening = listeningFor === fieldId;
+  return (
+    <button
+      type="button"
+      onClick={onStart}
+      title={isListening ? "Stop dictation" : "Tap to dictate"}
+      style={{
+        width: "40px", height: "40px", borderRadius: "50%", border: "none",
+        background: isListening ? "#dc2626" : C.teal,
+        color: "#fff", fontSize: "18px", cursor: "pointer", flexShrink: 0,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        boxShadow: isListening ? "0 0 0 4px rgba(220,38,38,0.3)" : "none",
+        transition: "all 200ms ease-out",
+      }}
+      aria-label={isListening ? "Stop dictation" : "Dictate this field"}
+    >
+      {isListening ? "⏹" : "🎤"}
+    </button>
+  );
+}
+
+// ── FIELD COMPONENT ───────────────────────────────────────────
+
+function Field({ id, label, hint, value, onChange, multiline = false, rows = 3, listeningFor, onDictate }: {
+  id: string; label: string; hint?: string; value: string;
+  onChange: (v: string) => void; multiline?: boolean; rows?: number;
+  listeningFor: string | null; onDictate: (id: string, cb: (t: string) => void) => void;
+}) {
+  const isListening = listeningFor === id;
+  const inputStyle: React.CSSProperties = {
+    flex: 1, padding: "12px 14px", borderRadius: "12px",
+    border: `2px solid ${isListening ? "#dc2626" : C.border}`,
+    fontFamily: C.bodyFont, fontSize: "15px",
+    color: "#1c1917", background: isListening ? "#fff5f5" : "#fffdf5",
+    outline: "none", boxSizing: "border-box",
+    transition: "border-color 200ms ease-out",
+  };
+  return (
+    <div style={{ marginBottom: "22px" }}>
+      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, marginBottom: "6px" }}>
+        {label}
+      </label>
+      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
+      {isListening && (
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
+          Listening... speak now
+        </p>
+      )}
+      <div style={{ display: "flex", gap: "10px", alignItems: multiline ? "flex-start" : "center" }}>
+        {multiline ? (
+          <textarea
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            rows={rows}
+            style={{ ...inputStyle, resize: "vertical" }}
+          />
+        ) : (
+          <input
+            type="text"
+            value={value}
+            onChange={e => onChange(e.target.value)}
+            style={inputStyle}
+          />
+        )}
+        <DictationBtn
+          fieldId={id}
+          listeningFor={listeningFor}
+          onStart={() => onDictate(id, text => onChange(value ? value + " " + text : text))}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ── SELECT WITH DICTATION ─────────────────────────────────────
+
+function SelectField({ id, label, hint, value, onChange, options, listeningFor, onDictate }: {
+  id: string; label: string; hint?: string; value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string }[];
+  listeningFor: string | null; onDictate: (id: string, cb: (t: string) => void) => void;
+}) {
+  const isListening = listeningFor === id;
+  return (
+    <div style={{ marginBottom: "22px" }}>
+      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, marginBottom: "6px" }}>
+        {label}
+      </label>
+      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
+      {isListening && (
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
+          Listening... say an option name
+        </p>
+      )}
+      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <select
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          style={{
+            flex: 1, padding: "12px 14px", borderRadius: "12px",
+            border: `2px solid ${isListening ? "#dc2626" : C.border}`,
+            fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917",
+            background: isListening ? "#fff5f5" : "#fffdf5", outline: "none",
+          }}
+        >
+          {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+        <DictationBtn
+          fieldId={id}
+          listeningFor={listeningFor}
+          onStart={() => onDictate(id, text => {
+            // Match spoken text to nearest option
+            const lower = text.toLowerCase();
+            const match = options.find(o => o.label.toLowerCase().includes(lower) || lower.includes(o.label.toLowerCase()));
+            if (match && match.value) onChange(match.value);
+          })}
+        />
+      </div>
+      <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "6px 0 0" }}>
+        Options: {options.filter(o => o.value).map(o => o.label).join(", ")}
+      </p>
+    </div>
+  );
+}
+
+// ── MAIN COMPONENT ────────────────────────────────────────────
 
 export default function AboutMeEditor() {
   const [profile, setProfile] = useState<AboutMeProfile>(EMPTY);
   const [activeTab, setActiveTab] = useState("who");
   const [shareUrl, setShareUrl] = useState("");
-  const [saved, setSaved] = useState(false);
+  const [copied, setCopied] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
+  const { listeningFor, startDictation } = useDictation();
 
-  // Load from localStorage on mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -118,7 +300,6 @@ export default function AboutMeEditor() {
     } catch {}
   }, []);
 
-  // Auto-save to localStorage whenever profile changes
   useEffect(() => {
     try {
       const { photo, ...rest } = profile;
@@ -127,7 +308,6 @@ export default function AboutMeEditor() {
     } catch {}
   }, [profile]);
 
-  // Generate share URL
   useEffect(() => {
     if (profile.name) {
       const params = profileToParams(profile);
@@ -166,129 +346,62 @@ export default function AboutMeEditor() {
   }
 
   function copyLink() {
-    navigator.clipboard.writeText(shareUrl).then(() => { setSaved(true); setTimeout(() => setSaved(false), 2000); });
+    navigator.clipboard.writeText(shareUrl).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
   }
 
-  // ── STYLES ──────────────────────────────────────────────────
-  const teal = "#0d9488";
-  const tealLight = "#ccfbf1";
-  const sage = "#4ade80";
-  const cream = "#fefce8";
-  const warmWhite = "#f0fdf4";
-  const headFont = "'Nunito', sans-serif";
-  const bodyFont = "'Nunito', sans-serif";
+  // Shared dictation props helper
+  function dp(id: string) {
+    return { id, listeningFor, onDictate: startDictation };
+  }
 
   const tabs = [
-    { id: "who",        label: "Who I Am",          emoji: "👤" },
-    { id: "emergency",  label: "Emergency",          emoji: "🆘" },
-    { id: "comms",      label: "Communication",      emoji: "💬" },
-    { id: "video",      label: "When I'm Well",      emoji: "🎬" },
-    { id: "function",   label: "What I Can Do",      emoji: "💪" },
-    { id: "triggers",   label: "Triggers & Help",    emoji: "🌿" },
-    { id: "approaches", label: "Approaches",         emoji: "🤝" },
-    { id: "prefs",      label: "My Preferences",     emoji: "🌻" },
-    { id: "ndis",       label: "NDIS Info",          emoji: "📋" },
-    { id: "share",      label: "Share",              emoji: "🔗" },
+    { id: "who",        label: "Who I Am",       emoji: "👤" },
+    { id: "emergency",  label: "Emergency",      emoji: "🆘" },
+    { id: "comms",      label: "Communication",  emoji: "💬" },
+    { id: "video",      label: "When I'm Well",  emoji: "🎬" },
+    { id: "function",   label: "What I Can Do",  emoji: "💪" },
+    { id: "triggers",   label: "Triggers",       emoji: "🌿" },
+    { id: "approaches", label: "Approaches",     emoji: "🤝" },
+    { id: "prefs",      label: "Preferences",    emoji: "🌻" },
+    { id: "ndis",       label: "NDIS Info",      emoji: "📋" },
+    { id: "share",      label: "Share",          emoji: "🔗" },
   ];
 
-  function Field({ label, hint, value, onChange, multiline = false, rows = 3 }: {
-    label: string; hint?: string; value: string;
-    onChange: (v: string) => void; multiline?: boolean; rows?: number;
-  }) {
-    return (
-      <div style={{ marginBottom: "20px" }}>
-        <label style={{ display: "block", fontFamily: headFont, fontWeight: 700, fontSize: "14px", color: "#134e4a", marginBottom: "6px" }}>
-          {label}
-        </label>
-        {hint && <p style={{ fontFamily: bodyFont, fontSize: "12px", color: "#5eead4", margin: "0 0 8px" }}>{hint}</p>}
-        {multiline ? (
-          <textarea
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            rows={rows}
-            style={{
-              width: "100%", padding: "12px 14px", borderRadius: "12px",
-              border: "1.5px solid #99f6e4", fontFamily: bodyFont, fontSize: "14px",
-              color: "#134e4a", background: "#f0fdfa", resize: "vertical",
-              outline: "none", boxSizing: "border-box",
-            }}
-          />
-        ) : (
-          <input
-            type="text"
-            value={value}
-            onChange={e => onChange(e.target.value)}
-            style={{
-              width: "100%", padding: "12px 14px", borderRadius: "12px",
-              border: "1.5px solid #99f6e4", fontFamily: bodyFont, fontSize: "14px",
-              color: "#134e4a", background: "#f0fdfa",
-              outline: "none", boxSizing: "border-box",
-            }}
-          />
-        )}
-      </div>
-    );
-  }
-
-  function Select({ label, hint, value, onChange, options }: {
-    label: string; hint?: string; value: string;
-    onChange: (v: string) => void; options: { value: string; label: string }[];
-  }) {
-    return (
-      <div style={{ marginBottom: "20px" }}>
-        <label style={{ display: "block", fontFamily: headFont, fontWeight: 700, fontSize: "14px", color: "#134e4a", marginBottom: "6px" }}>{label}</label>
-        {hint && <p style={{ fontFamily: bodyFont, fontSize: "12px", color: "#5eead4", margin: "0 0 8px" }}>{hint}</p>}
-        <select
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          style={{
-            width: "100%", padding: "12px 14px", borderRadius: "12px",
-            border: "1.5px solid #99f6e4", fontFamily: bodyFont, fontSize: "14px",
-            color: "#134e4a", background: "#f0fdfa", outline: "none",
-          }}
-        >
-          {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-        </select>
-      </div>
-    );
-  }
-
-  // ── RENDER ──────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: "100vh", background: warmWhite, fontFamily: bodyFont }}>
-      {/* Google Fonts */}
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Header */}
-      <div style={{ background: teal, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: C.accent, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontFamily: headFont, fontWeight: 900, fontSize: "20px", color: "#ffffff", margin: 0 }}>About Me Editor</p>
-          <p style={{ fontFamily: bodyFont, fontSize: "12px", color: "#ccfbf1", margin: "2px 0 0" }}>Free — for participants, families and carers</p>
+          <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: "#fffbeb", margin: 0 }}>About Me Editor</p>
+          <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: "#fde68a", margin: "2px 0 0" }}>Free — for participants, families and carers</p>
         </div>
-        <Link href="/" style={{ fontFamily: bodyFont, fontSize: "13px", color: "#ccfbf1", textDecoration: "none" }}>
+        <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
           Back to InSync Profiles
         </Link>
       </div>
 
-      {/* Intro banner */}
-      <div style={{ background: "#f0fdfa", borderBottom: "1.5px solid #99f6e4", padding: "14px 20px" }}>
-        <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#134e4a", margin: 0 }}>
-          Fill in as much or as little as you like. Everything saves automatically. When you're ready, go to the <strong>Share</strong> tab to get your link and QR code.
+      {/* Accessibility notice */}
+      <div style={{ background: C.accentLight, borderBottom: `2px solid ${C.borderLight}`, padding: "12px 20px", display: "flex", alignItems: "center", gap: "10px" }}>
+        <span style={{ fontSize: "20px" }}>🎤</span>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accent, margin: 0, fontWeight: 700 }}>
+          Every field has a microphone button — tap it to dictate instead of type. Everything saves automatically.
         </p>
       </div>
 
       {/* Tab bar */}
-      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: "1.5px solid #e0f2fe", padding: "0 8px", gap: "4px" }}>
+      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "0 4px", gap: "2px" }}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: "12px 14px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
-              fontFamily: headFont, fontWeight: activeTab === tab.id ? 800 : 600, fontSize: "13px",
-              color: activeTab === tab.id ? teal : "#5eead4",
+              padding: "12px 12px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+              fontFamily: C.headFont, fontWeight: activeTab === tab.id ? 900 : 600, fontSize: "13px",
+              color: activeTab === tab.id ? C.accent : "#78716c",
               background: "none",
-              borderBottom: activeTab === tab.id ? `3px solid ${teal}` : "3px solid transparent",
+              borderBottom: activeTab === tab.id ? `3px solid ${C.accent}` : "3px solid transparent",
               transition: "all 150ms ease-out",
             }}
           >
@@ -303,28 +416,28 @@ export default function AboutMeEditor() {
         {/* WHO I AM */}
         {activeTab === "who" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>Who I Am</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>Basic information about the person this profile belongs to.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Who I Am</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Basic information about the person this profile belongs to.</p>
 
             {/* Photo */}
-            <div style={{ marginBottom: "24px", display: "flex", alignItems: "center", gap: "20px" }}>
+            <div style={{ marginBottom: "28px", display: "flex", alignItems: "center", gap: "20px" }}>
               <div
                 onClick={() => photoInputRef.current?.click()}
                 style={{
                   width: "100px", height: "100px", borderRadius: "50%", cursor: "pointer",
-                  background: profile.photo ? `url(${profile.photo}) center/cover` : "#ccfbf1",
-                  border: `3px solid ${teal}`, display: "flex", alignItems: "center", justifyContent: "center",
-                  flexShrink: 0,
+                  background: profile.photo ? `url(${profile.photo}) center/cover` : C.accentLight,
+                  border: `3px solid ${C.border}`, display: "flex", alignItems: "center",
+                  justifyContent: "center", flexShrink: 0,
                 }}
               >
                 {!profile.photo && <span style={{ fontSize: "36px" }}>📷</span>}
               </div>
               <div>
-                <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "14px", color: "#134e4a", margin: "0 0 6px" }}>Profile Photo</p>
-                <p style={{ fontFamily: bodyFont, fontSize: "12px", color: "#5eead4", margin: "0 0 10px" }}>A warm, recent photo helps new staff connect immediately.</p>
+                <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 6px" }}>Profile Photo</p>
+                <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 10px" }}>A warm, recent photo helps new staff connect immediately.</p>
                 <button
                   onClick={() => photoInputRef.current?.click()}
-                  style={{ padding: "8px 16px", borderRadius: "20px", border: `1.5px solid ${teal}`, background: "white", color: teal, fontFamily: headFont, fontWeight: 700, fontSize: "13px", cursor: "pointer" }}
+                  style={{ padding: "10px 20px", borderRadius: "20px", border: `2px solid ${C.border}`, background: C.accentLight, color: C.accent, fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", cursor: "pointer" }}
                 >
                   Choose Photo
                 </button>
@@ -332,55 +445,71 @@ export default function AboutMeEditor() {
               </div>
             </div>
 
-            <Field label="Full Name *" value={profile.name} onChange={v => set("name", v)} />
-            <Field label="Preferred Name / Nickname" hint="What they like to be called day-to-day" value={profile.preferredName} onChange={v => set("preferredName", v)} />
-            <Select label="Gender" value={profile.gender} onChange={v => set("gender", v)} options={[
-              { value: "", label: "Select..." },
-              { value: "Female", label: "Female" },
-              { value: "Male", label: "Male" },
-            ]} />
-            <Field label="Date of Birth" value={profile.dob} onChange={v => set("dob", v)} />
-            <Field label="Primary Disability / Diagnosis" hint="Broad description only — e.g. Autism, Cerebral Palsy, Dementia. Do not include clinical detail." value={profile.diagnosis} onChange={v => set("diagnosis", v)} multiline rows={2} />
+            <Field label="Full Name *" value={profile.name} onChange={v => set("name", v)} {...dp("name")} />
+            <Field label="Preferred Name / Nickname" hint="What they like to be called day-to-day" value={profile.preferredName} onChange={v => set("preferredName", v)} {...dp("preferredName")} />
+            <SelectField
+              label="Gender"
+              value={profile.gender}
+              onChange={v => set("gender", v)}
+              options={[
+                { value: "", label: "Select..." },
+                { value: "Female", label: "Female" },
+                { value: "Male", label: "Male" },
+              ]}
+              {...dp("gender")}
+            />
+            <Field label="Date of Birth" hint="e.g. 12 March 1985" value={profile.dob} onChange={v => set("dob", v)} {...dp("dob")} />
+            <Field label="Primary Disability / Diagnosis" hint="Broad description only — e.g. Autism, Cerebral Palsy, Dementia. Do not include clinical detail." value={profile.diagnosis} onChange={v => set("diagnosis", v)} multiline rows={2} {...dp("diagnosis")} />
           </div>
         )}
 
         {/* EMERGENCY */}
         {activeTab === "emergency" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>Emergency Contacts</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>The people to call first. This section is highlighted prominently on the profile.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Emergency Contacts</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>The people to call first. This section is highlighted prominently on the profile.</p>
 
             {profile.emergencyContacts.map((ec, i) => (
-              <div key={i} style={{ background: "#fff7ed", border: "1.5px solid #fed7aa", borderRadius: "16px", padding: "16px", marginBottom: "16px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-                  <p style={{ fontFamily: headFont, fontWeight: 800, fontSize: "15px", color: "#9a3412", margin: 0 }}>Contact {i + 1}</p>
+              <div key={i} style={{ background: C.redLight, border: `2px solid ${C.redBorder}`, borderRadius: "16px", padding: "16px", marginBottom: "16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "16px", color: C.red, margin: 0 }}>Contact {i + 1}</p>
                   {i > 0 && (
-                    <button onClick={() => removeEC(i)} style={{ background: "none", border: "none", color: "#9a3412", cursor: "pointer", fontSize: "18px" }}>✕</button>
+                    <button onClick={() => removeEC(i)} style={{ background: "none", border: "none", color: C.red, cursor: "pointer", fontSize: "20px", padding: "4px 8px" }}>✕</button>
                   )}
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-                  <div>
-                    <label style={{ display: "block", fontFamily: headFont, fontWeight: 700, fontSize: "13px", color: "#9a3412", marginBottom: "6px" }}>Name</label>
+                {/* Name */}
+                <div style={{ marginBottom: "12px" }}>
+                  <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.red, marginBottom: "6px" }}>Name</label>
+                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                     <input type="text" value={ec.name} onChange={e => setEC(i, "name", e.target.value)}
-                      style={{ width: "100%", padding: "10px 12px", borderRadius: "10px", border: "1.5px solid #fed7aa", fontFamily: bodyFont, fontSize: "14px", color: "#134e4a", background: "#fff", outline: "none", boxSizing: "border-box" }} />
-                  </div>
-                  <div>
-                    <label style={{ display: "block", fontFamily: headFont, fontWeight: 700, fontSize: "13px", color: "#9a3412", marginBottom: "6px" }}>Relationship</label>
-                    <input type="text" value={ec.relationship} onChange={e => setEC(i, "relationship", e.target.value)}
-                      style={{ width: "100%", padding: "10px 12px", borderRadius: "10px", border: "1.5px solid #fed7aa", fontFamily: bodyFont, fontSize: "14px", color: "#134e4a", background: "#fff", outline: "none", boxSizing: "border-box" }} />
+                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.redBorder}`, fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", background: "#fff", outline: "none" }} />
+                    <DictationBtn fieldId={`ec-${i}-name`} listeningFor={listeningFor} onStart={() => startDictation(`ec-${i}-name`, t => setEC(i, "name", t))} />
                   </div>
                 </div>
-                <div style={{ marginTop: "12px" }}>
-                  <label style={{ display: "block", fontFamily: headFont, fontWeight: 700, fontSize: "13px", color: "#9a3412", marginBottom: "6px" }}>Phone</label>
-                  <input type="tel" value={ec.phone} onChange={e => setEC(i, "phone", e.target.value)}
-                    style={{ width: "100%", padding: "10px 12px", borderRadius: "10px", border: "1.5px solid #fed7aa", fontFamily: bodyFont, fontSize: "14px", color: "#134e4a", background: "#fff", outline: "none", boxSizing: "border-box" }} />
+                {/* Relationship */}
+                <div style={{ marginBottom: "12px" }}>
+                  <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.red, marginBottom: "6px" }}>Relationship</label>
+                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                    <input type="text" value={ec.relationship} onChange={e => setEC(i, "relationship", e.target.value)}
+                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.redBorder}`, fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", background: "#fff", outline: "none" }} />
+                    <DictationBtn fieldId={`ec-${i}-rel`} listeningFor={listeningFor} onStart={() => startDictation(`ec-${i}-rel`, t => setEC(i, "relationship", t))} />
+                  </div>
+                </div>
+                {/* Phone */}
+                <div>
+                  <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.red, marginBottom: "6px" }}>Phone</label>
+                  <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                    <input type="tel" value={ec.phone} onChange={e => setEC(i, "phone", e.target.value)}
+                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.redBorder}`, fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", background: "#fff", outline: "none" }} />
+                    <DictationBtn fieldId={`ec-${i}-phone`} listeningFor={listeningFor} onStart={() => startDictation(`ec-${i}-phone`, t => setEC(i, "phone", t))} />
+                  </div>
                 </div>
               </div>
             ))}
 
             <button
               onClick={addEC}
-              style={{ padding: "10px 20px", borderRadius: "20px", border: `1.5px solid ${teal}`, background: "white", color: teal, fontFamily: headFont, fontWeight: 700, fontSize: "14px", cursor: "pointer" }}
+              style={{ padding: "12px 24px", borderRadius: "20px", border: `2px solid ${C.border}`, background: C.accentLight, color: C.accent, fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", cursor: "pointer" }}
             >
               + Add Another Contact
             </button>
@@ -390,10 +519,10 @@ export default function AboutMeEditor() {
         {/* COMMUNICATION */}
         {activeTab === "comms" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>How I Communicate</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>Help staff understand how to communicate effectively from the very first interaction.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>How I Communicate</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Help staff understand how to communicate effectively from the very first interaction.</p>
 
-            <Select
+            <SelectField
               label="Communication Style"
               value={profile.communicationStyle}
               onChange={v => set("communicationStyle", v)}
@@ -406,47 +535,35 @@ export default function AboutMeEditor() {
                 { value: "non-verbal", label: "Non-verbal — no speech" },
                 { value: "mixed", label: "Mixed — depends on the day" },
               ]}
+              {...dp("communicationStyle")}
             />
-            <Field label="AAC Device / Communication Aid" hint="e.g. Proloquo2Go on iPad, PODD book, LAMP Words for Life" value={profile.aacDevice} onChange={v => set("aacDevice", v)} />
-            <Field label="Key Words I Use" hint="Words or phrases that are important to know — especially if my speech is hard to understand" value={profile.keyWords} onChange={v => set("keyWords", v)} multiline rows={3} />
-            <Field label="How I Show Yes and No" hint="e.g. Nod for yes, turn head for no. Thumbs up/down. Eye gaze up for yes." value={profile.yesNoSignals} onChange={v => set("yesNoSignals", v)} multiline rows={2} />
-            <Field label="How to Know I'm in Pain or Distress" hint="Describe the signs — facial expressions, sounds, body language, behaviour changes" value={profile.distressSignals} onChange={v => set("distressSignals", v)} multiline rows={3} />
+            <Field label="AAC Device / Communication Aid" hint="e.g. Proloquo2Go on iPad, PODD book" value={profile.aacDevice} onChange={v => set("aacDevice", v)} {...dp("aacDevice")} />
+            <Field label="Key Words I Use" hint="Words or phrases that are important to know" value={profile.keyWords} onChange={v => set("keyWords", v)} multiline rows={3} {...dp("keyWords")} />
+            <Field label="How I Show Yes and No" hint="e.g. Nod for yes, turn head for no. Thumbs up/down." value={profile.yesNoSignals} onChange={v => set("yesNoSignals", v)} multiline rows={2} {...dp("yesNoSignals")} />
+            <Field label="How to Know I'm in Pain or Distress" hint="Signs — facial expressions, sounds, body language, behaviour changes" value={profile.distressSignals} onChange={v => set("distressSignals", v)} multiline rows={3} {...dp("distressSignals")} />
           </div>
         )}
 
         {/* WHEN I'M WELL */}
         {activeTab === "video" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>When I'm Well</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "8px" }}>
-              This is the most powerful section. Hospital staff and new providers almost never see the person at their best.
-              A video of the person laughing, communicating, and engaging changes everything about how they're treated.
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>When I'm Well</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "8px" }}>
+              A video of the person at their best changes how staff treat them. Hospital staff almost never see this.
             </p>
-            <div style={{ background: "#f0fdfa", border: "1.5px solid #99f6e4", borderRadius: "12px", padding: "14px", marginBottom: "24px" }}>
-              <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "13px", color: teal, margin: "0 0 6px" }}>Tip: Use an unlisted YouTube video</p>
-              <p style={{ fontFamily: bodyFont, fontSize: "13px", color: "#134e4a", margin: 0 }}>
-                Upload to YouTube and set it to <strong>Unlisted</strong> — only people with the link can find it. This keeps it private while still being shareable. Do not set it to Public if the video contains personal information.
+            <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "12px", padding: "14px", marginBottom: "24px" }}>
+              <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.accent, margin: "0 0 4px" }}>Use an unlisted YouTube video</p>
+              <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: 0 }}>
+                Upload to YouTube and set it to <strong>Unlisted</strong> — only people with the link can find it. Do not set it to Public if the video contains personal information.
               </p>
             </div>
 
-            <Field
-              label="YouTube Video URL"
-              hint="Paste the full YouTube link here — e.g. https://youtube.com/watch?v=..."
-              value={profile.videoUrl}
-              onChange={v => set("videoUrl", v)}
-            />
-            <Field
-              label="Describe What's in the Video"
-              hint="e.g. 'This is me at home on a good day — laughing with my family, using my AAC device, and doing my favourite puzzle.'"
-              value={profile.videoDescription}
-              onChange={v => set("videoDescription", v)}
-              multiline
-              rows={3}
-            />
+            <Field label="YouTube Video URL" hint="Paste the full YouTube link — e.g. https://youtube.com/watch?v=..." value={profile.videoUrl} onChange={v => set("videoUrl", v)} {...dp("videoUrl")} />
+            <Field label="Describe What's in the Video" hint="e.g. 'This is me at home on a good day — laughing with my family, using my AAC device.'" value={profile.videoDescription} onChange={v => set("videoDescription", v)} multiline rows={3} {...dp("videoDescription")} />
 
             {profile.videoUrl && (
               <div style={{ marginTop: "16px" }}>
-                <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "13px", color: "#134e4a", marginBottom: "8px" }}>Preview:</p>
+                <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.accent, marginBottom: "8px" }}>Preview:</p>
                 <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, borderRadius: "12px", overflow: "hidden" }}>
                   <iframe
                     src={(() => {
@@ -469,155 +586,129 @@ export default function AboutMeEditor() {
         {/* WHAT I CAN DO */}
         {activeTab === "function" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>What I Can Do</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>Cognitive and physical function — what I do independently and what I need support with.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>What I Can Do</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Cognitive and physical function — what I do independently and what I need support with.</p>
 
-            <Field label="What I Can Do Independently" hint="e.g. Feed myself, communicate basic needs, walk short distances, use my phone" value={profile.canDo} onChange={v => set("canDo", v)} multiline rows={4} />
-            <Field label="What I Need Help With" hint="e.g. Transfers, showering, dressing, complex communication, managing medications" value={profile.needsHelp} onChange={v => set("needsHelp", v)} multiline rows={4} />
-            <Field label="Mobility Aids / Equipment" hint="e.g. Manual wheelchair, walking frame, CPAP machine, PEG tube, hearing aids" value={profile.mobilityAids} onChange={v => set("mobilityAids", v)} multiline rows={2} />
-            <Field label="Sensory Needs" hint="e.g. Sensitive to loud noise, needs dim lighting, dislikes certain textures, requires sensory breaks" value={profile.sensoryNeeds} onChange={v => set("sensoryNeeds", v)} multiline rows={3} />
+            <Field label="What I Can Do Independently" hint="e.g. Feed myself, communicate basic needs, walk short distances" value={profile.canDo} onChange={v => set("canDo", v)} multiline rows={4} {...dp("canDo")} />
+            <Field label="What I Need Help With" hint="e.g. Transfers, showering, dressing, complex communication" value={profile.needsHelp} onChange={v => set("needsHelp", v)} multiline rows={4} {...dp("needsHelp")} />
+            <Field label="Mobility Aids / Equipment" hint="e.g. Manual wheelchair, walking frame, CPAP machine, hearing aids" value={profile.mobilityAids} onChange={v => set("mobilityAids", v)} multiline rows={2} {...dp("mobilityAids")} />
+            <Field label="Sensory Needs" hint="e.g. Sensitive to loud noise, needs dim lighting, dislikes certain textures" value={profile.sensoryNeeds} onChange={v => set("sensoryNeeds", v)} multiline rows={3} {...dp("sensoryNeeds")} />
           </div>
         )}
 
-        {/* TRIGGERS & WHAT HELPS */}
+        {/* TRIGGERS */}
         {activeTab === "triggers" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>Triggers and What Helps</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>This section helps staff prevent distress and respond effectively when it happens.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Triggers and What Helps</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Helps staff prevent distress and respond effectively when it happens.</p>
 
-            <Field label="What Causes Distress (Triggers)" hint="e.g. Unexpected changes to routine, loud environments, being touched without warning, certain foods or smells" value={profile.triggers} onChange={v => set("triggers", v)} multiline rows={4} />
-            <Field label="Early Warning Signs" hint="Describe the signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} />
-            <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, my favourite music, a specific person, a walk outside" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} />
-            <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone, too many people talking at once" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} />
+            <Field label="What Causes Distress (Triggers)" hint="e.g. Unexpected changes, loud environments, being touched without warning" value={profile.triggers} onChange={v => set("triggers", v)} multiline rows={4} {...dp("triggers")} />
+            <Field label="Early Warning Signs" hint="Signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} {...dp("earlyWarnings")} />
+            <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} {...dp("whatHelps")} />
+            <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} {...dp("whatMakesWorse")} />
           </div>
         )}
 
         {/* APPROACHES */}
         {activeTab === "approaches" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>Approaches That Work</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>What staff should do, what they should never do, and any cultural or religious considerations.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Approaches That Work</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>What staff should do, what they should never do, and cultural or religious considerations.</p>
 
-            <Field label="Please Do This" hint="Specific approaches, strategies, or communication styles that work well" value={profile.doThis} onChange={v => set("doThis", v)} multiline rows={4} />
-            <Field label="Please Never Do This" hint="Things that cause harm, distress, or are against the person's wishes or dignity" value={profile.neverDo} onChange={v => set("neverDo", v)} multiline rows={4} />
-            <Field label="Cultural or Religious Considerations" hint="e.g. Dietary requirements, prayer times, gender preferences for personal care, cultural practices" value={profile.culturalConsiderations} onChange={v => set("culturalConsiderations", v)} multiline rows={3} />
+            <Field label="Please Do This" hint="Approaches, strategies, or communication styles that work well" value={profile.doThis} onChange={v => set("doThis", v)} multiline rows={4} {...dp("doThis")} />
+            <Field label="Please Never Do This" hint="Things that cause harm, distress, or are against the person's wishes" value={profile.neverDo} onChange={v => set("neverDo", v)} multiline rows={4} {...dp("neverDo")} />
+            <Field label="Cultural or Religious Considerations" hint="e.g. Dietary requirements, prayer times, gender preferences for personal care" value={profile.culturalConsiderations} onChange={v => set("culturalConsiderations", v)} multiline rows={3} {...dp("culturalConsiderations")} />
           </div>
         )}
 
         {/* PREFERENCES */}
         {activeTab === "prefs" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>My Preferences</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>The things that matter — what makes a good day, what brings comfort, what to know before you arrive.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>My Preferences</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>What makes a good day, what brings comfort, what to know before you arrive.</p>
 
-            <Field label="Food Preferences and Restrictions" hint="Likes, dislikes, allergies, texture needs, mealtime support required" value={profile.foodPreferences} onChange={v => set("foodPreferences", v)} multiline rows={3} />
-            <Field label="Music and Entertainment" hint="Favourite music, TV shows, podcasts, games — what they enjoy" value={profile.music} onChange={v => set("music", v)} multiline rows={2} />
-            <Field label="Routine" hint="Important daily routines — what order things happen, what time, what must not be skipped" value={profile.routine} onChange={v => set("routine", v)} multiline rows={3} />
-            <Field label="Environment" hint="Preferred lighting, temperature, noise level, space requirements" value={profile.environment} onChange={v => set("environment", v)} multiline rows={2} />
-            <Field label="What a Good Day Looks Like" hint="Describe what the person is like when they're happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} />
-            <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful for this person" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} />
+            <Field label="Food Preferences and Restrictions" hint="Likes, dislikes, allergies, texture needs, mealtime support" value={profile.foodPreferences} onChange={v => set("foodPreferences", v)} multiline rows={3} {...dp("foodPreferences")} />
+            <Field label="Music and Entertainment" hint="Favourite music, TV shows, podcasts, games" value={profile.music} onChange={v => set("music", v)} multiline rows={2} {...dp("music")} />
+            <Field label="Routine" hint="Important daily routines — order, timing, what must not be skipped" value={profile.routine} onChange={v => set("routine", v)} multiline rows={3} {...dp("routine")} />
+            <Field label="Environment" hint="Preferred lighting, temperature, noise level, space requirements" value={profile.environment} onChange={v => set("environment", v)} multiline rows={2} {...dp("environment")} />
+            <Field label="What a Good Day Looks Like" hint="Describe what the person is like when happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} {...dp("goodDayLooksLike")} />
+            <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} {...dp("whatMatters")} />
           </div>
         )}
 
         {/* NDIS INFO */}
         {activeTab === "ndis" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>NDIS Information</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "8px" }}>Optional — for sharing with NDIS providers and coordinators.</p>
-            <div style={{ background: "#fff7ed", border: "1.5px solid #fed7aa", borderRadius: "12px", padding: "14px", marginBottom: "24px" }}>
-              <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "13px", color: "#9a3412", margin: "0 0 4px" }}>Privacy note</p>
-              <p style={{ fontFamily: bodyFont, fontSize: "13px", color: "#9a3412", margin: 0 }}>
-                Your NDIS number and plan details will be visible to anyone with your profile link. Only include this information if you're comfortable sharing it with providers and coordinators.
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>NDIS Information</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "8px" }}>Optional — for sharing with NDIS providers and coordinators.</p>
+            <div style={{ background: C.redLight, border: `2px solid ${C.redBorder}`, borderRadius: "12px", padding: "14px", marginBottom: "24px" }}>
+              <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", color: C.red, margin: "0 0 4px" }}>Privacy note</p>
+              <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.red, margin: 0 }}>
+                Your NDIS number and plan details will be visible to anyone with your profile link. Only include this if you're comfortable sharing it with providers.
               </p>
             </div>
 
-            <Field label="NDIS Number" value={profile.ndisNumber} onChange={v => set("ndisNumber", v)} />
-            <Field label="Plan Dates" hint="e.g. 1 July 2025 – 30 June 2026" value={profile.planDates} onChange={v => set("planDates", v)} />
-            <Field label="Support Coordinator Name" value={profile.coordinatorName} onChange={v => set("coordinatorName", v)} />
-            <Field label="Support Coordinator Phone" value={profile.coordinatorPhone} onChange={v => set("coordinatorPhone", v)} />
-            <Field label="Support Coordinator Email" value={profile.coordinatorEmail} onChange={v => set("coordinatorEmail", v)} />
+            <Field label="NDIS Number" value={profile.ndisNumber} onChange={v => set("ndisNumber", v)} {...dp("ndisNumber")} />
+            <Field label="Plan Dates" hint="e.g. 1 July 2025 to 30 June 2026" value={profile.planDates} onChange={v => set("planDates", v)} {...dp("planDates")} />
+            <Field label="Support Coordinator Name" value={profile.coordinatorName} onChange={v => set("coordinatorName", v)} {...dp("coordinatorName")} />
+            <Field label="Support Coordinator Phone" value={profile.coordinatorPhone} onChange={v => set("coordinatorPhone", v)} {...dp("coordinatorPhone")} />
+            <Field label="Support Coordinator Email" value={profile.coordinatorEmail} onChange={v => set("coordinatorEmail", v)} {...dp("coordinatorEmail")} />
           </div>
         )}
 
         {/* SHARE */}
         {activeTab === "share" && (
           <div>
-            <h2 style={{ fontFamily: headFont, fontWeight: 900, fontSize: "22px", color: "#134e4a", marginBottom: "6px" }}>Share Your Profile</h2>
-            <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", marginBottom: "24px" }}>
-              Share this link with hospitals, NDIS providers, aged care facilities, or any new service. They'll see your full About Me profile — no login needed.
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Share Your Profile</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>
+              Share this link with hospitals, NDIS providers, aged care facilities, or any new service. No login needed.
             </p>
 
             {!profile.name ? (
-              <div style={{ background: "#f0fdfa", border: "1.5px solid #99f6e4", borderRadius: "16px", padding: "24px", textAlign: "center" }}>
-                <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "16px", color: "#134e4a", margin: "0 0 8px" }}>Add a name first</p>
-                <p style={{ fontFamily: bodyFont, fontSize: "14px", color: "#5eead4", margin: 0 }}>Go to the "Who I Am" tab and enter the person's full name to generate your shareable link.</p>
+              <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "24px", textAlign: "center" }}>
+                <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "16px", color: C.accent, margin: "0 0 8px" }}>Add a name first</p>
+                <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, margin: 0 }}>Go to the "Who I Am" tab and enter the person's full name to generate your shareable link.</p>
               </div>
             ) : (
               <>
-                {/* Link */}
-                <div style={{ background: "#f0fdfa", border: "1.5px solid #99f6e4", borderRadius: "16px", padding: "20px", marginBottom: "24px" }}>
-                  <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "14px", color: "#134e4a", margin: "0 0 10px" }}>Your Profile Link</p>
+                <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "20px", marginBottom: "24px" }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 10px" }}>Your Profile Link</p>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                     <input
                       readOnly
                       value={shareUrl}
-                      style={{ flex: 1, padding: "10px 14px", borderRadius: "10px", border: "1.5px solid #99f6e4", fontFamily: bodyFont, fontSize: "12px", color: "#134e4a", background: "#fff", outline: "none" }}
+                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.border}`, fontFamily: C.bodyFont, fontSize: "12px", color: "#1c1917", background: "#fff", outline: "none" }}
                     />
                     <button
                       onClick={copyLink}
                       style={{
-                        padding: "10px 18px", borderRadius: "10px", border: "none",
-                        background: saved ? "#4ade80" : teal, color: "#fff",
-                        fontFamily: headFont, fontWeight: 700, fontSize: "13px", cursor: "pointer",
+                        padding: "12px 20px", borderRadius: "12px", border: "none",
+                        background: copied ? "#16a34a" : C.teal, color: "#fff",
+                        fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", cursor: "pointer",
                         transition: "background 200ms ease-out", whiteSpace: "nowrap",
                       }}
                     >
-                      {saved ? "Copied!" : "Copy Link"}
+                      {copied ? "Copied!" : "Copy Link"}
                     </button>
                   </div>
                 </div>
 
-                {/* QR Code */}
-                <div style={{ background: "#ffffff", border: "1.5px solid #99f6e4", borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-                  <p style={{ fontFamily: headFont, fontWeight: 700, fontSize: "14px", color: "#134e4a", margin: 0 }}>QR Code</p>
-                  <QRCodeSVG
-                    value={shareUrl}
-                    size={200}
-                    fgColor={teal}
-                    bgColor="#ffffff"
-                    level="M"
-                  />
-                  <p style={{ fontFamily: bodyFont, fontSize: "12px", color: "#5eead4", margin: 0, textAlign: "center" }}>
-                    Screenshot this QR code to save it. Anyone who scans it will open the About Me profile directly.
+                <div style={{ background: "#ffffff", border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: 0 }}>QR Code</p>
+                  <QRCodeSVG value={shareUrl} size={200} fgColor={C.accent} bgColor="#ffffff" level="M" />
+                  <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: 0, textAlign: "center" }}>
+                    Screenshot this QR code. Anyone who scans it will open the About Me profile directly.
                   </p>
-                  <button
-                    onClick={() => {
-                      const svg = document.querySelector(".share-qr-wrapper svg") as SVGSVGElement | null;
-                      if (!svg) return;
-                      const canvas = document.createElement("canvas");
-                      canvas.width = 240; canvas.height = 240;
-                      const ctx = canvas.getContext("2d");
-                      const img = new Image();
-                      const blob = new Blob([svg.outerHTML], { type: "image/svg+xml" });
-                      const url = URL.createObjectURL(blob);
-                      img.onload = () => { ctx?.drawImage(img, 0, 0, 240, 240); const a = document.createElement("a"); a.href = canvas.toDataURL("image/png"); a.download = "about-me-qr.png"; a.click(); URL.revokeObjectURL(url); };
-                      img.src = url;
-                    }}
-                    style={{ padding: "10px 20px", borderRadius: "20px", border: `1.5px solid ${teal}`, background: "white", color: teal, fontFamily: headFont, fontWeight: 700, fontSize: "13px", cursor: "pointer" }}
-                  >
-                    Download QR Code
-                  </button>
                 </div>
 
-                {/* View profile */}
                 <div style={{ marginTop: "24px", textAlign: "center" }}>
                   <a
                     href={shareUrl}
                     target="_blank"
                     rel="noreferrer"
                     style={{
-                      display: "inline-block", padding: "14px 32px", borderRadius: "24px",
-                      background: teal, color: "#fff", fontFamily: headFont, fontWeight: 800,
+                      display: "inline-block", padding: "14px 36px", borderRadius: "24px",
+                      background: C.accent, color: "#fffbeb", fontFamily: C.headFont, fontWeight: 900,
                       fontSize: "16px", textDecoration: "none",
                     }}
                   >
@@ -632,10 +723,10 @@ export default function AboutMeEditor() {
       </div>
 
       {/* Footer */}
-      <div style={{ background: "#f0fdfa", borderTop: "1.5px solid #99f6e4", padding: "20px", textAlign: "center", marginTop: "40px" }}>
-        <p style={{ fontFamily: bodyFont, fontSize: "12px", color: "#5eead4", margin: 0 }}>
+      <div style={{ background: C.accentLight, borderTop: `2px solid ${C.borderLight}`, padding: "20px", textAlign: "center", marginTop: "40px" }}>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: 0 }}>
           About Me Profiles are free — always. Created by{" "}
-          <a href="https://insyncprofiles.net" style={{ color: teal, textDecoration: "none", fontWeight: 700 }}>InSync Profiles</a>.
+          <a href="https://insyncprofiles.net" style={{ color: C.accent, textDecoration: "none", fontWeight: 800 }}>InSync Profiles</a>.
         </p>
       </div>
     </div>
