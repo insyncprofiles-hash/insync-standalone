@@ -551,8 +551,11 @@ export default function AboutMeEditor() {
             <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.textBody, margin: "0 0 12px", lineHeight: 1.7 }}>
               They're the simple things that remove a frustration people have been carrying for years.
             </p>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.textBody, margin: 0, lineHeight: 1.7 }}>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.textBody, margin: "0 0 16px", lineHeight: 1.7 }}>
               The About Me Profile was created to reduce one of those frustrations: having to repeatedly explain your life, your needs and your preferences every time support changes.
+            </p>
+            <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "16px", color: C.gold, margin: 0 }}>
+              ✨ Free to use.
             </p>
           </div>
 
