@@ -13,18 +13,21 @@ const H = 900;
 const CX = W / 2;
 const CY = H / 2;
 
-const INNER_R = 175; // profile type nodes
-const OUTER_R = 330; // destination nodes
-const DEST_R  = 46;  // destination circle base radius (larger to fit text)
+const INNER_R = 185; // profile type nodes
+const OUTER_R = 345; // destination nodes
+const DEST_R  = 50;  // destination circle base radius (larger to fit text)
 
 // ── PROFILE TYPES (inner ring) ────────────────────────────────────────────
-// Solid fill = logo colour; white text
+// Exact metallic colours sampled from InSync Profiles logo arcs
+// Each profile circle uses a metallic gradient: mid-tone base + lighter highlight
 const profileTypes = [
   {
     id: "support-worker",
     label: "Support Worker\nProfile",
     emoji: "🤝",
-    color: "#4a7ab5",   // steel blue
+    color: "#4b7aa8",      // steel blue — logo top-left arc
+    colorLight: "#7aafd4", // highlight
+    colorDark: "#274760",  // shadow
     textColor: "#ffffff",
     href: "/editor",
     angle: -90,
@@ -33,8 +36,10 @@ const profileTypes = [
     id: "allied-health",
     label: "Allied Health\nProfile",
     emoji: "🩺",
-    color: "#c9a84c",   // warm gold
-    textColor: "#1a1200",
+    color: "#c89e6c",      // warm gold — logo top-right arc
+    colorLight: "#e8c98a", // highlight
+    colorDark: "#8a6030",  // shadow
+    textColor: "#1a0e00",
     href: "/allied-health",
     angle: -18,
   },
@@ -42,7 +47,9 @@ const profileTypes = [
     id: "coordinator",
     label: "Support Coordinator\nProfile",
     emoji: "📋",
-    color: "#a0522d",   // copper
+    color: "#9f5e38",      // copper — logo bottom-left arc
+    colorLight: "#c8845a", // highlight
+    colorDark: "#5a2e10",  // shadow
     textColor: "#ffffff",
     href: "/coordinators",
     angle: 54,
@@ -51,7 +58,9 @@ const profileTypes = [
     id: "about-me-disability",
     label: "About Me Profile\n(Disability / NDIS)",
     emoji: "♿",
-    color: "#7a8c3a",   // olive/khaki
+    color: "#746e4a",      // olive/khaki — logo bottom-right arc
+    colorLight: "#a09a70", // highlight
+    colorDark: "#3a3820",  // shadow
     textColor: "#ffffff",
     href: "/about-me/editor",
     angle: 126,
@@ -60,7 +69,9 @@ const profileTypes = [
     id: "about-me-aged",
     label: "About Me Profile\n(Aged Care)",
     emoji: "🌿",
-    color: "#6b3fa0",   // burnt violet
+    color: "#6b3fa0",      // burnt violet — user specified
+    colorLight: "#9a6ad0", // highlight
+    colorDark: "#3a1860",  // shadow
     textColor: "#ffffff",
     href: "/about-me/editor",
     angle: 198,
@@ -185,13 +196,24 @@ export default function EcosystemGraphic() {
         {/* Gold ring border */}
         <circle cx={CX} cy={CY} r={72} fill="none" stroke="#c9a84c" strokeWidth="2.5" opacity="0.8" />
 
-        {/* ── Inner ring: Profile types (solid fill, white/dark text) ── */}
+        {/* ── Metallic gradient defs for each profile ── */}
+        {profileTypes.map(p => (
+          <defs key={`grad-${p.id}`}>
+            <radialGradient id={`grad-${p.id}`} cx="38%" cy="32%" r="65%">
+              <stop offset="0%"   stopColor={p.colorLight} />
+              <stop offset="45%"  stopColor={p.color} />
+              <stop offset="100%" stopColor={p.colorDark} />
+            </radialGradient>
+          </defs>
+        ))}
+
+        {/* ── Inner ring: Profile types (metallic gradient fill) ── */}
         {profileTypes.map(profile => {
           const pos    = nodePos(INNER_R, profile.angle);
           const dimmed = profileDimmed(profile.id);
           const active = hovered === profile.id;
           const lines  = profile.label.split("\n");
-          const r      = active ? 50 : 46;
+          const r      = active ? 58 : 54;
           return (
             <g
               key={profile.id}
@@ -203,10 +225,10 @@ export default function EcosystemGraphic() {
               role="link"
               aria-label={profile.label.replace("\n", " ")}
             >
-              {/* Solid fill circle */}
+              {/* Metallic gradient fill circle */}
               <circle
                 cx={pos.x} cy={pos.y} r={r}
-                fill={profile.color}
+                fill={`url(#grad-${profile.id})`}
                 stroke={active ? "#ffffff" : "rgba(255,255,255,0.35)"}
                 strokeWidth={active ? 2.5 : 1.5}
                 filter={active ? "url(#softglow)" : undefined}
