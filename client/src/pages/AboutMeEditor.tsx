@@ -86,6 +86,8 @@ function profileToParams(p: AboutMeProfile): string {
     "ndisNumber","planDates","coordinatorName","coordinatorPhone","coordinatorEmail",
   ];
   fields.forEach(f => { if (p[f]) sp.set(f, p[f] as string); });
+  // Include photo (Cloudinary URL) in share link
+  if (p.photo) sp.set("photo", p.photo);
   const filled = p.emergencyContacts.filter(c => c.name || c.phone);
   if (filled.length) sp.set("ec", JSON.stringify(filled));
   return sp.toString();
@@ -297,6 +299,7 @@ export default function AboutMeEditor() {
   const [copiedShort, setCopiedShort] = useState(false);
   const [saved, setSaved] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
+  const [photoUploading, setPhotoUploading] = useState(false);
   const { listeningFor, startDictation } = useDictation();
 
   useEffect(() => {
@@ -373,12 +376,26 @@ export default function AboutMeEditor() {
     setProfile(p => ({ ...p, emergencyContacts: p.emergencyContacts.filter((_, i) => i !== index) }));
   }, []);
 
-  function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => set("photo", ev.target?.result as string);
-    reader.readAsDataURL(file);
+    setPhotoUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "Insync_profiles");
+      const res = await fetch("https://api.cloudinary.com/v1_1/dqacbq4qp/image/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      set("photo", data.secure_url);
+    } catch {
+      alert("Photo upload failed. Please try again or use a smaller image.");
+    } finally {
+      setPhotoUploading(false);
+    }
   }
 
   function copyLink() {
@@ -703,14 +720,16 @@ export default function AboutMeEditor() {
                 <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 10px" }}>A warm, recent photo helps new staff connect immediately.</p>
                 <button
                   onClick={() => photoInputRef.current?.click()}
+                  disabled={photoUploading}
                   style={{
                     padding: "12px 28px", borderRadius: "16px",
-                    border: `2px solid ${C.border}`, background: C.accent,
+                    border: `2px solid ${C.border}`, background: photoUploading ? C.accentLight : C.accent,
                     color: "#fffbeb", fontFamily: C.headFont, fontWeight: 900,
-                    fontSize: "15px", cursor: "pointer",
+                    fontSize: "15px", cursor: photoUploading ? "not-allowed" : "pointer",
+                    opacity: photoUploading ? 0.7 : 1,
                   }}
                 >
-                  📷 Choose Photo
+                  {photoUploading ? "⏳ Uploading..." : "📷 Choose Photo"}
                 </button>
                 <input ref={photoInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhoto} />
               </div>

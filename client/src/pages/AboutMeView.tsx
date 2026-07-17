@@ -123,9 +123,8 @@ export default function AboutMeView() {
   let emergencyContacts: { name: string; relationship: string; phone: string }[] = [];
   try { emergencyContacts = JSON.parse(p("ec") || "[]"); } catch {}
 
-  // Photo from localStorage (not in URL due to size)
-  let photo = "";
-  try { photo = localStorage.getItem("insync_aboutme_photo") || ""; } catch {}
+  // Photo — now a Cloudinary URL stored in the share link param
+  const photo = p("photo") || "";
 
   const displayName = preferredName || name;
   const videoId = videoUrl ? getYouTubeId(videoUrl) : "";
