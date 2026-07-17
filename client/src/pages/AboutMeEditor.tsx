@@ -133,18 +133,21 @@ function useDictation() {
 // ── COLOURS ───────────────────────────────────────────────────
 
 const C = {
-  bg: "#f5f5f5",           // grey-white background
+  bg: "#f5f7ff",           // soft blue-white background
   card: "#ffffff",
-  border: "#0f766e",       // deep teal border
-  borderLight: "#99f6e4",  // light teal
-  accent: "#0f4c45",       // deep teal — high contrast on pale gold
-  accentMid: "#0f766e",
-  accentLight: "#f0fdfa",  // very light teal tint
-  teal: "#0f766e",         // teal for action buttons
-  tealLight: "#ccfbf1",
+  border: "#1e40af",       // deep blue border
+  borderLight: "#bfdbfe",  // light blue
+  accent: "#1e3a8a",       // deep navy blue — high contrast
+  accentMid: "#1d4ed8",
+  accentLight: "#eff6ff",  // very light blue tint
+  teal: "#1d4ed8",         // blue for action buttons
+  tealLight: "#dbeafe",
   red: "#991b1b",
   redLight: "#fff7ed",
   redBorder: "#f97316",
+  gold: "#b45309",         // deep gold for highlights
+  goldLight: "#fef3c7",    // pale gold background
+  goldBorder: "#fcd34d",   // gold border
   headFont: "'Nunito', sans-serif" as const,
   bodyFont: "'Nunito', sans-serif" as const,
 };
@@ -540,7 +543,7 @@ export default function AboutMeEditor() {
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
                 <span style={{ fontSize: "36px" }}>♿</span>
                 <div>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#0f4c45", margin: 0 }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, margin: 0 }}>
                     Disability / NDIS
                   </p>
                   <p style={{ fontFamily: C.bodyFont, fontSize: "16px", color: "#1c1917", margin: "4px 0 0", fontWeight: 700 }}>
@@ -548,7 +551,7 @@ export default function AboutMeEditor() {
                   </p>
                 </div>
               </div>
-              <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#0f4c45", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: C.accent, margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                 Example uses
               </p>
               <ul style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", margin: 0, paddingLeft: "20px", lineHeight: "1.9", fontWeight: 700 }}>
@@ -559,7 +562,7 @@ export default function AboutMeEditor() {
                 <li>Respite or short-term accommodation — ensure consistent care from day one</li>
               </ul>
               <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
-                <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: C.accent, padding: "10px 24px", borderRadius: "20px" }}>
+                <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: "linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%)", padding: "10px 24px", borderRadius: "20px", boxShadow: "0 2px 8px rgba(30,58,138,0.30)" }}>
                   Start your Profile
                 </span>
               </div>
@@ -570,16 +573,16 @@ export default function AboutMeEditor() {
               onClick={() => chooseProfileType("agedcare")}
               style={{
                 width: "100%", textAlign: "left", background: "#ffffff",
-                border: "3px solid #a16207", borderRadius: "20px",
+                border: "3px solid #b45309", borderRadius: "20px",
                 padding: "28px 28px", cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(120,80,0,0.10)",
+                boxShadow: "0 4px 16px rgba(180,83,9,0.12)",
                 transition: "transform 150ms ease-out, box-shadow 150ms ease-out",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
                 <span style={{ fontSize: "36px" }}>🌿</span>
                 <div>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#78350f", margin: 0 }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#92400e", margin: 0 }}>
                     Aged Care
                   </p>
                   <p style={{ fontFamily: C.bodyFont, fontSize: "16px", color: "#1c1917", margin: "4px 0 0", fontWeight: 700 }}>
@@ -587,7 +590,7 @@ export default function AboutMeEditor() {
                   </p>
                 </div>
               </div>
-              <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#78350f", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+              <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#92400e", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                 Example uses
               </p>
               <ul style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917", margin: 0, paddingLeft: "20px", lineHeight: "1.9", fontWeight: 700 }}>
@@ -599,7 +602,7 @@ export default function AboutMeEditor() {
                 <li>Residential care admission — help facility staff understand the person before they arrive</li>
               </ul>
               <div style={{ marginTop: "20px", display: "flex", justifyContent: "flex-end" }}>
-                <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: "#92400e", padding: "10px 24px", borderRadius: "20px" }}>
+                <span style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "15px", color: "#ffffff", background: "linear-gradient(135deg, #92400e 0%, #b45309 100%)", padding: "10px 24px", borderRadius: "20px", boxShadow: "0 2px 8px rgba(146,64,14,0.30)" }}>
                   Start your Profile
                 </span>
               </div>
@@ -628,7 +631,7 @@ export default function AboutMeEditor() {
               background: activeTab === tab.id ? C.accent : "transparent",
               borderRadius: "12px",
               transition: "all 150ms ease-out",
-              boxShadow: activeTab === tab.id ? "0 2px 8px rgba(15,76,69,0.25)" : "none",
+              boxShadow: activeTab === tab.id ? "0 2px 8px rgba(30,58,138,0.30)" : "none",
             }}
           >
             {tab.emoji} {tab.label}
