@@ -184,9 +184,9 @@ function DictationBtn({ fieldId, listeningFor, onStart }: {
 
 // ── FIELD COMPONENT ───────────────────────────────────────────
 
-function Field({ id, label, hint, value, onChange, multiline = false, rows = 3, listeningFor, onDictate }: {
+function Field({ id, label, hint, value, onChange, multiline = false, rows = 3, maxLength, listeningFor, onDictate }: {
   id: string; label: string; hint?: string; value: string;
-  onChange: (v: string) => void; multiline?: boolean; rows?: number;
+  onChange: (v: string) => void; multiline?: boolean; rows?: number; maxLength?: number;
   listeningFor: string | null; onDictate: (id: string, cb: (t: string) => void) => void;
 }) {
   const isListening = listeningFor === id;
@@ -213,15 +213,17 @@ function Field({ id, label, hint, value, onChange, multiline = false, rows = 3, 
         {multiline ? (
           <textarea
             value={value}
-            onChange={e => onChange(e.target.value)}
+            onChange={e => { if (!maxLength || e.target.value.length <= maxLength) onChange(e.target.value); }}
             rows={rows}
+            maxLength={maxLength}
             style={{ ...inputStyle, resize: "vertical" }}
           />
         ) : (
           <input
             type="text"
             value={value}
-            onChange={e => onChange(e.target.value)}
+            onChange={e => { if (!maxLength || e.target.value.length <= maxLength) onChange(e.target.value); }}
+            maxLength={maxLength}
             style={inputStyle}
           />
         )}
@@ -231,6 +233,11 @@ function Field({ id, label, hint, value, onChange, multiline = false, rows = 3, 
           onStart={() => onDictate(id, text => onChange(value ? value + " " + text : text))}
         />
       </div>
+      {maxLength && (
+        <div style={{ textAlign: "right", fontFamily: C.bodyFont, fontSize: "11px", color: value.length >= maxLength ? "#dc2626" : value.length >= maxLength * 0.85 ? "#d97706" : C.accentMid, marginTop: "3px" }}>
+          {value.length}/{maxLength}
+        </div>
+      )}
     </div>
   );
 }
@@ -735,15 +742,16 @@ export default function AboutMeEditor() {
               </div>
             </div>
 
-            <Field label="Full Name *" value={profile.name} onChange={v => set("name", v)} {...dp("name")} />
-            <Field label="Preferred Name / Nickname" hint="What they like to be called day-to-day" value={profile.preferredName} onChange={v => set("preferredName", v)} {...dp("preferredName")} />
-            <Field label="Date of Birth" hint="e.g. 12 March 1985" value={profile.dob} onChange={v => set("dob", v)} {...dp("dob")} />
+            <Field label="Full Name *" value={profile.name} onChange={v => set("name", v)} maxLength={80} {...dp("name")} />
+            <Field label="Preferred Name / Nickname" hint="What they like to be called day-to-day" value={profile.preferredName} onChange={v => set("preferredName", v)} maxLength={50} {...dp("preferredName")} />
+            <Field label="Date of Birth" hint="e.g. 12 March 1985" value={profile.dob} onChange={v => set("dob", v)} maxLength={30} {...dp("dob")} />
             <Field
               label={isAgedCare ? "Health and Mobility Notes" : "Primary Disability / Diagnosis"}
               hint={isAgedCare ? "Broad description only — e.g. Dementia, Parkinson's, post-stroke. Do not include clinical detail." : "Broad description only — e.g. Autism, Cerebral Palsy, Dementia. Do not include clinical detail."}
               value={profile.diagnosis}
               onChange={v => set("diagnosis", v)}
               multiline rows={2}
+              maxLength={200}
               {...dp("diagnosis")}
             />
             <TabNav current="who" />
@@ -830,10 +838,10 @@ export default function AboutMeEditor() {
               ]}
               {...dp("communicationStyle")}
             />
-            <Field label="AAC Device / Communication Aid" hint="e.g. Proloquo2Go on iPad, PODD book" value={profile.aacDevice} onChange={v => set("aacDevice", v)} {...dp("aacDevice")} />
-            <Field label="Key Words I Use" hint="Words or phrases that are important to know" value={profile.keyWords} onChange={v => set("keyWords", v)} multiline rows={3} {...dp("keyWords")} />
-            <Field label="How I Show Yes and No" hint="e.g. Nod for yes, turn head for no. Thumbs up/down." value={profile.yesNoSignals} onChange={v => set("yesNoSignals", v)} multiline rows={2} {...dp("yesNoSignals")} />
-            <Field label="How to Know I'm in Pain or Distress" hint="Signs — facial expressions, sounds, body language, behaviour changes" value={profile.distressSignals} onChange={v => set("distressSignals", v)} multiline rows={3} {...dp("distressSignals")} />
+            <Field label="AAC Device / Communication Aid" hint="e.g. Proloquo2Go on iPad, PODD book" value={profile.aacDevice} onChange={v => set("aacDevice", v)} maxLength={150} {...dp("aacDevice")} />
+            <Field label="Key Words I Use" hint="Words or phrases that are important to know" value={profile.keyWords} onChange={v => set("keyWords", v)} multiline rows={3} maxLength={300} {...dp("keyWords")} />
+            <Field label="How I Show Yes and No" hint="e.g. Nod for yes, turn head for no. Thumbs up/down." value={profile.yesNoSignals} onChange={v => set("yesNoSignals", v)} multiline rows={2} maxLength={200} {...dp("yesNoSignals")} />
+            <Field label="How to Know I'm in Pain or Distress" hint="Signs — facial expressions, sounds, body language, behaviour changes" value={profile.distressSignals} onChange={v => set("distressSignals", v)} multiline rows={3} maxLength={400} {...dp("distressSignals")} />
             <TabNav current="comms" />
           </div>
         )}
@@ -852,8 +860,8 @@ export default function AboutMeEditor() {
               </p>
             </div>
 
-            <Field label="YouTube Video URL" hint="Paste the full YouTube link — e.g. https://youtube.com/watch?v=..." value={profile.videoUrl} onChange={v => set("videoUrl", v)} {...dp("videoUrl")} />
-            <Field label="Describe What's in the Video" hint="e.g. 'This is me at home on a good day — laughing with my family, using my AAC device.'" value={profile.videoDescription} onChange={v => set("videoDescription", v)} multiline rows={3} {...dp("videoDescription")} />
+            <Field label="YouTube Video URL" hint="Paste the full YouTube link — e.g. https://youtube.com/watch?v=..." value={profile.videoUrl} onChange={v => set("videoUrl", v)} maxLength={200} {...dp("videoUrl")} />
+            <Field label="Describe What's in the Video" hint="e.g. 'This is me at home on a good day — laughing with my family, using my AAC device.'" value={profile.videoDescription} onChange={v => set("videoDescription", v)} multiline rows={3} maxLength={300} {...dp("videoDescription")} />
 
             {profile.videoUrl && (
               <div style={{ marginTop: "16px" }}>
@@ -884,10 +892,10 @@ export default function AboutMeEditor() {
             <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>What I Can Do</h2>
             <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Cognitive and physical function — what I do independently and what I need support with.</p>
 
-            <Field label="What I Can Do Independently" hint="e.g. Feed myself, communicate basic needs, walk short distances" value={profile.canDo} onChange={v => set("canDo", v)} multiline rows={4} {...dp("canDo")} />
-            <Field label="What I Need Help With" hint="e.g. Transfers, showering, dressing, complex communication" value={profile.needsHelp} onChange={v => set("needsHelp", v)} multiline rows={4} {...dp("needsHelp")} />
-            <Field label="Mobility Aids / Equipment" hint="e.g. Manual wheelchair, walking frame, CPAP machine, hearing aids" value={profile.mobilityAids} onChange={v => set("mobilityAids", v)} multiline rows={2} {...dp("mobilityAids")} />
-            <Field label="Sensory Needs" hint="e.g. Sensitive to loud noise, needs dim lighting, dislikes certain textures" value={profile.sensoryNeeds} onChange={v => set("sensoryNeeds", v)} multiline rows={3} {...dp("sensoryNeeds")} />
+            <Field label="What I Can Do Independently" hint="e.g. Feed myself, communicate basic needs, walk short distances" value={profile.canDo} onChange={v => set("canDo", v)} multiline rows={4} maxLength={500} {...dp("canDo")} />
+            <Field label="What I Need Help With" hint="e.g. Transfers, showering, dressing, complex communication" value={profile.needsHelp} onChange={v => set("needsHelp", v)} multiline rows={4} maxLength={500} {...dp("needsHelp")} />
+            <Field label="Mobility Aids / Equipment" hint="e.g. Manual wheelchair, walking frame, CPAP machine, hearing aids" value={profile.mobilityAids} onChange={v => set("mobilityAids", v)} multiline rows={2} maxLength={200} {...dp("mobilityAids")} />
+            <Field label="Sensory Needs" hint="e.g. Sensitive to loud noise, needs dim lighting, dislikes certain textures" value={profile.sensoryNeeds} onChange={v => set("sensoryNeeds", v)} multiline rows={3} maxLength={500} {...dp("sensoryNeeds")} />
             <TabNav current="function" />
           </div>
         )}
@@ -898,10 +906,10 @@ export default function AboutMeEditor() {
             <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Triggers and What Helps</h2>
             <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Helps staff prevent distress and respond effectively when it happens.</p>
 
-            <Field label="What Causes Distress (Triggers)" hint="e.g. Unexpected changes, loud environments, being touched without warning" value={profile.triggers} onChange={v => set("triggers", v)} multiline rows={4} {...dp("triggers")} />
-            <Field label="Early Warning Signs" hint="Signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} {...dp("earlyWarnings")} />
-            <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} {...dp("whatHelps")} />
-            <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} {...dp("whatMakesWorse")} />
+            <Field label="What Causes Distress (Triggers)" hint="e.g. Unexpected changes, loud environments, being touched without warning" value={profile.triggers} onChange={v => set("triggers", v)} multiline rows={4} maxLength={500} {...dp("triggers")} />
+            <Field label="Early Warning Signs" hint="Signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} maxLength={500} {...dp("earlyWarnings")} />
+            <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} maxLength={500} {...dp("whatHelps")} />
+            <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} maxLength={500} {...dp("whatMakesWorse")} />
             <TabNav current="triggers" />
           </div>
         )}
@@ -912,9 +920,9 @@ export default function AboutMeEditor() {
             <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Approaches That Work</h2>
             <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>What staff should do, what they should never do, and cultural or religious considerations.</p>
 
-            <Field label="Please Do This" hint="Approaches, strategies, or communication styles that work well" value={profile.doThis} onChange={v => set("doThis", v)} multiline rows={4} {...dp("doThis")} />
-            <Field label="Please Never Do This" hint="Things that cause harm, distress, or are against the person's wishes" value={profile.neverDo} onChange={v => set("neverDo", v)} multiline rows={4} {...dp("neverDo")} />
-            <Field label="Cultural or Religious Considerations" hint="e.g. Dietary requirements, prayer times, gender preferences for personal care" value={profile.culturalConsiderations} onChange={v => set("culturalConsiderations", v)} multiline rows={3} {...dp("culturalConsiderations")} />
+            <Field label="Please Do This" hint="Approaches, strategies, or communication styles that work well" value={profile.doThis} onChange={v => set("doThis", v)} multiline rows={4} maxLength={500} {...dp("doThis")} />
+            <Field label="Please Never Do This" hint="Things that cause harm, distress, or are against the person's wishes" value={profile.neverDo} onChange={v => set("neverDo", v)} multiline rows={4} maxLength={500} {...dp("neverDo")} />
+            <Field label="Cultural or Religious Considerations" hint="e.g. Dietary requirements, prayer times, gender preferences for personal care" value={profile.culturalConsiderations} onChange={v => set("culturalConsiderations", v)} multiline rows={3} maxLength={400} {...dp("culturalConsiderations")} />
             <TabNav current="approaches" />
           </div>
         )}
@@ -925,12 +933,12 @@ export default function AboutMeEditor() {
             <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>My Preferences</h2>
             <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>What makes a good day, what brings comfort, what to know before you arrive.</p>
 
-            <Field label="Food Preferences and Restrictions" hint="Likes, dislikes, allergies, texture needs, mealtime support" value={profile.foodPreferences} onChange={v => set("foodPreferences", v)} multiline rows={3} {...dp("foodPreferences")} />
-            <Field label="Music and Entertainment" hint="Favourite music, TV shows, podcasts, games" value={profile.music} onChange={v => set("music", v)} multiline rows={2} {...dp("music")} />
-            <Field label="Routine" hint="Important daily routines — order, timing, what must not be skipped" value={profile.routine} onChange={v => set("routine", v)} multiline rows={3} {...dp("routine")} />
-            <Field label="Environment" hint="Preferred lighting, temperature, noise level, space requirements" value={profile.environment} onChange={v => set("environment", v)} multiline rows={2} {...dp("environment")} />
-            <Field label="What a Good Day Looks Like" hint="Describe what the person is like when happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} {...dp("goodDayLooksLike")} />
-            <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} {...dp("whatMatters")} />
+            <Field label="Food Preferences and Restrictions" hint="Likes, dislikes, allergies, texture needs, mealtime support" value={profile.foodPreferences} onChange={v => set("foodPreferences", v)} multiline rows={3} maxLength={400} {...dp("foodPreferences")} />
+            <Field label="Music and Entertainment" hint="Favourite music, TV shows, podcasts, games" value={profile.music} onChange={v => set("music", v)} multiline rows={2} maxLength={200} {...dp("music")} />
+            <Field label="Routine" hint="Important daily routines — order, timing, what must not be skipped" value={profile.routine} onChange={v => set("routine", v)} multiline rows={3} maxLength={500} {...dp("routine")} />
+            <Field label="Environment" hint="Preferred lighting, temperature, noise level, space requirements" value={profile.environment} onChange={v => set("environment", v)} multiline rows={2} maxLength={300} {...dp("environment")} />
+            <Field label="What a Good Day Looks Like" hint="Describe what the person is like when happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} maxLength={500} {...dp("goodDayLooksLike")} />
+            <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} maxLength={500} {...dp("whatMatters")} />
             <TabNav current="prefs" />
           </div>
         )}
@@ -957,6 +965,7 @@ export default function AboutMeEditor() {
               label={isAgedCare ? "Care ID / Reference Number" : "NDIS Number"}
               value={profile.ndisNumber}
               onChange={v => set("ndisNumber", v)}
+              maxLength={20}
               {...dp("ndisNumber")}
             />
             <Field
@@ -964,24 +973,28 @@ export default function AboutMeEditor() {
               hint="e.g. 1 July 2025 to 30 June 2026"
               value={profile.planDates}
               onChange={v => set("planDates", v)}
+              maxLength={60}
               {...dp("planDates")}
             />
             <Field
               label={isAgedCare ? "Case Manager Name" : "Support Coordinator Name"}
               value={profile.coordinatorName}
               onChange={v => set("coordinatorName", v)}
+              maxLength={80}
               {...dp("coordinatorName")}
             />
             <Field
               label={isAgedCare ? "Case Manager Phone" : "Support Coordinator Phone"}
               value={profile.coordinatorPhone}
               onChange={v => set("coordinatorPhone", v)}
+              maxLength={20}
               {...dp("coordinatorPhone")}
             />
             <Field
               label={isAgedCare ? "Case Manager Email" : "Support Coordinator Email"}
               value={profile.coordinatorEmail}
               onChange={v => set("coordinatorEmail", v)}
+              maxLength={100}
               {...dp("coordinatorEmail")}
             />
             <TabNav current="ndis" />
