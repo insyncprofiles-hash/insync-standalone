@@ -287,7 +287,10 @@ export default function AboutMeEditor() {
   const [profile, setProfile] = useState<AboutMeProfile>(EMPTY);
   const [activeTab, setActiveTab] = useState("who");
   const [shareUrl, setShareUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
+  const [shorteningUrl, setShorteningUrl] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copiedShort, setCopiedShort] = useState(false);
   const [saved, setSaved] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const { listeningFor, startDictation } = useDictation();
@@ -327,12 +330,22 @@ export default function AboutMeEditor() {
       if (profile.name) {
         const params = profileToParams(profile);
         setShareUrl(`${window.location.origin}/about-me/view?${params}`);
+        // Clear cached short URL when profile changes — it's stale
+        setShortUrl("");
+        localStorage.removeItem("aboutme_short_url");
       } else {
         setShareUrl("");
+        setShortUrl("");
       }
     }, 600);
     return () => { if (urlTimerRef.current) clearTimeout(urlTimerRef.current); };
   }, [profile]);
+
+  // Restore cached short URL on mount
+  useEffect(() => {
+    const cached = localStorage.getItem("aboutme_short_url");
+    if (cached) setShortUrl(cached);
+  }, []);
 
   const set = useCallback((field: keyof AboutMeProfile, value: string) => {
     setProfile(p => ({ ...p, [field]: value }));
@@ -364,6 +377,28 @@ export default function AboutMeEditor() {
 
   function copyLink() {
     navigator.clipboard.writeText(shareUrl).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+  }
+
+  function copyShortLink() {
+    navigator.clipboard.writeText(shortUrl).then(() => { setCopiedShort(true); setTimeout(() => setCopiedShort(false), 2000); });
+  }
+
+  async function generateShortUrl() {
+    if (!shareUrl) return;
+    setShorteningUrl(true);
+    try {
+      const res = await fetch("/api/shorten", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: shareUrl }),
+      });
+      const data = await res.json();
+      if (data.short) {
+        setShortUrl(data.short);
+        localStorage.setItem("aboutme_short_url", data.short);
+      }
+    } catch {}
+    setShorteningUrl(false);
   }
 
   // Shared dictation props helper — memoised so Field props are stable
@@ -695,13 +730,56 @@ export default function AboutMeEditor() {
               </div>
             ) : (
               <>
+                {/* Short URL section */}
+                <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "20px", marginBottom: "20px" }}>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 10px" }}>Short Link (TinyURL)</p>
+                  {!shortUrl ? (
+                    <button
+                      onClick={generateShortUrl}
+                      disabled={shorteningUrl}
+                      style={{
+                        width: "100%", padding: "14px", borderRadius: "12px", border: "none",
+                        background: shorteningUrl ? "#5eead4" : C.teal, color: "#fff",
+                        fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", cursor: shorteningUrl ? "default" : "pointer",
+                      }}
+                    >
+                      {shorteningUrl ? "Generating..." : "Generate Short Link"}
+                    </button>
+                  ) : (
+                    <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                      <input
+                        readOnly
+                        value={shortUrl}
+                        style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.border}`, fontFamily: C.bodyFont, fontSize: "13px", color: "#1c1917", background: "#fff", outline: "none", fontWeight: 700 }}
+                      />
+                      <button
+                        onClick={copyShortLink}
+                        style={{
+                          padding: "12px 20px", borderRadius: "12px", border: "none",
+                          background: copiedShort ? "#16a34a" : C.teal, color: "#fff",
+                          fontFamily: C.headFont, fontWeight: 800, fontSize: "14px", cursor: "pointer",
+                          transition: "background 200ms ease-out", whiteSpace: "nowrap",
+                        }}
+                      >
+                        {copiedShort ? "Copied!" : "Copy"}
+                      </button>
+                    </div>
+                  )}
+                  {shortUrl && (
+                    <p style={{ fontFamily: C.bodyFont, fontSize: "11px", color: C.accentMid, margin: "8px 0 0" }}>
+                      Short link is cached. It will reset if you edit the profile.
+                    </p>
+                  )}
+                </div>
+
+                {/* Full URL section */}
                 <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "20px", marginBottom: "24px" }}>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 10px" }}>Your Profile Link</p>
+                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 10px" }}>Full Profile Link</p>
                   <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                     <input
                       readOnly
                       value={shareUrl}
-                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.border}`, fontFamily: C.bodyFont, fontSize: "12px", color: "#1c1917", background: "#fff", outline: "none" }}
+                      style={{ flex: 1, padding: "12px 14px", borderRadius: "12px", border: `2px solid ${C.border}`, fontFamily: C.bodyFont, fontSize: "11px", color: "#1c1917", background: "#fff", outline: "none" }}
                     />
                     <button
                       onClick={copyLink}
@@ -712,16 +790,16 @@ export default function AboutMeEditor() {
                         transition: "background 200ms ease-out", whiteSpace: "nowrap",
                       }}
                     >
-                      {copied ? "Copied!" : "Copy Link"}
+                      {copied ? "Copied!" : "Copy"}
                     </button>
                   </div>
                 </div>
 
                 <div style={{ background: "#ffffff", border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
                   <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: 0 }}>QR Code</p>
-                  <QRCodeSVG value={shareUrl} size={200} fgColor={C.accent} bgColor="#ffffff" level="M" />
+                  <QRCodeSVG value={shortUrl || shareUrl} size={200} fgColor={C.accent} bgColor="#ffffff" level="M" />
                   <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: 0, textAlign: "center" }}>
-                    Screenshot this QR code. Anyone who scans it will open the About Me profile directly.
+                    {shortUrl ? "QR code uses your short link." : "Generate a short link above to use it in the QR code."} Screenshot to save.
                   </p>
                 </div>
 
