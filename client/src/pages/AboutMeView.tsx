@@ -80,7 +80,10 @@ function TextBlock({ value }: { value: string }) {
 export default function AboutMeView() {
   const params = new URLSearchParams(window.location.search);
 
-  function p(key: string) { return params.get(key) || ""; }
+  function p(key: string) {
+    const raw = params.get(key) || "";
+    try { return decodeURIComponent(raw); } catch { return raw; }
+  }
 
   const name = p("name");
   const preferredName = p("preferredName");
@@ -202,7 +205,7 @@ export default function AboutMeView() {
       />
 
       {/* Header banner */}
-      <div style={{ background: `linear-gradient(135deg, ${teal} 0%, ${tealDark} 100%)`, padding: "28px 20px 32px" }}>
+      <div style={{ background: `linear-gradient(135deg, ${teal} 0%, ${tealDark} 100%)`, padding: "36px 20px 40px", boxShadow: "0 4px 20px rgba(13,148,136,0.35)" }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "20px" }}>
           {photo ? (
             <img src={photo} alt={displayName} style={{ width: "90px", height: "90px", borderRadius: "50%", objectFit: "cover", border: "3px solid rgba(255,255,255,0.5)", flexShrink: 0 }} />
