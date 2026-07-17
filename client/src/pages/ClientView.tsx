@@ -1086,9 +1086,9 @@ export default function ClientView() {
                       style={{ width: "64px", height: "64px", borderRadius: "12px", objectFit: "cover", display: "block" }}
                     />
                     <p style={{
-                      fontFamily: "'Outfit', sans-serif", fontSize: "0.7em", fontWeight: 700,
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.9em", fontWeight: 700,
                       color: "#1a5fa8", textAlign: "center",
-                      margin: 0, lineHeight: 1.25, maxWidth: "76px",
+                      margin: 0, lineHeight: 1.25, maxWidth: "80px",
                     }}>{svc.label}</p>
                   </div>
                 ))}
