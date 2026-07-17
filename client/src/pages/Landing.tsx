@@ -595,68 +595,101 @@ export default function Landing() {
           </div>
         </section>}
 
-        {/* ── FLIPPING THE SCRIPT HERO FEATURE ── */}
+        {/* ── ABOUT ME PROFILES — INTRODUCTION SECTION ── */}
         <section
-          aria-labelledby="flipping-script-heading"
+          aria-labelledby="about-me-intro-heading"
           style={{
             width: "100%",
-            background: "linear-gradient(135deg, #f0f4f8 0%, #e8f4f1 40%, #e0f0f8 100%)",
-            borderTop: "1px solid rgba(13,148,136,0.18)",
-            borderBottom: "1px solid rgba(26,107,204,0.15)",
+            background: "linear-gradient(135deg, #0f4c45 0%, #0f766e 60%, #134e4a 100%)",
+            borderTop: "3px solid #f5c842",
+            borderBottom: "3px solid #f5c842",
             position: "relative",
             overflow: "hidden",
           }}
         >
           {/* Decorative orbs */}
-          <div aria-hidden="true" style={{ position: "absolute", top: "-60px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
-          <div aria-hidden="true" style={{ position: "absolute", bottom: "-80px", left: "-40px", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div aria-hidden="true" style={{ position: "absolute", top: "-60px", right: "-60px", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(245,200,66,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div aria-hidden="true" style={{ position: "absolute", bottom: "-80px", left: "-40px", width: "300px", height: "300px", borderRadius: "50%", background: "radial-gradient(circle, rgba(45,212,191,0.10) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "36px 32px", display: "flex", alignItems: "center", gap: "40px", flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "52px 32px" }}>
 
-            {/* LEFT — label + headline */}
-            <div style={{ flex: "1 1 400px", minWidth: "280px" }}>
-              {/* Category pill */}
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(13,148,136,0.10)", border: "1px solid rgba(13,148,136,0.28)", borderRadius: "99px", padding: "4px 14px", marginBottom: "14px" }}>
-                <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "#0d9488", display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
-                <span style={{ fontFamily: "'Outfit', sans-serif", color: "#0d6e65", fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" }}>Featured Article · Person-Centred Care</span>
-              </div>
+            {/* Eyebrow */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(245,200,66,0.15)", border: "1px solid rgba(245,200,66,0.40)", borderRadius: "99px", padding: "5px 16px", marginBottom: "20px" }}>
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#f5c842", display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
+              <span style={{ fontFamily: "'Outfit', sans-serif", color: "#f5c842", fontSize: "11px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" }}>Free Tool · Built with Care</span>
+            </div>
 
-              <h2
-                id="flipping-script-heading"
-                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#1a2e4a", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-0.02em" }}
-              >
-                Flipping the Script:
-                <br />
-                <span style={{ background: "linear-gradient(90deg, #1a6bcc 0%, #0d9488 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                  From Static Profiles to Inclusive Care Alliances
-                </span>
-              </h2>
+            {/* Headline */}
+            <h2
+              id="about-me-intro-heading"
+              style={{ fontFamily: "'Cormorant Garamond', serif", color: "#fffbeb", fontSize: "clamp(26px, 3.5vw, 44px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "20px", letterSpacing: "-0.02em" }}
+            >
+              About Me Profiles
+              <br />
+              <span style={{ color: "#f5c842" }}>A human story that travels with you.</span>
+            </h2>
 
-              <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(26,46,74,0.50)", fontSize: "13px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "0" }}>
-                8 min read
+            {/* Opening paragraphs */}
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,251,235,0.90)", fontSize: "clamp(14px, 1.4vw, 17px)", lineHeight: 1.80, marginBottom: "12px", maxWidth: "780px" }}>
+              Too often, the people who need support the most spend their energy repeating themselves. A new worker arrives and asks the same questions. A hospital admission means starting from scratch. A provider intake form reduces a whole person to a series of boxes.
+            </p>
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,251,235,0.90)", fontSize: "clamp(14px, 1.4vw, 17px)", lineHeight: 1.80, marginBottom: "12px", maxWidth: "780px" }}>
+              We’ve been there — as carers, as family members, as people who’ve sat in those waiting rooms and watched someone we love have to explain themselves again.
+            </p>
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,251,235,0.90)", fontSize: "clamp(14px, 1.4vw, 17px)", lineHeight: 1.80, marginBottom: "28px", maxWidth: "780px" }}>
+              About Me Profiles was built as a quiet act of advocacy — a human story that travels side by side with the person wherever they go. Into hospitals. Into new services. Into first appointments. A story that says <em>this is who I am, this is how I communicate, this is what I need</em> — before anyone has to ask. It’s not a clinical form. It’s a human introduction that walks in the door with them.
+            </p>
+
+            {/* Ecosystem grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginBottom: "36px" }}>
+              {[
+                { emoji: "♿", role: "Participants & aged persons", desc: "Never have to start from scratch or explain themselves under pressure again. Their story goes with them." },
+                { emoji: "💚", role: "Families & burnt-out carers", desc: "Fill it in once and let it do the advocating. No more repeating the same story to every new worker, every new shift." },
+                { emoji: "🤝", role: "Support workers & care staff", desc: "Arrive already knowing the person — their communication style, their routines, what helps and what doesn’t. The relationship starts with dignity, not a blank page." },
+                { emoji: "📋", role: "Coordinators & providers", desc: "Receive thorough, person-centred information before the first meeting. Intake becomes a genuine conversation, not a rapid-fire round of questions the person has already answered a dozen times before." },
+              ].map(({ emoji, role, desc }) => (
+                <div key={role} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(245,200,66,0.25)", borderRadius: "16px", padding: "20px 18px" }}>
+                  <div style={{ fontSize: "28px", marginBottom: "8px" }}>{emoji}</div>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", color: "#f5c842", fontSize: "13px", fontWeight: 800, marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.05em" }}>{role}</p>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,251,235,0.85)", fontSize: "14px", lineHeight: 1.65, margin: 0 }}>{desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Closing line */}
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,251,235,0.75)", fontSize: "clamp(13px, 1.2vw, 15px)", lineHeight: 1.70, marginBottom: "32px", maxWidth: "700px", fontStyle: "italic" }}>
+              Together, this is an ecosystem that addresses real frustrations at every point in the care journey — not by adding more paperwork, but by replacing it with something human. We can’t change the system overnight. But we can make sure the person at the centre of it is seen — before the first question is even asked.
+            </p>
+
+            {/* Device notice */}
+            <div style={{ background: "rgba(245,200,66,0.12)", border: "1px solid rgba(245,200,66,0.35)", borderRadius: "12px", padding: "14px 20px", marginBottom: "32px", maxWidth: "680px", display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ fontSize: "20px", flexShrink: 0 }}>📱</span>
+              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#fffbeb", fontSize: "14px", lineHeight: 1.65, margin: 0, fontWeight: 600 }}>
+                <strong style={{ color: "#f5c842" }}>Your profile is saved on this device.</strong> Everything you fill in is stored privately in your browser — no account needed. To update your profile, return to this link on the same device and your information will be waiting. Save your short link or QR code so your profile travels with you.
               </p>
             </div>
 
-            {/* DIVIDER */}
-            <div aria-hidden="true" style={{ width: "1px", alignSelf: "stretch", background: "linear-gradient(to bottom, transparent, rgba(45,212,191,0.30), rgba(245,200,66,0.25), transparent)", flexShrink: 0 }} className="hidden-mobile" />
-
-            {/* RIGHT — intro + CTA */}
-            <div style={{ flex: "1 1 280px", minWidth: "240px" }}>
-              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(13px, 1.3vw, 15px)", lineHeight: 1.70, marginBottom: "8px" }}>
-                The traditional support matching system treats care like a passive wildcard. Coordinators pick a name from a spreadsheet and hope for the best. This reactive loop doesn't just create high turnover — it creates anxiety on both sides.
-              </p>
-              <p style={{ fontFamily: "'Outfit', sans-serif", color: "#2d3f55", fontSize: "clamp(13px, 1.3vw, 15px)", lineHeight: 1.70, marginBottom: "18px" }}>
-                True person-centred care requires a proactive system. Interactive profiles change the dynamic entirely — turning a static document into a living demonstration of who a worker is and how they show up.
-              </p>
-              <Link
-                href="/blog/flipping-the-script"
-                style={{ background: "linear-gradient(135deg, #1a6bcc 0%, #0d9488 100%)", color: "#ffffff", padding: "10px 22px", borderRadius: "99px", fontSize: "14px", fontWeight: 800, textDecoration: "none", display: "inline-block", letterSpacing: "0.02em", boxShadow: "0 4px 20px rgba(245,200,66,0.30)" }}
+            {/* Gold sticker CTA */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "12px" }}>
+              <a
+                href="/about-me/editor"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "10px",
+                  background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
+                  color: "#0f4c45", fontFamily: "'Outfit', sans-serif", fontWeight: 900,
+                  fontSize: "clamp(16px, 2vw, 20px)", textDecoration: "none",
+                  padding: "16px 36px", borderRadius: "99px",
+                  boxShadow: "0 6px 32px rgba(245,200,66,0.45), 0 2px 8px rgba(0,0,0,0.20)",
+                  letterSpacing: "0.01em",
+                }}
               >
-                Read the Full Article →
-              </Link>
+                <span style={{ fontSize: "22px" }}>✨</span>
+                Create a Free About Me Profile
+              </a>
+              <span style={{ fontFamily: "'Outfit', sans-serif", color: "rgba(255,251,235,0.60)", fontSize: "13px", fontWeight: 600, paddingLeft: "8px" }}>
+                insyncprofiles.net/about-me/editor · No login · No cost · Always free
+              </span>
             </div>
-
-
 
           </div>
         </section>
