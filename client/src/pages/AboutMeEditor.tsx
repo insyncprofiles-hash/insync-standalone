@@ -288,6 +288,7 @@ export default function AboutMeEditor() {
   const [activeTab, setActiveTab] = useState("who");
   const [shareUrl, setShareUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [saved, setSaved] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const { listeningFor, startDictation } = useDictation();
 
@@ -302,6 +303,7 @@ export default function AboutMeEditor() {
 
   // Debounced save — only write to localStorage 600ms after last change
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveTimerRef.current = setTimeout(() => {
@@ -309,6 +311,9 @@ export default function AboutMeEditor() {
         const { photo, ...rest } = profile;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(rest));
         if (photo) localStorage.setItem(PHOTO_KEY, photo);
+        setSaved(true);
+        if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+        savedTimerRef.current = setTimeout(() => setSaved(false), 2000);
       } catch {}
     }, 600);
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
@@ -389,9 +394,16 @@ export default function AboutMeEditor() {
           <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: "#fffbeb", margin: 0 }}>About Me Editor</p>
           <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: "#fde68a", margin: "2px 0 0" }}>Free — for participants, families and carers</p>
         </div>
-        <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
-          Back to InSync Profiles
-        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {saved && (
+            <span style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#86efac", fontWeight: 700, transition: "opacity 300ms" }}>
+              Saved
+            </span>
+          )}
+          <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
+            Back to InSync Profiles
+          </Link>
+        </div>
       </div>
 
       {/* Accessibility notice */}
