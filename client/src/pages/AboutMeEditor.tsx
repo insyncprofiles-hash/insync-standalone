@@ -560,18 +560,12 @@ export default function AboutMeEditor() {
           </div>
 
           {/* Saving & sharing spool */}
-          <div style={{ background: "#f0f9ff", border: "2px solid #bae6fd", borderRadius: "14px", padding: "18px 20px", marginBottom: "32px" }}>
-            <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "14px", color: "#0c4a6e", margin: "0 0 10px", display: "flex", alignItems: "center", gap: "6px" }}>
-              💾 Saved automatically on this device
-            </p>
+          <div style={{ background: "#f0f9ff", border: "2px solid #bae6fd", borderRadius: "14px", padding: "16px 18px", marginBottom: "32px" }}>
             <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#0c4a6e", margin: "0 0 8px", lineHeight: 1.7 }}>
-              Everything you enter is saved privately on <strong>this device only</strong> — in your browser’s local storage (key: <code style={{ background: "#e0f2fe", padding: "1px 6px", borderRadius: "4px", fontSize: "11px", fontFamily: "monospace" }}>insync_aboutme_profile</code>). Nothing is sent to any server.
+              Your profile saves automatically on your device. Return here any time on the same device and browser to update it.
             </p>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#0c4a6e", margin: "0 0 10px", lineHeight: 1.7 }}>
-              Return to this page on the <strong>same device and browser</strong> any time to update — your information will be here exactly as you left it.
-            </p>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#0369a1", margin: 0, lineHeight: 1.7, borderTop: "1px solid #bae6fd", paddingTop: "10px" }}>
-              📤 <strong>To share your profile:</strong> fill in your details, then go to the <strong>Share</strong> tab. Copy your unique link or QR code and send it by message, email, or print it — anyone with the link can view your profile instantly, no app or login needed.
+            <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#0c4a6e", margin: 0, lineHeight: 1.7 }}>
+              To share, go to the <strong>Share</strong> tab and copy your link or QR code — anyone with it can view your profile instantly, no login needed.
             </p>
           </div>
 
