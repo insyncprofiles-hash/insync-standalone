@@ -40,8 +40,8 @@ const profileTypes = [
 const destinations = [
   { id: "participants",    label: ["NDIS Participants", "& Families"],     emoji: "👨‍👩‍👧", color: "#1e3a8a", angle: -108, profiles: ["support-worker","about-me-disability","coordinator"] },
   { id: "aged-persons",    label: ["Aged Persons", "& Carers"],            emoji: "👴",    color: "#6b3fa0", angle: -68,  profiles: ["about-me-aged","support-worker"] },
-  { id: "hospitals",       label: ["Hospitals", "& Ward Staff"],           emoji: "🏥",    color: "#be123c", angle: -28,  profiles: ["about-me-disability","about-me-aged","allied-health"] },
-  { id: "ndis-providers",  label: ["NDIS Providers", "& Services"],        emoji: "🏢",    color: "#9f5e38", angle: 12,   profiles: ["support-worker","allied-health","coordinator","about-me-disability"] },
+  { id: "hospitals",       label: ["Hospitals", "& Ward Staff"],           emoji: "🏥",    color: "#be123c", angle: -35,  profiles: ["about-me-disability","about-me-aged","allied-health"] },
+  { id: "ndis-providers",  label: ["NDIS Providers", "& Services"],        emoji: "🏢",    color: "#9f5e38", angle: 35,  profiles: ["support-worker","allied-health","coordinator","about-me-disability"] },
   { id: "aged-facilities", label: ["Aged Care", "Facilities"],             emoji: "🏡",    color: "#746e4a", angle: 52,   profiles: ["about-me-aged","support-worker"] },
   { id: "schools",         label: ["Schools &", "Therapists"],             emoji: "📚",    color: "#c89e6c", angle: 92,   profiles: ["about-me-disability","allied-health"] },
   { id: "new-workers",     label: ["New Support", "Workers"],              emoji: "🤲",    color: "#4b7aa8", angle: 148,  profiles: ["support-worker","about-me-disability","about-me-aged"] },
