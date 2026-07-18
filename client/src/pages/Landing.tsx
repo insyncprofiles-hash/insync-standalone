@@ -452,10 +452,10 @@ export default function Landing() {
           from { opacity: 0; transform: translateY(-8px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        /* Landscape mobile — add breathing room below nav strip */
-        @media (max-width: 900px) and (orientation: landscape) {
-          .hero-section {
-            padding-top: 32px !important;
+        /* Landscape mobile — add breathing room between nav and hero */
+        @media (orientation: landscape) and (max-height: 600px) {
+          .landscape-hero-buffer {
+            height: 32px;
           }
         }
       `}</style>
@@ -668,6 +668,9 @@ export default function Landing() {
 
 
                 {/* ── HERO ── */}
+        {/* Landscape mobile buffer — creates gap between nav and hero */}
+        <div className="landscape-hero-buffer" aria-hidden="true" />
+
         <section
           className="hero-section"
           style={{
