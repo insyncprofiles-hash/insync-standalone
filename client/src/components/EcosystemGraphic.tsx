@@ -20,7 +20,7 @@ const CY = 680; // centre pushed down slightly so top nodes have room
 const PROFILE_R  = 210;
 const DEST_R_POS = 420;
 const PROFILE_CR = 78;
-const DEST_CR    = 58;
+const DEST_CR    = 72;
 
 function toRad(deg: number) { return (deg * Math.PI) / 180; }
 function nodePos(r: number, angleDeg: number) {
@@ -285,11 +285,11 @@ export default function EcosystemGraphic() {
                 style={{ transition: "all 180ms ease-out" }}
               />
               {/* Emoji */}
-              <text x={pos.x} y={pos.y - 14} textAnchor="middle" fontSize="18" dominantBaseline="middle">{dest.emoji}</text>
+              <text x={pos.x} y={pos.y - 18} textAnchor="middle" fontSize="22" dominantBaseline="middle">{dest.emoji}</text>
               {/* Label line 1 */}
-              <text x={pos.x} y={pos.y + 6}  textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="800" fontSize="11" fill={dest.color}>{dest.label[0]}</text>
+              <text x={pos.x} y={pos.y + 8}  textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="800" fontSize="14" fill={dest.color}>{dest.label[0]}</text>
               {/* Label line 2 */}
-              <text x={pos.x} y={pos.y + 20} textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="800" fontSize="11" fill={dest.color}>{dest.label[1]}</text>
+              <text x={pos.x} y={pos.y + 26} textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="800" fontSize="14" fill={dest.color}>{dest.label[1]}</text>
             </g>
           );
         })}
