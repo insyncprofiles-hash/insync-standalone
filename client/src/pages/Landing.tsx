@@ -454,14 +454,8 @@ export default function Landing() {
         }
         /* Landscape mobile — add breathing room below nav strip */
         @media (max-width: 900px) and (orientation: landscape) {
-          .mobile-top-nav {
-            padding-bottom: 20px !important;
-          }
-          #main-content {
-            padding-top: 100px !important;
-          }
           .hero-section {
-            padding-top: 28px !important;
+            padding-top: 32px !important;
           }
         }
       `}</style>
@@ -477,7 +471,7 @@ export default function Landing() {
             msOverflowStyle: "none",
             display: "flex",
             gap: "6px",
-            padding: "10px 16px",
+            padding: "10px 16px 18px",
             borderBottom: `1px solid ${C.border}`,
             background: "rgba(13,27,42,0.95)",
           }}>
