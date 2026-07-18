@@ -10,7 +10,7 @@ export default function Ecosystem() {
       {/* Hero header */}
       <div style={{
         background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #0f172a 100%)",
-        padding: "48px 24px 40px",
+        padding: "96px 24px 40px",
         textAlign: "center",
         borderBottom: "3px solid #fcd34d",
       }}>
