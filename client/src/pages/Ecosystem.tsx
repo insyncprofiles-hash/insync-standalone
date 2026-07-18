@@ -41,10 +41,10 @@ export default function Ecosystem() {
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
             {[
-              { step: "1", text: "Tap any profile circle to visit a sample profile and see what it looks like in real-world practice." },
-              { step: "2", text: "Hit \u2190 Back in your browser to return here." },
-              { step: "3", text: "Back on the diagram, the connection lines are already showing — see who that profile serves and where it travels in real-world practice." },
-              { step: "4", text: "Tap any empty space on the diagram to deselect and choose a different profile." },
+              { step: "1", text: "Tap any profile circle to highlight its connection lines — see who it serves and where it travels." },
+              { step: "2", text: "Tap the same circle again (or the \u2018View sample \u2192\u2019 button) to visit a real sample profile." },
+              { step: "3", text: "Hit \u2190 Back to return here with connections still visible." },
+              { step: "4", text: "Tap any empty space on the diagram to deselect and explore a different profile." },
             ].map(({ step, text }) => (
               <div key={step} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
                 <span style={{

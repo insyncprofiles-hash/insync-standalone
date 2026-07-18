@@ -6,6 +6,11 @@ import { useState } from "react";
 // Profile types: inner ring at r=210, circle r=78
 // Destinations:  outer ring at r=420, circle r=58
 // Canvas is tall enough that all 9 destination nodes fit within bounds.
+//
+// Interaction model:
+//   Desktop: hover to highlight connections, click to navigate
+//   Mobile:  first tap selects & shows connections (with a "View sample" button),
+//            tap empty space to deselect, tap the button to navigate
 
 const W  = 900;
 const H  = 1400;
@@ -32,8 +37,6 @@ const profileTypes = [
 ];
 
 // Destinations — 9 nodes, manually spaced to avoid overlap
-// Min angular gap needed = 2 * arcsin(DEST_CR / DEST_R_POS) ≈ 2 * arcsin(58/420) ≈ 15.8°
-// Using ~38° average gap across 9 nodes (360/9 = 40°) — safe
 const destinations = [
   { id: "participants",    label: ["NDIS Participants", "& Families"],     emoji: "👨‍👩‍👧", color: "#1e3a8a", angle: -108, profiles: ["support-worker","about-me-disability","coordinator"] },
   { id: "aged-persons",    label: ["Aged Persons", "& Carers"],            emoji: "👴",    color: "#6b3fa0", angle: -68,  profiles: ["about-me-aged","support-worker"] },
@@ -47,37 +50,103 @@ const destinations = [
 ];
 
 export default function EcosystemGraphic() {
+  // hovered = desktop hover state
   const [hovered, setHovered] = useState<string | null>(null);
+  // selected = mobile tap-to-select state (profile id only)
+  const [selected, setSelected] = useState<string | null>(null);
+
+  // The active highlight is whichever is set (hover takes priority on desktop)
+  const active = hovered ?? selected;
 
   function isLineActive(profileId: string, destId: string) {
-    if (!hovered) return false;
+    if (!active) return false;
     const dp = destinations.find(d => d.id === destId)?.profiles ?? [];
-    if (hovered === profileId) return dp.includes(profileId);
-    if (hovered === destId)    return dp.includes(profileId);
+    if (active === profileId) return dp.includes(profileId);
+    if (active === destId)    return dp.includes(profileId);
     return false;
   }
   function profileDimmed(id: string) {
-    if (!hovered) return false;
-    if (hovered === id) return false;
-    const hd = destinations.find(d => d.id === hovered);
+    if (!active) return false;
+    if (active === id) return false;
+    const hd = destinations.find(d => d.id === active);
     if (hd) return !hd.profiles.includes(id);
     return true;
   }
   function destDimmed(id: string) {
-    if (!hovered) return false;
-    if (hovered === id) return false;
-    const hp = profileTypes.find(p => p.id === hovered);
+    if (!active) return false;
+    if (active === id) return false;
+    const hp = profileTypes.find(p => p.id === active);
     if (hp) return !destinations.find(d => d.id === id)?.profiles.includes(hp.id);
     return true;
   }
 
+  function handleProfileClick(profileId: string, href: string) {
+    // If already selected → navigate to sample profile
+    if (selected === profileId) {
+      window.location.href = href;
+      return;
+    }
+    // First tap → select and show connections
+    setSelected(profileId);
+  }
+
+  function handleBackgroundClick() {
+    setSelected(null);
+  }
+
+  const selectedProfile = profileTypes.find(p => p.id === selected);
+
   return (
     <div style={{ width: "100%", maxWidth: "900px", margin: "0 auto", padding: "0 4px" }}>
+
+      {/* Selected profile action banner — shown on mobile after first tap */}
+      {selectedProfile && (
+        <div style={{
+          background: `linear-gradient(135deg, ${selectedProfile.colorLight}, ${selectedProfile.color})`,
+          borderRadius: "14px",
+          padding: "12px 16px",
+          marginBottom: "12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "12px",
+          flexWrap: "wrap",
+        }}>
+          <div>
+            <p style={{ margin: 0, fontFamily: "'Outfit','Nunito',sans-serif", fontWeight: 900, fontSize: "14px", color: selectedProfile.textColor }}>
+              {selectedProfile.emoji} {selectedProfile.label.join(" ")} — connections highlighted below
+            </p>
+            <p style={{ margin: "3px 0 0", fontFamily: "'Nunito',sans-serif", fontSize: "12px", color: selectedProfile.textColor, opacity: 0.8 }}>
+              Tap again to view a sample profile, or tap empty space to deselect
+            </p>
+          </div>
+          <a
+            href={selectedProfile.href}
+            style={{
+              background: "rgba(255,255,255,0.25)",
+              border: "1.5px solid rgba(255,255,255,0.5)",
+              color: selectedProfile.textColor,
+              fontFamily: "'Outfit','Nunito',sans-serif",
+              fontWeight: 900,
+              fontSize: "13px",
+              padding: "7px 16px",
+              borderRadius: "99px",
+              textDecoration: "none",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            View sample →
+          </a>
+        </div>
+      )}
+
       <svg
         viewBox={`0 0 ${W} ${H}`}
         style={{ width: "100%", height: "auto", display: "block" }}
         aria-label="InSync Profiles Ecosystem"
         role="img"
+        onClick={handleBackgroundClick}
       >
         <defs>
           <radialGradient id="bgGrad" cx="50%" cy="40%" r="70%">
@@ -111,7 +180,7 @@ export default function EcosystemGraphic() {
           ))}
         </defs>
 
-        {/* Background */}
+        {/* Background — clicking it deselects */}
         <rect x="0" y="0" width={W} height={H} fill="url(#bgGrad)" rx="20" />
 
         {/* Title */}
@@ -133,15 +202,15 @@ export default function EcosystemGraphic() {
             .map(dest => {
               const from   = nodePos(PROFILE_R, profile.angle);
               const to     = nodePos(DEST_R_POS, dest.angle);
-              const active = isLineActive(profile.id, dest.id);
-              const dimmed = hovered && !active;
+              const lineActive = isLineActive(profile.id, dest.id);
+              const dimmed = active && !lineActive;
               return (
                 <line
                   key={`${profile.id}-${dest.id}`}
                   x1={from.x} y1={from.y} x2={to.x} y2={to.y}
-                  stroke={active ? profile.color : "#8fa0c0"}
-                  strokeWidth={active ? 3 : 1}
-                  opacity={dimmed ? 0.04 : active ? 0.9 : 0.2}
+                  stroke={lineActive ? profile.color : "#8fa0c0"}
+                  strokeWidth={lineActive ? 3 : 1}
+                  opacity={dimmed ? 0.04 : lineActive ? 0.9 : 0.2}
                   style={{ transition: "all 200ms ease-out" }}
                 />
               );
@@ -155,10 +224,10 @@ export default function EcosystemGraphic() {
 
         {/* Profile type circles */}
         {profileTypes.map(profile => {
-          const pos    = nodePos(PROFILE_R, profile.angle);
-          const dimmed = profileDimmed(profile.id);
-          const active = hovered === profile.id;
-          const r      = active ? PROFILE_CR + 8 : PROFILE_CR;
+          const pos     = nodePos(PROFILE_R, profile.angle);
+          const dimmed  = profileDimmed(profile.id);
+          const isActive = active === profile.id;
+          const r       = isActive ? PROFILE_CR + 8 : PROFILE_CR;
           return (
             <g
               key={profile.id}
@@ -166,7 +235,10 @@ export default function EcosystemGraphic() {
               opacity={dimmed ? 0.18 : 1}
               onMouseEnter={() => setHovered(profile.id)}
               onMouseLeave={() => setHovered(null)}
-              onClick={() => { window.location.href = profile.href; }}
+              onClick={(e) => {
+                e.stopPropagation(); // prevent background deselect
+                handleProfileClick(profile.id, profile.href);
+              }}
             >
               {/* Outer glow ring */}
               <circle cx={pos.x} cy={pos.y} r={r + 5} fill="none" stroke={profile.colorLight} strokeWidth="1.5" opacity="0.4" />
@@ -174,9 +246,9 @@ export default function EcosystemGraphic() {
               <circle
                 cx={pos.x} cy={pos.y} r={r}
                 fill={`url(#g-${profile.id})`}
-                stroke={active ? "#ffffff" : profile.colorLight}
-                strokeWidth={active ? 3 : 2}
-                filter={active ? "url(#softglow)" : "url(#dropshadow)"}
+                stroke={isActive ? "#ffffff" : profile.colorLight}
+                strokeWidth={isActive ? 3 : 2}
+                filter={isActive ? "url(#softglow)" : "url(#dropshadow)"}
                 style={{ transition: "all 180ms ease-out" }}
               />
               {/* Emoji */}
@@ -191,10 +263,10 @@ export default function EcosystemGraphic() {
 
         {/* Destination circles */}
         {destinations.map(dest => {
-          const pos    = nodePos(DEST_R_POS, dest.angle);
-          const dimmed = destDimmed(dest.id);
-          const active = hovered === dest.id;
-          const r      = active ? DEST_CR + 6 : DEST_CR;
+          const pos     = nodePos(DEST_R_POS, dest.angle);
+          const dimmed  = destDimmed(dest.id);
+          const isActive = active === dest.id;
+          const r       = isActive ? DEST_CR + 6 : DEST_CR;
           return (
             <g
               key={dest.id}
@@ -202,12 +274,13 @@ export default function EcosystemGraphic() {
               opacity={dimmed ? 0.1 : 1}
               onMouseEnter={() => setHovered(dest.id)}
               onMouseLeave={() => setHovered(null)}
+              onClick={(e) => e.stopPropagation()}
             >
               <circle
                 cx={pos.x} cy={pos.y} r={r}
                 fill="#ffffff"
                 stroke={dest.color}
-                strokeWidth={active ? 3.5 : 2.5}
+                strokeWidth={isActive ? 3.5 : 2.5}
                 filter="url(#dropshadow)"
                 style={{ transition: "all 180ms ease-out" }}
               />
@@ -223,7 +296,7 @@ export default function EcosystemGraphic() {
 
         {/* Hint */}
         <text x={CX} y={H - 30} textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="600" fontSize="13" fill="#6b7280">
-          Hover a node to see connections · Tap a profile type to explore
+          Tap a profile to see connections · Tap again to view sample · Tap space to clear
         </text>
       </svg>
 
