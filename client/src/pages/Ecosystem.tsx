@@ -39,6 +39,9 @@ export default function Ecosystem() {
           <p style={{ fontFamily: "'Outfit', 'Nunito', sans-serif", fontWeight: 900, fontSize: "14px", color: "#1e3a8a", margin: "0 0 10px", letterSpacing: "0.02em" }}>
             📖 How to explore this diagram
           </p>
+          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: "#1e3a8a", margin: "0 0 10px", fontWeight: 700, background: "#dbeafe", borderRadius: "8px", padding: "6px 10px", display: "inline-block" }}>
+            🖥️ On desktop? Just hover over any circle to instantly see its connections.
+          </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
             {[
               { step: "1", text: "Tap any profile circle to highlight its connection lines — see who it serves and where it travels." },
