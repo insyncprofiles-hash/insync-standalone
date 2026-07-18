@@ -101,7 +101,7 @@ export default function Ecosystem() {
       {/* CTA */}
       <div style={{ textAlign: "center", marginTop: "48px", padding: "0 24px" }}>
         <p style={{ fontFamily: B, fontSize: "15px", color: "#475569", marginBottom: "20px" }}>
-          All profiles are free to view. Support Worker, Allied Health, and Coordinator profiles are available with a subscription.
+          All profiles are free to view. Support Worker, Allied Health, and Coordinator profiles are available with a one-off purchase — no subscription, ever.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", justifyContent: "center" }}>
           <a href="/about-me/editor" style={{
