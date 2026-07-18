@@ -27,6 +27,25 @@ export default function Ecosystem() {
 
       {/* Graphic */}
       <div style={{ maxWidth: "860px", margin: "40px auto 0", padding: "0 16px" }}>
+        {/* Interactive sticker */}
+        <div style={{ textAlign: "center", marginBottom: "12px" }}>
+          <span style={{
+            display: "inline-block",
+            background: "linear-gradient(135deg, #b45309 0%, #d97706 50%, #b45309 100%)",
+            color: "#ffffff",
+            fontFamily: "'Outfit', 'Nunito', sans-serif",
+            fontWeight: 900,
+            fontSize: "12px",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            padding: "7px 18px",
+            borderRadius: "20px",
+            boxShadow: "0 2px 10px rgba(180,83,9,0.45), inset 0 1px 0 rgba(255,255,255,0.25)",
+            border: "1.5px solid #92400e",
+          }}>
+            👆 Interactive — tap any profile to see its purpose &amp; real-world connections
+          </span>
+        </div>
         <div style={{
           background: "#ffffff",
           borderRadius: "20px",
