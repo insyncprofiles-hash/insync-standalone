@@ -452,6 +452,15 @@ export default function Landing() {
           from { opacity: 0; transform: translateY(-8px); }
           to   { opacity: 1; transform: translateY(0); }
         }
+        /* Landscape mobile — add breathing room below nav strip */
+        @media (max-width: 900px) and (orientation: landscape) {
+          .mobile-top-nav {
+            margin-bottom: 20px !important;
+          }
+          #main-content {
+            padding-top: 140px !important;
+          }
+        }
       `}</style>
 
       <main id="main-content" style={{ paddingTop: "174px" }}>
