@@ -27,6 +27,42 @@ export default function Ecosystem() {
 
       {/* Graphic */}
       <div style={{ maxWidth: "860px", margin: "40px auto 0", padding: "0 16px" }}>
+        {/* How to use guide */}
+        <div style={{
+          background: "#f0f4ff",
+          border: "2px solid #c7d7f8",
+          borderRadius: "16px",
+          padding: "16px 20px",
+          marginBottom: "16px",
+          fontFamily: "'Nunito', sans-serif",
+        }}>
+          <p style={{ fontFamily: "'Outfit', 'Nunito', sans-serif", fontWeight: 900, fontSize: "14px", color: "#1e3a8a", margin: "0 0 10px", letterSpacing: "0.02em" }}>
+            📖 How to explore this diagram
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+            {[
+              { step: "1", text: "Tap any profile circle to visit a sample profile and see what it looks like in real-world practice." },
+              { step: "2", text: "Hit \u2190 Back in your browser to return here." },
+              { step: "3", text: "Tap any profile circle again to see the connection lines light up — showing who that profile serves and where it travels." },
+              { step: "4", text: "Tap any empty space on the diagram to deselect and choose a different profile." },
+            ].map(({ step, text }) => (
+              <div key={step} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                <span style={{
+                  flexShrink: 0,
+                  width: "22px", height: "22px",
+                  background: "#1e3a8a",
+                  color: "#fff",
+                  borderRadius: "50%",
+                  fontSize: "11px",
+                  fontWeight: 900,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>{step}</span>
+                <p style={{ margin: 0, fontSize: "13px", color: "#1e3d58", lineHeight: 1.55 }}>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Interactive sticker */}
         <div style={{ textAlign: "center", marginBottom: "14px" }}>
           <span style={{
