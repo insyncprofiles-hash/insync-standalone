@@ -144,7 +144,7 @@ export default function EcosystemGraphic() {
       <svg
         viewBox={`0 0 ${W} ${H}`}
         style={{ width: "100%", height: "auto", display: "block" }}
-        aria-label="InSync Profiles Ecosystem"
+        aria-label="Connections and Continuity Ecosystem"
         role="img"
         onClick={handleBackgroundClick}
       >
@@ -185,7 +185,7 @@ export default function EcosystemGraphic() {
 
         {/* Title */}
         <text x={CX} y={52} textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="900" fontSize="28" fill="#1e3a8a">
-          The InSync Profiles Ecosystem
+          Connections and Continuity Ecosystem
         </text>
         <text x={CX} y={84} textAnchor="middle" fontFamily="'Outfit','Nunito',sans-serif" fontWeight="600" fontSize="15" fill="#4a5568">
           Profile types · Who they serve · Where they travel

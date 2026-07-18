@@ -18,7 +18,7 @@ export default function Ecosystem() {
           InSync Profiles
         </p>
         <h1 style={{ fontFamily: H, fontWeight: 900, fontSize: "clamp(26px, 5vw, 40px)", color: "#ffffff", margin: "0 0 14px", lineHeight: 1.2 }}>
-          The InSync Profiles Ecosystem
+          Connections and Continuity Ecosystem
         </h1>
         <p style={{ fontFamily: B, fontSize: "clamp(14px, 2.5vw, 17px)", color: "#93c5fd", maxWidth: "640px", margin: "0 auto 0", lineHeight: 1.7 }}>
           Four profile types. One shared purpose — making sure the right people have the right information, before they need to ask.
