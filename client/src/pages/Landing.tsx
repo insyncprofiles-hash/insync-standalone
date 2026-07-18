@@ -301,7 +301,7 @@ export default function Landing() {
         <nav aria-label="Page navigation" className="desktop-nav" style={{ display: "flex", gap: "4px", alignItems: "center" }}>
           <div style={{ position: "relative", display: "inline-flex", flexShrink: 0 }}>
             <Link href="/about-me/editor" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: "2px", background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)", color: "#0f4c45", textDecoration: "none", padding: "7px 20px 8px", borderRadius: "99px", letterSpacing: "0.01em", boxShadow: "0 2px 12px rgba(245,200,66,0.40)" }}>
-              <span style={{ fontSize: "15px", fontWeight: 900, display: "flex", alignItems: "center", gap: "6px" }}>✨ About Me Profile</span>
+              <span style={{ fontSize: "15px", fontWeight: 900, display: "flex", alignItems: "center", gap: "6px" }}>✨ About Me</span>
               <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.04em", opacity: 0.8, lineHeight: 1 }}>Continuity for Aged &amp; Disabled Persons</span>
             </Link>
             <span style={{ position: "absolute", top: "4px", left: "-14px", background: "linear-gradient(135deg, #b91c1c 0%, #7f1d1d 40%, #c0392b 70%, #991b1b 100%)", color: "#fff", fontSize: "9px", fontWeight: 900, letterSpacing: "0.06em", padding: "3px 8px", borderRadius: "99px", boxShadow: "0 2px 6px rgba(120,20,20,0.55), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.25)", textTransform: "uppercase", whiteSpace: "nowrap", border: "1px solid rgba(255,255,255,0.15)", pointerEvents: "none" }}>Free to use</span>
@@ -369,7 +369,7 @@ export default function Landing() {
           aria-label="Mobile navigation"
         >
           {          [
-            { href: "/about-me/editor", label: "✨ About Me Profile" },
+            { href: "/about-me/editor", label: "✨ About Me" },
             { href: "/scenarios",  label: "🌊 The New Wave" },
             { href: "/ecosystem",  label: "🌐 Ecosystem" },
             { href: "/how-to-use", label: "How It Works" },
@@ -492,7 +492,7 @@ export default function Landing() {
                   boxShadow: "0 2px 8px rgba(245,200,66,0.40)",
                 }}
               >
-                <span style={{ fontSize: "13px", fontWeight: 900, whiteSpace: "nowrap", lineHeight: 1.2 }}>✨ About Me Profile</span>
+                <span style={{ fontSize: "13px", fontWeight: 900, whiteSpace: "nowrap", lineHeight: 1.2 }}>✨ About Me</span>
                 <span style={{ fontSize: "9px", fontWeight: 700, opacity: 0.75, whiteSpace: "nowrap", lineHeight: 1, letterSpacing: "0.03em" }}>Continuity for Aged &amp; Disabled Persons</span>
               </Link>
               <span style={{ position: "absolute", top: "3px", left: "-12px", background: "linear-gradient(135deg, #b91c1c 0%, #7f1d1d 40%, #c0392b 70%, #991b1b 100%)", color: "#fff", fontSize: "8px", fontWeight: 900, letterSpacing: "0.06em", padding: "2px 7px", borderRadius: "99px", boxShadow: "0 2px 5px rgba(120,20,20,0.55), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.25)", textTransform: "uppercase", whiteSpace: "nowrap", border: "1px solid rgba(255,255,255,0.15)", pointerEvents: "none" }}>Free to use</span>
