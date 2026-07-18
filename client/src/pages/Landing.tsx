@@ -455,10 +455,13 @@ export default function Landing() {
         /* Landscape mobile — add breathing room below nav strip */
         @media (max-width: 900px) and (orientation: landscape) {
           .mobile-top-nav {
-            margin-bottom: 20px !important;
+            padding-bottom: 20px !important;
           }
           #main-content {
-            padding-top: 140px !important;
+            padding-top: 100px !important;
+          }
+          .hero-section {
+            padding-top: 28px !important;
           }
         }
       `}</style>
@@ -672,6 +675,7 @@ export default function Landing() {
 
                 {/* ── HERO ── */}
         <section
+          className="hero-section"
           style={{
             padding: "0 24px 80px",
             maxWidth: "1200px",
