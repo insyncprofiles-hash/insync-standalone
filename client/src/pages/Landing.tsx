@@ -674,7 +674,7 @@ export default function Landing() {
         <section
           className="hero-section"
           style={{
-            padding: "0 24px 80px",
+            padding: "48px 24px 80px",
             maxWidth: "1200px",
             margin: "0 auto",
             position: "relative",
