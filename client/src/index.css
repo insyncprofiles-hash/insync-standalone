@@ -340,10 +340,10 @@
 
 /* Font scaling — applied via CSS variable */
 :root { --a11y-font-scale: 1; }
-.a11y-font-scale body,
 body {
   font-size: calc(16px * var(--a11y-font-scale, 1));
 }
+
 
 /* High contrast mode */
 .a11y-high-contrast {
@@ -370,14 +370,8 @@ body {
 }
 
 /* Dyslexia-friendly font — Lexend (loaded via index.html) */
-.a11y-dyslexia body,
-.a11y-dyslexia p,
-.a11y-dyslexia span,
-.a11y-dyslexia button,
-.a11y-dyslexia input,
-.a11y-dyslexia textarea,
-.a11y-dyslexia label,
-.a11y-dyslexia li {
+.a11y-dyslexia *,
+.a11y-dyslexia body {
   font-family: 'Lexend', sans-serif !important;
   letter-spacing: 0.05em !important;
   word-spacing: 0.1em !important;

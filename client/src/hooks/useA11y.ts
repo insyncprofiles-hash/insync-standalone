@@ -11,8 +11,8 @@ interface A11ySettings {
 }
 
 const STORAGE_KEY = "sw-accessibility-settings";
-const DYSLEXIA_FONT = "'OpenDyslexic', 'Comic Sans MS', cursive";
-const NORMAL_FONT = "'Outfit', sans-serif";
+const DYSLEXIA_FONT = "'Lexend', 'OpenDyslexic', sans-serif";
+const NORMAL_FONT = "'Nunito', 'Outfit', sans-serif";
 
 function readSettings(): A11ySettings {
   try {
@@ -44,8 +44,19 @@ export function useA11y() {
     };
   }, []);
 
+  // Keep the CSS variable in sync for CSS-based scaling
+  useEffect(() => {
+    document.documentElement.style.setProperty("--a11y-font-scale", String(settings.fontSize));
+  }, [settings.fontSize]);
+
+  // Apply/remove dyslexia class on <html> so the CSS rule catches inline-styled elements
+  useEffect(() => {
+    document.documentElement.classList.toggle("a11y-dyslexia", settings.dyslexiaFont);
+  }, [settings.dyslexiaFont]);
+
+  // Use zoom for font scaling — this scales the entire page including inline px sizes
   const wrapperStyle: React.CSSProperties = {
-    fontSize: settings.fontSize !== 1 ? `${settings.fontSize * 100}%` : undefined,
+    zoom: settings.fontSize !== 1 ? settings.fontSize : undefined,
     fontFamily: settings.dyslexiaFont ? DYSLEXIA_FONT : NORMAL_FONT,
     filter: settings.highContrast ? "contrast(1.8) brightness(1.05)" : undefined,
   };
