@@ -45,6 +45,8 @@ interface AboutMeProfile {
   doThis: string;
   neverDo: string;
   culturalConsiderations: string;
+  languages: string;
+  needsInterpreter: string;
   foodPreferences: string;
   music: string;
   routine: string;
@@ -66,6 +68,7 @@ const EMPTY: AboutMeProfile = {
   canDo: "", needsHelp: "", mobilityAids: "", sensoryNeeds: "",
   triggers: "", earlyWarnings: "", whatHelps: "", whatMakesWorse: "",
   doThis: "", neverDo: "", culturalConsiderations: "",
+  languages: "", needsInterpreter: "",
   foodPreferences: "", music: "", routine: "", environment: "", goodDayLooksLike: "", whatMatters: "",
   ndisNumber: "", planDates: "", coordinatorName: "", coordinatorPhone: "", coordinatorEmail: "",
 };
@@ -82,6 +85,7 @@ function profileToParams(p: AboutMeProfile): string {
     "canDo","needsHelp","mobilityAids","sensoryNeeds",
     "triggers","earlyWarnings","whatHelps","whatMakesWorse",
     "doThis","neverDo","culturalConsiderations",
+    "languages","needsInterpreter",
     "foodPreferences","music","routine","environment","goodDayLooksLike","whatMatters",
     "ndisNumber","planDates","coordinatorName","coordinatorPhone","coordinatorEmail",
   ];
@@ -767,10 +771,11 @@ export default function AboutMeEditor() {
               maxLength={200}
               {...dp("diagnosis")}
             />
+            <Field label="Languages Spoken" hint="e.g. English, Vietnamese, Arabic" value={profile.languages} onChange={v => set("languages", v)} maxLength={120} {...dp("languages")} />
+            <Field label="Do you need an interpreter?" hint="e.g. Yes — Vietnamese interpreter required, or No" value={profile.needsInterpreter} onChange={v => set("needsInterpreter", v)} maxLength={120} {...dp("needsInterpreter")} />
             <TabNav current="who" />
           </div>
         )}
-
         {/* EMERGENCY */}
         {activeTab === "emergency" && (
           <div>

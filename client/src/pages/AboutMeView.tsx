@@ -106,6 +106,8 @@ export default function AboutMeView() {
   const doThis = p("doThis");
   const neverDo = p("neverDo");
   const culturalConsiderations = p("culturalConsiderations");
+  const languages = p("languages");
+  const needsInterpreter = p("needsInterpreter");
   const foodPreferences = p("foodPreferences");
   const music = p("music");
   const routine = p("routine");
@@ -251,6 +253,8 @@ export default function AboutMeView() {
 
               <InfoRow label="Date of Birth" value={dob} />
               <InfoRow label="Diagnosis" value={diagnosis} />
+              <InfoRow label="Languages Spoken" value={languages} />
+              <InfoRow label="Interpreter Needed" value={needsInterpreter} />
             </Section>
           </div>
         )}
