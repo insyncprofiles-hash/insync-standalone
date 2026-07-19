@@ -188,11 +188,12 @@ function DictationBtn({ fieldId, listeningFor, onStart }: {
 
 // ── FIELD COMPONENT ───────────────────────────────────────────
 
-function Field({ id, label, hint, value, onChange, multiline = false, rows = 3, maxLength, listeningFor, onDictate }: {
+function Field({ id, label, hint, value: rawValue, onChange, multiline = false, rows = 3, maxLength, listeningFor, onDictate }: {
   id: string; label: string; hint?: string; value: string;
   onChange: (v: string) => void; multiline?: boolean; rows?: number; maxLength?: number;
   listeningFor: string | null; onDictate: (id: string, cb: (t: string) => void) => void;
 }) {
+  const value = rawValue ?? "";
   const isListening = listeningFor === id;
   const inputStyle: React.CSSProperties = {
     flex: 1, padding: "12px 14px", borderRadius: "12px",
@@ -316,7 +317,7 @@ export default function AboutMeEditor() {
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setProfile(JSON.parse(stored));
+      if (stored) setProfile({ ...EMPTY, ...JSON.parse(stored) });
       const photo = localStorage.getItem(PHOTO_KEY);
       if (photo) setProfile(p => ({ ...p, photo }));
       const pt = localStorage.getItem("insync_aboutme_type");
