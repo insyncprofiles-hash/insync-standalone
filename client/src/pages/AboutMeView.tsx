@@ -22,7 +22,7 @@ function getYouTubeId(url: string): string {
   } catch { return ""; }
 }
 
-function Pill({ text, color = "#0d9488" }: { text: string; color?: string }) {
+function Pill({ text, color = "#1e3a5f" }: { text: string; color?: string }) {
   return (
     <span style={{
       display: "inline-block", padding: "5px 14px", borderRadius: "20px",
@@ -35,7 +35,7 @@ function Pill({ text, color = "#0d9488" }: { text: string; color?: string }) {
   );
 }
 
-function Section({ title, emoji, children, accent = "#0d9488" }: {
+function Section({ title, emoji, children, accent = "#1e3a5f" }: {
   title: string; emoji: string; children: React.ReactNode; accent?: string;
 }) {
   return (
@@ -48,7 +48,7 @@ function Section({ title, emoji, children, accent = "#0d9488" }: {
         }}>{emoji}</span>
         <h2 style={{
           fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "18px",
-          color: "#134e4a", margin: 0,
+          color: "#1e3a5f", margin: 0,
         }}>{title}</h2>
       </div>
       {children}
@@ -60,8 +60,8 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   if (!value) return null;
   return (
     <div style={{ display: "flex", gap: "12px", marginBottom: "10px", alignItems: "flex-start" }}>
-      <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", minWidth: "130px", flexShrink: 0 }}>{label}</span>
-      <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#134e4a", lineHeight: 1.6 }}>{value}</span>
+      <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", minWidth: "130px", flexShrink: 0 }}>{label}</span>
+      <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#1e3a5f", lineHeight: 1.6 }}>{value}</span>
     </div>
   );
 }
@@ -69,7 +69,7 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 function TextBlock({ value }: { value: string }) {
   if (!value) return null;
   return (
-    <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", color: "#134e4a", lineHeight: 1.7, margin: "0 0 8px", whiteSpace: "pre-wrap" }}>
+    <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", color: "#1e3a5f", lineHeight: 1.7, margin: "0 0 8px", whiteSpace: "pre-wrap" }}>
       {value}
     </p>
   );
@@ -157,17 +157,20 @@ export default function AboutMeView() {
   }, []);
 
   // Colours
-  const teal = "#0d9488";
-  const tealDark = "#0f766e";
-  const greyWhite = "#f5f5f5";
+  const navy = "#1e3a5f";
+  const navyDark = "#152d4a";
+  const teal = "#1e3a5f";
+  const tealDark = "#152d4a";
+  const accent = "#2563eb"; // blue accent for labels
+  const greyWhite = "#ffffff";
   const cardBg = "#ffffff";
 
   if (!name) {
     return (
       <div style={{ minHeight: "100vh", background: "#f5f5f5", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
         <div style={{ textAlign: "center", maxWidth: "400px" }}>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "24px", color: "#134e4a", marginBottom: "12px" }}>No profile found</p>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", color: "#5eead4", marginBottom: "24px" }}>
+          <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "24px", color: "#1e3a5f", marginBottom: "12px" }}>No profile found</p>
+          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", color: "#2563eb", marginBottom: "24px" }}>
             This link doesn't contain a profile. Create one at the About Me editor.
           </p>
           <a href="/about-me/editor" style={{ padding: "12px 28px", borderRadius: "20px", background: teal, color: "#fff", fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "15px", textDecoration: "none" }}>
@@ -204,7 +207,7 @@ export default function AboutMeView() {
       />
 
       {/* Header banner */}
-      <div style={{ background: `linear-gradient(135deg, ${teal} 0%, ${tealDark} 100%)`, padding: "36px 20px 40px", boxShadow: "0 4px 20px rgba(13,148,136,0.35)" }}>
+      <div style={{ background: `linear-gradient(135deg, ${navy} 0%, ${navyDark} 100%)`, padding: "36px 20px 40px", paddingTop: "calc(36px + 80px)", boxShadow: "0 4px 20px rgba(30,58,95,0.35)" }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "20px" }}>
           {photo ? (
             <img src={photo} alt={displayName} style={{ width: "90px", height: "90px", borderRadius: "50%", objectFit: "cover", border: "3px solid rgba(255,255,255,0.5)", flexShrink: 0 }} />
@@ -273,7 +276,7 @@ export default function AboutMeView() {
 
         {/* WHO I AM */}
         {(dob || diagnosis || preferredName) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="Who I Am" emoji="👤" accent={teal}>
               <InfoRow label="Full Name" value={name} />
               {preferredName && preferredName !== name && <InfoRow label="Preferred Name" value={preferredName} />}
@@ -286,9 +289,9 @@ export default function AboutMeView() {
 
         {/* WHEN I'M WELL — video */}
         {videoId && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="When I'm Well" emoji="🎬" accent={teal}>
-              {videoDescription && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#5eead4", fontStyle: "italic", marginBottom: "14px" }}>{videoDescription}</p>}
+              {videoDescription && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: "#2563eb", fontStyle: "italic", marginBottom: "14px" }}>{videoDescription}</p>}
               <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, borderRadius: "12px", overflow: "hidden" }}>
                 <iframe
                   ref={videoIframeRef}
@@ -305,7 +308,7 @@ export default function AboutMeView() {
 
         {/* COMMUNICATION */}
         {(communicationStyle || aacDevice || keyWords || yesNoSignals || distressSignals) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="How I Communicate" emoji="💬" accent={teal}>
               {communicationStyle && (
                 <div style={{ marginBottom: "14px" }}>
@@ -323,19 +326,19 @@ export default function AboutMeView() {
               <InfoRow label="AAC Device" value={aacDevice} />
               {keyWords && (
                 <div style={{ marginBottom: "12px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Key Words</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Key Words</p>
                   <TextBlock value={keyWords} />
                 </div>
               )}
               {yesNoSignals && (
                 <div style={{ marginBottom: "12px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>How I Show Yes and No</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>How I Show Yes and No</p>
                   <TextBlock value={yesNoSignals} />
                 </div>
               )}
               {distressSignals && (
                 <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Signs I'm in Pain or Distress</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Signs I'm in Pain or Distress</p>
                   <TextBlock value={distressSignals} />
                 </div>
               )}
@@ -345,24 +348,24 @@ export default function AboutMeView() {
 
         {/* WHAT I CAN DO */}
         {(canDo || needsHelp || mobilityAids || sensoryNeeds) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="What I Can Do" emoji="💪" accent={teal}>
               {canDo && (
                 <div style={{ marginBottom: "16px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>I Can Do Independently</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>I Can Do Independently</p>
                   <TextBlock value={canDo} />
                 </div>
               )}
               {needsHelp && (
                 <div style={{ marginBottom: "16px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>I Need Help With</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>I Need Help With</p>
                   <TextBlock value={needsHelp} />
                 </div>
               )}
               <InfoRow label="Mobility Aids" value={mobilityAids} />
               {sensoryNeeds && (
                 <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Sensory Needs</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Sensory Needs</p>
                   <TextBlock value={sensoryNeeds} />
                 </div>
               )}
@@ -372,7 +375,7 @@ export default function AboutMeView() {
 
         {/* TRIGGERS & WHAT HELPS */}
         {(triggers || earlyWarnings || whatHelps || whatMakesWorse) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="Triggers and What Helps" emoji="🌿" accent={teal}>
               {triggers && (
                 <div style={{ marginBottom: "16px", background: "#fff7ed", borderRadius: "12px", padding: "14px" }}>
@@ -382,7 +385,7 @@ export default function AboutMeView() {
               )}
               {earlyWarnings && (
                 <div style={{ marginBottom: "16px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Early Warning Signs</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Early Warning Signs</p>
                   <TextBlock value={earlyWarnings} />
                 </div>
               )}
@@ -394,7 +397,7 @@ export default function AboutMeView() {
               )}
               {whatMakesWorse && (
                 <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>What Makes Things Worse</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>What Makes Things Worse</p>
                   <TextBlock value={whatMakesWorse} />
                 </div>
               )}
@@ -404,7 +407,7 @@ export default function AboutMeView() {
 
         {/* APPROACHES */}
         {(doThis || neverDo || culturalConsiderations) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="Approaches That Work" emoji="🤝" accent={teal}>
               {doThis && (
                 <div style={{ marginBottom: "16px", background: "#f0fdf4", borderRadius: "12px", padding: "14px" }}>
@@ -420,7 +423,7 @@ export default function AboutMeView() {
               )}
               {culturalConsiderations && (
                 <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Cultural and Religious Considerations</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Cultural and Religious Considerations</p>
                   <TextBlock value={culturalConsiderations} />
                 </div>
               )}
@@ -430,29 +433,29 @@ export default function AboutMeView() {
 
         {/* PREFERENCES */}
         {(foodPreferences || music || routine || environment || goodDayLooksLike || whatMatters) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="My Preferences" emoji="🌻" accent={teal}>
               {foodPreferences && (
                 <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Food</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Food</p>
                   <TextBlock value={foodPreferences} />
                 </div>
               )}
               {music && (
                 <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Music and Entertainment</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Music and Entertainment</p>
                   <TextBlock value={music} />
                 </div>
               )}
               {routine && (
                 <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Routine</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Routine</p>
                   <TextBlock value={routine} />
                 </div>
               )}
               {environment && (
                 <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>Environment</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>Environment</p>
                   <TextBlock value={environment} />
                 </div>
               )}
@@ -464,7 +467,7 @@ export default function AboutMeView() {
               )}
               {whatMatters && (
                 <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", marginBottom: "6px" }}>What Matters Most to Me</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", marginBottom: "6px" }}>What Matters Most to Me</p>
                   <TextBlock value={whatMatters} />
                 </div>
               )}
@@ -474,20 +477,20 @@ export default function AboutMeView() {
 
         {/* NDIS INFO */}
         {(ndisNumber || planDates || coordinatorName) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #d1fae5" }}>
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
             <Section title="NDIS Information" emoji="📋" accent={teal}>
               <InfoRow label="NDIS Number" value={ndisNumber} />
               <InfoRow label="Plan Dates" value={planDates} />
               <InfoRow label="Coordinator" value={coordinatorName} />
               {coordinatorPhone && (
                 <div style={{ display: "flex", gap: "12px", marginBottom: "10px", alignItems: "center" }}>
-                  <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", minWidth: "130px" }}>Phone</span>
+                  <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", minWidth: "130px" }}>Phone</span>
                   <a href={`tel:${coordinatorPhone}`} style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: teal, textDecoration: "none", fontWeight: 700 }}>{coordinatorPhone}</a>
                 </div>
               )}
               {coordinatorEmail && (
                 <div style={{ display: "flex", gap: "12px", marginBottom: "10px", alignItems: "center" }}>
-                  <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#5eead4", minWidth: "130px" }}>Email</span>
+                  <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#2563eb", minWidth: "130px" }}>Email</span>
                   <a href={`mailto:${coordinatorEmail}`} style={{ fontFamily: "'Nunito', sans-serif", fontSize: "14px", color: teal, textDecoration: "none", fontWeight: 700 }}>{coordinatorEmail}</a>
                 </div>
               )}
@@ -496,62 +499,24 @@ export default function AboutMeView() {
         )}
 
         {/* QR CODE */}
-        <div style={{ background: cardBg, borderRadius: "20px", padding: "24px", marginBottom: "20px", border: "1.5px solid #d1fae5", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "16px", color: "#134e4a", marginBottom: "16px" }}>Share This Profile</p>
+        <div style={{ background: cardBg, borderRadius: "20px", padding: "24px", marginBottom: "20px", border: "1.5px solid #cbd5e1", textAlign: "center" }}>
+          <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "16px", color: navy, marginBottom: "16px" }}>Share This Profile</p>
           <div className="aboutme-qr-wrapper" style={{ display: "inline-block" }}>
-            <QRCodeSVG value={shareUrl} size={160} fgColor={teal} bgColor="#ffffff" level="M" />
+            <QRCodeSVG value={shareUrl} size={160} fgColor={navy} bgColor="#ffffff" level="M" />
           </div>
-          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: "#5eead4", margin: "12px 0 0" }}>
+          <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: "#64748b", margin: "12px 0 0" }}>
             Scan to open this profile on any device
           </p>
         </div>
 
       </div>
 
-      {/* CTA for participants, carers, SAH recipients */}
-      <div style={{ background: "linear-gradient(135deg, #0f4c45 0%, #0f766e 60%, #134e4a 100%)", borderTop: "3px solid #f5c842", padding: "36px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: "520px", margin: "0 auto" }}>
-          <p style={{ fontFamily: "'Nunito', sans-serif", color: "#f5c842", fontSize: "11px", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "10px" }}>Free · No Login · Always Private</p>
-          <h3 style={{ fontFamily: "'Nunito', sans-serif", color: "#fffbeb", fontSize: "clamp(20px, 5vw, 26px)", fontWeight: 900, lineHeight: 1.2, marginBottom: "12px" }}>
-            Are you a participant, carer,<br />or SAH recipient?
-          </h3>
-          <p style={{ fontFamily: "'Nunito', sans-serif", color: "rgba(255,251,235,0.85)", fontSize: "15px", lineHeight: 1.65, marginBottom: "24px" }}>
-            Create your own free About Me Profile — a human story that travels with you into hospitals, new services, and first appointments. Fill it in once, share it with anyone who needs it.
-          </p>
-          <a
-            href="https://insyncprofiles.net/about-me/editor"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: "8px",
-              background: "linear-gradient(135deg, #f5c842 0%, #f59e0b 100%)",
-              color: "#0f4c45", fontFamily: "'Nunito', sans-serif", fontWeight: 900,
-              fontSize: "clamp(15px, 4vw, 18px)", textDecoration: "none",
-              padding: "14px 32px", borderRadius: "99px",
-              boxShadow: "0 4px 24px rgba(245,200,66,0.45)",
-            }}
-          >
-            <span style={{ fontSize: "20px" }}>✨</span>
-            Create My Free Profile
-          </a>
-          <p style={{ fontFamily: "'Nunito', sans-serif", color: "rgba(255,251,235,0.50)", fontSize: "12px", marginTop: "12px", fontWeight: 600 }}>
-            insyncprofiles.net/about-me/editor
-          </p>
-        </div>
-      </div>
+
 
       {/* Footer */}
-      <div style={{ background: "#f0fdfa", borderTop: "1.5px solid #99f6e4", padding: "28px 20px", textAlign: "center" }}>
-        <a href="https://insyncprofiles.net" style={{ display: "inline-block", marginBottom: "12px" }}>
-          <img
-            src="/assets/insync-logo-transparent_9e0df532.png"
-            alt="InSync Profiles"
-            style={{ width: "72px", height: "72px", objectFit: "contain" }}
-          />
-        </a>
-        <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: "#5eead4", margin: "0 0 6px" }}>
-          About Me Profile — free for participants, families and carers
-        </p>
-        <a href="https://insyncprofiles.net/about-me/editor" style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: teal, fontWeight: 700, textDecoration: "none" }}>
-          Create your own About Me Profile at InSync Profiles
+      <div style={{ background: "#f8fafc", borderTop: "1.5px solid #e2e8f0", padding: "20px", textAlign: "center" }}>
+        <a href="https://insyncprofiles.net" style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: navy, fontWeight: 700, textDecoration: "none" }}>
+          insyncprofiles.net
         </a>
       </div>
     </div>
