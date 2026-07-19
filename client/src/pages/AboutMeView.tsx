@@ -4,10 +4,8 @@
    Includes full accessibility tools (same as ClientView).
    Data loaded from URL params.
    ============================================================ */
-import { useState, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import AccessibilityToolbar from "@/components/AccessibilityToolbar";
-import VoiceControl from "@/components/VoiceControl";
 import { useA11y } from "@/hooks/useA11y";
 
 // ── HELPERS ───────────────────────────────────────────────────
@@ -130,14 +128,7 @@ export default function AboutMeView() {
   const videoId = videoUrl ? getYouTubeId(videoUrl) : "";
   const shareUrl = window.location.href;
 
-  // Accessibility state
-  const [voiceActive, setVoiceActive] = useState(false);
-  const voiceToggleRef = useRef<(() => void) | null>(null);
   const { wrapperStyle: a11yStyle } = useA11y();
-
-  const handleVoiceToggle = useCallback(() => {
-    voiceToggleRef.current?.();
-  }, []);
 
   // Video ref — used by voice command to play the YouTube iframe
   const videoIframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -182,29 +173,8 @@ export default function AboutMeView() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: greyWhite, fontFamily: a11yStyle.fontFamily || "'Nunito', sans-serif", fontSize: a11yStyle.fontSize, filter: a11yStyle.filter }}>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
-
-      {/* Accessibility toolbar */}
-      <AccessibilityToolbar
-        onSettingsChange={() => {}}
-        onVoiceToggle={handleVoiceToggle}
-        voiceActive={voiceActive}
-      />
-
-      {/* Voice control */}
-      <VoiceControl
-        onScrollTo={() => {}}
-        onPlayVideo={handlePlayVideo}
-        onOpenAAC={() => {}}
-        onOpenAccessibility={() => {}}
-        onMessage={() => {}}
-        onFeedback={() => {}}
-        onReadPage={() => {}}
-        onStopReading={() => {}}
-        onToggleReady={fn => { voiceToggleRef.current = fn; }}
-        onActiveChange={setVoiceActive}
-      />
+    <div style={{ minHeight: "100vh", background: greyWhite, fontFamily: a11yStyle.fontFamily || "'Nunito', sans-serif", zoom: a11yStyle.zoom as string | undefined, filter: a11yStyle.filter }}>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lexend:wght@400;500;600&display=swap" />
 
       {/* Header banner — white, print-friendly */}
       <div style={{ background: "#ffffff", borderBottom: "2px solid #e2e8f0", padding: "24px 20px 20px", paddingTop: "calc(24px + 80px)" }}>
