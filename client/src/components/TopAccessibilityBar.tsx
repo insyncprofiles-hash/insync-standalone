@@ -358,7 +358,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           />
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "1px" }}>
             <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 800, color: "#7a5c00", letterSpacing: "0.10em", textTransform: "uppercase", lineHeight: 1 }}>InSync Profiles</span>
-            <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 600, color: "#1e3a78", letterSpacing: "0.07em", textTransform: "uppercase", lineHeight: 1.2 }}>Support Worker Profile</span>
+            <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 600, color: "#1e3a78", letterSpacing: "0.07em", textTransform: "uppercase", lineHeight: 1.2 }}>Support Profiles</span>
             <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "8px", fontWeight: 700, color: "#1e3a78", letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1.2 }}>Interactive &amp; Accessible</span>
           </div>
         </a>
