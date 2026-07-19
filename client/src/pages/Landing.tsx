@@ -452,11 +452,14 @@ export default function Landing() {
           from { opacity: 0; transform: translateY(-8px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        /* Landscape mobile — add breathing room between nav and hero */
-        @media (orientation: landscape) and (max-height: 600px) {
-          .landscape-hero-buffer {
-            height: 32px;
-          }
+        /* Landscape mobile — switch to hamburger/strip nav on phone-sized heights */
+        @media (orientation: landscape) and (max-height: 500px) {
+          .hidden-mobile { display: none !important; }
+          .desktop-nav   { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          .mobile-top-nav { display: block !important; }
+          .footer-nav-links { display: none !important; }
+          .landscape-hero-buffer { height: 32px; }
         }
       `}</style>
 
