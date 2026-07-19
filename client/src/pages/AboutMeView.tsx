@@ -250,20 +250,19 @@ export default function AboutMeView() {
 
         {/* EMERGENCY CONTACTS — always first, highlighted */}
         {emergencyContacts.filter(c => c.name || c.phone).length > 0 && (
-          <div style={{ background: "#fff7ed", border: "2px solid #f97316", borderRadius: "20px", padding: "20px", marginBottom: "28px" }}>
+          <div style={{ background: "#f0f4fa", border: "2px solid #1e3a5f", borderRadius: "20px", padding: "20px", marginBottom: "28px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-              <span style={{ fontSize: "24px" }}>🆘</span>
-              <h2 style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "18px", color: "#9a3412", margin: 0 }}>Emergency Contacts</h2>
+              <h2 style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "18px", color: "#1e3a5f", margin: 0 }}>Emergency Contacts</h2>
             </div>
             {emergencyContacts.filter(c => c.name || c.phone).map((ec, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0", borderBottom: i < emergencyContacts.length - 1 ? "1px solid #fed7aa" : "none" }}>
+              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0", borderBottom: i < emergencyContacts.length - 1 ? "1px solid #cbd5e1" : "none" }}>
                 <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "15px", color: "#9a3412", margin: "0 0 2px" }}>{ec.name}</p>
-                  {ec.relationship && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "13px", color: "#c2410c", margin: 0 }}>{ec.relationship}</p>}
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "15px", color: "#1e3a5f", margin: "0 0 2px" }}>{ec.name}</p>
+                  {ec.relationship && <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "13px", color: "#475569", margin: 0 }}>{ec.relationship}</p>}
                 </div>
                 {ec.phone && (
                   <a href={`tel:${ec.phone}`} style={{
-                    padding: "10px 18px", borderRadius: "20px", background: "#f97316", color: "#fff",
+                    padding: "10px 18px", borderRadius: "20px", background: "#1e3a5f", color: "#fff",
                     fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "14px", textDecoration: "none",
                   }}>
                     {ec.phone}
