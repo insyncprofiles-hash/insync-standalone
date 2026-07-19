@@ -227,6 +227,21 @@ export default function AboutMeView() {
         </div>
       </div>
 
+      {/* Print button — hidden when printing */}
+      <div className="no-print" style={{ maxWidth: "680px", margin: "0 auto", padding: "12px 20px 0", display: "flex", justifyContent: "flex-end" }}>
+        <button
+          onClick={() => window.print()}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "7px",
+            background: "#ffffff", border: `1.5px solid ${teal}`,
+            color: teal, fontFamily: "'Nunito', sans-serif", fontWeight: 800,
+            fontSize: "13px", padding: "8px 18px", borderRadius: "99px",
+            cursor: "pointer", boxShadow: "0 1px 4px rgba(13,148,136,0.12)",
+          }}
+        >
+          🖨️ Print / Save as PDF
+        </button>
+      </div>
       {/* Main content */}
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "24px 20px" }}>
 

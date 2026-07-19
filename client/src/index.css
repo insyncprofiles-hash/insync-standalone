@@ -480,6 +480,11 @@ body {
     display: none !important;
   }
 
+  /* Hide print button and other no-print elements */
+  .no-print {
+    display: none !important;
+  }
+
   /* Ensure shimmer overlay is hidden */
   [style*="radial-gradient(ellipse"] {
     display: none !important;
