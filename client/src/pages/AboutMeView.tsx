@@ -206,23 +206,22 @@ export default function AboutMeView() {
         onActiveChange={setVoiceActive}
       />
 
-      {/* Header banner */}
-      <div style={{ background: `linear-gradient(135deg, ${navy} 0%, ${navyDark} 100%)`, padding: "36px 20px 40px", paddingTop: "calc(36px + 80px)", boxShadow: "0 4px 20px rgba(30,58,95,0.35)" }}>
+      {/* Header banner — white, print-friendly */}
+      <div style={{ background: "#ffffff", borderBottom: "2px solid #e2e8f0", padding: "24px 20px 20px", paddingTop: "calc(24px + 80px)" }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "20px" }}>
           {photo ? (
-            <img src={photo} alt={displayName} style={{ width: "90px", height: "90px", borderRadius: "50%", objectFit: "cover", border: "3px solid rgba(255,255,255,0.5)", flexShrink: 0 }} />
+            <img src={photo} alt={displayName} style={{ width: "80px", height: "80px", borderRadius: "50%", objectFit: "cover", border: "2px solid #e2e8f0", flexShrink: 0 }} />
           ) : (
-            <div style={{ width: "90px", height: "90px", borderRadius: "50%", background: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "40px", flexShrink: 0 }}>
+            <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "#f1f5f9", border: "2px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "36px", flexShrink: 0 }}>
               👤
             </div>
           )}
           <div>
-            <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "26px", color: "#ffffff", margin: "0 0 4px" }}>
+            <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 900, fontSize: "26px", color: "#1e3a5f", margin: "0 0 6px" }}>
               About {displayName}
             </p>
-
             {diagnosis && (
-              <span style={{ display: "inline-block", padding: "4px 12px", borderRadius: "16px", background: "rgba(255,255,255,0.2)", fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#ffffff" }}>
+              <span style={{ display: "inline-block", padding: "3px 12px", borderRadius: "16px", background: "#f1f5f9", border: "1px solid #cbd5e1", fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: "13px", color: "#1e3a5f" }}>
                 {diagnosis}
               </span>
             )}
