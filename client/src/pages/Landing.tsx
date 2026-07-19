@@ -453,7 +453,7 @@ export default function Landing() {
           to   { opacity: 1; transform: translateY(0); }
         }
         /* Landscape mobile — switch to hamburger/strip nav on phone-sized heights */
-        @media (orientation: landscape) and (max-height: 500px) {
+        @media (orientation: landscape) and (max-height: 900px) {
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
