@@ -6,7 +6,6 @@
    ============================================================ */
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { QRCodeSVG } from "qrcode.react";
 import SocialPostPreview from "@/components/SocialPostPreview";
 import { useColorTheme } from "@/contexts/ColorThemeContext";
 import { useIsMobile } from "@/hooks/useMobile";
@@ -1162,55 +1161,6 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
         {/* Footer */}
         <div style={{ textAlign: 'center', marginTop: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
 
-          {/* QR Code */}
-          {(() => {
-            const qrUrl: string = !isDemo && (shortUrl || hostedUrl) ? (shortUrl || hostedUrl)! : (typeof window !== 'undefined' ? `${window.location.origin}/pricing` : 'https://insyncprofiles.net/pricing');
-            const qrLabel = !isDemo && hostedUrl ? 'Scan to open this profile' : 'Scan to get your own profile';
-            return (
-              <div id='demo-overlay-qr' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '20px 24px', background: 'white', borderRadius: '20px', boxShadow: '0 4px 24px rgba(74,144,217,0.12)', border: '1.5px solid rgba(74,144,217,0.15)' }}>
-                <QRCodeSVG
-                  value={qrUrl}
-                  size={140}
-                  bgColor="#ffffff"
-                  fgColor="#1a2e4a"
-                  level="M"
-                  style={{ borderRadius: '8px' }}
-                />
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', fontWeight: 700, color: '#4a90d9', margin: 0, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{qrLabel}</p>
-                {!isDemo && hostedUrl && (
-                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: '#9aabcc', margin: 0, maxWidth: '180px', lineHeight: 1.4, wordBreak: 'break-all' }}>{hostedUrl.replace(/^https?:\/\//, '')}</p>
-                )}
-                {!isDemo && hostedUrl && (
-                  <button
-                    onClick={() => {
-                      const svg = document.querySelector('#demo-overlay-qr svg') as SVGSVGElement | null;
-                      if (!svg) return;
-                      const serializer = new XMLSerializer();
-                      const svgStr = serializer.serializeToString(svg);
-                      const img = new Image();
-                      const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-                      const url = URL.createObjectURL(blob);
-                      img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = 400; canvas.height = 400;
-                        const ctx = canvas.getContext('2d');
-                        if (!ctx) return;
-                        ctx.fillStyle = '#ffffff';
-                        ctx.fillRect(0, 0, 400, 400);
-                        ctx.drawImage(img, 30, 30, 340, 340);
-                        const a = document.createElement('a');
-                        a.href = canvas.toDataURL('image/png');
-                        a.download = 'insync-profile-qr.png';
-                        a.click();
-                        URL.revokeObjectURL(url);
-                      };
-                      img.src = url;
-                    }}
-                    style={{ padding: '8px 20px', borderRadius: '99px', background: 'linear-gradient(135deg,#4a90d9,#d4a820)', border: 'none', color: '#fff', fontFamily: "'Outfit',sans-serif", fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}
-                  >
-                    ⬇️ Download QR
-                  </button>
-                )}
                 {((!isDemo && hostedUrl) || isDemo) && (
                   <LanyardPreview profile={profile} profileUrl={shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true')} />
                 )}
@@ -1401,9 +1351,6 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
                     🪪 Download Lanyard Card
                   </button>
                 )}
-              </div>
-            );
-          })()}
 
           <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: 'rgba(0,0,0,0.35)', margin: 0 }}>Powered by <strong>InSync Profiles</strong></p>
           {/* Ownership disclaimer */}
@@ -3552,54 +3499,6 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
                         ⚠️ Your share link opens a preview page. Tap <strong>Save Changes</strong> below to generate a fixed direct link.
                       </div>
                     )}
-                    {/* QR Code */}
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                      <div id="insync-share-qr" style={{ background: "#ffffff", borderRadius: "12px", padding: "10px", boxShadow: `0 4px 20px ${A.gold}44` }}>
-                        <QRCodeSVG
-                          value={shortUrl || hostedUrl || (typeof window !== 'undefined' ? window.location.origin + '/view?demo=true' : 'https://insyncprofiles.net/view?demo=true')}
-                          size={160}
-                          bgColor="#ffffff"
-                          fgColor="#1a2e1e"
-                          level="M"
-                          aria-label="Unique QR code for this profile"
-                        />
-                      </div>
-                      <p style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: "11px", color: A.textDim, textAlign: "center", maxWidth: "220px", lineHeight: 1.5 }}>
-                        Scan to open your profile. Share this QR code on flyers, emails, or social media.
-                      </p>
-                      <button
-                        id="insync-download-qr-btn"
-                        onClick={() => {
-                          const container = document.getElementById('insync-share-qr');
-                          const svg = container?.querySelector('svg') as SVGSVGElement | null;
-                          if (!svg) return;
-                          const serializer = new XMLSerializer();
-                          const svgStr = serializer.serializeToString(svg);
-                          const blob = new Blob([svgStr], { type: 'image/svg+xml' });
-                          const url = URL.createObjectURL(blob);
-                          const img = new Image();
-                          img.onload = () => {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = 400; canvas.height = 400;
-                            const ctx = canvas.getContext('2d');
-                            if (!ctx) return;
-                            ctx.fillStyle = '#ffffff';
-                            ctx.fillRect(0, 0, 400, 400);
-                            ctx.drawImage(img, 30, 30, 340, 340);
-                            const a = document.createElement('a');
-                            a.href = canvas.toDataURL('image/png');
-                            a.download = 'insync-profile-qr.png';
-                            a.click();
-                            URL.revokeObjectURL(url);
-                          };
-                          img.src = url;
-                        }}
-                        style={{ padding: '9px 22px', borderRadius: '99px', background: `linear-gradient(135deg, ${A.gold} 0%, oklch(0.72 0.18 65) 100%)`, border: 'none', color: '#ffffff', fontFamily: "'Outfit', sans-serif", fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: '6px' }}
-                        aria-label="Download QR code as PNG image"
-                      >
-                        ⬇️ Download QR as Image
-                      </button>
-                    </div>
 
                     {/* ── Lanyard Card ── */}
                     <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
