@@ -324,7 +324,7 @@ export default function Landing() {
           aria-expanded={mobileMenuOpen}
           style={{
             display: "none", // overridden by CSS below
-            width: "52px", height: "44px", borderRadius: "10px",
+            width: "64px", height: "56px", borderRadius: "12px",
             background: mobileMenuOpen ? `rgba(45,212,191,0.15)` : "transparent",
             border: `1.5px solid ${mobileMenuOpen ? C.teal : C.border}`,
             cursor: "pointer",
@@ -333,15 +333,15 @@ export default function Landing() {
           }}
         >
           {mobileMenuOpen ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.teal} strokeWidth="2.5" strokeLinecap="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={C.teal} strokeWidth="2.5" strokeLinecap="round">
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           ) : (
             <>
-              <span style={{ display: "block", width: "18px", height: "2px", borderRadius: "2px", background: C.textBody }} />
-              <span style={{ display: "block", width: "18px", height: "2px", borderRadius: "2px", background: C.textBody }} />
-              <span style={{ display: "block", width: "18px", height: "2px", borderRadius: "2px", background: C.textBody }} />
-              <span style={{ display: "block", fontSize: "9px", fontWeight: 700, color: C.textBody, letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1, marginTop: "1px" }}>Menu</span>
+              <span style={{ display: "block", width: "26px", height: "3px", borderRadius: "2px", background: C.textBody }} />
+              <span style={{ display: "block", width: "26px", height: "3px", borderRadius: "2px", background: C.textBody }} />
+              <span style={{ display: "block", width: "26px", height: "3px", borderRadius: "2px", background: C.textBody }} />
+              <span style={{ display: "block", fontSize: "10px", fontWeight: 700, color: C.textBody, letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1, marginTop: "2px" }}>Menu</span>
             </>
           )}
         </button>
