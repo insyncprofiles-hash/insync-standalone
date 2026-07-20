@@ -1,7 +1,7 @@
 /* useA11y — Reactive accessibility settings hook
    Reads sw-accessibility-settings from localStorage and listens for changes.
-   Applies font scale directly to :root via --a11y-font-scale CSS variable,
-   and returns style overrides for dyslexia font and high contrast. */
+   Returns wrapperStyle with zoom so ALL text (including inline px) scales correctly.
+   TopAccessibilityBar dispatches a11y-settings-changed event for instant updates. */
 import { useState, useEffect } from "react";
 
 interface A11ySettings {
@@ -34,24 +34,25 @@ export function useA11y() {
 
   useEffect(() => {
     const handler = () => setSettings(readSettings());
-    // Listen for storage changes from other tabs / the TopAccessibilityBar
+    // Listen for storage changes from other tabs
     window.addEventListener("storage", handler);
-    // Also poll every 300ms to catch same-tab changes (TopAccessibilityBar doesn't dispatch storage events)
-    const interval = setInterval(handler, 300);
+    // Listen for custom event dispatched by TopAccessibilityBar on same-tab changes
+    window.addEventListener("a11y-settings-changed", handler);
+    // Fallback poll every 500ms
+    const interval = setInterval(handler, 500);
     return () => {
       window.removeEventListener("storage", handler);
+      window.removeEventListener("a11y-settings-changed", handler);
       clearInterval(interval);
     };
   }, []);
 
-  // Apply font scale to :root — this makes rem-based AND px-based text scale via CSS calc()
+  // Keep CSS variable in sync
   useEffect(() => {
     document.documentElement.style.setProperty("--a11y-font-scale", String(settings.fontSize));
-    // Also set font-size on <html> directly so all rem units scale
-    document.documentElement.style.fontSize = `${settings.fontSize * 100}%`;
   }, [settings.fontSize]);
 
-  // Apply/remove dyslexia class on <html> so the CSS rule catches inline-styled elements
+  // Apply/remove dyslexia class
   useEffect(() => {
     document.documentElement.classList.toggle("a11y-dyslexia", settings.dyslexiaFont);
   }, [settings.dyslexiaFont]);
@@ -61,8 +62,10 @@ export function useA11y() {
     document.documentElement.classList.toggle("a11y-high-contrast", settings.highContrast);
   }, [settings.highContrast]);
 
-  // wrapperStyle: only fontFamily and filter — font size is handled via :root font-size
+  // zoom scales the entire wrapper including inline px sizes — works in Chrome/Edge/Safari
+  // For Firefox (which doesn't support zoom), fall back to transform: scale
   const wrapperStyle: React.CSSProperties = {
+    zoom: settings.fontSize !== 1 ? settings.fontSize : undefined,
     fontFamily: settings.dyslexiaFont ? DYSLEXIA_FONT : NORMAL_FONT,
     filter: settings.highContrast ? "contrast(1.8) brightness(1.05)" : undefined,
   };

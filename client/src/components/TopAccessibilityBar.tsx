@@ -83,6 +83,8 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     applySettings(settings);
     saveSettings(settings);
     onSettingsChange?.(settings);
+    // Dispatch custom event so useA11y hook on same page reacts instantly (no 500ms poll delay)
+    window.dispatchEvent(new Event("a11y-settings-changed"));
   }, [settings, onSettingsChange]);
 
   // Close panels on Escape
