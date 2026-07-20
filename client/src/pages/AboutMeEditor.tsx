@@ -591,7 +591,7 @@ export default function AboutMeEditor() {
               Your profile saves automatically on your device. Return here any time on the same device and browser to update it.
             </p>
             <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#0c4a6e", margin: 0, lineHeight: 1.7 }}>
-              To share, go to the <strong>Share</strong> tab and copy your link or QR code — anyone with it can view your profile instantly, no login needed.
+              To share, go to the <strong>Share</strong> tab and copy your short link — anyone with it can view your profile instantly, no login needed.
             </p>
           </div>
 
@@ -1132,7 +1132,7 @@ export default function AboutMeEditor() {
           Everything you fill in is saved <strong>only on this device</strong>, privately in your browser's local storage. Nothing is sent to any server. To access your profile again, return to this page on the same device and browser — your information will be waiting exactly as you left it.
         </p>
         <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "8px 0 0", lineHeight: 1.6 }}>
-          💡 <em>Tip: Save your short link or QR code from the Share tab — this is the only way to access your profile on a different device or after clearing your browser.</em>
+          💡 <em>Tip: Save your short link from the Share tab — this is the only way to access your profile on a different device or after clearing your browser.</em>
         </p>
       </div>
 
