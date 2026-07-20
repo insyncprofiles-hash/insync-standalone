@@ -315,6 +315,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       <div
         role="banner"
         aria-label="Accessibility and display options"
+        className="no-print"
         style={{
           position: "fixed",
           top: 0,
@@ -398,6 +399,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
       {/* ── SECOND ROW: Access button + optional TTS stop — sticky below the top bar ── */}
       <div
+        className="no-print"
         style={{
           position: "fixed",
           top: `${TOP_BAR_HEIGHT}px`,

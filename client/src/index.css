@@ -468,9 +468,12 @@ body {
     break-inside: avoid;
   }
 
-  /* Remove fixed/sticky elements */
+  /* Remove fixed/sticky elements — prevents nav bar repeating on every printed page */
   [style*="position: \"fixed\""],
-  [style*="position:fixed"] {
+  [style*="position:fixed"],
+  [style*="position: fixed"],
+  [style*="position: sticky"],
+  [style*="position:sticky"] {
     display: none !important;
   }
 
