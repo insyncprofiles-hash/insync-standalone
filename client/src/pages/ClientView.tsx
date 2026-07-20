@@ -835,7 +835,7 @@ export default function ClientView() {
       minHeight: "100vh",
       fontFamily: activeSkin ? `'${activeSkin.fonts.body}', sans-serif` : (a11yStyle.fontFamily || "'Outfit', sans-serif"),
       paddingTop: "110px",
-      fontSize: `calc(${fontScale}rem * ${a11yStyle.fontSize ? parseFloat(a11yStyle.fontSize as string) / 100 : 1})`,
+      zoom: a11yStyle.zoom as string | undefined,
     }}>
       <main id="main-content" aria-label={profile.roleType === "allied-health" ? "Allied health practitioner profile" : profile.roleType === "coordinator" ? "Support coordinator profile" : "Support worker profile"}>
       {/* Read Aloud + Accessibility + Voice Control are now in the black GET TO KNOW ME banner above */}

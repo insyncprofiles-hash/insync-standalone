@@ -175,7 +175,7 @@ export default function AboutMeView() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: greyWhite, fontFamily: a11yStyle.fontFamily || "'Nunito', sans-serif", zoom: a11yStyle.zoom as string | undefined, filter: a11yStyle.filter }}>
+    <div style={{ minHeight: "100vh", background: greyWhite, fontFamily: a11yStyle.fontFamily || "'Nunito', sans-serif", filter: a11yStyle.filter }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lexend:wght@400;500;600&display=swap" />
 
       {/* Header banner — white, print-friendly */}

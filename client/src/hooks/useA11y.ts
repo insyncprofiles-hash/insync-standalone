@@ -1,7 +1,7 @@
 /* useA11y — Reactive accessibility settings hook
    Reads sw-accessibility-settings from localStorage and listens for changes.
-   Returns style overrides to apply to the page wrapper so that font scale,
-   dyslexia font, and high contrast work even on pages that use inline styles. */
+   Applies font scale directly to :root via --a11y-font-scale CSS variable,
+   and returns style overrides for dyslexia font and high contrast. */
 import { useState, useEffect } from "react";
 
 interface A11ySettings {
@@ -44,9 +44,11 @@ export function useA11y() {
     };
   }, []);
 
-  // Keep the CSS variable in sync for CSS-based scaling
+  // Apply font scale to :root — this makes rem-based AND px-based text scale via CSS calc()
   useEffect(() => {
     document.documentElement.style.setProperty("--a11y-font-scale", String(settings.fontSize));
+    // Also set font-size on <html> directly so all rem units scale
+    document.documentElement.style.fontSize = `${settings.fontSize * 100}%`;
   }, [settings.fontSize]);
 
   // Apply/remove dyslexia class on <html> so the CSS rule catches inline-styled elements
@@ -54,9 +56,13 @@ export function useA11y() {
     document.documentElement.classList.toggle("a11y-dyslexia", settings.dyslexiaFont);
   }, [settings.dyslexiaFont]);
 
-  // Use zoom for font scaling — this scales the entire page including inline px sizes
+  // Apply/remove high-contrast class
+  useEffect(() => {
+    document.documentElement.classList.toggle("a11y-high-contrast", settings.highContrast);
+  }, [settings.highContrast]);
+
+  // wrapperStyle: only fontFamily and filter — font size is handled via :root font-size
   const wrapperStyle: React.CSSProperties = {
-    zoom: settings.fontSize !== 1 ? settings.fontSize : undefined,
     fontFamily: settings.dyslexiaFont ? DYSLEXIA_FONT : NORMAL_FONT,
     filter: settings.highContrast ? "contrast(1.8) brightness(1.05)" : undefined,
   };
