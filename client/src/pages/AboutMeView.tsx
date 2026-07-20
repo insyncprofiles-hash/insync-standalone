@@ -6,6 +6,13 @@
    ============================================================ */
 import { useRef, useCallback } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import React from "react";
+
+class QRErrorBoundary extends React.Component<{ children: React.ReactNode; fallback: React.ReactNode }, { hasError: boolean }> {
+  constructor(props: any) { super(props); this.state = { hasError: false }; }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() { return this.state.hasError ? this.props.fallback : this.props.children; }
+}
 import { useA11y } from "@/hooks/useA11y";
 
 // ── HELPERS ───────────────────────────────────────────────────
@@ -474,7 +481,13 @@ export default function AboutMeView() {
         <div style={{ background: cardBg, borderRadius: "20px", padding: "24px", marginBottom: "20px", border: "1.5px solid #cbd5e1", textAlign: "center" }}>
           <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 800, fontSize: "16px", color: navy, marginBottom: "16px" }}>Share This Profile</p>
           <div className="aboutme-qr-wrapper" style={{ display: "inline-block" }}>
-            <QRCodeSVG value={shareUrl} size={160} fgColor={navy} bgColor="#ffffff" level="M" />
+            <QRErrorBoundary fallback={
+              <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "13px", color: "#64748b", margin: 0 }}>
+                Profile is too detailed for a QR code.<br />Use the short link from the Share tab instead.
+              </p>
+            }>
+              <QRCodeSVG value={shareUrl} size={160} fgColor={navy} bgColor="#ffffff" level="M" />
+            </QRErrorBoundary>
           </div>
           <p style={{ fontFamily: "'Nunito', sans-serif", fontSize: "12px", color: "#64748b", margin: "12px 0 0" }}>
             Scan to open this profile on any device
