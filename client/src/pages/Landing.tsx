@@ -306,7 +306,7 @@ export default function Landing() {
             </Link>
             <span style={{ position: "absolute", top: "4px", left: "-14px", background: "linear-gradient(135deg, #b91c1c 0%, #7f1d1d 40%, #c0392b 70%, #991b1b 100%)", color: "#fff", fontSize: "9px", fontWeight: 900, letterSpacing: "0.06em", padding: "3px 8px", borderRadius: "99px", boxShadow: "0 2px 6px rgba(120,20,20,0.55), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.25)", textTransform: "uppercase", whiteSpace: "nowrap", border: "1px solid rgba(255,255,255,0.15)", pointerEvents: "none" }}>Free to use</span>
           </div>
-          <Link href="/ecosystem" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px", transition: "color 150ms" }}>🌐 Ecosystem</Link>
+          <Link href="/ecosystem" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px", transition: "color 150ms" }}>🌐 Continuity of Support Ecosystem</Link>
           <Link href="/how-to-use" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>How It Works</Link>
           <Link href="/scenarios" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Scenarios</Link>
           <Link href="/blog" style={{ color: C.textHead, fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "8px 16px", borderRadius: "8px" }}>Blog</Link>
@@ -371,7 +371,7 @@ export default function Landing() {
           {          [
             { href: "/about-me/editor", label: "✨ About Me" },
             { href: "/scenarios",  label: "🌊 The New Wave" },
-            { href: "/ecosystem",  label: "🌐 Ecosystem" },
+            { href: "/ecosystem",  label: "🌐 Continuity of Support Ecosystem" },
             { href: "/how-to-use", label: "How It Works" },
             { href: "/blog",       label: "📝 Blog" },
             { href: "/guides",       label: "📖 Guides" },
@@ -501,7 +501,7 @@ export default function Landing() {
               <span style={{ position: "absolute", top: "3px", left: "-12px", background: "linear-gradient(135deg, #b91c1c 0%, #7f1d1d 40%, #c0392b 70%, #991b1b 100%)", color: "#fff", fontSize: "8px", fontWeight: 900, letterSpacing: "0.06em", padding: "2px 7px", borderRadius: "99px", boxShadow: "0 2px 5px rgba(120,20,20,0.55), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(0,0,0,0.25)", textTransform: "uppercase", whiteSpace: "nowrap", border: "1px solid rgba(255,255,255,0.15)", pointerEvents: "none" }}>Free to use</span>
             </div>
             {[
-              { href: "/ecosystem",  label: "🌐 Ecosystem",   teal: false },
+              { href: "/ecosystem",  label: "🌐 Continuity of Support Ecosystem",   teal: false },
               { href: "/how-to-use", label: "How It Works",    teal: false },
               { href: "/scenarios",  label: "Scenarios",       teal: false },
               { href: "/blog",       label: "Blog",            teal: false },
@@ -1485,7 +1485,7 @@ export default function Landing() {
           </p>
           <div className="footer-nav-links" style={{ display: "flex", gap: "20px", justifyContent: "center", flexWrap: "wrap" }}>
             {[
-              { href: "/ecosystem",  label: "🌐 Ecosystem" },
+              { href: "/ecosystem",  label: "🌐 Continuity of Support Ecosystem" },
               { href: "/how-to-use", label: "How It Works" },
               { href: "/scenarios",  label: "Scenarios" },
               { href: "/blog",       label: "Blog" },
