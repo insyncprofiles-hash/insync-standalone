@@ -368,6 +368,28 @@ export default function AboutMeEditor() {
     if (cached) setShortUrl(cached);
   }, []);
 
+  // Auto-generate short URL when Share tab is active and shareUrl is ready
+  useEffect(() => {
+    if (activeTab === "share" && shareUrl && !shortUrl && !shorteningUrl) {
+      setShorteningUrl(true);
+      fetch("/api/shorten", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: shareUrl }),
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.short) {
+            setShortUrl(data.short);
+            localStorage.setItem("aboutme_short_url", data.short);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setShorteningUrl(false));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, shareUrl]);
+
   const set = useCallback((field: keyof AboutMeProfile, value: string) => {
     setProfile(p => ({ ...p, [field]: value }));
   }, []);
@@ -1038,18 +1060,10 @@ export default function AboutMeEditor() {
                 {/* Short URL section */}
                 <div style={{ background: C.accentLight, border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "20px", marginBottom: "20px" }}>
                   <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: "0 0 10px" }}>Short Link (TinyURL)</p>
-                  {!shortUrl ? (
-                    <button
-                      onClick={generateShortUrl}
-                      disabled={shorteningUrl}
-                      style={{
-                        width: "100%", padding: "14px", borderRadius: "12px", border: "none",
-                        background: shorteningUrl ? "#5eead4" : C.teal, color: "#fff",
-                        fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", cursor: shorteningUrl ? "default" : "pointer",
-                      }}
-                    >
-                      {shorteningUrl ? "Generating..." : "Generate Short Link"}
-                    </button>
+                  {shorteningUrl && !shortUrl ? (
+                    <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, margin: 0 }}>Generating short link…</p>
+                  ) : !shortUrl ? (
+                    <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: 0 }}>Short link will appear here automatically.</p>
                   ) : (
                     <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                       <input
@@ -1080,9 +1094,15 @@ export default function AboutMeEditor() {
 
                 <div style={{ background: "#ffffff", border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
                   <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: 0 }}>QR Code</p>
-                  <QRCodeSVG value={shortUrl || shareUrl} size={200} fgColor={C.accent} bgColor="#ffffff" level="M" />
+                  {shortUrl ? (
+                    <QRCodeSVG value={shortUrl} size={200} fgColor={C.accent} bgColor="#ffffff" level="M" />
+                  ) : (
+                    <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: 0, textAlign: "center" }}>
+                      {shorteningUrl ? "Generating short link for QR code…" : "QR code will appear once the short link is ready."}
+                    </p>
+                  )}
                   <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: 0, textAlign: "center" }}>
-                    {shortUrl ? "QR code uses your short link." : "Generate a short link above to use it in the QR code."} Screenshot to save.
+                    {shortUrl ? "QR code uses your short link. Screenshot to save." : ""}
                   </p>
                 </div>
 
