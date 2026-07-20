@@ -9,7 +9,6 @@
    ============================================================ */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "wouter";
-import { QRCodeSVG } from "qrcode.react";
 
 // ── TYPES ─────────────────────────────────────────────────────
 
@@ -1092,19 +1091,7 @@ export default function AboutMeEditor() {
                 </div>
 
 
-                <div style={{ background: "#ffffff", border: `2px solid ${C.borderLight}`, borderRadius: "16px", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
-                  <p style={{ fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, margin: 0 }}>QR Code</p>
-                  {shortUrl ? (
-                    <QRCodeSVG value={shortUrl} size={200} fgColor={C.accent} bgColor="#ffffff" level="M" />
-                  ) : (
-                    <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: 0, textAlign: "center" }}>
-                      {shorteningUrl ? "Generating short link for QR code…" : "QR code will appear once the short link is ready."}
-                    </p>
-                  )}
-                  <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: 0, textAlign: "center" }}>
-                    {shortUrl ? "QR code uses your short link. Screenshot to save." : ""}
-                  </p>
-                </div>
+
 
                 <div style={{ marginTop: "24px" }}>
                   <a
