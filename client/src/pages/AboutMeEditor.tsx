@@ -570,14 +570,14 @@ export default function AboutMeEditor() {
         <div style={{ maxWidth: "720px", margin: "0 auto", padding: "32px 20px" }}>
 
           {/* Prelude */}
-          <div style={{ background: C.bgCard, border: `1px solid ${C.borderLight}`, borderRadius: "16px", padding: "28px 24px", marginBottom: "36px" }}>
+          <div style={{ background: C.card, border: `1px solid ${C.borderLight}`, borderRadius: "16px", padding: "28px 24px", marginBottom: "36px" }}>
             <p style={{ fontFamily: C.bodyFont, fontSize: "17px", fontWeight: 800, color: C.accent, margin: "0 0 14px", lineHeight: 1.4 }}>
               Sometimes the biggest improvements aren't complicated.
             </p>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.textBody, margin: "0 0 12px", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accent, margin: "0 0 12px", lineHeight: 1.7 }}>
               They're the simple things that remove a frustration people have been carrying for years.
             </p>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.textBody, margin: "0 0 16px", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accent, margin: "0 0 16px", lineHeight: 1.7 }}>
               The About Me Profile was created to reduce one of those frustrations: having to repeatedly explain your life, your needs and your preferences every time support changes.
             </p>
             <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "16px", color: C.gold, margin: 0 }}>
