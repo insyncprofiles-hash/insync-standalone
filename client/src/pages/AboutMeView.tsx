@@ -22,9 +22,10 @@ function getYouTubeId(url: string): string {
   } catch { return ""; }
 }
 
-// Font scale helper — multiplies base px size by accessibility scale
-function makeFs(scale: number) {
-  return (px: number) => `${Math.round(px * scale)}px`;
+// Font scale helper — uses CSS variable so scaling is instant without React re-render
+// Works on ALL browsers including Android tablets
+function makeFs(_scale: number) {
+  return (px: number) => `calc(${px}px * var(--a11y-font-scale, 1))`;
 }
 
 function Pill({ text, color = "#1e3a5f", fs }: { text: string; color?: string; fs: (n: number) => string }) {
@@ -135,9 +136,9 @@ export default function AboutMeView() {
   const displayName = preferredName || name;
   const videoId = videoUrl ? getYouTubeId(videoUrl) : "";
 
-  const { wrapperStyle: a11yStyle, settings: a11ySettings } = useA11y();
-  // fs() scales every font size by the accessibility multiplier
-  const fs = makeFs(a11ySettings.fontSize);
+  const { wrapperStyle: a11yStyle } = useA11y();
+  // fs() uses CSS calc() with --a11y-font-scale variable — scales instantly on button press
+  const fs = makeFs(1);
 
   const videoIframeRef = useRef<HTMLIFrameElement | null>(null);
 
