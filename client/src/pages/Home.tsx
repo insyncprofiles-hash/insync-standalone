@@ -2172,7 +2172,7 @@ export default function Home({ isDemo = false }: { isDemo?: boolean }) {
 
       // Tagline / quote — italic dark navy
       if (profile.tagline) {
-        const quoteFontSize = Math.round(PANEL_H * 0.125);
+        const quoteFontSize = Math.round(PANEL_H * 0.082);
         ctx.font = `italic ${quoteFontSize}px Georgia, "Times New Roman", serif`;
         ctx.fillStyle = NAVY;
         const tagWords = profile.tagline.split(" ");
