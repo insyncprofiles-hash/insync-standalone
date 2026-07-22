@@ -862,12 +862,16 @@ export default function ClientView() {
             background: "#0a0a0a",
             padding: "12px 16px",
             display: "flex", alignItems: "center", justifyContent: "space-between",
+            flexWrap: "wrap",
             gap: "10px",
             position: "relative",
             overflow: "hidden",
           }}>
             {/* Shimmer sweep */}
             <style>{`
+              @media (max-width: 520px) {
+                .banner-btns { width: 100%; justify-content: center; }
+              }
               @keyframes shimmerSweep {
                 0% { transform: translateX(-100%) skewX(-15deg); }
                 100% { transform: translateX(350%) skewX(-15deg); }
@@ -896,7 +900,7 @@ export default function ClientView() {
             </div>
 
             {/* Right: Read Aloud + Accessibility + Voice Control buttons */}
-            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+            <div className="banner-btns" style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
 
               {/* Shared button style — all 3 buttons identical size */}
               {/* Read Aloud */}
