@@ -70,5 +70,5 @@ export function useA11y() {
     filter: settings.highContrast ? "contrast(1.8) brightness(1.05)" : undefined,
   };
 
-  return { settings, wrapperStyle };
+  return { settings, wrapperStyle, fontScale: settings.fontSize };
 }
