@@ -123,8 +123,36 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     setTtsStatus("idle");
   }, []);
 
+  const doSpeak = useCallback((text: string) => {
+    const ss = window.speechSynthesis;
+    ss.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;
+    // Prefer a local English voice (important on Android)
+    const voices = ss.getVoices();
+    const preferred = voices.find(v => v.lang.startsWith("en-AU") && v.localService)
+      || voices.find(v => v.lang.startsWith("en") && v.localService)
+      || voices.find(v => v.lang.startsWith("en"));
+    if (preferred) utterance.voice = preferred;
+    utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
+    utterance.onend = () => { setSpeaking(false); setTtsStatus("idle"); };
+    utterance.onerror = (e) => {
+      setSpeaking(false);
+      setTtsStatus("idle");
+      if (e.error !== "interrupted" && e.error !== "canceled") {
+        alert("Text-to-speech is not available. Please check that Google Text-to-Speech is enabled in your device settings (Settings → Accessibility → Text-to-speech).");
+      }
+    };
+    ss.speak(utterance);
+    // Android Chrome workaround: synthesis can get stuck in pending state
+    setTimeout(() => { if (ss.speaking) ss.resume(); }, 300);
+  }, []);
+
   const readPage = useCallback(() => {
-    if (!window.speechSynthesis) return;
+    if (!window.speechSynthesis) {
+      alert("Text-to-speech is not supported in this browser.");
+      return;
+    }
     if (ttsStatus === "reading") {
       window.speechSynthesis.pause();
       setTtsStatus("paused");
@@ -135,15 +163,24 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       setTtsStatus("reading");
       return;
     }
-    window.speechSynthesis.cancel();
     const text = document.body.innerText.slice(0, 5000);
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.9;
-    utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
-    utterance.onend = () => { setSpeaking(false); setTtsStatus("idle"); };
-    utterance.onerror = () => { setSpeaking(false); setTtsStatus("idle"); };
-    window.speechSynthesis.speak(utterance);
-  }, [ttsStatus]);
+    // Android: voices may not be loaded yet — wait for voiceschanged event
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length === 0) {
+      let fired = false;
+      const handler = () => {
+        if (fired) return;
+        fired = true;
+        window.speechSynthesis.removeEventListener("voiceschanged", handler);
+        doSpeak(text);
+      };
+      window.speechSynthesis.addEventListener("voiceschanged", handler);
+      // Fallback timeout in case voiceschanged never fires
+      setTimeout(() => handler(), 1500);
+    } else {
+      doSpeak(text);
+    }
+  }, [ttsStatus, doSpeak]);
 
   // Bar background — adapts to light/dark themes
   const barBg = isLight ? theme.bgCard2 : "oklch(0.08 0.06 155)";
