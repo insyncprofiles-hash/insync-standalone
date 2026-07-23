@@ -207,12 +207,11 @@ export default function AboutMeView() {
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "14px 20px 0" }}>
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-          background: "linear-gradient(135deg, #7c1d1d 0%, #991b1b 50%, #7c1d1d 100%)",
-          border: "3px solid #450a0a",
+          background: "linear-gradient(135deg, #1e3a78 0%, #1e40af 50%, #1e3a78 100%)",
+          border: "3px solid #1e2d6b",
           borderRadius: "6px",
           padding: "10px 20px",
-          boxShadow: "0 2px 8px rgba(127,29,29,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
-          transform: "rotate(-1deg)",
+          boxShadow: "0 2px 8px rgba(30,58,120,0.35), inset 0 1px 0 rgba(255,255,255,0.12)",
           position: "relative",
           overflow: "hidden",
         }}>
@@ -226,14 +225,14 @@ export default function AboutMeView() {
           <div style={{ textAlign: "center" }}>
             <p style={{
               fontFamily: "'Nunito', sans-serif", fontWeight: 900,
-              fontSize: fs(15), color: "#fef2f2",
+              fontSize: fs(15), color: "#f5c842",
               letterSpacing: "0.18em", textTransform: "uppercase",
               margin: 0, lineHeight: 1.1,
               textShadow: "0 1px 2px rgba(0,0,0,0.4)",
             }}>Private &amp; Confidential</p>
             <p style={{
               fontFamily: "'Nunito', sans-serif", fontWeight: 600,
-              fontSize: fs(11), color: "#fecaca",
+              fontSize: fs(11), color: "#fcd97a",
               letterSpacing: "0.06em",
               margin: "3px 0 0", lineHeight: 1,
             }}>For authorised recipients only</p>
