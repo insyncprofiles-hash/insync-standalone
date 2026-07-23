@@ -203,6 +203,44 @@ export default function AboutMeView() {
         </div>
       </div>
 
+      {/* Private & Confidential sticker */}
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "14px 20px 0" }}>
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+          background: "linear-gradient(135deg, #7c1d1d 0%, #991b1b 50%, #7c1d1d 100%)",
+          border: "3px solid #450a0a",
+          borderRadius: "6px",
+          padding: "10px 20px",
+          boxShadow: "0 2px 8px rgba(127,29,29,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
+          transform: "rotate(-1deg)",
+          position: "relative",
+          overflow: "hidden",
+        }}>
+          {/* Diagonal stripe texture overlay */}
+          <div style={{
+            position: "absolute", inset: 0,
+            backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.08) 4px, rgba(0,0,0,0.08) 5px)",
+            pointerEvents: "none",
+          }} />
+          <span style={{ fontSize: fs(18), lineHeight: 1 }}>🔒</span>
+          <div style={{ textAlign: "center" }}>
+            <p style={{
+              fontFamily: "'Nunito', sans-serif", fontWeight: 900,
+              fontSize: fs(15), color: "#fef2f2",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              margin: 0, lineHeight: 1.1,
+              textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+            }}>Private &amp; Confidential</p>
+            <p style={{
+              fontFamily: "'Nunito', sans-serif", fontWeight: 600,
+              fontSize: fs(11), color: "#fecaca",
+              letterSpacing: "0.06em",
+              margin: "3px 0 0", lineHeight: 1,
+            }}>For authorised recipients only</p>
+          </div>
+          <span style={{ fontSize: fs(18), lineHeight: 1 }}>🔒</span>
+        </div>
+      </div>
       {/* Print button — hidden when printing */}
       <div className="no-print" style={{ maxWidth: "680px", margin: "0 auto", padding: "12px 20px 0", display: "flex", justifyContent: "flex-end" }}>
         <button
