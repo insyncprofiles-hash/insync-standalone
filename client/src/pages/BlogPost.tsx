@@ -517,6 +517,124 @@ function MorePowerToYouArticle() {
   );
 }
 
+// ── "When I'm Well" Article ─────────────────────────────────────────────
+function WhenImWellArticle() {
+  return (
+    <>
+      <p>
+        Most support systems only ever see a person at their worst.
+      </p>
+      <p>
+        By the time a support worker, nurse, hospital clinician, or new service meets someone with a disability, that person is often in crisis — overwhelmed, non-verbal, dysregulated, or in pain. That becomes the worker's entire frame of reference for who that person is. It shapes how they speak to them, what they assume about their capacity, and what they believe is possible.
+      </p>
+      <p>
+        The About Me profile on InSync Profiles includes a <strong>When I'm Well</strong> section — and an option to include a short video of the person when they are at their best. It is one of the most quietly significant features in the platform. Here is why.
+      </p>
+
+      <h2>The frame problem in disability support</h2>
+      <p>
+        Every new intake, every hospital admission, every support transition begins with a first impression. And for many people with disability, that first impression is formed in a moment of difficulty — a meltdown, a medical episode, a period of heightened anxiety, or simply the stress of meeting a stranger.
+      </p>
+      <p>
+        That moment is not representative. But without anything else to go on, it becomes the lens through which the person is seen — sometimes for the entire duration of that support relationship.
+      </p>
+      <p>
+        A When I'm Well video breaks that frame entirely.
+      </p>
+
+      <h2>What a 30-second video actually does</h2>
+      <p>
+        When a clinician, support worker, or hospital nurse has seen a short video of a person telling a joke, talking about their dog, or showing what they love to do — they treat that person differently. Not because they are trying harder. Because they know more.
+      </p>
+      <p>
+        They have seen the person communicate. They have seen them animated, engaged, and themselves. They carry that image into every interaction, including the hard ones.
+      </p>
+      <p>
+        For someone who is non-verbal or minimally verbal during a crisis, this is especially powerful. A video of that person using AAC to describe their favourite meal, or laughing with a family member, communicates something that no written profile can: <em>this is a full human being, and this is who they are when the world is working for them.</em>
+      </p>
+
+      <h2>Countering diagnostic overshadowing</h2>
+      <p>
+        Diagnostic overshadowing is the tendency — well-documented in clinical literature — to attribute everything about a person to their diagnosis. Pain gets dismissed as "part of the condition." Distress gets read as "typical behaviour." Capacity gets underestimated because the professional's only data point is the person in a difficult moment.
+      </p>
+      <p>
+        The When I'm Well section directly counters this. It gives every new provider a baseline — a reference point for who this person is at their best — before the first interaction. That baseline changes what gets noticed, what gets asked, and what gets assumed.
+      </p>
+
+      <h2>In hospital settings</h2>
+      <p>
+        Hospital admissions are among the highest-risk moments for people with disability. The environment is unfamiliar, the sensory load is extreme, the routines are gone, and the people are strangers. For someone who relies on predictability and familiar faces, it is a perfect storm.
+      </p>
+      <p>
+        An About Me profile — with a When I'm Well video — gives ED staff and ward nurses an immediate, human anchor. They know the person's name, their communication style, their triggers, their preferences, and what a good day looks like. They have seen them well. That changes the quality of care from the first minute.
+      </p>
+      <p>
+        This is not hypothetical. It is what person-centred care is supposed to look like — and it almost never happens in practice because the information does not exist in a portable, accessible form. Until now.
+      </p>
+
+      <h2>For new support workers</h2>
+      <p>
+        A support worker who has watched a participant's When I'm Well video before their first shift arrives differently. They are not walking in blind. They have context. They have a sense of who this person is, what they enjoy, how they communicate when things are going well.
+      </p>
+      <p>
+        That changes the first interaction. It reduces the awkwardness of a stranger relationship. It gives the worker something genuine to connect over — not a list of deficits, but a person.
+      </p>
+
+      <h2>For families</h2>
+      <p>
+        There is something else the When I'm Well section does that is harder to quantify but no less real.
+      </p>
+      <p>
+        For families who spend a significant amount of their time managing crises, navigating systems, and advocating in difficult circumstances — having a record of their person at their best is quietly important. It is a reminder, and a document, of who their family member is when the world is not making things hard.
+      </p>
+      <p>
+        That matters. Not just for the people reading the profile. For the family who built it.
+      </p>
+
+      <h2>What the standard toolkit is missing</h2>
+      <p>
+        Support plans describe needs. Care plans describe risks. Intake forms capture diagnoses, medications, and behaviours of concern.
+      </p>
+      <p>
+        None of them ask: <em>What does this person look like when they are well?</em>
+      </p>
+      <p>
+        That question is not in the standard toolkit. The About Me profile is the only place in the NDIS ecosystem where it gets answered — in the person's own voice, in their own words, and on their own terms.
+      </p>
+
+      <p>
+        About Me profiles are free. Always. <a href="/about-me/editor" style={{ color: "#f5c842" }}>Build yours at insyncprofiles.net →</a>
+      </p>
+
+      <div style={{ marginTop: "48px", padding: "28px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px" }}>
+        <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>Related Topics</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          {[
+            "#AboutMeProfile",
+            "#WhenImWell",
+            "#PersonCentredCare",
+            "#NDISParticipant",
+            "#DiagnosticOvershadowing",
+            "#DisabilityInclusion",
+            "#HospitalAdmission",
+            "#ContinuityOfCare",
+            "#SupportWorker",
+            "#NDISAustralia",
+            "#ChoiceAndControl",
+            "#CommunicationSupport",
+            "#AAC",
+            "#Neurodivergent",
+            "#CarerSupport",
+            "#InformedCare",
+          ].map(tag => (
+            <span key={tag} style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "99px", padding: "4px 12px", lineHeight: 1.5 }}>{tag}</span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // ── Article metadata registry ─────────────────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
@@ -568,6 +686,16 @@ const ARTICLES: Record<string, {
     metaDescription: "Discover why generic social media posts are failing NDIS support workers and how InSync Profiles's digital profile platform helps workers stand out in the Australian care sector.",
     keywords: "NDIS support worker social media, sea of sameness disability sector, support worker digital profile Australia, NDIS worker stand out, InSync Profiles, disability support worker marketing, NDIS independent worker visibility",
     content: SeaOfSamenessArticle,
+  },
+  "when-im-well": {
+    title: "When I'm Well: Why a 30-Second Video Changes Everything in Disability Support",
+    date: "July 2026",
+    readTime: "5 min read",
+    category: "Person-Centred Care",
+    emoji: "🌱",
+    metaDescription: "Most support systems only see a person at their worst. The About Me profile's When I'm Well video feature gives clinicians, support workers, and hospitals a baseline — who this person is when the world is working for them.",
+    keywords: "About Me NDIS profile, when I'm well disability, person-centred care NDIS, diagnostic overshadowing disability, NDIS participant hospital, continuity of care NDIS, About Me profile free NDIS, support worker first shift, disability communication profile, InSync Profiles",
+    content: WhenImWellArticle,
   },
   "who-is-going-to-support-me": {
     title: "Who is going to support me?",

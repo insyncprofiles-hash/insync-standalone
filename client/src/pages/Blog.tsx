@@ -21,6 +21,15 @@ const C = {
 
 const POSTS = [
   {
+    slug: "when-im-well",
+    title: "When I'm Well: Why a 30-Second Video Changes Everything in Disability Support",
+    excerpt: "Most support systems only ever see a person at their worst. The About Me profile's When I'm Well video gives clinicians, support workers, and hospitals a baseline — who this person is when the world is working for them.",
+    date: "July 2026",
+    readTime: "5 min read",
+    category: "Person-Centred Care",
+    emoji: "🌱",
+  },
+  {
     slug: "more-power-to-you",
     title: "More power to You — A Participant-Led Journey into the Most Important Decisions of Their Life",
     excerpt: "Choosing a support worker is one of the biggest decisions a person can make. It’s not just about qualifications or availability. InSync Profiles puts real, accessible information in participants’ hands before that decision is made.",
