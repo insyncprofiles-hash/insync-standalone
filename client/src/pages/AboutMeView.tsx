@@ -184,9 +184,9 @@ export default function AboutMeView() {
       <div style={{ background: "#ffffff", borderBottom: "2px solid #e2e8f0", padding: "24px 20px 20px", paddingTop: "calc(24px + 80px)" }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "20px" }}>
           {photo ? (
-            <img src={photo} alt={displayName} style={{ width: "80px", height: "80px", borderRadius: "50%", objectFit: "cover", border: "2px solid #e2e8f0", flexShrink: 0 }} />
+            <img src={photo} alt={displayName} style={{ width: "140px", height: "140px", borderRadius: "50%", objectFit: "cover", objectPosition: "center top", border: "3px solid #e2e8f0", flexShrink: 0, boxShadow: "0 4px 20px rgba(0,0,0,0.12)" }} />
           ) : (
-            <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "#f1f5f9", border: "2px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: fs(36), flexShrink: 0 }}>
+            <div style={{ width: "140px", height: "140px", borderRadius: "50%", background: "#f1f5f9", border: "3px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: fs(52), flexShrink: 0, boxShadow: "0 4px 20px rgba(0,0,0,0.12)" }}>
               👤
             </div>
           )}
