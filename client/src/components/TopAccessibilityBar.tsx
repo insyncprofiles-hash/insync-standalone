@@ -511,13 +511,8 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "scale(1.04)"; }}
           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "scale(1)"; }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="12" cy="5.5" r="2.2" fill="white" />
-            <path d="M12 9v5" stroke="white" strokeWidth="2.4" strokeLinecap="round" />
-            <path d="M7.5 11h9" stroke="white" strokeWidth="2.4" strokeLinecap="round" />
-            <path d="M12 14l-3 5M12 14l3 5" stroke="white" strokeWidth="2.4" strokeLinecap="round" />
-          </svg>
-          <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 800, color: "white", letterSpacing: "0.02em" }}>Access</span>
+          <img src="/accessibility-icon.png" alt="" aria-hidden="true" style={{ width: "28px", height: "28px", borderRadius: "50%", flexShrink: 0 }} />
+          <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "16px", fontWeight: 900, color: "white", letterSpacing: "0.02em" }}>Access</span>
         </button>
       </div>
 
