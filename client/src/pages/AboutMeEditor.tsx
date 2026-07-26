@@ -195,21 +195,21 @@ function Field({ id, label, hint, value: rawValue, onChange, multiline = false, 
   const value = rawValue ?? "";
   const isListening = listeningFor === id;
   const inputStyle: React.CSSProperties = {
-    flex: 1, padding: "12px 14px", borderRadius: "12px",
+    flex: 1, padding: "14px 16px", borderRadius: "12px",
     border: `2px solid ${isListening ? "#dc2626" : C.border}`,
-    fontFamily: C.bodyFont, fontSize: "15px",
+    fontFamily: C.bodyFont, fontSize: "17px",
     color: "#1c1917", background: isListening ? "#fff5f5" : "#fffdf5",
     outline: "none", boxSizing: "border-box",
     transition: "border-color 200ms ease-out",
   };
   return (
     <div style={{ marginBottom: "22px" }}>
-      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, marginBottom: "6px" }}>
+      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "17px", color: C.accent, marginBottom: "6px" }}>
         {label}
       </label>
-      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
+      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
       {isListening && (
-        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
           Listening... speak now
         </p>
       )}
@@ -257,12 +257,12 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
   const isListening = listeningFor === id;
   return (
     <div style={{ marginBottom: "22px" }}>
-      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, marginBottom: "6px" }}>
+      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "17px", color: C.accent, marginBottom: "6px" }}>
         {label}
       </label>
-      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
+      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
       {isListening && (
-        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
           Listening... say an option name
         </p>
       )}
@@ -271,9 +271,9 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
           value={value}
           onChange={e => onChange(e.target.value)}
           style={{
-            flex: 1, padding: "12px 14px", borderRadius: "12px",
+            flex: 1, padding: "14px 16px", borderRadius: "12px",
             border: `2px solid ${isListening ? "#dc2626" : C.border}`,
-            fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917",
+            fontFamily: C.bodyFont, fontSize: "17px", color: "#1c1917",
             background: isListening ? "#fff5f5" : "#fffdf5", outline: "none",
           }}
         >
@@ -290,7 +290,7 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
           })}
         />
       </div>
-      <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "6px 0 0" }}>
+      <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, margin: "6px 0 0" }}>
         Options: {options.filter(o => o.value).map(o => o.label).join(", ")}
       </p>
     </div>
@@ -527,40 +527,42 @@ export default function AboutMeEditor() {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Header */}
-      <div style={{ background: C.accent, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: "#fffbeb", margin: 0 }}>About Me Editor</p>
-          <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: "#fde68a", margin: "2px 0 0" }}>Free — for participants, families and carers</p>
+      <div style={{ background: C.accent, padding: "14px 20px" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "12px" }}>
+          <div style={{ minWidth: 0 }}>
+            <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#fffbeb", margin: 0 }}>About Me Editor</p>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#fde68a", margin: "2px 0 0" }}>Free — for participants, families &amp; carers</p>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+            {saved && (
+              <span style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#86efac", fontWeight: 700, transition: "opacity 300ms" }}>
+                Saved
+              </span>
+            )}
+            {profileType !== null && (
+              <button
+                onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
+                style={{
+                  background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.5)",
+                  fontFamily: C.headFont, fontWeight: 800, fontSize: "13px",
+                  color: "#fffbeb", cursor: "pointer", padding: "6px 12px",
+                  borderRadius: "20px", whiteSpace: "nowrap",
+                }}
+              >
+                ↩ Change
+              </button>
+            )}
+          </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {saved && (
-            <span style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#86efac", fontWeight: 700, transition: "opacity 300ms" }}>
-              Saved
-            </span>
-          )}
-          {profileType !== null && (
-            <button
-              onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
-              style={{
-                background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.5)",
-                fontFamily: C.headFont, fontWeight: 800, fontSize: "13px",
-                color: "#fffbeb", cursor: "pointer", padding: "6px 14px",
-                borderRadius: "20px",
-              }}
-            >
-              ↩ Change type
-            </button>
-          )}
-          <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
-            Back to InSync Profiles
-          </Link>
-        </div>
+        <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none", display: "inline-block", marginTop: "6px" }}>
+          ← Back to InSync Profiles
+        </Link>
       </div>
 
       {/* Accessibility notice */}
-      <div style={{ background: C.accent, borderBottom: `2px solid ${C.accentMid}`, padding: "12px 20px", display: "flex", alignItems: "center", gap: "10px" }}>
-        <span style={{ fontSize: "20px" }}>🎤</span>
-        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#ffffff", margin: 0, fontWeight: 700 }}>
+      <div style={{ background: C.accent, borderBottom: `2px solid ${C.accentMid}`, padding: "14px 20px", display: "flex", alignItems: "center", gap: "10px" }}>
+        <span style={{ fontSize: "22px" }}>🎤</span>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#ffffff", margin: 0, fontWeight: 700 }}>
           Every field has a microphone button — tap it to dictate instead of type. Everything saves automatically.
         </p>
       </div>
@@ -696,14 +698,14 @@ export default function AboutMeEditor() {
       {/* Tab bar — only shown once a type is selected */}
       {profileType !== null && (
         <>
-      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "8px 8px", gap: "4px" }}>
+      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "10px 12px", gap: "6px" }}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: "10px 14px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
-              fontFamily: C.headFont, fontWeight: activeTab === tab.id ? 900 : 600, fontSize: "13px",
+              padding: "12px 16px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+              fontFamily: C.headFont, fontWeight: activeTab === tab.id ? 900 : 600, fontSize: "15px",
               color: activeTab === tab.id ? "#ffffff" : "#57534e",
               background: activeTab === tab.id ? C.accent : "transparent",
               borderRadius: "12px",
@@ -745,8 +747,8 @@ export default function AboutMeEditor() {
         {/* WHO I AM */}
         {activeTab === "who" && (
           <div>
-            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Who I Am</h2>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Basic information about the person this profile belongs to.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "24px", color: C.accent, marginBottom: "6px" }}>Who I Am</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "16px", color: C.accentMid, marginBottom: "24px" }}>Basic information about the person this profile belongs to.</p>
 
             {/* Photo */}
             <div style={{ marginBottom: "28px", display: "flex", alignItems: "center", gap: "20px" }}>
