@@ -755,8 +755,8 @@ export default function Landing() {
                 InSync Profiles is an interactive, accessibility-first profile for support workers, allied health practitioners, support coordinators, and every other support role — share your services, availability, credentials, and communication style in one shareable link.
               </p>
 
-              {/* Social proof */}
-              <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", marginBottom: "40px" }}>
+              {/* Social proof + trust badges */}
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", marginBottom: "40px" }}>
                 {[
                   { icon: "✦",  text: "WCAG 2.1 AA" },
                   { icon: "🇦🇺", text: "Made in Australia" },
@@ -766,6 +766,32 @@ export default function Landing() {
                     <span style={{ color: C.textDim, fontSize: "13px", fontWeight: 500 }}>{item.text}</span>
                   </div>
                 ))}
+                {/* Accessibility-First badge */}
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "6px",
+                  background: "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)",
+                  borderRadius: "99px", padding: "6px 14px",
+                  fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 800,
+                  color: "#ffffff", letterSpacing: "0.04em",
+                  boxShadow: "0 2px 14px rgba(14,165,233,0.45)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                }}>
+                  <span aria-hidden="true" style={{ fontSize: "14px" }}>♿</span>
+                  Accessibility-First
+                </div>
+                {/* Person-Centred badge */}
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "6px",
+                  background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                  borderRadius: "99px", padding: "6px 14px",
+                  fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 800,
+                  color: "#ffffff", letterSpacing: "0.04em",
+                  boxShadow: "0 2px 14px rgba(16,185,129,0.45)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                }}>
+                  <span aria-hidden="true" style={{ fontSize: "14px" }}>🫶</span>
+                  Person-Centred
+                </div>
               </div>
 
               {/* CTAs */}
