@@ -1136,6 +1136,9 @@ export default function AboutMeEditor() {
         <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "8px 0 0", lineHeight: 1.6 }}>
           💡 <em>Tip: Save your short link from the Share tab — this is the only way to access your profile on a different device or after clearing your browser.</em>
         </p>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accent, margin: "12px 0 0", lineHeight: 1.6 }}>
+          ← <a href="https://insyncprofiles.net/about-me/editor" style={{ color: C.accent, fontWeight: 800, textDecoration: "underline" }}>Return to the About Me section on insyncprofiles.net</a>
+        </p>
       </div>
 
       <div style={{ background: C.accentLight, borderTop: `2px solid ${C.borderLight}`, padding: "28px 20px", textAlign: "center", marginTop: "40px" }}>
