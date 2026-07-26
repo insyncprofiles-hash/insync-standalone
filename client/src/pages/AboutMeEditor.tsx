@@ -523,7 +523,7 @@ export default function AboutMeEditor() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont }}>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont, paddingTop: "60px" }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Header */}
