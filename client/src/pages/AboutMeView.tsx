@@ -298,6 +298,50 @@ export default function AboutMeView() {
           </div>
         )}
 
+        {/* PREFERENCES */}
+        {(foodPreferences || music || routine || environment || goodDayLooksLike || whatMatters) && (
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
+            <Section title="My Preferences" emoji="🌻" accent={teal} fs={fs}>
+              {foodPreferences && (
+                <div style={{ marginBottom: "14px" }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Food</p>
+                  <TextBlock value={foodPreferences} fs={fs} />
+                </div>
+              )}
+              {music && (
+                <div style={{ marginBottom: "14px" }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Music and Entertainment</p>
+                  <TextBlock value={music} fs={fs} />
+                </div>
+              )}
+              {routine && (
+                <div style={{ marginBottom: "14px" }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Routine</p>
+                  <TextBlock value={routine} fs={fs} />
+                </div>
+              )}
+              {environment && (
+                <div style={{ marginBottom: "14px" }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Environment</p>
+                  <TextBlock value={environment} fs={fs} />
+                </div>
+              )}
+              {goodDayLooksLike && (
+                <div style={{ marginBottom: "14px", background: "#f0fdf4", borderRadius: "12px", padding: "14px" }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: teal, marginBottom: "6px" }}>What a Good Day Looks Like</p>
+                  <TextBlock value={goodDayLooksLike} fs={fs} />
+                </div>
+              )}
+              {whatMatters && (
+                <div>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>What Matters Most to Me</p>
+                  <TextBlock value={whatMatters} fs={fs} />
+                </div>
+              )}
+            </Section>
+          </div>
+        )}
+
         {/* WHEN I'M WELL — video */}
         {videoId && (
           <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
@@ -436,50 +480,6 @@ export default function AboutMeView() {
                 <div>
                   <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Cultural and Religious Considerations</p>
                   <TextBlock value={culturalConsiderations} fs={fs} />
-                </div>
-              )}
-            </Section>
-          </div>
-        )}
-
-        {/* PREFERENCES */}
-        {(foodPreferences || music || routine || environment || goodDayLooksLike || whatMatters) && (
-          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
-            <Section title="My Preferences" emoji="🌻" accent={teal} fs={fs}>
-              {foodPreferences && (
-                <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Food</p>
-                  <TextBlock value={foodPreferences} fs={fs} />
-                </div>
-              )}
-              {music && (
-                <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Music and Entertainment</p>
-                  <TextBlock value={music} fs={fs} />
-                </div>
-              )}
-              {routine && (
-                <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Routine</p>
-                  <TextBlock value={routine} fs={fs} />
-                </div>
-              )}
-              {environment && (
-                <div style={{ marginBottom: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>Environment</p>
-                  <TextBlock value={environment} fs={fs} />
-                </div>
-              )}
-              {goodDayLooksLike && (
-                <div style={{ marginBottom: "14px", background: "#f0fdf4", borderRadius: "12px", padding: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: teal, marginBottom: "6px" }}>What a Good Day Looks Like</p>
-                  <TextBlock value={goodDayLooksLike} fs={fs} />
-                </div>
-              )}
-              {whatMatters && (
-                <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>What Matters Most to Me</p>
-                  <TextBlock value={whatMatters} fs={fs} />
                 </div>
               )}
             </Section>
