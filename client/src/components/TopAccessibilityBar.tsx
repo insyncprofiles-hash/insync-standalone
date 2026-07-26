@@ -123,7 +123,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     setTtsStatus("idle");
   }, []);
 
-  const doSpeak = useCallback((text: string) => {
+  const doSpeak = useCallback((text: string, retryCount = 0) => {
     const ss = window.speechSynthesis;
     ss.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
@@ -139,7 +139,15 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     utterance.onerror = (e) => {
       setSpeaking(false);
       setTtsStatus("idle");
-      if (e.error !== "interrupted" && e.error !== "canceled") {
+      // synthesis-failed on Android means voices weren't ready — retry up to 2 times
+      if (e.error === "synthesis-failed" && retryCount < 2) {
+        setTimeout(() => doSpeak(text, retryCount + 1), 800);
+        return;
+      }
+      // interrupted/canceled are normal (user stopped it) — don't alert
+      if (e.error === "interrupted" || e.error === "canceled") return;
+      // Only alert for truly unsupported environments
+      if (e.error === "not-allowed" || e.error === "audio-busy") {
         alert("Text-to-speech is not available. Please check that Google Text-to-Speech is enabled in your device settings (Settings → Accessibility → Text-to-speech).");
       }
     };
