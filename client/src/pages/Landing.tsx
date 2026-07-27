@@ -456,15 +456,17 @@ export default function Landing() {
         }
         /* Landscape mobile — switch to hamburger/strip nav on phone-sized heights */
         @media (orientation: landscape) and (max-height: 900px) {
+          #main-content { padding-top: 110px !important; }
+          .hero-section { padding-top: 8px !important; }
+          .landscape-hero-buffer { height: 0 !important; }
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
           .mobile-top-nav { display: block !important; }
           .footer-nav-links { display: none !important; }
-          .landscape-hero-buffer { height: 32px; }
-          .hero-inner-flex { gap: 24px !important; }
-          .hero-left-col { flex: 1 1 280px !important; max-width: 380px !important; }
-          .hero-right-col { margin-left: 16px !important; }
+          .hero-inner-flex { gap: 32px !important; justify-content: center !important; }
+          .hero-left-col { flex: 1 1 260px !important; max-width: 360px !important; min-width: 220px !important; }
+          .hero-right-col { flex-shrink: 0 !important; margin-left: 0 !important; transform: scale(0.82) !important; transform-origin: top center !important; margin-top: -20px !important; }
         }
       `}</style>
 

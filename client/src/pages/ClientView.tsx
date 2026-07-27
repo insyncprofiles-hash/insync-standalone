@@ -869,8 +869,11 @@ export default function ClientView() {
           }}>
             {/* Shimmer sweep */}
             <style>{`
-              @media (max-width: 520px) {
-                .banner-btns { width: 100%; justify-content: center; }
+              @media (max-width: 480px) {
+                .banner-btns { gap: 5px !important; }
+                .banner-btn { width: 46px !important; height: 46px !important; }
+                .banner-btn-icon { font-size: 17px !important; }
+                .banner-btn-label { font-size: 7px !important; }
               }
               @keyframes shimmerSweep {
                 0% { transform: translateX(-100%) skewX(-15deg); }
@@ -890,8 +893,8 @@ export default function ClientView() {
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: 1 }}>
               <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "34px", height: "34px", flexShrink: 0 }} />
               <div style={{ minWidth: 0 }}>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>GET TO KNOW ME</p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.625em", fontWeight: 800, color: "#F0C040", margin: "2px 0 0", letterSpacing: "0.10em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7)", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>GET TO KNOW ME</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.625em", fontWeight: 800, color: "#F0C040", margin: "2px 0 0", letterSpacing: "0.10em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex", alignItems: "center", gap: "4px" }}>
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
                   Interactive &amp; Accessible
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
@@ -907,6 +910,7 @@ export default function ClientView() {
               <button
                 onClick={handleReadAloud}
                 aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
+                className="banner-btn"
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                   background: ttsStatus === "reading" ? "#e53935" : ttsStatus === "paused" ? "#f57c00" : "#6200ea",
@@ -918,10 +922,10 @@ export default function ClientView() {
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">
+                <span className="banner-btn-icon" style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">
                   {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
                 </span>
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
                   {ttsStatus === "reading" ? "PAUSE" : ttsStatus === "paused" ? "RESUME" : "READ"}
                 </span>
               </button>
@@ -953,6 +957,7 @@ export default function ClientView() {
                   document.dispatchEvent(new CustomEvent("insync:open-a11y-panel"));
                 }}
                 aria-label="Accessibility options"
+                className="banner-btn"
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                   background: "transparent",
@@ -1004,6 +1009,7 @@ export default function ClientView() {
                   onClick={handleVoiceToggle}
                   aria-label={voiceActive ? "Turn off voice control" : "Turn on voice control"}
                   aria-pressed={voiceActive}
+                  className="banner-btn"
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                     background: voiceActive ? "#1565C0" : "#b71c1c",
