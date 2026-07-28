@@ -1127,32 +1127,50 @@ export default function ClientView() {
                 </button>
                 {/* Language picker dropdown */}
                 {showLangPicker && (
-                  <div style={{
-                    position: "absolute", bottom: "calc(100% + 10px)", right: 0,
-                    width: "200px", background: "rgba(13,27,42,0.97)",
-                    border: "2px solid #F0C040", borderRadius: "14px",
-                    padding: "10px 0", boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
-                    zIndex: 10001, fontFamily: "'Outfit', sans-serif",
-                    maxHeight: "320px", overflowY: "auto",
-                  }}>
-                    <p style={{ color: "#F0C040", fontSize: "11px", fontWeight: 800, margin: "0 0 8px 14px", letterSpacing: "0.05em", textTransform: "uppercase" }}>Translate to...</p>
-                    {TRANSLATE_LANGS.map(lang => (
-                      <button
-                        key={lang.code}
-                        onClick={() => handleTranslate(lang.code, lang.label)}
-                        style={{
-                          display: "flex", alignItems: "center", justifyContent: "space-between",
-                          width: "100%", padding: "10px 14px",
-                          background: translatedLang === lang.label ? "rgba(21,101,192,0.4)" : "transparent",
-                          border: "none", cursor: "pointer",
-                          borderBottom: "1px solid rgba(240,192,64,0.15)",
-                        }}
-                      >
-                        <span style={{ color: "#ffffff", fontSize: "14px", fontWeight: 700 }}>{lang.label}</span>
-                        <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px" }}>{lang.native}</span>
-                      </button>
-                    ))}
-                  </div>
+                  <>
+                    {/* Backdrop — tap outside to close */}
+                    <div
+                      onClick={() => setShowLangPicker(false)}
+                      style={{
+                        position: "fixed", inset: 0,
+                        zIndex: 10001, background: "transparent",
+                      }}
+                    />
+                    <div style={{
+                      position: "fixed", bottom: "100px", right: "12px",
+                      width: "230px", background: "rgba(13,27,42,0.98)",
+                      border: "2px solid #F0C040", borderRadius: "14px",
+                      padding: "0", boxShadow: "0 8px 32px rgba(0,0,0,0.85)",
+                      zIndex: 10002, fontFamily: "'Outfit', sans-serif",
+                      maxHeight: "55vh", overflowY: "auto",
+                    }}>
+                      {/* Header row */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px 8px" }}>
+                        <p style={{ color: "#F0C040", fontSize: "11px", fontWeight: 800, margin: 0, letterSpacing: "0.05em", textTransform: "uppercase" }}>Translate to...</p>
+                        <button
+                          onClick={() => setShowLangPicker(false)}
+                          style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", fontSize: "18px", cursor: "pointer", lineHeight: 1, padding: "0 2px" }}
+                          aria-label="Close language picker"
+                        >✕</button>
+                      </div>
+                      {TRANSLATE_LANGS.map(lang => (
+                        <button
+                          key={lang.code}
+                          onClick={() => handleTranslate(lang.code, lang.label)}
+                          style={{
+                            display: "flex", alignItems: "center", justifyContent: "space-between",
+                            width: "100%", padding: "12px 14px",
+                            background: translatedLang === lang.label ? "rgba(21,101,192,0.4)" : "transparent",
+                            border: "none", cursor: "pointer",
+                            borderTop: "1px solid rgba(240,192,64,0.15)",
+                          }}
+                        >
+                          <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 700 }}>{lang.label}</span>
+                          <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px" }}>{lang.native}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
             </div>
