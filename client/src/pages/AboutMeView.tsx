@@ -444,16 +444,16 @@ export default function AboutMeView() {
                   <TextBlock value={earlyWarnings} fs={fs} />
                 </div>
               )}
+              {whatMakesWorse && (
+                <div style={{ marginBottom: "16px" }}>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>What Makes Things Worse</p>
+                  <TextBlock value={whatMakesWorse} fs={fs} />
+                </div>
+              )}
               {whatHelps && (
                 <div style={{ marginBottom: "16px", background: "#f0fdf4", borderRadius: "12px", padding: "14px" }}>
                   <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: teal, marginBottom: "6px" }}>What Helps Me Regulate</p>
                   <TextBlock value={whatHelps} fs={fs} />
-                </div>
-              )}
-              {whatMakesWorse && (
-                <div>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: "#2563eb", marginBottom: "6px" }}>What Makes Things Worse</p>
-                  <TextBlock value={whatMakesWorse} fs={fs} />
                 </div>
               )}
             </Section>
