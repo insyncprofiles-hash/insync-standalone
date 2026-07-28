@@ -723,7 +723,7 @@ export default function ClientView() {
   const [showLangPicker, setShowLangPicker] = useState(false);
   const [translating, setTranslating] = useState(false);
   const [translatedLang, setTranslatedLang] = useState<string | null>(null);
-  const [translations, setTranslations] = useState<Record<string, string>>({});
+  const [translations, setTranslations] = useState<Record<string, string | string[]>>({});
 
   const translateText = async (text: string, targetLang: string): Promise<string> => {
     if (!text || !text.trim()) return text;
@@ -746,22 +746,52 @@ export default function ClientView() {
       return;
     }
     setTranslating(true);
-    const textsToTranslate: Record<string, string> = {};
-    if (profile.name) textsToTranslate.name = profile.name;
-    if (profile.title) textsToTranslate.title = profile.title;
-    if (profile.tagline) textsToTranslate.tagline = profile.tagline;
-    if (profile.bio) textsToTranslate.bio = profile.bio;
-    if (profile.customExperience) textsToTranslate.customExperience = profile.customExperience;
-    const results: Record<string, string> = {};
-    for (const [key, val] of Object.entries(textsToTranslate)) {
+    const results: Record<string, string | string[]> = {};
+    // Scalar fields
+    const scalarFields: Record<string, string> = {};
+    if (profile.name) scalarFields.name = profile.name;
+    if (profile.title) scalarFields.title = profile.title;
+    if (profile.tagline) scalarFields.tagline = profile.tagline;
+    if (profile.bio) scalarFields.bio = profile.bio;
+    if (profile.customExperience) scalarFields.customExperience = profile.customExperience;
+    for (const [key, val] of Object.entries(scalarFields)) {
       results[key] = await translateText(val, langCode);
+    }
+    // Service labels
+    const selSvcs = profile.services.filter((s: { selected: boolean }) => s.selected);
+    if (selSvcs.length > 0) {
+      results.serviceLabels = await Promise.all(selSvcs.map((s: { label: string }) => translateText(s.label, langCode)));
+    }
+    // Credential badges
+    if (profile.badges.length > 0) {
+      results.badges = await Promise.all(profile.badges.map((b: string) => translateText(b, langCode)));
+    }
+    // Experience chips
+    const expLabels = profile.experienceGroups.flatMap((g: { items: { checked: boolean; label: string }[] }) => g.items.filter(i => i.checked).map(i => i.label));
+    if (expLabels.length > 0) {
+      results.experienceLabels = await Promise.all(expLabels.map((l: string) => translateText(l, langCode)));
+    }
+    // How I Show Up chips
+    if (profile.showUpStyle.communicate.length > 0) {
+      results.communicate = await Promise.all(profile.showUpStyle.communicate.map((c: string) => translateText(c, langCode)));
+    }
+    if (profile.showUpStyle.connect.length > 0) {
+      results.connect = await Promise.all(profile.showUpStyle.connect.map((c: string) => translateText(c, langCode)));
+    }
+    if (profile.showUpStyle.presence.length > 0) {
+      results.presence = await Promise.all(profile.showUpStyle.presence.map((c: string) => translateText(c, langCode)));
+    }
+    // Languages spoken
+    if (profile.languages.length > 0) {
+      results.languages = await Promise.all(profile.languages.map((l: string) => translateText(l, langCode)));
     }
     setTranslations(results);
     setTranslatedLang(langLabel);
     setTranslating(false);
   };
 
-  const t = (key: string, fallback: string) => translations[key] || fallback;
+  const t = (key: string, fallback: string) => (translations[key] as string) || fallback;
+  const tArr = (key: string, fallback: string[]): string[] => (translations[key] as string[]) || fallback;
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showAACBoard, setShowAACBoard] = useState(false);
   const videoPlayRef = useRef<(() => void) | null>(null);
@@ -1237,7 +1267,7 @@ export default function ClientView() {
           {selectedServices.length > 0 && (
             <div style={{ padding: "24px 20px 32px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "28px 20px", justifyItems: "center" }}>
-                {selectedServices.slice(0, 4).map((svc) => (
+                {selectedServices.slice(0, 4).map((svc, svcIdx) => (
                   <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", width: "100%" }}>
                     <img
                       src={svc.iconImg || `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='64' height='64' rx='12' fill='%231a5fa8'/><text x='32' y='44' font-size='28' text-anchor='middle'>${encodeURIComponent(svc.icon)}</text></svg>`}
@@ -1248,13 +1278,12 @@ export default function ClientView() {
                       fontFamily: "'Outfit', sans-serif", fontSize: "0.85em", fontWeight: 700,
                       color: "#1a5fa8", textAlign: "center",
                       margin: 0, lineHeight: 1.25, wordBreak: "break-word", width: "100%",
-                    }}>{svc.label}</p>
+                                        }}>{tArr("serviceLabels", selectedServices.map(s => s.label))[svcIdx] || svc.label}</p>
                   </div>
                 ))}
               </div>
             </div>
           )}
-
           {/* Video — rainbow border matching reference */}
           <div style={{ padding: "0 20px 16px" }}>
             <div style={{
@@ -1435,7 +1464,7 @@ export default function ClientView() {
                 <span style={{ fontWeight: 400, opacity: 0.6 }}></span>
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                {profile.badges.map(badge => (
+                {profile.badges.map((badge, bIdx) => (
                   <div key={badge} style={{
                     display: "flex", alignItems: "center", gap: "10px",
                     padding: "12px 14px",
@@ -1453,7 +1482,7 @@ export default function ClientView() {
                       <span style={{ fontSize: "1.125em", flexShrink: 0 }}>{BADGE_ICONS[badge] || "✦"}</span>
                     )}
                     <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, color: P.text, lineHeight: 1.25 }}>
-                      {badge}
+                      {tArr("badges", profile.badges)[bIdx] || badge}
                     </span>
                   </div>
                 ))}
@@ -1492,13 +1521,13 @@ export default function ClientView() {
                   Languages
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                  {profile.languages.map(lang => (
+                  {profile.languages.map((lang, langIdx) => (
                     <span key={lang} style={{
                       fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                       padding: "6px 14px", borderRadius: "20px",
                       background: P.badgeBg, border: `1px solid ${P.badgeBorder}`,
                       color: P.text,
-                    }}>{lang}</span>
+                    }}>{tArr("languages", profile.languages)[langIdx] || lang}</span>
                   ))}
                 </div>
               </div>
@@ -1513,7 +1542,7 @@ export default function ClientView() {
           <div style={{ paddingTop: "16px" }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {selectedServices.map((svc) => (
+                {selectedServices.map((svc, svcIdx) => (
                   <div key={svc.id} style={{
                     display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
                     width: "90px",
@@ -1526,7 +1555,7 @@ export default function ClientView() {
                     <span style={{
                       fontFamily: "'Outfit', sans-serif", fontSize: "0.9em", fontWeight: 700,
                       color: P.text, textAlign: "center", lineHeight: 1.25,
-                    }}>{svc.label}</span>
+                    }}>{tArr("serviceLabels", selectedServices.map(s => s.label))[svcIdx] || svc.label}</span>
                   </div>
                 ))}
               </div>
@@ -1576,13 +1605,13 @@ export default function ClientView() {
             <ThreadConnector />
             <ThreadSection id="thread-experience" num={3} icon="📋" title="Experience" subtitle="My background, training, and specialist areas." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                {checkedExperience.map(({ label }) => (
+                {checkedExperience.map(({ label }, expIdx) => (
                   <span key={label} style={{
                     fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                     padding: "6px 14px", borderRadius: "20px",
                     background: "#dbeafe", border: "1.5px solid #93c5fd",
                     color: "#1e3a5f",
-                  }}>{label}</span>
+                  }}>{tArr("experienceLabels", checkedExperience.map(e => e.label))[expIdx] || label}</span>
                 ))}
                 {profile.customExperience && (
                   <span style={{
@@ -1615,13 +1644,13 @@ export default function ClientView() {
                         {group.label}
                       </p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                        {profile.showUpStyle[group.key].map(chip => (
+                        {profile.showUpStyle[group.key].map((chip, chipIdx) => (
                           <span key={chip} style={{
                             fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                             padding: "6px 14px", borderRadius: "20px",
                             background: "#f3e8ff", border: "1.5px solid #c4b5fd",
                             color: "#4c1d95",
-                          }}>{chip}</span>
+                          }}>{tArr(group.key, profile.showUpStyle[group.key])[chipIdx] || chip}</span>
                         ))}
                       </div>
                     </div>
