@@ -925,13 +925,18 @@ export default function ClientView() {
           }}>
             {/* Shimmer sweep */}
             <style>{`
-              .banner-btns { width: 100%; justify-content: space-evenly; }
-              .banner-btn { width: 72px; height: 72px; border-radius: 14px !important; }
-              .banner-btn-icon { font-size: 28px !important; }
-              .banner-btn-label { font-size: 11px !important; }
-              @media (max-width: 360px) {
-                .banner-btn { width: 62px !important; height: 62px !important; }
-                .banner-btn-icon { font-size: 24px !important; }
+              .banner-btns { width: 100%; justify-content: space-evenly; gap: 6px; }
+              .banner-btn { width: 82px; height: 82px; border-radius: 16px !important; padding: 6px 4px !important; }
+              .banner-btn-icon { font-size: 30px !important; }
+              .banner-btn-label { font-size: 13px !important; font-weight: 900 !important; letter-spacing: 0 !important; }
+              @media (max-width: 380px) {
+                .banner-btn { width: 72px !important; height: 72px !important; }
+                .banner-btn-icon { font-size: 26px !important; }
+                .banner-btn-label { font-size: 11px !important; }
+              }
+              @media (max-width: 340px) {
+                .banner-btn { width: 64px !important; height: 64px !important; }
+                .banner-btn-icon { font-size: 22px !important; }
                 .banner-btn-label { font-size: 10px !important; }
               }
               @keyframes shimmerSweep {
@@ -976,19 +981,19 @@ export default function ClientView() {
                 className="banner-btn"
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
-                  background: ttsStatus === "reading" ? "#F0C040" : ttsStatus === "paused" ? "#F0C040" : "#F0C040",
-                  border: "2px solid #000000",
-                  borderRadius: "14px",
-                  padding: "0",
+                  background: "#F0C040",
+                  border: "2.5px solid #000000",
+                  borderRadius: "16px",
+                  padding: "6px 4px",
                   cursor: "pointer",
-                  width: "72px", height: "72px",
+                  width: "82px", height: "82px",
                   flexShrink: 0,
                 }}
               >
-                <span className="banner-btn-icon" style={{ fontSize: "28px", lineHeight: 1 }} aria-hidden="true">
+                <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">
                   {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
                 </span>
-                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 800, color: "#000000", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
                   {ttsStatus === "reading" ? "PAUSE" : ttsStatus === "paused" ? "RESUME" : "READ"}
                 </span>
               </button>
@@ -1001,16 +1006,16 @@ export default function ClientView() {
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
                     background: "#F0C040",
-                    border: "2px solid #000000",
-                    borderRadius: "12px",
-                    padding: "0",
+                    border: "2.5px solid #000000",
+                    borderRadius: "14px",
+                    padding: "4px",
                     cursor: "pointer",
-                    width: "58px", height: "58px",
+                    width: "68px", height: "68px",
                     flexShrink: 0,
                   }}
                 >
                   <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">⏹</span>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#000000", letterSpacing: "0.04em", textTransform: "uppercase" }}>STOP</span>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase" }}>STOP</span>
                 </button>
               )}
 
@@ -1024,16 +1029,16 @@ export default function ClientView() {
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
                   background: "#F0C040",
-                  border: "2px solid #000000",
-                  borderRadius: "14px",
-                  padding: "0",
+                  border: "2.5px solid #000000",
+                  borderRadius: "16px",
+                  padding: "6px 4px",
                   cursor: "pointer",
-                  width: "72px", height: "72px",
+                  width: "82px", height: "82px",
                   flexShrink: 0,
                 }}
               >
-                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "34px", height: "34px", objectFit: "contain" }} />
-                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 800, color: "#000000", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
+                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "38px", height: "38px", objectFit: "contain" }} />
+                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
               </button>
 
               {/* Voice Control */}
@@ -1075,20 +1080,19 @@ export default function ClientView() {
                   className="banner-btn"
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
-                    background: voiceActive ? "#F0C040" : "#F0C040",
-                    border: `2px solid ${voiceActive ? "#000000" : "#000000"}`,
+                    background: "#F0C040",
+                    border: "2.5px solid #000000",
                     animation: voiceActive ? "vc-pulse-gold 1.5s ease-in-out infinite" : "none",
-                    borderRadius: "14px",
-                    padding: "0",
+                    borderRadius: "16px",
+                    padding: "6px 4px",
                     cursor: "pointer",
-                    width: "72px", height: "72px",
+                    width: "82px", height: "82px",
                     flexShrink: 0,
-
                   }}
                 >
-                  <span className="banner-btn-icon" style={{ fontSize: "28px", lineHeight: 1 }} aria-hidden="true">{voiceActive ? "⏹" : "🎤"}</span>
-                  <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 800, color: "#000000", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                    {voiceActive ? "LISTENING" : "VOICE"}
+                  <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">{voiceActive ? "⏹" : "🎤"}</span>
+                  <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    {voiceActive ? "LISTEN" : "VOICE"}
                   </span>
                 </button>
                 {/* Persistent hint for low vision */}
@@ -1117,17 +1121,17 @@ export default function ClientView() {
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
                     background: "#F0C040",
-                    border: "2px solid #000000",
-                    borderRadius: "14px", padding: "0", cursor: "pointer",
-                    width: "72px", height: "72px", flexShrink: 0,
+                    border: "2.5px solid #000000",
+                    borderRadius: "16px", padding: "6px 4px", cursor: "pointer",
+                    width: "82px", height: "82px", flexShrink: 0,
                     opacity: translating ? 0.6 : 1,
                   }}
                 >
-                  <span className="banner-btn-icon" style={{ fontSize: "28px", lineHeight: 1 }} aria-hidden="true">
+                  <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">
                     {translating ? "⏳" : "🌐"}
                   </span>
-                  <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "11px", fontWeight: 800, color: "#000000", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                    {translating ? "..." : translatedLang ? "RESTORE" : "TRANSLATE"}
+                  <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    {translating ? "..." : translatedLang ? "RESTORE" : "TRANSL8"}
                   </span>
                 </button>
                 {/* Language picker dropdown */}
