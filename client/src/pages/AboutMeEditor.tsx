@@ -950,7 +950,7 @@ export default function AboutMeEditor() {
 
             <Field label="What Causes Distress (Triggers)" hint="e.g. Unexpected changes, loud environments, being touched without warning" value={profile.triggers} onChange={v => set("triggers", v)} multiline rows={4} maxLength={500} {...dp("triggers")} />
             <Field label="Early Warning Signs" hint="Signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} maxLength={500} {...dp("earlyWarnings")} />
-            <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} maxLength={500} {...dp("whatHelps")} />
+            <Field label="Strategies that help me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} maxLength={500} {...dp("whatHelps")} />
             <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} maxLength={500} {...dp("whatMakesWorse")} />
             <TabNav current="triggers" />
           </div>

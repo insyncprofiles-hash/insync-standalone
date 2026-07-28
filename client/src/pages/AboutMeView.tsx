@@ -452,7 +452,7 @@ export default function AboutMeView() {
               )}
               {whatHelps && (
                 <div style={{ marginBottom: "16px", background: "#f0fdf4", borderRadius: "12px", padding: "14px" }}>
-                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: teal, marginBottom: "6px" }}>What Helps Me Regulate</p>
+                  <p style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, fontSize: fs(13), color: teal, marginBottom: "6px" }}>Strategies that help me Regulate</p>
                   <TextBlock value={whatHelps} fs={fs} />
                 </div>
               )}
