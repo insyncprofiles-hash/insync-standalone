@@ -52,6 +52,7 @@ interface AboutMeProfile {
   environment: string;
   goodDayLooksLike: string;
   whatMatters: string;
+  goals: string;
   ndisNumber: string;
   planDates: string;
   coordinatorName: string;
@@ -69,6 +70,7 @@ const EMPTY: AboutMeProfile = {
   doThis: "", neverDo: "", culturalConsiderations: "",
   languages: "", needsInterpreter: "",
   foodPreferences: "", music: "", routine: "", environment: "", goodDayLooksLike: "", whatMatters: "",
+  goals: "",
   ndisNumber: "", planDates: "", coordinatorName: "", coordinatorPhone: "", coordinatorEmail: "",
 };
 
@@ -86,6 +88,7 @@ function profileToParams(p: AboutMeProfile): string {
     "doThis","neverDo","culturalConsiderations",
     "languages","needsInterpreter",
     "foodPreferences","music","routine","environment","goodDayLooksLike","whatMatters",
+    "goals",
     "ndisNumber","planDates","coordinatorName","coordinatorPhone","coordinatorEmail",
   ];
   fields.forEach(f => { if (p[f]) sp.set(f, p[f] as string); });
@@ -478,6 +481,7 @@ export default function AboutMeEditor() {
     { id: "triggers",   label: "Triggers",                        emoji: "🌿" },
     { id: "approaches", label: "Approaches",                      emoji: "🤝" },
     { id: "prefs",      label: "Preferences",                     emoji: "🌻" },
+    { id: "goals",      label: "Goals",                            emoji: "🎯" },
     { id: "ndis",       label: isAgedCare ? "Care Info" : "NDIS Info", emoji: "📋" },
     { id: "share",      label: "Share",                           emoji: "🔗" },
   ];
@@ -982,6 +986,29 @@ export default function AboutMeEditor() {
             <Field label="What a Good Day Looks Like" hint="Describe what the person is like when happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} maxLength={500} {...dp("goodDayLooksLike")} />
             <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} maxLength={500} {...dp("whatMatters")} />
             <TabNav current="prefs" />
+          </div>
+        )}
+
+        {/* GOALS */}
+        {activeTab === "goals" && (
+          <div>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>
+              Goals 🎯
+            </h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>
+              Share your personal goals — what you're working toward, what you hope to achieve, and what matters most to you for your future.
+            </p>
+            <Field
+              id="goals"
+              label="My Goals"
+              hint="What are you working toward? What do you hope to achieve? (short-term and long-term)"
+              value={profile.goals}
+              onChange={v => set("goals", v)}
+              multiline rows={6}
+              maxLength={800}
+              {...dp("goals")}
+            />
+            <TabNav current="goals" />
           </div>
         )}
 

@@ -122,6 +122,7 @@ export default function AboutMeView() {
   const environment = p("environment");
   const goodDayLooksLike = p("goodDayLooksLike");
   const whatMatters = p("whatMatters");
+  const goals = p("goals");
   const ndisNumber = p("ndisNumber");
   const planDates = p("planDates");
   const coordinatorName = p("coordinatorName");
@@ -482,6 +483,15 @@ export default function AboutMeView() {
                   <TextBlock value={culturalConsiderations} fs={fs} />
                 </div>
               )}
+            </Section>
+          </div>
+        )}
+
+        {/* GOALS */}
+        {goals && (
+          <div style={{ background: cardBg, borderRadius: "20px", padding: "20px", marginBottom: "20px", border: "1.5px solid #e2e8f0" }}>
+            <Section title="Goals" emoji="🎯" accent={teal} fs={fs}>
+              <TextBlock value={goals} fs={fs} />
             </Section>
           </div>
         )}
