@@ -159,17 +159,22 @@ export function generateAboutMeHTML(data: AboutMeExportData): string {
     ? section("My Preferences", "🌻", prefsContent) : "";
 
   // ── VIDEO ──────────────────────────────────────────────────
+  // Use a clickable thumbnail link instead of an iframe embed.
+  // YouTube blocks iframe embeds when opened from local files (Error 153).
   const videoSection = videoId ? section("When I'm Well", "🎬", `
     ${data.videoDescription ? `<p class="video-desc">${esc(data.videoDescription)}</p>` : ""}
-    <div class="video-wrapper">
-      <iframe
-        src="https://www.youtube.com/embed/${esc(videoId)}?rel=0&enablejsapi=1"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        title="When I'm Well"
-        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px"
-      ></iframe>
-    </div>`) : "";
+    <a href="https://www.youtube.com/watch?v=${esc(videoId)}" target="_blank" rel="noreferrer" class="video-link">
+      <div class="video-thumb-wrap">
+        <img
+          src="https://img.youtube.com/vi/${esc(videoId)}/hqdefault.jpg"
+          alt="Watch video"
+          class="video-thumb"
+          onerror="this.style.display='none'"
+        />
+        <div class="video-play-btn">▶</div>
+        <div class="video-label">▶ Watch on YouTube</div>
+      </div>
+    </a>`) : "";
 
   // ── COMMUNICATION ──────────────────────────────────────────
   const commContent = [
@@ -391,9 +396,31 @@ export function generateAboutMeHTML(data: AboutMeExportData): string {
     .video-desc {
       font-size: 14px; color: #2563eb; font-style: italic; margin-bottom: 14px;
     }
-    .video-wrapper {
-      position: relative; padding-bottom: 56.25%; height: 0;
-      border-radius: 12px; overflow: hidden;
+    .video-link { display: block; text-decoration: none; }
+    .video-thumb-wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      background: #000; cursor: pointer;
+    }
+    .video-thumb {
+      width: 100%; display: block; border-radius: 12px;
+      aspect-ratio: 16/9; object-fit: cover;
+    }
+    .video-play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(240,192,64,0.95);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: #0a0a0a;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+    }
+    .video-label {
+      position: absolute; bottom: 10px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.65);
+      border-radius: 20px; padding: 4px 14px;
+      font-family: 'Nunito', sans-serif; font-size: 13px;
+      font-weight: 700; color: #F0C040; white-space: nowrap;
     }
     .footer {
       background: #f8fafc;
