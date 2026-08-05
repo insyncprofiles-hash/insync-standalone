@@ -1169,10 +1169,10 @@ export default function AboutMeEditor() {
                     style={{
                       display: "block", width: "100%", padding: "16px 36px",
                       borderRadius: "16px", boxSizing: "border-box",
-                      background: downloadDone ? "#16a34a" : C.gold,
-                      color: "#fff", fontFamily: C.headFont, fontWeight: 900,
+                      background: downloadDone ? "#16a34a" : "#F0C040",
+                      color: downloadDone ? "#fff" : "#1a1a1a", fontFamily: C.headFont, fontWeight: 900,
                       fontSize: "16px", border: "none", cursor: "pointer", textAlign: "center",
-                      boxShadow: "0 4px 16px rgba(180,83,9,0.25)",
+                      boxShadow: "0 4px 16px rgba(240,192,64,0.4)",
                       transition: "background 200ms ease-out",
                     }}
                   >
