@@ -99,18 +99,20 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     return () => document.removeEventListener("keydown", handler);
   }, [openPanel]);
 
-  // Close panels on outside click
+  // Close panels on outside click — but NOT while TTS is active (Android: tap fires mousedown before click, closing panel would cancel synthesis)
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       const target = e.target as Node;
       if (openPanel === "a11y" && a11yPanelRef.current && !a11yPanelRef.current.contains(target) && !a11yBtnRef.current?.contains(target)) {
+        // Don't close the panel while TTS is reading/paused — closing it on Android cancels synthesis
+        if (ttsStatus !== "idle") return;
         setOpenPanel("none");
       }
 
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [openPanel]);
+  }, [openPanel, ttsStatus]);
 
   const updateSettings = useCallback((patch: Partial<AccessibilitySettings>) => {
     setSettings(prev => ({ ...prev, ...patch }));
@@ -153,7 +155,9 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     };
     ss.speak(utterance);
     // Android Chrome workaround: synthesis can get stuck in pending state
-    setTimeout(() => { if (ss.speaking) ss.resume(); }, 300);
+    // Multiple resume() calls at different intervals to cover slow-starting voices
+    setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 250);
+    setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 800);
   }, []);
 
   const readPage = useCallback(() => {
@@ -171,7 +175,21 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       setTtsStatus("reading");
       return;
     }
-    const text = document.body.innerText.slice(0, 5000);
+    // Try to get text from the main content area first; fall back to body
+    // This ensures we capture profile content on the About Me view
+    const mainContent = document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('#root > div') || document.body;
+    const rawText = (mainContent as HTMLElement).innerText || document.body.innerText;
+    // Filter out very short lines (nav labels, button text) and join meaningful content
+    const text = rawText
+      .split('\n')
+      .map(l => l.trim())
+      .filter(l => l.length > 2)
+      .join(' ')
+      .slice(0, 5000);
+    if (!text || text.length < 3) {
+      alert("No readable text was found on this page.");
+      return;
+    }
     // Android: voices may not be loaded yet — wait for voiceschanged event
     const voices = window.speechSynthesis.getVoices();
     if (voices.length === 0) {
@@ -638,6 +656,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             </div>
             <button
               onClick={readPage}
+              onPointerDown={e => e.stopPropagation()}
               aria-label={ttsStatus === "reading" ? "Pause reading" : ttsStatus === "paused" ? "Resume reading" : "Read page aloud"}
               style={{
                 padding: "8px 14px",

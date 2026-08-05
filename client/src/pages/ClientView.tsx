@@ -705,6 +705,93 @@ export default function ClientView() {
 
   // Read Aloud (TTS)
   const [ttsStatus, setTtsStatus] = useState<"idle" | "reading" | "paused">("idle");
+
+  // ── Translation ──────────────────────────────────────────────────────────
+  const TRANSLATE_LANGS: { code: string; label: string; native: string }[] = [
+    { code: "ar", label: "Arabic", native: "العربية" },
+    { code: "vi", label: "Vietnamese", native: "Tiếng Việt" },
+    { code: "zh", label: "Mandarin", native: "普通话" },
+    { code: "yue", label: "Cantonese", native: "廣東話" },
+    { code: "es", label: "Spanish", native: "Español" },
+    { code: "hi", label: "Hindi", native: "हिन्दी" },
+    { code: "el", label: "Greek", native: "Ελληνικά" },
+    { code: "it", label: "Italian", native: "Italiano" },
+    { code: "tl", label: "Filipino", native: "Filipino" },
+    { code: "ko", label: "Korean", native: "한국어" },
+    { code: "pt", label: "Portuguese", native: "Português" },
+  ];
+  const [showLangPicker, setShowLangPicker] = useState(false);
+  const [translating, setTranslating] = useState(false);
+  const [translatedLang, setTranslatedLang] = useState<string | null>(null);
+  const [translations, setTranslations] = useState<Record<string, string | string[]>>({});
+
+  const translateText = async (text: string, targetLang: string): Promise<string> => {
+    if (!text || !text.trim()) return text;
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${targetLang}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      return data?.responseData?.translatedText || text;
+    } catch {
+      return text;
+    }
+  };
+
+  const handleTranslate = async (langCode: string, langLabel: string) => {
+    setShowLangPicker(false);
+    if (translatedLang === langLabel) {
+      // Restore original
+      setTranslatedLang(null);
+      setTranslations({});
+      return;
+    }
+    setTranslating(true);
+    const results: Record<string, string | string[]> = {};
+    // Scalar fields
+    const scalarFields: Record<string, string> = {};
+    if (profile.name) scalarFields.name = profile.name;
+    if (profile.title) scalarFields.title = profile.title;
+    if (profile.tagline) scalarFields.tagline = profile.tagline;
+    if (profile.bio) scalarFields.bio = profile.bio;
+    if (profile.customExperience) scalarFields.customExperience = profile.customExperience;
+    for (const [key, val] of Object.entries(scalarFields)) {
+      results[key] = await translateText(val, langCode);
+    }
+    // Service labels
+    const selSvcs = profile.services.filter((s: { selected: boolean }) => s.selected);
+    if (selSvcs.length > 0) {
+      results.serviceLabels = await Promise.all(selSvcs.map((s: { label: string }) => translateText(s.label, langCode)));
+    }
+    // Credential badges
+    if (profile.badges.length > 0) {
+      results.badges = await Promise.all(profile.badges.map((b: string) => translateText(b, langCode)));
+    }
+    // Experience chips
+    const expLabels = profile.experienceGroups.flatMap((g: { items: { checked: boolean; label: string }[] }) => g.items.filter(i => i.checked).map(i => i.label));
+    if (expLabels.length > 0) {
+      results.experienceLabels = await Promise.all(expLabels.map((l: string) => translateText(l, langCode)));
+    }
+    // How I Show Up chips
+    if (profile.showUpStyle.communicate.length > 0) {
+      results.communicate = await Promise.all(profile.showUpStyle.communicate.map((c: string) => translateText(c, langCode)));
+    }
+    if (profile.showUpStyle.connect.length > 0) {
+      results.connect = await Promise.all(profile.showUpStyle.connect.map((c: string) => translateText(c, langCode)));
+    }
+    if (profile.showUpStyle.presence.length > 0) {
+      results.presence = await Promise.all(profile.showUpStyle.presence.map((c: string) => translateText(c, langCode)));
+    }
+    // Languages spoken
+    if (profile.languages.length > 0) {
+      results.languages = await Promise.all(profile.languages.map((l: string) => translateText(l, langCode)));
+    }
+    setTranslations(results);
+    setTranslatedLang(langLabel);
+    setTranslating(false);
+  };
+
+  const t = (key: string, fallback: string) => (translations[key] as string) || fallback;
+  const tArr = (key: string, fallback: string[]): string[] => (translations[key] as string[]) || fallback;
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showAACBoard, setShowAACBoard] = useState(false);
   const videoPlayRef = useRef<(() => void) | null>(null);
@@ -873,21 +960,35 @@ export default function ClientView() {
           {/* ── GET TO KNOW ME — top CTA banner ── */}
           <div style={{
             background: "#0a0a0a",
-            padding: "12px 16px",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "10px",
+            padding: "14px 16px 16px",
+            display: "flex", flexDirection: "column", alignItems: "flex-start",
+            gap: "12px",
             position: "relative",
             overflow: "hidden",
           }}>
             {/* Shimmer sweep */}
             <style>{`
-              @media (max-width: 520px) {
-                .banner-btns { width: 100%; justify-content: center; }
+              .banner-btns { width: 100%; justify-content: space-evenly; gap: 6px; }
+              .banner-btn { width: 82px; height: 82px; border-radius: 16px !important; padding: 6px 4px !important; }
+              .banner-btn-icon { font-size: 30px !important; }
+              .banner-btn-label { font-size: 13px !important; font-weight: 900 !important; letter-spacing: 0 !important; }
+              @media (max-width: 380px) {
+                .banner-btn { width: 72px !important; height: 72px !important; }
+                .banner-btn-icon { font-size: 26px !important; }
+                .banner-btn-label { font-size: 11px !important; }
+              }
+              @media (max-width: 340px) {
+                .banner-btn { width: 64px !important; height: 64px !important; }
+                .banner-btn-icon { font-size: 22px !important; }
+                .banner-btn-label { font-size: 10px !important; }
               }
               @keyframes shimmerSweep {
                 0% { transform: translateX(-100%) skewX(-15deg); }
                 100% { transform: translateX(350%) skewX(-15deg); }
+              }
+              @keyframes vc-pulse-gold {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(240,192,64,0.7); }
+                50% { box-shadow: 0 0 0 8px rgba(240,192,64,0); }
               }
               @media (prefers-reduced-motion: no-preference) {
                 .insync-shimmer { animation: shimmerSweep 2.4s ease-in-out infinite; }
@@ -903,8 +1004,8 @@ export default function ClientView() {
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: 1 }}>
               <img src="/assets/accessibility-icon-gold.svg" alt="Accessible" style={{ width: "34px", height: "34px", flexShrink: 0 }} />
               <div style={{ minWidth: 0 }}>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>GET TO KNOW ME</p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.625em", fontWeight: 800, color: "#F0C040", margin: "2px 0 0", letterSpacing: "0.10em", textTransform: "uppercase", textShadow: "0 0 8px rgba(240,192,64,0.7)", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.5em", fontWeight: 900, color: "#F0C040", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", lineHeight: 1.1 }}>GET TO KNOW ME</p>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.85em", fontWeight: 800, color: "#F0C040", margin: "4px 0 0", letterSpacing: "0.12em", textTransform: "uppercase", textShadow: "0 0 10px rgba(240,192,64,0.8)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", display: "flex", alignItems: "center", gap: "6px" }}>
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
                   Interactive &amp; Accessible
                   <span style={{ display: "inline-block", width: "5px", height: "5px", borderRadius: "50%", background: "#F0C040", boxShadow: "0 0 5px #F0C040", flexShrink: 0 }} />
@@ -913,28 +1014,29 @@ export default function ClientView() {
             </div>
 
             {/* Right: Read Aloud + Accessibility + Voice Control buttons */}
-            <div className="banner-btns" style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+            <div className="banner-btns" style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-evenly", gap: "0", width: "100%" }}>
 
               {/* Shared button style — all 3 buttons identical size */}
               {/* Read Aloud */}
               <button
                 onClick={handleReadAloud}
                 aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
+                className="banner-btn"
                 style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-                  background: ttsStatus === "reading" ? "#e53935" : ttsStatus === "paused" ? "#f57c00" : "#6200ea",
-                  border: "2px solid #F0C040",
-                  borderRadius: "12px",
-                  padding: "0",
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
+                  background: "#F0C040",
+                  border: "2.5px solid #000000",
+                  borderRadius: "16px",
+                  padding: "6px 4px",
                   cursor: "pointer",
-                  width: "58px", height: "58px",
+                  width: "82px", height: "82px",
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">
+                <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">
                   {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
                 </span>
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
                   {ttsStatus === "reading" ? "PAUSE" : ttsStatus === "paused" ? "RESUME" : "READ"}
                 </span>
               </button>
@@ -946,17 +1048,17 @@ export default function ClientView() {
                   aria-label="Stop reading aloud"
                   style={{
                     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-                    background: "#b71c1c",
-                    border: "2px solid #F0C040",
-                    borderRadius: "12px",
-                    padding: "0",
+                    background: "#F0C040",
+                    border: "2.5px solid #000000",
+                    borderRadius: "14px",
+                    padding: "4px",
                     cursor: "pointer",
-                    width: "58px", height: "58px",
+                    width: "68px", height: "68px",
                     flexShrink: 0,
                   }}
                 >
                   <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">⏹</span>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase" }}>STOP</span>
+                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase" }}>STOP</span>
                 </button>
               )}
 
@@ -966,19 +1068,20 @@ export default function ClientView() {
                   document.dispatchEvent(new CustomEvent("insync:open-a11y-panel"));
                 }}
                 aria-label="Accessibility options"
+                className="banner-btn"
                 style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-                  background: "transparent",
-                  border: "2px solid #F0C040",
-                  borderRadius: "12px",
-                  padding: "0",
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
+                  background: "#F0C040",
+                  border: "2.5px solid #000000",
+                  borderRadius: "16px",
+                  padding: "6px 4px",
                   cursor: "pointer",
-                  width: "58px", height: "58px",
+                  width: "82px", height: "82px",
                   flexShrink: 0,
                 }}
               >
-                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "34px", height: "34px", objectFit: "contain" }} />
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#F0C040", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
+                <img src="/assets/accessibility-icon-gold-circle.png" alt="" aria-hidden="true" style={{ width: "38px", height: "38px", objectFit: "contain" }} />
+                <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>ACCESS</span>
               </button>
 
               {/* Voice Control */}
@@ -1017,21 +1120,22 @@ export default function ClientView() {
                   onClick={handleVoiceToggle}
                   aria-label={voiceActive ? "Turn off voice control" : "Turn on voice control"}
                   aria-pressed={voiceActive}
+                  className="banner-btn"
                   style={{
-                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-                    background: voiceActive ? "#1565C0" : "#b71c1c",
-                    border: `2px solid ${voiceActive ? "#90CAF9" : "#ef9a9a"}`,
-                    borderRadius: "12px",
-                    padding: "0",
+                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
+                    background: "#F0C040",
+                    border: "2.5px solid #000000",
+                    animation: voiceActive ? "vc-pulse-gold 1.5s ease-in-out infinite" : "none",
+                    borderRadius: "16px",
+                    padding: "6px 4px",
                     cursor: "pointer",
-                    width: "58px", height: "58px",
+                    width: "82px", height: "82px",
                     flexShrink: 0,
-                    animation: voiceActive ? "vc-pulse-a11y 1.5s ease-in-out infinite" : "none",
                   }}
                 >
-                  <span style={{ fontSize: "20px", lineHeight: 1 }} aria-hidden="true">{voiceActive ? "⏹" : "🎤"}</span>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "9px", fontWeight: 800, color: "#ffffff", letterSpacing: "0.04em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                    {voiceActive ? "LISTENING" : "VOICE"}
+                  <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">{voiceActive ? "⏹" : "🎤"}</span>
+                  <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    {voiceActive ? "LISTEN" : "VOICE"}
                   </span>
                 </button>
                 {/* Persistent hint for low vision */}
@@ -1051,11 +1155,92 @@ export default function ClientView() {
                   }}>Say “help”</span>
                 )}
               </div>
-
+              {/* Translate button */}
+              <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: "3px" }}>
+                <button
+                  onClick={() => setShowLangPicker(p => !p)}
+                  aria-label="Translate profile"
+                  className="banner-btn"
+                  style={{
+                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
+                    background: "#F0C040",
+                    border: "2.5px solid #000000",
+                    borderRadius: "16px", padding: "6px 4px", cursor: "pointer",
+                    width: "82px", height: "82px", flexShrink: 0,
+                    opacity: translating ? 0.6 : 1,
+                  }}
+                >
+                  <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">
+                    {translating ? "⏳" : "🌐"}
+                  </span>
+                  <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    {translating ? "..." : translatedLang ? "RESTORE" : "TRANSL8"}
+                  </span>
+                </button>
+                {/* Language picker dropdown */}
+                {showLangPicker && (
+                  <>
+                    {/* Backdrop — tap outside to close */}
+                    <div
+                      onClick={() => setShowLangPicker(false)}
+                      style={{
+                        position: "fixed", inset: 0,
+                        zIndex: 10001, background: "transparent",
+                      }}
+                    />
+                    <div style={{
+                      position: "fixed", bottom: "100px", right: "12px",
+                      width: "230px", background: "rgba(13,27,42,0.98)",
+                      border: "2px solid #F0C040", borderRadius: "14px",
+                      padding: "0", boxShadow: "0 8px 32px rgba(0,0,0,0.85)",
+                      zIndex: 10002, fontFamily: "'Outfit', sans-serif",
+                      maxHeight: "55vh", overflowY: "auto",
+                    }}>
+                      {/* Header row */}
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px 8px" }}>
+                        <p style={{ color: "#F0C040", fontSize: "11px", fontWeight: 800, margin: 0, letterSpacing: "0.05em", textTransform: "uppercase" }}>Translate to...</p>
+                        <button
+                          onClick={() => setShowLangPicker(false)}
+                          style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", fontSize: "18px", cursor: "pointer", lineHeight: 1, padding: "0 2px" }}
+                          aria-label="Close language picker"
+                        >✕</button>
+                      </div>
+                      {TRANSLATE_LANGS.map(lang => (
+                        <button
+                          key={lang.code}
+                          onClick={() => handleTranslate(lang.code, lang.label)}
+                          style={{
+                            display: "flex", alignItems: "center", justifyContent: "space-between",
+                            width: "100%", padding: "12px 14px",
+                            background: translatedLang === lang.label ? "rgba(21,101,192,0.4)" : "transparent",
+                            border: "none", cursor: "pointer",
+                            borderTop: "1px solid rgba(240,192,64,0.15)",
+                          }}
+                        >
+                          <span style={{ color: "#ffffff", fontSize: "15px", fontWeight: 700 }}>{lang.label}</span>
+                          <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px" }}>{lang.native}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-
           </div>
-
+          {/* Translation active banner */}
+          {translatedLang && (
+            <div style={{
+              background: "#1565C0", color: "#ffffff",
+              padding: "8px 16px", display: "flex", alignItems: "center", justifyContent: "space-between",
+              fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 700,
+            }}>
+              <span>🌐 Translated to {translatedLang}</span>
+              <button
+                onClick={() => { setTranslatedLang(null); setTranslations({}); }}
+                style={{ background: "none", border: "1px solid rgba(255,255,255,0.5)", borderRadius: "6px", color: "#ffffff", padding: "3px 10px", cursor: "pointer", fontSize: "12px", fontWeight: 700 }}
+              >Restore original</button>
+            </div>
+          )}
           {/* Header: large circular photo + name/title/location */}
           <div style={{ display: "flex", alignItems: "flex-start", gap: "18px", padding: "28px 24px 16px" }}>
             {/* Large circular photo with gold ring */}
@@ -1077,10 +1262,10 @@ export default function ClientView() {
             {/* Name / title / location */}
             <div style={{ flex: 1, paddingTop: "8px" }}>
               <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.875em", fontWeight: 700, color: P.text, margin: "0 0 6px", lineHeight: 1.05 }}>
-                {profile.name}
+                {t("name", profile.name)}
               </h1>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: P.accent === "#4a90d9" ? "#1a5fa8" : P.accent, margin: "0 0 10px" }}>
-                {profile.title}
+                {t("title", profile.title)}
               </p>
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.text, margin: 0, display: "flex", alignItems: "center", gap: "6px" }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="#e74c3c" aria-hidden="true">
@@ -1093,26 +1278,25 @@ export default function ClientView() {
 
           {/* Service circles — pastel circle + label, matching reference image */}
           {selectedServices.length > 0 && (
-            <div style={{ padding: "8px 10px 20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-around", gap: "6px", flexWrap: "wrap" }}>
-                {selectedServices.slice(0, 4).map((svc) => (
-                  <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", flex: "1 1 68px", minWidth: "60px", maxWidth: "80px" }}>
+            <div style={{ padding: "24px 20px 32px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "28px 20px", justifyItems: "center" }}>
+                {selectedServices.slice(0, 4).map((svc, svcIdx) => (
+                  <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", width: "100%" }}>
                     <img
                       src={svc.iconImg || `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='64' height='64' rx='12' fill='%231a5fa8'/><text x='32' y='44' font-size='28' text-anchor='middle'>${encodeURIComponent(svc.icon)}</text></svg>`}
                       alt={svc.label}
                       style={{ width: "64px", height: "64px", borderRadius: "12px", objectFit: "cover", display: "block" }}
                     />
                     <p style={{
-                      fontFamily: "'Outfit', sans-serif", fontSize: "0.9em", fontWeight: 700,
+                      fontFamily: "'Outfit', sans-serif", fontSize: "0.85em", fontWeight: 700,
                       color: "#1a5fa8", textAlign: "center",
-                      margin: 0, lineHeight: 1.25, maxWidth: "80px",
-                    }}>{svc.label}</p>
+                      margin: 0, lineHeight: 1.25, wordBreak: "break-word", width: "100%",
+                                        }}>{tArr("serviceLabels", selectedServices.map(s => s.label))[svcIdx] || svc.label}</p>
                   </div>
                 ))}
               </div>
             </div>
           )}
-
           {/* Video — rainbow border matching reference */}
           <div id="profile-video" style={{ padding: "0 20px 16px" }}>
             <div style={{
@@ -1227,7 +1411,7 @@ export default function ClientView() {
               fontStyle: "italic", fontWeight: 600, color: P.text, margin: 0,
               lineHeight: 1.35,
             }}>
-              “{profile.tagline}”
+              {`"${t("tagline", profile.tagline)}"`}
             </p>
           </div>
 
@@ -1293,7 +1477,7 @@ export default function ClientView() {
                 <span style={{ fontWeight: 400, opacity: 0.6 }}></span>
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                {profile.badges.map(badge => (
+                {profile.badges.map((badge, bIdx) => (
                   <div key={badge} style={{
                     display: "flex", alignItems: "center", gap: "10px",
                     padding: "12px 14px",
@@ -1311,7 +1495,7 @@ export default function ClientView() {
                       <span style={{ fontSize: "1.125em", flexShrink: 0 }}>{BADGE_ICONS[badge] || "✦"}</span>
                     )}
                     <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 700, color: P.text, lineHeight: 1.25 }}>
-                      {badge}
+                      {tArr("badges", profile.badges)[bIdx] || badge}
                     </span>
                   </div>
                 ))}
@@ -1341,7 +1525,7 @@ export default function ClientView() {
           <div style={{ paddingTop: "16px" }}>
             {profile.bio && (
               <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.0em", color: P.text, lineHeight: 1.6, margin: "0 0 12px" }}>
-                {profile.bio}
+                {t("bio", profile.bio)}
               </p>
             )}
             {profile.languages.length > 0 && (
@@ -1350,13 +1534,13 @@ export default function ClientView() {
                   Languages
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                  {profile.languages.map(lang => (
+                  {profile.languages.map((lang, langIdx) => (
                     <span key={lang} style={{
                       fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                       padding: "6px 14px", borderRadius: "20px",
                       background: P.badgeBg, border: `1px solid ${P.badgeBorder}`,
                       color: P.text,
-                    }}>{lang}</span>
+                    }}>{tArr("languages", profile.languages)[langIdx] || lang}</span>
                   ))}
                 </div>
               </div>
@@ -1371,7 +1555,7 @@ export default function ClientView() {
           <div style={{ paddingTop: "16px" }}>
             {selectedServices.length > 0 ? (
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {selectedServices.map((svc) => (
+                {selectedServices.map((svc, svcIdx) => (
                   <div key={svc.id} style={{
                     display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
                     width: "90px",
@@ -1384,7 +1568,7 @@ export default function ClientView() {
                     <span style={{
                       fontFamily: "'Outfit', sans-serif", fontSize: "0.9em", fontWeight: 700,
                       color: P.text, textAlign: "center", lineHeight: 1.25,
-                    }}>{svc.label}</span>
+                    }}>{tArr("serviceLabels", selectedServices.map(s => s.label))[svcIdx] || svc.label}</span>
                   </div>
                 ))}
               </div>
@@ -1434,13 +1618,13 @@ export default function ClientView() {
             <ThreadConnector />
             <ThreadSection id="thread-experience" num={3} icon="📋" title="Experience" subtitle="My background, training, and specialist areas." textColor={P.text} cardBg={P.bg}>
               <div style={{ paddingTop: "16px", display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                {checkedExperience.map(({ label }) => (
+                {checkedExperience.map(({ label }, expIdx) => (
                   <span key={label} style={{
                     fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                     padding: "6px 14px", borderRadius: "20px",
                     background: "#dbeafe", border: "1.5px solid #93c5fd",
                     color: "#1e3a5f",
-                  }}>{label}</span>
+                  }}>{tArr("experienceLabels", checkedExperience.map(e => e.label))[expIdx] || label}</span>
                 ))}
                 {profile.customExperience && (
                   <span style={{
@@ -1448,7 +1632,7 @@ export default function ClientView() {
                     padding: "6px 14px", borderRadius: "20px",
                     background: "#fef3c7", border: "1.5px solid #fcd34d",
                     color: "#78350f",
-                  }}>{profile.customExperience}</span>
+                  }}>{t("customExperience", profile.customExperience)}</span>
                 )}
               </div>
             </ThreadSection>
@@ -1473,13 +1657,13 @@ export default function ClientView() {
                         {group.label}
                       </p>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                        {profile.showUpStyle[group.key].map(chip => (
+                        {profile.showUpStyle[group.key].map((chip, chipIdx) => (
                           <span key={chip} style={{
                             fontFamily: "'Outfit', sans-serif", fontSize: "0.875em", fontWeight: 600,
                             padding: "6px 14px", borderRadius: "20px",
                             background: "#f3e8ff", border: "1.5px solid #c4b5fd",
                             color: "#4c1d95",
-                          }}>{chip}</span>
+                          }}>{tArr(group.key, profile.showUpStyle[group.key])[chipIdx] || chip}</span>
                         ))}
                       </div>
                     </div>

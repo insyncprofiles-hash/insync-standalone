@@ -52,6 +52,7 @@ interface AboutMeProfile {
   environment: string;
   goodDayLooksLike: string;
   whatMatters: string;
+  goals: string;
   ndisNumber: string;
   planDates: string;
   coordinatorName: string;
@@ -69,6 +70,7 @@ const EMPTY: AboutMeProfile = {
   doThis: "", neverDo: "", culturalConsiderations: "",
   languages: "", needsInterpreter: "",
   foodPreferences: "", music: "", routine: "", environment: "", goodDayLooksLike: "", whatMatters: "",
+  goals: "",
   ndisNumber: "", planDates: "", coordinatorName: "", coordinatorPhone: "", coordinatorEmail: "",
 };
 
@@ -86,6 +88,7 @@ function profileToParams(p: AboutMeProfile): string {
     "doThis","neverDo","culturalConsiderations",
     "languages","needsInterpreter",
     "foodPreferences","music","routine","environment","goodDayLooksLike","whatMatters",
+    "goals",
     "ndisNumber","planDates","coordinatorName","coordinatorPhone","coordinatorEmail",
   ];
   fields.forEach(f => { if (p[f]) sp.set(f, p[f] as string); });
@@ -195,21 +198,21 @@ function Field({ id, label, hint, value: rawValue, onChange, multiline = false, 
   const value = rawValue ?? "";
   const isListening = listeningFor === id;
   const inputStyle: React.CSSProperties = {
-    flex: 1, padding: "12px 14px", borderRadius: "12px",
+    flex: 1, padding: "14px 16px", borderRadius: "12px",
     border: `2px solid ${isListening ? "#dc2626" : C.border}`,
-    fontFamily: C.bodyFont, fontSize: "15px",
+    fontFamily: C.bodyFont, fontSize: "17px",
     color: "#1c1917", background: isListening ? "#fff5f5" : "#fffdf5",
     outline: "none", boxSizing: "border-box",
     transition: "border-color 200ms ease-out",
   };
   return (
     <div style={{ marginBottom: "22px" }}>
-      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, marginBottom: "6px" }}>
+      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "17px", color: C.accent, marginBottom: "6px" }}>
         {label}
       </label>
-      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
+      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
       {isListening && (
-        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
           Listening... speak now
         </p>
       )}
@@ -257,12 +260,12 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
   const isListening = listeningFor === id;
   return (
     <div style={{ marginBottom: "22px" }}>
-      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "15px", color: C.accent, marginBottom: "6px" }}>
+      <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "17px", color: C.accent, marginBottom: "6px" }}>
         {label}
       </label>
-      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
+      {hint && <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: C.accentMid, margin: "0 0 8px" }}>{hint}</p>}
       {isListening && (
-        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#dc2626", fontWeight: 700, margin: "0 0 6px" }}>
           Listening... say an option name
         </p>
       )}
@@ -271,9 +274,9 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
           value={value}
           onChange={e => onChange(e.target.value)}
           style={{
-            flex: 1, padding: "12px 14px", borderRadius: "12px",
+            flex: 1, padding: "14px 16px", borderRadius: "12px",
             border: `2px solid ${isListening ? "#dc2626" : C.border}`,
-            fontFamily: C.bodyFont, fontSize: "15px", color: "#1c1917",
+            fontFamily: C.bodyFont, fontSize: "17px", color: "#1c1917",
             background: isListening ? "#fff5f5" : "#fffdf5", outline: "none",
           }}
         >
@@ -290,7 +293,7 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
           })}
         />
       </div>
-      <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "6px 0 0" }}>
+      <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, margin: "6px 0 0" }}>
         Options: {options.filter(o => o.value).map(o => o.label).join(", ")}
       </p>
     </div>
@@ -478,6 +481,7 @@ export default function AboutMeEditor() {
     { id: "triggers",   label: "Triggers",                        emoji: "🌿" },
     { id: "approaches", label: "Approaches",                      emoji: "🤝" },
     { id: "prefs",      label: "Preferences",                     emoji: "🌻" },
+    { id: "goals",      label: "Goals",                            emoji: "🎯" },
     { id: "ndis",       label: isAgedCare ? "Care Info" : "NDIS Info", emoji: "📋" },
     { id: "share",      label: "Share",                           emoji: "🔗" },
   ];
@@ -523,44 +527,46 @@ export default function AboutMeEditor() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont }}>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont, paddingTop: "60px" }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Header */}
-      <div style={{ background: C.accent, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "20px", color: "#fffbeb", margin: 0 }}>About Me Editor</p>
-          <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: "#fde68a", margin: "2px 0 0" }}>Free — for participants, families and carers</p>
+      <div style={{ background: C.accent, padding: "14px 20px" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "12px" }}>
+          <div style={{ minWidth: 0 }}>
+            <p style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: "#fffbeb", margin: 0 }}>About Me Editor</p>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: "#fde68a", margin: "2px 0 0" }}>Free — for participants, families &amp; carers</p>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+            {saved && (
+              <span style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#86efac", fontWeight: 700, transition: "opacity 300ms" }}>
+                Saved
+              </span>
+            )}
+            {profileType !== null && (
+              <button
+                onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
+                style={{
+                  background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.5)",
+                  fontFamily: C.headFont, fontWeight: 800, fontSize: "13px",
+                  color: "#fffbeb", cursor: "pointer", padding: "6px 12px",
+                  borderRadius: "20px", whiteSpace: "nowrap",
+                }}
+              >
+                ↩ Change
+              </button>
+            )}
+          </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          {saved && (
-            <span style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#86efac", fontWeight: 700, transition: "opacity 300ms" }}>
-              Saved
-            </span>
-          )}
-          {profileType !== null && (
-            <button
-              onClick={() => { setProfileType(null); try { localStorage.removeItem("insync_aboutme_type"); } catch {} }}
-              style={{
-                background: "rgba(255,255,255,0.15)", border: "2px solid rgba(255,255,255,0.5)",
-                fontFamily: C.headFont, fontWeight: 800, fontSize: "13px",
-                color: "#fffbeb", cursor: "pointer", padding: "6px 14px",
-                borderRadius: "20px",
-              }}
-            >
-              ↩ Change type
-            </button>
-          )}
-          <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none" }}>
-            Back to InSync Profiles
-          </Link>
-        </div>
+        <Link href="/" style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#fde68a", textDecoration: "none", display: "inline-block", marginTop: "6px" }}>
+          ← Back to InSync Profiles
+        </Link>
       </div>
 
       {/* Accessibility notice */}
-      <div style={{ background: C.accent, borderBottom: `2px solid ${C.accentMid}`, padding: "12px 20px", display: "flex", alignItems: "center", gap: "10px" }}>
-        <span style={{ fontSize: "20px" }}>🎤</span>
-        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: "#ffffff", margin: 0, fontWeight: 700 }}>
+      <div style={{ background: C.accent, borderBottom: `2px solid ${C.accentMid}`, padding: "14px 20px", display: "flex", alignItems: "center", gap: "10px" }}>
+        <span style={{ fontSize: "22px" }}>🎤</span>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "15px", color: "#ffffff", margin: 0, fontWeight: 700 }}>
           Every field has a microphone button — tap it to dictate instead of type. Everything saves automatically.
         </p>
       </div>
@@ -696,14 +702,14 @@ export default function AboutMeEditor() {
       {/* Tab bar — only shown once a type is selected */}
       {profileType !== null && (
         <>
-      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "8px 8px", gap: "4px" }}>
+      <div style={{ display: "flex", overflowX: "auto", background: "#ffffff", borderBottom: `2px solid ${C.borderLight}`, padding: "10px 12px", gap: "6px" }}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             style={{
-              padding: "10px 14px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
-              fontFamily: C.headFont, fontWeight: activeTab === tab.id ? 900 : 600, fontSize: "13px",
+              padding: "12px 16px", border: "none", cursor: "pointer", whiteSpace: "nowrap",
+              fontFamily: C.headFont, fontWeight: activeTab === tab.id ? 900 : 600, fontSize: "15px",
               color: activeTab === tab.id ? "#ffffff" : "#57534e",
               background: activeTab === tab.id ? C.accent : "transparent",
               borderRadius: "12px",
@@ -745,8 +751,8 @@ export default function AboutMeEditor() {
         {/* WHO I AM */}
         {activeTab === "who" && (
           <div>
-            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>Who I Am</h2>
-            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>Basic information about the person this profile belongs to.</p>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "24px", color: C.accent, marginBottom: "6px" }}>Who I Am</h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "16px", color: C.accentMid, marginBottom: "24px" }}>Basic information about the person this profile belongs to.</p>
 
             {/* Photo */}
             <div style={{ marginBottom: "28px", display: "flex", alignItems: "center", gap: "20px" }}>
@@ -948,7 +954,7 @@ export default function AboutMeEditor() {
 
             <Field label="What Causes Distress (Triggers)" hint="e.g. Unexpected changes, loud environments, being touched without warning" value={profile.triggers} onChange={v => set("triggers", v)} multiline rows={4} maxLength={500} {...dp("triggers")} />
             <Field label="Early Warning Signs" hint="Signs that distress is building — before it becomes a crisis" value={profile.earlyWarnings} onChange={v => set("earlyWarnings", v)} multiline rows={3} maxLength={500} {...dp("earlyWarnings")} />
-            <Field label="What Helps Me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} maxLength={500} {...dp("whatHelps")} />
+            <Field label="Strategies that help me Regulate" hint="e.g. Quiet space, weighted blanket, favourite music, a specific person" value={profile.whatHelps} onChange={v => set("whatHelps", v)} multiline rows={3} maxLength={500} {...dp("whatHelps")} />
             <Field label="What Makes Things Worse" hint="e.g. Restraint, raised voices, bright lights, being left alone" value={profile.whatMakesWorse} onChange={v => set("whatMakesWorse", v)} multiline rows={3} maxLength={500} {...dp("whatMakesWorse")} />
             <TabNav current="triggers" />
           </div>
@@ -980,6 +986,29 @@ export default function AboutMeEditor() {
             <Field label="What a Good Day Looks Like" hint="Describe what the person is like when happy and comfortable" value={profile.goodDayLooksLike} onChange={v => set("goodDayLooksLike", v)} multiline rows={3} maxLength={500} {...dp("goodDayLooksLike")} />
             <Field label="What Matters Most to Me" hint="Values, relationships, activities, goals — what makes life meaningful" value={profile.whatMatters} onChange={v => set("whatMatters", v)} multiline rows={3} maxLength={500} {...dp("whatMatters")} />
             <TabNav current="prefs" />
+          </div>
+        )}
+
+        {/* GOALS */}
+        {activeTab === "goals" && (
+          <div>
+            <h2 style={{ fontFamily: C.headFont, fontWeight: 900, fontSize: "22px", color: C.accent, marginBottom: "6px" }}>
+              Goals 🎯
+            </h2>
+            <p style={{ fontFamily: C.bodyFont, fontSize: "14px", color: C.accentMid, marginBottom: "24px" }}>
+              Share your personal goals — what you're working toward, what you hope to achieve, and what matters most to you for your future.
+            </p>
+            <Field
+              id="goals"
+              label="My Goals"
+              hint="What are you working toward? What do you hope to achieve? (short-term and long-term)"
+              value={profile.goals}
+              onChange={v => set("goals", v)}
+              multiline rows={6}
+              maxLength={800}
+              {...dp("goals")}
+            />
+            <TabNav current="goals" />
           </div>
         )}
 
@@ -1133,6 +1162,9 @@ export default function AboutMeEditor() {
         </p>
         <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "8px 0 0", lineHeight: 1.6 }}>
           💡 <em>Tip: Save your short link from the Share tab — this is the only way to access your profile on a different device or after clearing your browser.</em>
+        </p>
+        <p style={{ fontFamily: C.bodyFont, fontSize: "13px", color: C.accent, margin: "12px 0 0", lineHeight: 1.6 }}>
+          ← <a href="https://insyncprofiles.net/about-me/editor" style={{ color: C.accent, fontWeight: 800, textDecoration: "underline" }}>Return to the About Me section on insyncprofiles.net</a>
         </p>
       </div>
 

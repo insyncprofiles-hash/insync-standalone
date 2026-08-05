@@ -408,6 +408,8 @@ export default function Landing() {
         .footer-nav-links { display: flex; }
         .mobile-aboutme-btn { display: none; }
         @media (max-width: 768px) {
+          #main-content { padding-top: 110px !important; }
+          .hero-section { padding-top: 16px !important; }
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
@@ -454,12 +456,17 @@ export default function Landing() {
         }
         /* Landscape mobile — switch to hamburger/strip nav on phone-sized heights */
         @media (orientation: landscape) and (max-height: 900px) {
+          #main-content { padding-top: 110px !important; }
+          .hero-section { padding-top: 8px !important; }
+          .landscape-hero-buffer { height: 0 !important; }
           .hidden-mobile { display: none !important; }
           .desktop-nav   { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
           .mobile-top-nav { display: block !important; }
           .footer-nav-links { display: none !important; }
-          .landscape-hero-buffer { height: 32px; }
+          .hero-inner-flex { gap: 32px !important; justify-content: center !important; }
+          .hero-left-col { flex: 1 1 260px !important; max-width: 360px !important; min-width: 220px !important; }
+          .hero-right-col { flex-shrink: 0 !important; margin-left: 0 !important; transform: scale(0.82) !important; transform-origin: top center !important; margin-top: -20px !important; }
         }
       `}</style>
 
@@ -688,10 +695,10 @@ export default function Landing() {
           <div aria-hidden="true" style={{ position: "absolute", top: "60px", left: "30%", transform: "translateX(-50%)", width: "600px", height: "300px", background: `radial-gradient(ellipse at center, ${C.tealDim} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
           <div aria-hidden="true" style={{ position: "absolute", top: "120px", left: "10%", width: "300px", height: "200px", background: `radial-gradient(ellipse at center, ${C.goldGlow} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
 
-          <div style={{ position: "relative", zIndex: 1, display: "flex", gap: "56px", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+          <div className="hero-inner-flex" style={{ position: "relative", zIndex: 1, display: "flex", gap: "56px", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
 
             {/* ── LEFT: Headline + CTAs ── */}
-            <div style={{ flex: "1 1 380px", maxWidth: "520px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div className="hero-left-col" style={{ flex: "1 1 380px", maxWidth: "520px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
               {/* Sector tag */}
               <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: C.bgGlass, border: `1px solid ${C.border}`, borderRadius: "99px", padding: "6px 16px", marginBottom: "28px" }}>
                 <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.teal, display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
@@ -755,16 +762,21 @@ export default function Landing() {
                 InSync Profiles is an interactive, accessibility-first profile for support workers, allied health practitioners, support coordinators, and every other support role — share your services, availability, credentials, and communication style in one shareable link.
               </p>
 
-              {/* Social proof */}
-              <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap", marginBottom: "40px" }}>
+              {/* Social proof — single line, electric blue text, gold star separators */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0", flexWrap: "nowrap", marginBottom: "40px", overflowX: "auto" }}>
                 {[
-                  { icon: "✦",  text: "WCAG 2.1 AA" },
-                  { icon: "🇦🇺", text: "Made in Australia" },
-                ].map(item => (
-                  <div key={item.text} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                    <span style={{ fontSize: "14px" }} aria-hidden="true">{item.icon}</span>
-                    <span style={{ color: C.textDim, fontSize: "13px", fontWeight: 500 }}>{item.text}</span>
-                  </div>
+                  "WCAG 2.1 AA",
+                  "Made in Australia",
+                  "Accessibility-First",
+                  "Person-Centred",
+                  "Participant-Led",
+                ].map((text, i) => (
+                  <span key={text} style={{ display: "inline-flex", alignItems: "center", gap: "0", whiteSpace: "nowrap" }}>
+                    {i > 0 && (
+                      <span aria-hidden="true" style={{ color: "#f5c842", fontSize: "14px", fontWeight: 900, margin: "0 8px" }}>★</span>
+                    )}
+                    <span style={{ color: "#38bdf8", fontSize: "13px", fontWeight: 700, letterSpacing: "0.02em" }}>{text}</span>
+                  </span>
                 ))}
               </div>
 
@@ -779,7 +791,7 @@ export default function Landing() {
             </div>
 
             {/* ── RIGHT: Sample Postcard Carousel ── */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+            <div className="hero-right-col" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", flexShrink: 0 }}>
               {/* Live Example label + carousel nav */}
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <button
