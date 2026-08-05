@@ -9,6 +9,7 @@
    ============================================================ */
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "wouter";
+import { generateAboutMeHTML } from "@/lib/generateAboutMeHTML";
 
 // ── TYPES ─────────────────────────────────────────────────────
 
@@ -311,6 +312,28 @@ export default function AboutMeEditor() {
   const [shorteningUrl, setShorteningUrl] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copiedShort, setCopiedShort] = useState(false);
+  const [downloadDone, setDownloadDone] = useState(false);
+
+  const handleDownloadProfile = useCallback(() => {
+    const html = generateAboutMeHTML(profile);
+    const filename = `about-${(profile.name || "me").replace(/\s+/g, "-").toLowerCase()}.html`;
+    try {
+      const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+    } catch {
+      const win = window.open("", "_blank");
+      if (win) { win.document.write(generateAboutMeHTML(profile)); win.document.close(); }
+    }
+    setDownloadDone(true);
+    setTimeout(() => setDownloadDone(false), 3000);
+  }, [profile]);
   const [saved, setSaved] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const [photoUploading, setPhotoUploading] = useState(false);
@@ -1137,6 +1160,27 @@ export default function AboutMeEditor() {
                   >
                     View My Profile →
                   </a>
+                </div>
+
+                {/* Download standalone HTML */}
+                <div style={{ marginTop: "16px" }}>
+                  <button
+                    onClick={handleDownloadProfile}
+                    style={{
+                      display: "block", width: "100%", padding: "16px 36px",
+                      borderRadius: "16px", boxSizing: "border-box",
+                      background: downloadDone ? "#16a34a" : C.gold,
+                      color: "#fff", fontFamily: C.headFont, fontWeight: 900,
+                      fontSize: "16px", border: "none", cursor: "pointer", textAlign: "center",
+                      boxShadow: "0 4px 16px rgba(180,83,9,0.25)",
+                      transition: "background 200ms ease-out",
+                    }}
+                  >
+                    {downloadDone ? "✅ Downloaded!" : "⬇️ Download My Profile (HTML)"}
+                  </button>
+                  <p style={{ fontFamily: C.bodyFont, fontSize: "12px", color: C.accentMid, margin: "8px 0 0", textAlign: "center" }}>
+                    Opens in any browser — works offline. Your profile, independent of insyncprofiles.net.
+                  </p>
                 </div>
               </>
             )}

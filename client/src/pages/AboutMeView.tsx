@@ -6,9 +6,10 @@
    Font scaling: uses fs(n) helper that multiplies by a11y scale factor.
    This works on ALL browsers including Android tablets (no zoom needed).
    ============================================================ */
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState } from "react";
 import React from "react";
 import { useA11y } from "@/hooks/useA11y";
+import { generateAboutMeHTML } from "@/lib/generateAboutMeHTML";
 
 // ── HELPERS ───────────────────────────────────────────────────
 
@@ -142,6 +143,44 @@ export default function AboutMeView() {
   const fs = makeFs(1);
 
   const videoIframeRef = useRef<HTMLIFrameElement | null>(null);
+  const [downloadDone, setDownloadDone] = useState(false);
+
+  const handleDownload = useCallback(() => {
+    const profileData = {
+      name, preferredName, gender, dob, diagnosis, photo,
+      emergencyContacts,
+      communicationStyle, aacDevice, keyWords, yesNoSignals, distressSignals,
+      videoUrl, videoDescription,
+      canDo, needsHelp, mobilityAids, sensoryNeeds,
+      triggers, earlyWarnings, whatHelps, whatMakesWorse,
+      doThis, neverDo, culturalConsiderations,
+      languages, needsInterpreter,
+      foodPreferences, music, routine, environment, goodDayLooksLike, whatMatters,
+      goals,
+      ndisNumber, planDates, coordinatorName, coordinatorPhone, coordinatorEmail,
+    };
+    const html = generateAboutMeHTML(profileData);
+    const filename = `about-${(name || "me").replace(/\s+/g, "-").toLowerCase()}.html`;
+    try {
+      const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename; a.style.display = "none";
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+    } catch {
+      const win = window.open("", "_blank");
+      if (win) { win.document.write(html); win.document.close(); }
+    }
+    setDownloadDone(true);
+    setTimeout(() => setDownloadDone(false), 3000);
+  }, [name, preferredName, gender, dob, diagnosis, photo, emergencyContacts,
+      communicationStyle, aacDevice, keyWords, yesNoSignals, distressSignals,
+      videoUrl, videoDescription, canDo, needsHelp, mobilityAids, sensoryNeeds,
+      triggers, earlyWarnings, whatHelps, whatMakesWorse, doThis, neverDo,
+      culturalConsiderations, languages, needsInterpreter, foodPreferences, music,
+      routine, environment, goodDayLooksLike, whatMatters, goals,
+      ndisNumber, planDates, coordinatorName, coordinatorPhone, coordinatorEmail]);
 
   const handlePlayVideo = useCallback(() => {
     const iframe = videoIframeRef.current;
@@ -241,8 +280,8 @@ export default function AboutMeView() {
           <span style={{ fontSize: fs(18), lineHeight: 1 }}>🔒</span>
         </div>
       </div>
-      {/* Print button — hidden when printing */}
-      <div className="no-print" style={{ maxWidth: "680px", margin: "0 auto", padding: "12px 20px 0", display: "flex", justifyContent: "flex-end" }}>
+      {/* Print + Download buttons — hidden when printing */}
+      <div className="no-print" style={{ maxWidth: "680px", margin: "0 auto", padding: "12px 20px 0", display: "flex", justifyContent: "flex-end", gap: "10px", flexWrap: "wrap" }}>
         <button
           onClick={() => window.print()}
           style={{
@@ -253,7 +292,21 @@ export default function AboutMeView() {
             cursor: "pointer", boxShadow: "0 1px 4px rgba(13,148,136,0.12)",
           }}
         >
-          🖨️ Print / Save as PDF
+          🖸️ Print / Save as PDF
+        </button>
+        <button
+          onClick={handleDownload}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "7px",
+            background: downloadDone ? "#16a34a" : "#1e3a5f",
+            border: "none",
+            color: "#fff", fontFamily: "'Nunito', sans-serif", fontWeight: 800,
+            fontSize: fs(13), padding: "8px 18px", borderRadius: "99px",
+            cursor: "pointer", transition: "background 200ms ease-out",
+            boxShadow: "0 1px 4px rgba(30,58,95,0.25)",
+          }}
+        >
+          {downloadDone ? "✅ Downloaded!" : "⬇️ Download Profile"}
         </button>
       </div>
 
