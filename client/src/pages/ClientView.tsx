@@ -713,12 +713,25 @@ export default function ClientView() {
   // Wire videoPlayRef at component level — handles both YouTube and mp4
   React.useEffect(() => {
     videoPlayRef.current = () => {
-      // If there's a native video element (mp4), play it directly
-      if (videoElementRef.current) {
-        videoElementRef.current.play().catch(() => {});
+      // Scroll the video section into view first so it's visible
+      const videoSection = document.getElementById('profile-video');
+      if (videoSection) {
+        videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Small delay to let scroll complete before playing
+        setTimeout(() => {
+          if (videoElementRef.current) {
+            videoElementRef.current.play().catch(() => {});
+          } else {
+            setVideoPlaying(true);
+          }
+        }, 600);
       } else {
-        // YouTube path — set playing state to swap thumbnail for iframe
-        setVideoPlaying(true);
+        // Fallback: play immediately if element not found
+        if (videoElementRef.current) {
+          videoElementRef.current.play().catch(() => {});
+        } else {
+          setVideoPlaying(true);
+        }
       }
     };
   }, []);
@@ -1101,7 +1114,7 @@ export default function ClientView() {
           )}
 
           {/* Video — rainbow border matching reference */}
-          <div style={{ padding: "0 20px 16px" }}>
+          <div id="profile-video" style={{ padding: "0 20px 16px" }}>
             <div style={{
               borderRadius: "16px", overflow: "hidden",
               padding: "3px",
