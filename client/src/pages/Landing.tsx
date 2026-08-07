@@ -252,9 +252,7 @@ export default function Landing() {
           </div>
           {/* Ecosystem */}
           <div>
-            <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "8px" }}>Built for the whole support circle</h2>
-            <p style={{ fontSize: "16px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
-            <img src="/support_circle_icons.jpg" alt="Participants, Carers and Families, Support Workers, Support Coordinators, Providers, Aged Care" style={{ width: "100%", maxWidth: "600px", display: "block", margin: "0 auto" }} />
+            <img src="/support_circle_icons.jpg" alt="Built for the whole support circle — Participants, Carers and Families, Support Workers, Support Coordinators, Providers, Aged Care" style={{ width: "100%", display: "block", margin: "0 auto" }} />
           </div>
         </div>
         <style>{`@media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr !important; } }`}</style>
