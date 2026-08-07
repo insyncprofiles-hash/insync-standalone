@@ -157,14 +157,14 @@ export default function Landing() {
             InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
           </p>
           <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
-            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "12px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
             {/* About Me button */}
             <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a3a1a", fontSize: "17px", fontWeight: 900, padding: "12px 28px 10px", borderRadius: "40px", textDecoration: "none", boxShadow: "0 4px 20px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", minWidth: "200px" }}>
               <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "10px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
               <span style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "0.02em" }}>✨ About Me</span>
               <span style={{ fontSize: "11px", fontWeight: 700, color: "#0a4a1a", letterSpacing: "0.05em", marginTop: "2px" }}>Continuity for Aged &amp; Disabled Persons</span>
             </Link>
+            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore Demo SW Profile</Link>
+            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "12px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
           </div>
           <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.75)", marginTop: "20px" }}>♡ Not an NDIS provider &nbsp;•&nbsp; A participant-first matching and communication resource</p>
         </div>
