@@ -203,7 +203,7 @@ function InfographicSection() {
 // ── Design tokens (fixed — not theme-dependent on landing) ───
 const C = {
   // Backgrounds
-  bgPage:    "linear-gradient(160deg, #0d1b2a 0%, #0f2d3d 40%, #0a2a1e 100%)",
+  bgPage:    "linear-gradient(160deg, #020c1b 0%, #051a3a 20%, #0a2550 40%, #062040 60%, #041530 80%, #020c1b 100%)",
   bgCard:    "rgba(255,255,255,0.06)",
   bgCardHov: "rgba(255,255,255,0.10)",
   bgGlass:   "rgba(255,255,255,0.08)",
@@ -541,7 +541,7 @@ export default function Landing() {
           {/* Full-bleed wave gradient background */}
           <div aria-hidden="true" style={{
             position: "absolute", inset: 0,
-            background: `linear-gradient(160deg, #071520 0%, #0a2535 25%, #0d3320 55%, #0a1f30 80%, #06111e 100%)`,
+            background: `linear-gradient(160deg, #020c1b 0%, #051a3a 25%, #0a2550 55%, #062040 80%, #020c1b 100%)`,
             zIndex: 0,
           }} />
           {/* Animated glow orbs */}
@@ -726,7 +726,7 @@ export default function Landing() {
         <section
           style={{
             padding: "80px 24px",
-            background: "rgba(8,13,20,0.95)",
+            background: "rgba(2,12,27,0.97)",
             borderTop: `1px solid rgba(245,200,66,0.12)`,
             borderBottom: `1px solid rgba(245,200,66,0.12)`,
             overflow: "hidden",
