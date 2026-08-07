@@ -60,6 +60,9 @@ export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Close mobile menu on route change
+  useEffect(() => { setMobileMenuOpen(false); }, []);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
@@ -67,7 +70,7 @@ export default function Landing() {
   }, []);
 
   return (
-    <div style={{ background: "#ffffff", minHeight: "100vh", fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", color: "#1a2e44" }}>
+    <div style={{ background: "#ffffff", minHeight: "100vh", fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", color: "#111827" }}>
 
       {/* ── NAV ── */}
       <nav style={{ position: "sticky", top: 0, zIndex: 100, background: scrolled ? "rgba(255,255,255,0.98)" : "#ffffff", borderBottom: "1px solid #e8eef5", boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.08)" : "none", transition: "all 0.2s ease" }}>
@@ -76,8 +79,8 @@ export default function Landing() {
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
             <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: "40px", height: "40px", objectFit: "contain" }} />
             <div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 800, fontSize: "16px", color: "#0f2a4a", lineHeight: 1.1 }}>InSync</div>
-              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 600, fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#0d9488" }}>PROFILES</div>
+              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 800, fontSize: "16px", color: "#0c1f36", lineHeight: 1.1 }}>InSync</div>
+              <div style={{ fontFamily: "Inter, sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#0a7a72" }}>PROFILES</div>
             </div>
           </Link>
           {/* Desktop nav */}
@@ -91,14 +94,37 @@ export default function Landing() {
               { label: "About us", href: "/about" },
               { label: "Contact", href: "/contact" },
             ].map(item => (
-              <Link key={item.label} href={item.href} style={{ color: "#374151", fontSize: "14px", fontWeight: 500, textDecoration: "none", whiteSpace: "nowrap" }}>{item.label}</Link>
+              <Link key={item.label} href={item.href} style={{ color: "#1f2937", fontSize: "14px", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>{item.label}</Link>
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "14px", fontWeight: 700, padding: "9px 20px", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap" }}>View demo</Link>
             <button aria-label="Accessibility options" style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>♿</button>
+            {/* Mobile hamburger */}
+            <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Open menu" style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px" }}>
+              <span style={{ width: "18px", height: "2px", background: "#1f2937", borderRadius: "2px" }} />
+              <span style={{ width: "18px", height: "2px", background: "#1f2937", borderRadius: "2px" }} />
+              <span style={{ width: "18px", height: "2px", background: "#1f2937", borderRadius: "2px" }} />
+            </button>
           </div>
         </div>
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div style={{ background: "#fff", borderTop: "1px solid #e8eef5", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "4px" }}>
+            {[
+              { label: "Home", href: "/" },
+              { label: "How it works", href: "/how-it-works" },
+              { label: "For participants & carers", href: "/about-me/editor" },
+              { label: "For support workers", href: "/view" },
+              { label: "For providers", href: "/allied-health" },
+              { label: "About us", href: "/about" },
+              { label: "Contact", href: "/contact" },
+            ].map(item => (
+              <Link key={item.label} href={item.href} onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 600, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>{item.label}</Link>
+            ))}
+            <Link href="/view" onClick={() => setMobileMenuOpen(false)} style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 20px", borderRadius: "8px", textDecoration: "none", textAlign: "center", marginTop: "8px" }}>View demo</Link>
+          </div>
+        )}
         <style>{`
           @media (max-width: 900px) { .desktop-nav { display: none !important; } }
           @media (min-width: 901px) { .mobile-menu-btn { display: none !important; } }
@@ -134,7 +160,7 @@ export default function Landing() {
       {/* ── CHALLENGES ── */}
       <section style={{ padding: "72px 24px", background: "#ffffff" }} aria-labelledby="challenges-heading">
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <h2 id="challenges-heading" style={{ textAlign: "center", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 800, color: "#0f2a4a", marginBottom: "48px" }}>The challenges we all know too well</h2>
+          <h2 id="challenges-heading" style={{ textAlign: "center", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "48px" }}>The challenges we all know too well</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "32px" }}>
             {[
               { icon: "💬", color: "#0d9488", title: "Retell your story", subtitle: "Again and again", desc: "Participants and carers often repeat the same information across providers, coordinators, support workers, hospitals and services.", underline: "#0d9488" },
@@ -147,11 +173,11 @@ export default function Landing() {
                     {c.icon}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 800, fontSize: "16px", color: "#0f2a4a", lineHeight: 1.3 }}>{c.title}</div>
-                    <div style={{ fontWeight: 600, fontSize: "13px", color: "#6b7280", marginTop: "2px" }}>{c.subtitle}</div>
+                    <div style={{ fontWeight: 800, fontSize: "16px", color: "#0c1f36", lineHeight: 1.3 }}>{c.title}</div>
+                    <div style={{ fontWeight: 600, fontSize: "13px", color: "#374151", marginTop: "2px" }}>{c.subtitle}</div>
                   </div>
                 </div>
-                <p style={{ fontSize: "14px", color: "#4b5563", lineHeight: 1.7, margin: 0 }}>{c.desc}</p>
+                <p style={{ fontSize: "14px", color: "#374151", lineHeight: 1.7, margin: 0 }}>{c.desc}</p>
                 <div style={{ width: "40px", height: "3px", background: c.underline, borderRadius: "2px" }} />
               </div>
             ))}
@@ -160,13 +186,13 @@ export default function Landing() {
       </section>
 
       {/* ── SHIFT BANNER ── */}
-      <section style={{ margin: "0 24px 48px", borderRadius: "20px", background: "linear-gradient(135deg, #e6f7f5 0%, #fef9ec 100%)", padding: "48px 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "center", overflow: "hidden" }} aria-label="From fitting into services to services fitting around people">
+      <section className="shift-banner" style={{ margin: "0 24px 48px", borderRadius: "20px", background: "linear-gradient(135deg, #e6f7f5 0%, #fef9ec 100%)", padding: "clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "center", overflow: "hidden" }} aria-label="From fitting into services to services fitting around people">
         {/* Left */}
         <div>
           <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2rem)", fontWeight: 800, color: "#0f2a4a", lineHeight: 1.3 }}>
             From fitting into services<br />
-            <span style={{ color: "#6b7280", fontWeight: 400 }}>to services fitting</span><br />
-            <span style={{ color: "#6b7280", fontWeight: 400 }}>around people</span>
+            <span style={{ color: "#374151", fontWeight: 500 }}>to services fitting</span><br />
+            <span style={{ color: "#374151", fontWeight: 500 }}>around people</span>
           </h2>
           <div style={{ marginTop: "24px", width: "120px", height: "120px", background: "linear-gradient(135deg, #0d9488 0%, #0f766e 100%)", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "48px", boxShadow: "0 8px 24px rgba(13,148,136,0.25)" }}>
             📦
@@ -192,19 +218,19 @@ export default function Landing() {
             ))}
           </div>
         </div>
-        <style>{`@media (max-width: 600px) { section[aria-label="From fitting into services to services fitting around people"] { grid-template-columns: 1fr !important; } }`}</style>
+        <style>{`@media (max-width: 600px) { .shift-banner { grid-template-columns: 1fr !important; margin: 0 12px 32px !important; } }`}</style>
       </section>
 
       {/* ── COMPARISON + ECOSYSTEM ── */}
-      <section style={{ padding: "48px 24px", background: "#f8fafc" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "start" }}>
+      <section className="compare-section" style={{ padding: "48px 24px", background: "#f8fafc" }}>
+        <div className="compare-grid" style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "start" }}>
           {/* Comparison table */}
           <div>
-            <h2 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0f2a4a", marginBottom: "20px" }}>What makes InSync Profiles different?</h2>
+            <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "20px" }}>What makes InSync Profiles different?</h2>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "10px 16px", textAlign: "left", background: "#f1f5f9", color: "#6b7280", fontWeight: 700, borderRadius: "8px 0 0 0", border: "1px solid #e2e8f0" }}>Traditional matching</th>
+                  <th style={{ padding: "10px 16px", textAlign: "left", background: "#f1f5f9", color: "#374151", fontWeight: 700, borderRadius: "8px 0 0 0", border: "1px solid #e2e8f0" }}>Traditional matching</th>
                   <th style={{ padding: "10px 16px", textAlign: "left", background: "#0d9488", color: "#fff", fontWeight: 700, borderRadius: "0 8px 0 0", border: "1px solid #0d9488" }}>InSync approach</th>
                 </tr>
               </thead>
@@ -218,10 +244,10 @@ export default function Landing() {
                   ["", "Informed choice & control"],
                 ].map(([old, neo], i) => (
                   <tr key={i}>
-                    <td style={{ padding: "9px 16px", border: "1px solid #e2e8f0", color: "#6b7280", background: "#fff" }}>
+                    <td style={{ padding: "9px 16px", border: "1px solid #e2e8f0", color: "#374151", background: "#fff" }}>
                       {old && <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ color: "#ef4444", fontWeight: 700 }}>✗</span> {old}</span>}
                     </td>
-                    <td style={{ padding: "9px 16px", border: "1px solid #ccede9", color: "#0f2a4a", background: "#f0faf9" }}>
+                    <td style={{ padding: "9px 16px", border: "1px solid #ccede9", color: "#0c1f36", background: "#f0faf9" }}>
                       <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ color: "#0d9488", fontWeight: 700 }}>✓</span> {neo}</span>
                     </td>
                   </tr>
@@ -231,8 +257,8 @@ export default function Landing() {
           </div>
           {/* Ecosystem */}
           <div>
-            <h2 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0f2a4a", marginBottom: "8px" }}>Built for the whole support circle</h2>
-            <p style={{ fontSize: "14px", color: "#6b7280", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
+            <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "8px" }}>Built for the whole support circle</h2>
+            <p style={{ fontSize: "14px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
             <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
               {[
                 { icon: "👤", label: "Participants", bg: "#dbeafe", color: "#1d4ed8" },
@@ -244,18 +270,18 @@ export default function Landing() {
               ].map(e => (
                 <div key={e.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", flex: "1 1 80px" }}>
                   <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", border: `2px solid ${e.color}22` }}>{e.icon}</div>
-                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#374151", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
+                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <style>{`@media (max-width: 700px) { section[style*="#f8fafc"] > div { grid-template-columns: 1fr !important; } }`}</style>
+        <style>{`@media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr !important; } }`}</style>
       </section>
 
       {/* ── ACCESSIBILITY STRIP ── */}
-      <section style={{ padding: "56px 24px", background: "#ffffff" }} aria-labelledby="access-heading">
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "auto 1fr", gap: "48px", alignItems: "center" }}>
+      <section className="access-section" style={{ padding: "56px 24px", background: "#ffffff" }} aria-labelledby="access-heading">
+        <div className="access-grid" style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "auto 1fr", gap: "48px", alignItems: "center" }}>
           <div style={{ maxWidth: "220px" }}>
             <h2 id="access-heading" style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 800, color: "#0d9488", lineHeight: 1.3 }}>
               Accessibility is<br />the foundation<br />of being understood.
@@ -273,12 +299,12 @@ export default function Landing() {
             ].map(a => (
               <div key={a.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", minWidth: "72px" }}>
                 <div style={{ width: "52px", height: "52px", borderRadius: "12px", border: "1.5px solid #e0e7ef", display: "flex", alignItems: "center", justifyContent: "center", fontSize: a.isText ? "16px" : "22px", fontWeight: a.isText ? 800 : 400, color: a.isText ? "#0d9488" : "inherit", background: "#f8fafc" }}>{a.icon}</div>
-                <div style={{ fontSize: "11px", fontWeight: 600, color: "#374151", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
               </div>
             ))}
           </div>
         </div>
-        <style>{`@media (max-width: 700px) { section[aria-labelledby="access-heading"] > div { grid-template-columns: 1fr !important; } }`}</style>
+        <style>{`@media (max-width: 700px) { .access-grid { grid-template-columns: 1fr !important; gap: 24px !important; } }`}</style>
       </section>
 
 
@@ -287,13 +313,13 @@ export default function Landing() {
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
             {["♡ Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
-              <span key={t} style={{ fontSize: "12px", color: "#6b7280" }}>{t}</span>
+              <span key={t} style={{ fontSize: "12px", color: "#374151" }}>{t}</span>
             ))}
           </div>
           <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
-            <span style={{ fontSize: "12px", color: "#9ca3af" }}>© 2024 InSync Profiles</span>
+            <span style={{ fontSize: "12px", color: "#374151" }}>© 2024 InSync Profiles</span>
             {["Privacy", "Terms", "Contact"].map(l => (
-              <Link key={l} href={`/${l.toLowerCase()}`} style={{ fontSize: "12px", color: "#6b7280", textDecoration: "none" }}>{l}</Link>
+              <Link key={l} href={`/${l.toLowerCase()}`} style={{ fontSize: "12px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>{l}</Link>
             ))}
             <button aria-label="Accessibility" style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", fontSize: "14px" }}>♿</button>
           </div>
