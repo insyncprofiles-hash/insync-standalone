@@ -41,14 +41,14 @@ function InfographicSection() {
           </div>
           <h2
             id="infographic-heading"
-            style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffffff", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "14px" }}
+            style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0f2a4a", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 700, lineHeight: 1.1, marginBottom: "14px" }}
           >
             Real Choice Starts<br />
             <span style={{ background: "linear-gradient(90deg, #2dd4bf 0%, #f5c842 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               When Everyone Is Included.
             </span>
           </h2>
-          <p style={{ color: "rgba(255,255,255,0.78)", fontSize: "15px", lineHeight: 1.75, maxWidth: "540px", margin: "0 auto" }}>
+          <p style={{ color: "#1e3a5f", fontSize: "15px", lineHeight: 1.75, maxWidth: "540px", margin: "0 auto" }}>
             Accessible. Interactive. Family informed. Because choice and control belongs to the person — and the people who know them best.
           </p>
         </div>
@@ -185,7 +185,7 @@ function InfographicSection() {
             transform: "translateX(-50%)",
             fontFamily: "'Outfit', sans-serif",
             fontSize: "11px",
-            color: "rgba(255,255,255,0.45)",
+            color: "#4a6a8a",
             background: "rgba(0,0,0,0.6)",
             borderRadius: "99px",
             padding: "5px 14px",
@@ -203,16 +203,16 @@ function InfographicSection() {
 // ── Design tokens (fixed — not theme-dependent on landing) ───
 const C = {
   // Backgrounds
-  bgPage:    "linear-gradient(135deg, #f8f9fc 0%, #f0f4fb 35%, #dce8f8 60%, #b8d0f0 80%, #2554c7 100%)",
-  bgCard:    "rgba(255,255,255,0.06)",
-  bgCardHov: "rgba(255,255,255,0.10)",
-  bgGlass:   "rgba(255,255,255,0.08)",
-  bgCatBand: "rgba(255,255,255,0.04)",
+  bgPage:    "linear-gradient(135deg, #e8eef7 0%, #d8e6f4 35%, #c4d8ef 60%, #9abde0 80%, #2554c7 100%)",
+  bgCard:    "rgba(255,255,255,0.55)",
+  bgCardHov: "rgba(255,255,255,0.70)",
+  bgGlass:   "#4a6a8a",
+  bgCatBand: "rgba(255,255,255,0.30)",
 
   // Text
-  textHead:  "#ffffff",
-  textBody:  "rgba(255,255,255,0.78)",
-  textDim:   "rgba(255,255,255,0.45)",
+  textHead:  "#0f2a4a",
+  textBody:  "#1e3a5f",
+  textDim:   "#4a6a8a",
 
   // Accents
   gold:      "#f5c842",
@@ -222,8 +222,8 @@ const C = {
   tealDim:   "rgba(45,212,191,0.55)",
 
   // Borders
-  border:    "rgba(255,255,255,0.10)",
-  borderGold:"rgba(245,200,66,0.30)",
+  border:    "rgba(255,255,255,0.70)",
+  borderGold:"rgba(180,130,0,0.35)",
 };
 
 const FEATURES = [
@@ -527,7 +527,7 @@ export default function Landing() {
                   padding: "6px 14px",
                   borderRadius: "99px",
                   border: link.teal ? `1.5px solid ${C.teal}88` : `1px solid ${C.border}`,
-                  background: link.teal ? `rgba(26,184,160,0.12)` : "rgba(255,255,255,0.06)",
+                  background: link.teal ? `rgba(26,184,160,0.12)` : "rgba(255,255,255,0.55)",
                   whiteSpace: "nowrap",
                   flexShrink: 0,
                 }}
@@ -541,7 +541,7 @@ export default function Landing() {
           {/* Full-bleed wave gradient background */}
           <div aria-hidden="true" style={{
             position: "absolute", inset: 0,
-            background: `linear-gradient(160deg, #e8f0fb 0%, #d0e4f7 40%, #b8d0f0 70%, #2554c7 100%)`,
+            background: `linear-gradient(160deg, #dce8f5 0%, #c4d8ef 40%, #9abde0 70%, #2554c7 100%)`,
             zIndex: 0,
           }} />
           {/* Animated glow orbs */}
@@ -570,7 +570,7 @@ export default function Landing() {
                 id="wave-heading"
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
-                  color: "#ffffff",
+                  color: "#0f2a4a",
                   fontSize: "clamp(44px, 8vw, 96px)",
                   fontWeight: 700,
                   lineHeight: 1.0,
@@ -609,7 +609,7 @@ export default function Landing() {
                 <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 700, color: C.gold, fontStyle: "italic", margin: 0, letterSpacing: "0.01em" }}>
                   “You get it.”
                 </p>
-                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: "rgba(255,255,255,0.45)", margin: "6px 0 0", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", color: "#4a6a8a", margin: "6px 0 0", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                   — What the sector will say about you
                 </p>
               </div>
@@ -643,7 +643,7 @@ export default function Landing() {
                     <div style={{ fontSize: "28px" }} aria-hidden="true">{tile.icon}</div>
                     <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: tile.accent, fontFamily: "'Outfit', sans-serif", background: `${tile.accent}18`, padding: "3px 10px", borderRadius: "99px", border: `1px solid ${tile.accent}40` }}>{tile.tag}</span>
                   </div>
-                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffffff", fontSize: "24px", fontWeight: 700, marginBottom: "10px", lineHeight: 1.1 }}>{tile.title}</h3>
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", color: "#0f2a4a", fontSize: "24px", fontWeight: 700, marginBottom: "10px", lineHeight: 1.1 }}>{tile.title}</h3>
                   <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "14px", lineHeight: 1.8, margin: 0, fontFamily: "'Outfit', sans-serif" }}>{tile.body}</p>
                 </div>
               ))}
@@ -694,7 +694,7 @@ export default function Landing() {
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45)" }}
           />
           {/* Logo card — top right corner */}
-          <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 3, display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "rgba(255,255,255,0.10)", borderRadius: "14px", padding: "12px 16px", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)" }}>
+          <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 3, display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "rgba(255,255,255,0.70)", borderRadius: "14px", padding: "12px 16px", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)" }}>
             <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: "52px", height: "52px", objectFit: "contain" }} />
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 900, fontSize: "0.85rem", color: "#fff", textAlign: "center" }}>InSync</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>PROFILES</div>
@@ -702,7 +702,7 @@ export default function Landing() {
           {/* Content overlay */}
           <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "56px 32px", display: "flex", alignItems: "center", justifyContent: "flex-start", gap: "40px", flexWrap: "wrap" }}>
             <div style={{ flex: "1 1 400px", maxWidth: "620px" }}>
-              <h1 id="hero-heading" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.35, marginBottom: "16px" }}>
+              <h1 id="hero-heading" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", fontWeight: 800, color: "#0f2a4a", lineHeight: 1.35, marginBottom: "16px" }}>
                 When people are known before they are supported,{" "}
                 <br />support becomes a{" "}
                 <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
@@ -735,7 +735,7 @@ export default function Landing() {
         <section
           style={{
             padding: "80px 24px",
-            background: "rgba(240,246,255,0.97)",
+            background: "rgba(210,228,248,0.97)",
             borderTop: `1px solid rgba(245,200,66,0.12)`,
             borderBottom: `1px solid rgba(245,200,66,0.12)`,
             overflow: "hidden",
