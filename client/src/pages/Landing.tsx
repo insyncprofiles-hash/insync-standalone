@@ -252,7 +252,25 @@ export default function Landing() {
           </div>
           {/* Ecosystem */}
           <div>
-            <img src="/support_circle_icons.jpg" alt="Built for the whole support circle — Participants, Carers and Families, Support Workers, Support Coordinators, Providers, Aged Care" style={{ width: "100%", display: "block", margin: "0 auto" }} />
+            <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "6px", textAlign: "center" }}>Built for the whole support circle</h2>
+            <p style={{ fontSize: "15px", color: "#374151", marginBottom: "28px", textAlign: "center" }}>Stronger connections. Better outcomes. For everyone.</p>
+            <div style={{ display: "flex", justifyContent: "center", gap: "clamp(12px, 3vw, 28px)", flexWrap: "wrap" }}>
+              {[
+                { label: "Participants", bg: "#3a9e9e", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg> },
+                { label: "Carers &\nFamilies", bg: "#d4a017", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="7" r="3"/><path d="M3 21c0-3 2.7-5.5 6-5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M13 21c0-2.5 1.8-4.5 4-4.5s4 2 4 4.5"/></svg> },
+                { label: "Support\nWorkers", bg: "#7b5ea7", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7" r="4"/><rect x="8" y="13" width="8" height="9" rx="1"/><line x1="10" y1="13" x2="10" y2="22"/><line x1="14" y1="13" x2="14" y2="22"/><line x1="8" y1="17" x2="16" y2="17"/></svg> },
+                { label: "Support\nCoordinators", bg: "#3a9e9e", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5 21c0-3.5 3.1-6 7-6s7 2.5 7 6"/><line x1="5" y1="14" x2="3" y2="16"/><line x1="19" y1="14" x2="21" y2="16"/></svg> },
+                { label: "Providers", bg: "#5a9e6e", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"/><path d="M5 21V9l7-6 7 6v12"/><rect x="9" y="13" width="2" height="4"/><rect x="13" y="13" width="2" height="4"/><path d="M9 9h6"/></svg> },
+                { label: "Aged Care", bg: "#4a8fa8", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21C12 21 4 15.5 4 9.5a4 4 0 0 1 8-0.5 4 4 0 0 1 8 0.5C20 15.5 12 21 12 21z"/><path d="M8 13c1 1.5 2.5 2.5 4 3"/></svg> },
+              ].map(e => (
+                <div key={e.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", minWidth: "72px" }}>
+                  <div style={{ width: "72px", height: "72px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    {e.icon}
+                  </div>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <style>{`@media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr !important; } }`}</style>
