@@ -93,7 +93,7 @@ function InfographicSection() {
               position: "absolute",
               top: "14px",
               right: "14px",
-              background: "rgba(13,27,42,0.82)",
+              background: "rgba(255,255,255,0.92)",
               backdropFilter: "blur(8px)",
               border: "1px solid rgba(255,255,255,0.15)",
               borderRadius: "99px",
@@ -203,7 +203,7 @@ function InfographicSection() {
 // ── Design tokens (fixed — not theme-dependent on landing) ───
 const C = {
   // Backgrounds
-  bgPage:    "linear-gradient(160deg, #020c1b 0%, #051a3a 20%, #0a2550 40%, #062040 60%, #041530 80%, #020c1b 100%)",
+  bgPage:    "linear-gradient(135deg, #f8f9fc 0%, #f0f4fb 35%, #dce8f8 60%, #b8d0f0 80%, #2554c7 100%)",
   bgCard:    "rgba(255,255,255,0.06)",
   bgCardHov: "rgba(255,255,255,0.10)",
   bgGlass:   "rgba(255,255,255,0.08)",
@@ -279,7 +279,7 @@ export default function Landing() {
       {/* ── NAV ── */}
       <header
         style={{
-          background: "rgba(13,27,42,0.85)",
+          background: "rgba(255,255,255,0.95)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
           borderBottom: `1px solid ${C.border}`,
@@ -354,7 +354,7 @@ export default function Landing() {
             position: "sticky",
             top: "174px", // 60px top bar + 50px access bar + 64px nav
             zIndex: 39,
-            background: "rgba(13,27,42,0.97)",
+            background: "rgba(255,255,255,0.98)",
             backdropFilter: "blur(16px)",
             WebkitBackdropFilter: "blur(16px)",
             borderBottom: `1px solid ${C.border}`,
@@ -481,7 +481,7 @@ export default function Landing() {
             gap: "6px",
             padding: "10px 16px 18px",
             borderBottom: `1px solid ${C.border}`,
-            background: "rgba(13,27,42,0.95)",
+            background: "rgba(255,255,255,0.97)",
           }}>
             {/* About Me Profile — gold pill with tagline, first in mobile nav strip */}
             <div style={{ position: "relative", display: "inline-flex", flexShrink: 0 }}>
@@ -541,7 +541,7 @@ export default function Landing() {
           {/* Full-bleed wave gradient background */}
           <div aria-hidden="true" style={{
             position: "absolute", inset: 0,
-            background: `linear-gradient(160deg, #020c1b 0%, #051a3a 25%, #0a2550 55%, #062040 80%, #020c1b 100%)`,
+            background: `linear-gradient(160deg, #e8f0fb 0%, #d0e4f7 40%, #b8d0f0 70%, #2554c7 100%)`,
             zIndex: 0,
           }} />
           {/* Animated glow orbs */}
@@ -722,7 +722,7 @@ export default function Landing() {
         {/* ── SPLIT HERO IMAGE ── */}
         <section aria-label="Before and after InSync Profiles" style={{ width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "0 0 0 0" }}>
           <img
-            src="/manus-storage/split_hero_known_d3f71b5b.jpg"
+            src="/split_hero_known.jpg"
             alt="Left side: a person overwhelmed by paperwork with speech bubbles saying 'Tell your story again...', 'Start over new forms', 'Explain everything again', 'Start over again'. Right side: a smiling support worker with an elderly person, showing Sarah Torens' accessible profile with the text 'Known. Understood. In sync.'"
             style={{ width: "100%", display: "block", objectFit: "cover" }}
           />
@@ -735,7 +735,7 @@ export default function Landing() {
         <section
           style={{
             padding: "80px 24px",
-            background: "rgba(2,12,27,0.97)",
+            background: "rgba(240,246,255,0.97)",
             borderTop: `1px solid rgba(245,200,66,0.12)`,
             borderBottom: `1px solid rgba(245,200,66,0.12)`,
             overflow: "hidden",
