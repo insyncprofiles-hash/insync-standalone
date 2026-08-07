@@ -693,8 +693,14 @@ export default function Landing() {
             aria-hidden="true"
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45)" }}
           />
+          {/* Logo card — top right corner */}
+          <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 3, display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "rgba(255,255,255,0.10)", borderRadius: "14px", padding: "12px 16px", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)" }}>
+            <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: "52px", height: "52px", objectFit: "contain" }} />
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 900, fontSize: "0.85rem", color: "#fff", textAlign: "center" }}>InSync</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.5rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>PROFILES</div>
+          </div>
           {/* Content overlay */}
-          <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "56px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "40px", flexWrap: "wrap" }}>
+          <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "56px 32px", display: "flex", alignItems: "center", justifyContent: "flex-start", gap: "40px", flexWrap: "wrap" }}>
             <div style={{ flex: "1 1 400px", maxWidth: "620px" }}>
               <h1 id="hero-heading" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.35, marginBottom: "16px" }}>
                 When people are known before they are supported,{" "}
@@ -708,12 +714,6 @@ export default function Landing() {
                 <Link href="/view" style={{ background: C.teal, color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "15px", padding: "11px 24px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
                 <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "15px", padding: "11px 24px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
               </div>
-            </div>
-            {/* Logo card */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", background: "rgba(255,255,255,0.10)", borderRadius: "16px", padding: "20px 24px", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)", flexShrink: 0 }}>
-              <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: "72px", height: "72px", objectFit: "contain" }} />
-              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 900, fontSize: "1rem", color: "#fff", textAlign: "center" }}>InSync</div>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>PROFILES</div>
             </div>
           </div>
         </section>
