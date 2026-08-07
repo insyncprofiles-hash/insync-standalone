@@ -173,27 +173,27 @@ export default function Landing() {
       </section>
 
       {/* ── CHALLENGES ── */}
-      <section style={{ padding: "72px 24px", background: "#ffffff" }} aria-labelledby="challenges-heading">
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <h2 id="challenges-heading" style={{ textAlign: "center", fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "48px" }}>The challenges we all know too well</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "32px" }}>
+      <section style={{ padding: "80px 24px", background: "#f8fafc" }} aria-labelledby="challenges-heading">
+        <div style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0d9488", marginBottom: "12px" }}>Why it matters</p>
+          <h2 id="challenges-heading" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 900, color: "#0c1f36", marginBottom: "16px", lineHeight: 1.2 }}>The challenges we all know too well</h2>
+          <p style={{ fontSize: "16px", color: "#4a6a8a", maxWidth: "560px", margin: "0 auto 56px", lineHeight: 1.7 }}>People deserve more than a name and a photo when choosing who enters their life.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "28px", textAlign: "left" }}>
             {[
-              { icon: "💬", color: "#0d9488", title: "Retell your story", subtitle: "Again and again", desc: "Participants and carers often repeat the same information across providers, coordinators, support workers, hospitals and services.", underline: "#0d9488" },
-              { icon: "🔍", color: "#f59e0b", title: "Choose with limited information", subtitle: "Availability is not compatibility", desc: "A name, a photo and a roster rarely tell someone how a support worker communicates, adapts or understands their needs, preferences and lived experience.", underline: "#f59e0b" },
-              { icon: "🔄", color: "#7c3aed", title: "Start over when it doesn't fit", subtitle: "Mismatches have a cost", desc: "When support is a poor match, people lose trust, continuity, energy and sometimes the confidence to ask for what they need.", underline: "#7c3aed" },
+              { icon: "💬", color: "#0d9488", bg: "#e6f7f5", title: "Retell your story", subtitle: "Again and again", desc: "Participants and carers repeat the same information across providers, coordinators, support workers, hospitals and services.", accent: "#0d9488" },
+              { icon: "🔍", color: "#f59e0b", bg: "#fef9ec", title: "Choose with limited information", subtitle: "Availability is not compatibility", desc: "A name, a photo and a roster rarely tell someone how a support worker communicates, adapts or understands their needs.", accent: "#f59e0b" },
+              { icon: "🔄", color: "#7c3aed", bg: "#f3f0ff", title: "Start over when it doesn't fit", subtitle: "Mismatches have a cost", desc: "When support is a poor match, people lose trust, continuity, energy and sometimes the confidence to ask for what they need.", accent: "#7c3aed" },
             ].map(c => (
-              <div key={c.title} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div style={{ display: "flex", alignItems: "flex-start", gap: "16px" }}>
-                  <div style={{ width: "52px", height: "52px", borderRadius: "50%", border: `2px solid ${c.color}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", flexShrink: 0, color: c.color }}>
-                    {c.icon}
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: "16px", color: "#0c1f36", lineHeight: 1.3 }}>{c.title}</div>
-                    <div style={{ fontWeight: 600, fontSize: "13px", color: "#374151", marginTop: "2px" }}>{c.subtitle}</div>
-                  </div>
+              <div key={c.title} style={{ background: "#ffffff", borderRadius: "16px", padding: "28px", boxShadow: "0 2px 16px rgba(0,0,0,0.06)", border: "1px solid #e8eef5", display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div style={{ width: "56px", height: "56px", borderRadius: "14px", background: c.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px" }}>
+                  {c.icon}
                 </div>
-                <p style={{ fontSize: "14px", color: "#374151", lineHeight: 1.7, margin: 0 }}>{c.desc}</p>
-                <div style={{ width: "40px", height: "3px", background: c.underline, borderRadius: "2px" }} />
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: "17px", color: "#0c1f36", lineHeight: 1.3, marginBottom: "4px" }}>{c.title}</div>
+                  <div style={{ fontWeight: 600, fontSize: "13px", color: c.color }}>{c.subtitle}</div>
+                </div>
+                <p style={{ fontSize: "14px", color: "#4a6a8a", lineHeight: 1.75, margin: 0, flex: 1 }}>{c.desc}</p>
+                <div style={{ width: "36px", height: "3px", background: c.accent, borderRadius: "2px" }} />
               </div>
             ))}
           </div>
