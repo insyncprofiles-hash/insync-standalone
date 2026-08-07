@@ -160,6 +160,7 @@ export default function Landing() {
         </div>
         {/* Buttons — pinned to bottom */}
         <div style={{ position: "relative", zIndex: 2, padding: "24px 32px 40px", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}>
+          <p style={{ width: "100%", textAlign: "center", fontSize: "13px", color: "rgba(255,255,255,0.85)", fontWeight: 600, letterSpacing: "0.04em", marginBottom: "4px" }}>♡ A participant-first matching and communication resource</p>
           {/* About Me button */}
           <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a3a1a", fontSize: "17px", fontWeight: 900, padding: "14px 32px 12px", borderRadius: "40px", textDecoration: "none", boxShadow: "0 4px 20px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", minWidth: "200px" }}>
             <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "10px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
