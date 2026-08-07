@@ -105,44 +105,31 @@ export default function Landing() {
         `}</style>
       </nav>
 
-      {/* ── HERO ── */}
-      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "480px", overflow: "hidden" }} aria-labelledby="hero-heading">
-        {/* Left — copy */}
-        <div style={{ padding: "clamp(40px, 6vw, 80px) clamp(24px, 4vw, 64px)", display: "flex", flexDirection: "column", justifyContent: "center", background: "#ffffff" }}>
-          <p style={{ color: "#0d9488", fontSize: "14px", fontWeight: 600, marginBottom: "16px", letterSpacing: "0.01em" }}>People first. Understanding always.</p>
-          <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#0f2a4a", lineHeight: 1.1, marginBottom: "8px" }}>
-            Better matches.<br />Better support.
+      {/* ── HERO — Partnership banner as full-width hero ── */}
+      <section style={{ position: "relative", overflow: "hidden", minHeight: "380px" }} aria-labelledby="hero-heading">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80" alt="" aria-hidden="true"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45)" }} />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "72px 32px", textAlign: "center" }}>
+          <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.4, marginBottom: "16px" }}>
+            When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
           </h1>
-          <div style={{ fontFamily: "Georgia, serif", fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontStyle: "italic", color: "#0d9488", marginBottom: "24px", lineHeight: 1.2 }}>
-            More human.
-            <div style={{ width: "80px", height: "3px", background: "linear-gradient(90deg, #f59e0b, #fbbf24)", borderRadius: "2px", marginTop: "6px" }} />
-          </div>
-          <p style={{ fontSize: "15px", color: "#4b5563", lineHeight: 1.75, marginBottom: "32px", maxWidth: "420px" }}>
-            InSync Profiles helps participants, carers, families and support workers connect through accessible, participant-led profiles that go beyond a name and a photo.
+          <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.85)", lineHeight: 1.8, marginBottom: "32px", maxWidth: "500px", margin: "0 auto 32px" }}>
+            InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
           </p>
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginBottom: "20px" }}>
+          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
-            <Link href="/how-it-works" style={{ background: "#fff", color: "#0f2a4a", fontSize: "15px", fontWeight: 600, padding: "12px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid #d1dae6" }}>How it works</Link>
+            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "12px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
           </div>
-          <p style={{ fontSize: "12px", color: "#9ca3af", display: "flex", alignItems: "center", gap: "6px" }}>
-            <span>♡</span> Not an NDIS provider &nbsp;•&nbsp; A participant-first matching and communication resource
-          </p>
-        </div>
-        {/* Right — split image */}
-        <div style={{ position: "relative", overflow: "hidden", minHeight: "400px" }}>
-          <img
-            src="/split_hero_known.jpg"
-            alt="Left: overwhelmed person with paperwork and speech bubbles saying 'Tell your story again', 'Start over new forms', 'Explain everything again'. Right: smiling support worker with elderly person, showing 'Known. Understood. In sync.' with an accessible profile on screen."
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          />
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", marginTop: "20px" }}>♡ Not an NDIS provider &nbsp;•&nbsp; A participant-first matching and communication resource</p>
         </div>
       </section>
-      <style>{`
-        @media (max-width: 700px) {
-          section[aria-labelledby="hero-heading"] { grid-template-columns: 1fr !important; }
-          section[aria-labelledby="hero-heading"] > div:last-child { min-height: 260px !important; }
-        }
-      `}</style>
+
+      {/* ── SPLIT IMAGE ── */}
+      <section aria-label="Before and after InSync Profiles" style={{ width: "100%" }}>
+        <img src="/split_hero_known.jpg"
+          alt="Left: overwhelmed person with paperwork and speech bubbles. Right: smiling support worker with elderly person showing 'Known. Understood. In sync.' with an accessible profile on screen."
+          style={{ width: "100%", display: "block", objectFit: "cover" }} />
+      </section>
 
       {/* ── CHALLENGES ── */}
       <section style={{ padding: "72px 24px", background: "#ffffff" }} aria-labelledby="challenges-heading">
@@ -294,31 +281,6 @@ export default function Landing() {
         <style>{`@media (max-width: 700px) { section[aria-labelledby="access-heading"] > div { grid-template-columns: 1fr !important; } }`}</style>
       </section>
 
-      {/* ── PARTNERSHIP FOOTER BANNER ── */}
-      <section style={{ position: "relative", overflow: "hidden", minHeight: "220px" }} aria-label="About InSync Profiles">
-        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80" alt="" aria-hidden="true"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45)" }} />
-        {/* Logo card — top right */}
-        <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 3, display: "flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.12)", borderRadius: "12px", padding: "10px 14px", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}>
-          <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: "36px", height: "36px", objectFit: "contain" }} />
-          <div>
-            <div style={{ fontWeight: 800, fontSize: "13px", color: "#fff" }}>InSync</div>
-            <div style={{ fontSize: "8px", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)" }}>PROFILES</div>
-          </div>
-        </div>
-        <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "56px 32px", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.4, marginBottom: "16px" }}>
-            When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
-          </h2>
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.82)", lineHeight: 1.8, marginBottom: "28px", maxWidth: "480px", margin: "0 auto 28px" }}>
-            InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
-          </p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
-            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "12px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
-          </div>
-        </div>
-      </section>
 
       {/* ── FOOTER ── */}
       <footer style={{ background: "#ffffff", borderTop: "1px solid #e8eef5", padding: "16px 24px" }}>
