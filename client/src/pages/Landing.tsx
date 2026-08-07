@@ -148,7 +148,7 @@ export default function Landing() {
       {/* ── HERO — Partnership banner as full-width hero ── */}
       <section style={{ position: "relative", overflow: "hidden", minHeight: "380px" }} aria-labelledby="hero-heading">
         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80" alt="" aria-hidden="true"
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.32)" }} />
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.48)" }} />
         <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "72px 32px", textAlign: "center" }}>
           <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.3, marginBottom: "16px", textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>
             When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
