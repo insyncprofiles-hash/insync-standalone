@@ -304,6 +304,36 @@ export default function Landing() {
 
 
       {/* ── FOOTER ── */}
+
+      {/* ── PARTNERSHIP CLOSING BANNER ── */}
+      <section style={{ position: "relative", overflow: "hidden", minHeight: "220px", display: "flex", alignItems: "center" }}>
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80" alt="" aria-hidden="true"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.48)" }} />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", margin: "0 auto", padding: "48px 32px", display: "grid", gridTemplateColumns: "1fr auto", gap: "40px", alignItems: "center", width: "100%" }}>
+          <div>
+            <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.9rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.4, marginBottom: "12px", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>
+              When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
+            </h2>
+            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.88)", lineHeight: 1.7, maxWidth: "480px", marginBottom: "24px", textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>
+              InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
+            </p>
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "14px", fontWeight: 700, padding: "11px 24px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
+              <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "14px", fontWeight: 600, padding: "11px 24px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
+            </div>
+          </div>
+          {/* InSync logo card */}
+          <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255,255,255,0.2)", flexShrink: 0 }}>
+            <img src="/insync_logo.webp" alt="InSync Profiles logo" style={{ width: "48px", height: "48px", objectFit: "contain" }} />
+            <div>
+              <div style={{ fontWeight: 900, fontSize: "16px", color: "#ffffff", letterSpacing: "0.02em" }}>InSync</div>
+              <div style={{ fontWeight: 600, fontSize: "11px", color: "rgba(255,255,255,0.75)", letterSpacing: "0.08em", textTransform: "uppercase" }}>PROFILES</div>
+            </div>
+          </div>
+        </div>
+        <style>{`@media (max-width: 700px) { .partner-close { grid-template-columns: 1fr !important; } }`}</style>
+      </section>
+
       <footer style={{ background: "#ffffff", borderTop: "1px solid #e8eef5", padding: "16px 24px" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
