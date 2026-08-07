@@ -194,18 +194,18 @@ export default function Landing() {
 
       {/* ── SHIFT BANNER ── */}
 
-      {/* ── SPLIT IMAGE ── */}
-      <section aria-label="Before and after InSync Profiles" style={{ width: "100%" }}>
-        <img src="/split_hero_known.jpg"
-          alt="Left: overwhelmed person with paperwork and speech bubbles. Right: smiling support worker with elderly person showing 'Known. Understood. In sync.' with an accessible profile on screen."
-          style={{ width: "100%", display: "block", objectFit: "cover" }} />
-      </section>
-
       {/* ── SHIFT BANNER IMAGE ── */}
       <section aria-label="From fitting into services to services fitting around people" style={{ padding: "0 24px 48px" }}>
         <img src="/shift_banner.jpg"
           alt="From fitting into services to services fitting around people. Support that fits you. A teal cube with a hole, a smiling woman with floating support icons around her."
           style={{ width: "100%", display: "block", borderRadius: "16px", objectFit: "cover" }} />
+      </section>
+
+      {/* ── SPLIT IMAGE ── */}
+      <section aria-label="Before and after InSync Profiles" style={{ width: "100%" }}>
+        <img src="/split_hero_known.jpg"
+          alt="Left: overwhelmed person with paperwork and speech bubbles. Right: smiling support worker with elderly person showing 'Known. Understood. In sync.' with an accessible profile on screen."
+          style={{ width: "100%", display: "block", objectFit: "cover" }} />
       </section>
 
       {/* ── COMPARISON + ECOSYSTEM ── */}
