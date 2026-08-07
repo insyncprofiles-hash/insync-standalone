@@ -217,7 +217,7 @@ export default function Landing() {
       </section>
 
       {/* ── COMPARISON + ECOSYSTEM ── */}
-      <section className="compare-section" style={{ padding: "48px 24px", background: "#f8fafc" }}>
+      <section className="compare-section" style={{ padding: "48px 24px", background: "#ffffff" }}>
         <div className="compare-grid" style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "start" }}>
           {/* Comparison table */}
           <div>
@@ -225,8 +225,8 @@ export default function Landing() {
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "10px 16px", textAlign: "left", background: "#f1f5f9", color: "#374151", fontWeight: 700, borderRadius: "8px 0 0 0", border: "1px solid #e2e8f0" }}>Traditional matching</th>
-                  <th style={{ padding: "10px 16px", textAlign: "left", background: "#0d9488", color: "#fff", fontWeight: 700, borderRadius: "0 8px 0 0", border: "1px solid #0d9488" }}>InSync approach</th>
+                  <th style={{ padding: "8px 14px", textAlign: "left", background: "#f1f5f9", color: "#374151", fontWeight: 700, border: "1px solid #e2e8f0", fontSize: "13px" }}>Traditional matching</th>
+                  <th style={{ padding: "8px 14px", textAlign: "left", background: "#0d9488", color: "#fff", fontWeight: 700, border: "1px solid #0d9488", fontSize: "13px" }}>InSync approach</th>
                 </tr>
               </thead>
               <tbody>
@@ -239,10 +239,10 @@ export default function Landing() {
                   ["", "Informed choice & control"],
                 ].map(([old, neo], i) => (
                   <tr key={i}>
-                    <td style={{ padding: "9px 16px", border: "1px solid #e2e8f0", color: "#374151", background: "#fff" }}>
+                    <td style={{ padding: "7px 14px", border: "1px solid #e2e8f0", color: "#374151", background: "#fff", fontSize: "13px" }}>
                       {old && <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ color: "#ef4444", fontWeight: 700 }}>✗</span> {old}</span>}
                     </td>
-                    <td style={{ padding: "9px 16px", border: "1px solid #ccede9", color: "#0c1f36", background: "#f0faf9" }}>
+                    <td style={{ padding: "7px 14px", border: "1px solid #ccede9", color: "#0c1f36", background: "#f0faf9", fontSize: "13px" }}>
                       <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ color: "#0d9488", fontWeight: 700 }}>✓</span> {neo}</span>
                     </td>
                   </tr>
@@ -254,17 +254,19 @@ export default function Landing() {
           <div>
             <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "8px" }}>Built for the whole support circle</h2>
             <p style={{ fontSize: "14px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: "8px", flexWrap: "wrap" }}>
               {[
-                { icon: "👤", label: "Participants", bg: "#dbeafe", color: "#1d4ed8" },
-                { icon: "👨‍👩‍👧", label: "Carers &\nFamilies", bg: "#fef3c7", color: "#b45309" },
-                { icon: "🏅", label: "Support\nWorkers", bg: "#ede9fe", color: "#6d28d9" },
-                { icon: "🤝", label: "Support\nCoordinators", bg: "#d1fae5", color: "#065f46" },
-                { icon: "🏢", label: "Providers", bg: "#e0f2fe", color: "#0369a1" },
-                { icon: "❤️", label: "Aged Care", bg: "#fce7f3", color: "#9d174d" },
+                { svg: "M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z", label: "Participants", bg: "#e0f2f1", color: "#0d9488" },
+                { svg: "M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.6 0-.9.1 1.1.8 1.9 1.8 1.9 3.4V19h6v-2.5c0-2.3-4.7-3.5-7-3.5z", label: "Carers &\nFamilies", bg: "#fff8e1", color: "#f59e0b" },
+                { svg: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z", label: "Support\nWorkers", bg: "#ede9fe", color: "#7c3aed" },
+                { svg: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z", label: "Support\nCoordinators", bg: "#d1fae5", color: "#059669" },
+                { svg: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z", label: "Providers", bg: "#e0f2fe", color: "#0369a1" },
+                { svg: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", label: "Aged Care", bg: "#fce7f3", color: "#db2777" },
               ].map(e => (
                 <div key={e.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", flex: "1 1 80px" }}>
-                  <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "26px", border: `2px solid ${e.color}22` }}>{e.icon}</div>
+                  <div style={{ width: "68px", height: "68px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", border: `2px solid ${e.color}33` }}>
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill={e.color}><path d={e.svg} /></svg>
+                  </div>
                   <div style={{ fontSize: "12px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
                 </div>
               ))}
@@ -275,14 +277,14 @@ export default function Landing() {
       </section>
 
       {/* ── ACCESSIBILITY STRIP ── */}
-      <section className="access-section" style={{ padding: "56px 24px", background: "#ffffff" }} aria-labelledby="access-heading">
+      <section className="access-section" style={{ padding: "40px 24px", background: "#f8fafc", borderTop: "1px solid #e8eef5", borderBottom: "1px solid #e8eef5" }} aria-labelledby="access-heading">
         <div className="access-grid" style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "auto 1fr", gap: "48px", alignItems: "center" }}>
           <div style={{ maxWidth: "220px" }}>
             <h2 id="access-heading" style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 800, color: "#0d9488", lineHeight: 1.3 }}>
               Accessibility is<br />the foundation<br />of being understood.
             </h2>
           </div>
-          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", justifyContent: "space-around" }}>
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "space-around" }}>
             {[
               { icon: "🌐", label: "Multi-language" },
               { icon: "🎙️", label: "Voice options" },
@@ -292,9 +294,9 @@ export default function Landing() {
               { icon: "🤲", label: "Trauma-aware" },
               { icon: "🧠", label: "Neurodiversity\naffirming" },
             ].map(a => (
-              <div key={a.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", minWidth: "72px" }}>
-                <div style={{ width: "52px", height: "52px", borderRadius: "12px", border: "1.5px solid #e0e7ef", display: "flex", alignItems: "center", justifyContent: "center", fontSize: a.isText ? "16px" : "22px", fontWeight: a.isText ? 800 : 400, color: a.isText ? "#0d9488" : "inherit", background: "#f8fafc" }}>{a.icon}</div>
-                <div style={{ fontSize: "11px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
+              <div key={a.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", minWidth: "68px" }}>
+                <div style={{ width: "48px", height: "48px", borderRadius: "10px", border: "1.5px solid #d1d9e6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: a.isText ? "15px" : "20px", fontWeight: a.isText ? 800 : 400, color: a.isText ? "#0d9488" : "inherit", background: "#ffffff" }}>{a.icon}</div>
+                <div style={{ fontSize: "10px", fontWeight: 600, color: "#374151", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
               </div>
             ))}
           </div>
@@ -307,7 +309,7 @@ export default function Landing() {
 
       {/* ── PARTNERSHIP CLOSING BANNER ── */}
       <section style={{ position: "relative", overflow: "hidden", minHeight: "220px", display: "flex", alignItems: "center" }}>
-        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80" alt="" aria-hidden="true"
+        <img src="https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1400&q=80" alt="" aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.48)" }} />
         <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", margin: "0 auto", padding: "48px 32px", display: "grid", gridTemplateColumns: "1fr auto", gap: "40px", alignItems: "center", width: "100%" }}>
           <div>
@@ -323,11 +325,11 @@ export default function Landing() {
             </div>
           </div>
           {/* InSync logo card */}
-          <div style={{ background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255,255,255,0.2)", flexShrink: 0 }}>
+          <div style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255,255,255,0.6)", flexShrink: 0 }}>
             <img src="/insync_logo.webp" alt="InSync Profiles logo" style={{ width: "48px", height: "48px", objectFit: "contain" }} />
             <div>
-              <div style={{ fontWeight: 900, fontSize: "16px", color: "#ffffff", letterSpacing: "0.02em" }}>InSync</div>
-              <div style={{ fontWeight: 600, fontSize: "11px", color: "rgba(255,255,255,0.75)", letterSpacing: "0.08em", textTransform: "uppercase" }}>PROFILES</div>
+              <div style={{ fontWeight: 900, fontSize: "16px", color: "#0c1f36", letterSpacing: "0.02em" }}>InSync</div>
+              <div style={{ fontWeight: 600, fontSize: "11px", color: "#4a6a8a", letterSpacing: "0.08em", textTransform: "uppercase" }}>PROFILES</div>
             </div>
           </div>
         </div>
@@ -336,8 +338,8 @@ export default function Landing() {
 
       <footer style={{ background: "#ffffff", borderTop: "1px solid #e8eef5", padding: "16px 24px" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-            {["♡ Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
+         <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+           {["♡ Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
               <span key={t} style={{ fontSize: "12px", color: "#374151" }}>{t}</span>
             ))}
           </div>
