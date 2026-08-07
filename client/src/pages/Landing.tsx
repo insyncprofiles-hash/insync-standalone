@@ -146,27 +146,28 @@ export default function Landing() {
       </nav>
 
       {/* ── HERO — Partnership banner as full-width hero ── */}
-      <section style={{ position: "relative", overflow: "hidden", minHeight: "380px" }} aria-labelledby="hero-heading">
+      <section style={{ position: "relative", overflow: "hidden", minHeight: "460px", display: "flex", flexDirection: "column" }} aria-labelledby="hero-heading">
         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80" alt="" aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.48)" }} />
-        <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "72px 32px", textAlign: "center" }}>
-          <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.3, marginBottom: "16px", textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}>
+        {/* Text content — top */}
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "64px 32px 24px", textAlign: "center", flex: 1 }}>
+          <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.2, marginBottom: "20px", textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}>
             When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
           </h1>
-          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.95)", lineHeight: 1.8, marginBottom: "32px", maxWidth: "500px", margin: "0 auto 32px", textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}>
+          <p style={{ fontSize: "18px", color: "#ffffff", lineHeight: 1.8, maxWidth: "540px", margin: "0 auto", textShadow: "0 1px 8px rgba(0,0,0,0.5)", fontWeight: 500 }}>
             InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
           </p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>♡ Not an NDIS provider &nbsp;•&nbsp; A participant-first matching and communication resource</p>
-            {/* About Me button */}
-            <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a3a1a", fontSize: "17px", fontWeight: 900, padding: "12px 28px 10px", borderRadius: "40px", textDecoration: "none", boxShadow: "0 4px 20px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", minWidth: "200px" }}>
-              <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "10px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
-              <span style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "0.02em" }}>✨ About Me</span>
-              <span style={{ fontSize: "11px", fontWeight: 700, color: "#0a4a1a", letterSpacing: "0.05em", marginTop: "2px" }}>Continuity for Aged &amp; Disabled Persons</span>
-            </Link>
-            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore Demo SW Profile</Link>
-            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "12px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
-          </div>
+        </div>
+        {/* Buttons — pinned to bottom */}
+        <div style={{ position: "relative", zIndex: 2, padding: "24px 32px 40px", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}>
+          {/* About Me button */}
+          <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a3a1a", fontSize: "17px", fontWeight: 900, padding: "14px 32px 12px", borderRadius: "40px", textDecoration: "none", boxShadow: "0 4px 20px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", minWidth: "200px" }}>
+            <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "10px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
+            <span style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "0.02em" }}>✨ About Me</span>
+            <span style={{ fontSize: "11px", fontWeight: 700, color: "#0a4a1a", letterSpacing: "0.05em", marginTop: "2px" }}>Continuity for Aged &amp; Disabled Persons</span>
+          </Link>
+          <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "14px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore Demo SW Profile</Link>
+          <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "14px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
         </div>
       </section>
 
