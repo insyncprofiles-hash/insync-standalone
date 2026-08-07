@@ -309,7 +309,7 @@ export default function Landing() {
 
       {/* ── PARTNERSHIP CLOSING BANNER ── */}
       <section style={{ position: "relative", overflow: "hidden", minHeight: "220px", display: "flex", alignItems: "center" }}>
-        <img src="https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=1400&q=80" alt="" aria-hidden="true"
+        <img src="/partnership_photo.jpg" alt="" aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.48)" }} />
         <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", margin: "0 auto", padding: "48px 32px", display: "grid", gridTemplateColumns: "1fr auto", gap: "40px", alignItems: "center", width: "100%" }}>
           <div>
