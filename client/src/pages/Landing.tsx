@@ -339,8 +339,7 @@ export default function Landing() {
             <span style={{ fontSize: "13px", color: "#374151" }}>© 2026 InSync Profiles</span>
             <Link href="/privacy" style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>Privacy & Terms</Link>
             <Link href="/contact" style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>Contact</Link>
-            <button aria-label="Accessibility" style={{ width: "32px", height: "32px", borderRadius: "50%", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="#1a1a1a"><path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-1 5h2c1.1 0 2 .9 2 2v4h-1v5h-2v-5H11v5H9v-5H8V9c0-1.1.9-2 2-2z"/></svg>
+            <button aria-label="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%", border: "none", background: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/accessibility_icon.png" alt="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%" }} /></button>
             </button>
           </div>
         </div>
