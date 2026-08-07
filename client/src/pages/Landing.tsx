@@ -201,39 +201,11 @@ export default function Landing() {
           style={{ width: "100%", display: "block", objectFit: "cover" }} />
       </section>
 
-      <section className="shift-banner" style={{ margin: "0 24px 48px", borderRadius: "20px", background: "linear-gradient(135deg, #e6f7f5 0%, #fef9ec 100%)", padding: "clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "center", overflow: "hidden" }} aria-label="From fitting into services to services fitting around people">
-        {/* Left */}
-        <div>
-          <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.4rem, 2.8vw, 2rem)", fontWeight: 800, color: "#0f2a4a", lineHeight: 1.3 }}>
-            From fitting into services<br />
-            <span style={{ color: "#374151", fontWeight: 500 }}>to services fitting</span><br />
-            <span style={{ color: "#374151", fontWeight: 500 }}>around people</span>
-          </h2>
-          <div style={{ marginTop: "24px", width: "120px", height: "120px", background: "linear-gradient(135deg, #0d9488 0%, #0f766e 100%)", borderRadius: "16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "48px", boxShadow: "0 8px 24px rgba(13,148,136,0.25)" }}>
-            📦
-          </div>
-        </div>
-        {/* Right */}
-        <div style={{ textAlign: "center", position: "relative" }}>
-          <div style={{ fontSize: "clamp(1.2rem, 2.5vw, 1.7rem)", fontWeight: 800, color: "#0f2a4a", marginBottom: "24px" }}>
-            Support that<br />fits <em style={{ fontStyle: "italic", color: "#0d9488" }}>you.</em>
-          </div>
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <div style={{ width: "100px", height: "100px", borderRadius: "50%", overflow: "hidden", border: "4px solid #fff", boxShadow: "0 4px 20px rgba(0,0,0,0.12)", margin: "0 auto" }}>
-              <img src="/assets/kira_chen_headshot_70b4d1ab.png" alt="Participant" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </div>
-            {[
-              { icon: "💬", top: "-20px", right: "-30px", bg: "#fff" },
-              { icon: "👂", top: "-10px", right: "60px", bg: "#fef3c7" },
-              { icon: "📅", bottom: "10px", right: "-30px", bg: "#e0f2fe" },
-              { icon: "👤", bottom: "-10px", left: "-30px", bg: "#ede9fe" },
-              { icon: "👤", bottom: "30px", left: "60px", bg: "#d1fae5" },
-            ].map((b, i) => (
-              <div key={i} style={{ position: "absolute", top: b.top, bottom: b.bottom, left: b.left, right: b.right, width: "36px", height: "36px", borderRadius: "50%", background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", boxShadow: "0 2px 8px rgba(0,0,0,0.10)", border: "2px solid #fff" }}>{b.icon}</div>
-            ))}
-          </div>
-        </div>
-        <style>{`@media (max-width: 600px) { .shift-banner { grid-template-columns: 1fr !important; margin: 0 12px 32px !important; } }`}</style>
+      {/* ── SHIFT BANNER IMAGE ── */}
+      <section aria-label="From fitting into services to services fitting around people" style={{ padding: "0 24px 48px" }}>
+        <img src="/shift_banner.jpg"
+          alt="From fitting into services to services fitting around people. Support that fits you. A teal cube with a hole, a smiling woman with floating support icons around her."
+          style={{ width: "100%", display: "block", borderRadius: "16px", objectFit: "cover" }} />
       </section>
 
       {/* ── COMPARISON + ECOSYSTEM ── */}
