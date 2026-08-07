@@ -164,13 +164,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── SPLIT IMAGE ── */}
-      <section aria-label="Before and after InSync Profiles" style={{ width: "100%" }}>
-        <img src="/split_hero_known.jpg"
-          alt="Left: overwhelmed person with paperwork and speech bubbles. Right: smiling support worker with elderly person showing 'Known. Understood. In sync.' with an accessible profile on screen."
-          style={{ width: "100%", display: "block", objectFit: "cover" }} />
-      </section>
-
       {/* ── CHALLENGES ── */}
       <section style={{ padding: "72px 24px", background: "#ffffff" }} aria-labelledby="challenges-heading">
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
@@ -200,6 +193,14 @@ export default function Landing() {
       </section>
 
       {/* ── SHIFT BANNER ── */}
+
+      {/* ── SPLIT IMAGE ── */}
+      <section aria-label="Before and after InSync Profiles" style={{ width: "100%" }}>
+        <img src="/split_hero_known.jpg"
+          alt="Left: overwhelmed person with paperwork and speech bubbles. Right: smiling support worker with elderly person showing 'Known. Understood. In sync.' with an accessible profile on screen."
+          style={{ width: "100%", display: "block", objectFit: "cover" }} />
+      </section>
+
       <section className="shift-banner" style={{ margin: "0 24px 48px", borderRadius: "20px", background: "linear-gradient(135deg, #e6f7f5 0%, #fef9ec 100%)", padding: "clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "40px", alignItems: "center", overflow: "hidden" }} aria-label="From fitting into services to services fitting around people">
         {/* Left */}
         <div>
