@@ -377,33 +377,6 @@ export default function Pricing() {
             ))}
           </div>
 
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-            <a
-              href="#pricing"
-              style={{
-                background: ACCENT_BLUE, color: "#ffffff",
-                padding: "14px 32px", borderRadius: "99px",
-                fontSize: "15px", fontFamily: "'Outfit', sans-serif", fontWeight: 700,
-                textDecoration: "none", display: "inline-block",
-                boxShadow: `0 4px 24px rgba(26,74,138,0.35)`,
-                transition: "transform 160ms ease-out",
-              }}
-            >
-              See Pricing →
-            </a>
-            <Link
-              href="/demo"
-              style={{
-                background: "transparent", color: ACCENT_BLUE,
-                padding: "14px 32px", borderRadius: "99px",
-                fontSize: "15px", fontFamily: "'Outfit', sans-serif", fontWeight: 600,
-                textDecoration: "none", display: "inline-block",
-                border: `1.5px solid rgba(26,74,138,0.50)`,
-              }}
-            >
-              Try the Demo
-            </Link>
-          </div>
         </section>
 
         {/* ── PRICING CARDS ── */}
