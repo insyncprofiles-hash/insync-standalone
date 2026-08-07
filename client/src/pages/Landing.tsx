@@ -342,7 +342,7 @@ export default function Landing() {
             ))}
           </div>
           <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
-            <span style={{ fontSize: "12px", color: "#374151" }}>© 2024 InSync Profiles</span>
+            <span style={{ fontSize: "12px", color: "#374151" }}>© 2026 InSync Profiles</span>
             {["Privacy", "Terms", "Contact"].map(l => (
               <Link key={l} href={`/${l.toLowerCase()}`} style={{ fontSize: "12px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>{l}</Link>
             ))}
