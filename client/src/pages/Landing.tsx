@@ -63,6 +63,20 @@ export default function Landing() {
   // Close mobile menu on route change
   useEffect(() => { setMobileMenuOpen(false); }, []);
 
+  // Force light theme on landing page — remove dark class from html element
+  useEffect(() => {
+    const root = document.documentElement;
+    const hadDark = root.classList.contains("dark");
+    root.classList.remove("dark");
+    root.style.background = "#ffffff";
+    document.body.style.background = "#ffffff";
+    return () => {
+      if (hadDark) root.classList.add("dark");
+      root.style.background = "";
+      document.body.style.background = "";
+    };
+  }, []);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
