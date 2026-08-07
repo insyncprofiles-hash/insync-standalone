@@ -256,12 +256,12 @@ export default function Landing() {
             <p style={{ fontSize: "16px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
             <div style={{ display: "flex", justifyContent: "space-between", gap: "8px", flexWrap: "wrap" }}>
               {[
-                { svg: "M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z", label: "Participants", bg: "#e0f2f1", color: "#0d9488" },
-                { svg: "M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.6 0-.9.1 1.1.8 1.9 1.8 1.9 3.4V19h6v-2.5c0-2.3-4.7-3.5-7-3.5z", label: "Carers &\nFamilies", bg: "#fff8e1", color: "#f59e0b" },
-                { svg: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z", label: "Support\nWorkers", bg: "#ede9fe", color: "#7c3aed" },
-                { svg: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z", label: "Support\nCoordinators", bg: "#d1fae5", color: "#059669" },
-                { svg: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z", label: "Providers", bg: "#e0f2fe", color: "#0369a1" },
-                { svg: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", label: "Aged Care", bg: "#fce7f3", color: "#db2777" },
+                { svg: "M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z", label: "Participants", bg: "#b2dfdb", color: "#00796b" },
+                { svg: "M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.6 0-.9.1 1.1.8 1.9 1.8 1.9 3.4V19h6v-2.5c0-2.3-4.7-3.5-7-3.5z", label: "Carers &\nFamilies", bg: "#ffe0b2", color: "#e65100" },
+                { svg: "M8 5v14l11-7z", label: "Support\nWorkers", bg: "#d1c4e9", color: "#4527a0" },
+                { svg: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z", label: "Support\nCoordinators", bg: "#b2dfdb", color: "#00695c" },
+                { svg: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z", label: "Providers", bg: "#bbdefb", color: "#1565c0" },
+                { svg: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", label: "Aged Care", bg: "#f8bbd0", color: "#c2185b" },
               ].map(e => (
                 <div key={e.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", flex: "1 1 80px" }}>
                   <div style={{ width: "68px", height: "68px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", border: `2px solid ${e.color}33` }}>
@@ -311,7 +311,7 @@ export default function Landing() {
       <section style={{ position: "relative", overflow: "hidden", minHeight: "220px", display: "flex", alignItems: "center" }}>
         <img src="/partnership_photo.jpg" alt="" aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.48)" }} />
-        <div style={{ position: "relative", zIndex: 2, maxWidth: "1100px", margin: "0 auto", padding: "48px 32px", display: "grid", gridTemplateColumns: "1fr auto", gap: "40px", alignItems: "center", width: "100%" }}>
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "48px 32px", width: "100%" }}>
           <div>
             <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.9rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.4, marginBottom: "12px", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>
               When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
@@ -322,14 +322,6 @@ export default function Landing() {
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
               <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "16px", fontWeight: 700, padding: "11px 24px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
               <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "16px", fontWeight: 600, padding: "11px 24px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
-            </div>
-          </div>
-          {/* InSync logo card */}
-          <div style={{ background: "rgba(255,255,255,0.92)", backdropFilter: "blur(8px)", borderRadius: "16px", padding: "16px 20px", display: "flex", alignItems: "center", gap: "12px", border: "1px solid rgba(255,255,255,0.6)", flexShrink: 0 }}>
-            <img src="/insync_logo.webp" alt="InSync Profiles logo" style={{ width: "48px", height: "48px", objectFit: "contain" }} />
-            <div>
-              <div style={{ fontWeight: 900, fontSize: "16px", color: "#0c1f36", letterSpacing: "0.02em" }}>InSync</div>
-              <div style={{ fontWeight: 600, fontSize: "12px", color: "#4a6a8a", letterSpacing: "0.08em", textTransform: "uppercase" }}>PROFILES</div>
             </div>
           </div>
         </div>
@@ -345,10 +337,11 @@ export default function Landing() {
           </div>
           <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
             <span style={{ fontSize: "13px", color: "#374151" }}>© 2026 InSync Profiles</span>
-            {["Privacy", "Terms", "Contact"].map(l => (
-              <Link key={l} href={`/${l.toLowerCase()}`} style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>{l}</Link>
-            ))}
-            <button aria-label="Accessibility" style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", fontSize: "16px" }}>♿</button>
+            <Link href="/privacy" style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>Privacy & Terms</Link>
+            <Link href="/contact" style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>Contact</Link>
+            <button aria-label="Accessibility" style={{ width: "32px", height: "32px", borderRadius: "50%", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="#1a1a1a"><path d="M12 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-1 5h2c1.1 0 2 .9 2 2v4h-1v5h-2v-5H11v5H9v-5H8V9c0-1.1.9-2 2-2z"/></svg>
+            </button>
           </div>
         </div>
       </footer>
