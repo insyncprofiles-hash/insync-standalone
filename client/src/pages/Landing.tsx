@@ -719,6 +719,15 @@ export default function Landing() {
         </section>
 
 
+        {/* ── SPLIT HERO IMAGE ── */}
+        <section aria-label="Before and after InSync Profiles" style={{ width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "0 0 0 0" }}>
+          <img
+            src="/manus-storage/split_hero_known_d3f71b5b.jpg"
+            alt="Left side: a person overwhelmed by paperwork with speech bubbles saying 'Tell your story again...', 'Start over new forms', 'Explain everything again', 'Start over again'. Right side: a smiling support worker with an elderly person, showing Sarah Torens' accessible profile with the text 'Known. Understood. In sync.'"
+            style={{ width: "100%", display: "block", objectFit: "cover" }}
+          />
+        </section>
+
         {/* ── REAL CHOICE INFOGRAPHIC ── */}
         <InfographicSection />
 
