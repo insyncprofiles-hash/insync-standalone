@@ -37,7 +37,7 @@ function InfographicSection() {
           <button onClick={() => setLightboxOpen(true)} aria-label="Tap to zoom in and read the infographic"
             style={{ background: "none", border: "none", padding: 0, cursor: "zoom-in", display: "block", width: "100%", borderRadius: "20px", position: "relative" }}>
             <img src={IMG_SRC} alt={IMG_ALT} style={{ width: "100%", borderRadius: "20px", display: "block", boxShadow: "0 8px 40px rgba(0,0,0,0.12)" }} />
-            <div style={{ position: "absolute", top: "12px", right: "12px", background: "rgba(0,0,0,0.55)", color: "#fff", fontSize: "11px", fontWeight: 700, padding: "5px 12px", borderRadius: "99px", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", gap: "5px" }}>
+            <div style={{ position: "absolute", top: "12px", right: "12px", background: "rgba(0,0,0,0.55)", color: "#fff", fontSize: "12px", fontWeight: 700, padding: "5px 12px", borderRadius: "99px", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", gap: "5px" }}>
               🔍 Tap to zoom
             </div>
           </button>
@@ -49,7 +49,7 @@ function InfographicSection() {
           <img src={IMG_SRC} alt={IMG_ALT} style={{ maxWidth: "100%", maxHeight: "90vh", borderRadius: "12px", objectFit: "contain", boxShadow: "0 20px 80px rgba(0,0,0,0.6)" }} />
           <button onClick={() => setLightboxOpen(false)} aria-label="Close zoomed infographic"
             style={{ position: "absolute", top: "16px", right: "16px", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", width: "40px", height: "40px", borderRadius: "50%", fontSize: "18px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>✕</button>
-          <p style={{ position: "absolute", bottom: "16px", left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.6)", fontSize: "12px", whiteSpace: "nowrap" }}>Tap outside or press Esc to close · Pinch to zoom on mobile</p>
+          <p style={{ position: "absolute", bottom: "16px", left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.6)", fontSize: "13px", whiteSpace: "nowrap" }}>Tap outside or press Esc to close · Pinch to zoom on mobile</p>
         </div>
       )}
     </>
@@ -108,11 +108,11 @@ export default function Landing() {
               { label: "About us", href: "/about" },
               { label: "Contact", href: "/contact" },
             ].map(item => (
-              <Link key={item.label} href={item.href} style={{ color: "#1f2937", fontSize: "14px", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>{item.label}</Link>
+              <Link key={item.label} href={item.href} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>{item.label}</Link>
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "14px", fontWeight: 700, padding: "9px 20px", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap" }}>View demo</Link>
+            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "16px", fontWeight: 700, padding: "9px 20px", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap" }}>View demo</Link>
             <button aria-label="Accessibility options" style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>♿</button>
             {/* Mobile hamburger */}
             <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Open menu" style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px" }}>
@@ -160,12 +160,12 @@ export default function Landing() {
         </div>
         {/* Buttons — pinned to bottom */}
         <div style={{ position: "relative", zIndex: 2, padding: "24px 32px 40px", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}>
-          <p style={{ width: "100%", textAlign: "center", fontSize: "13px", color: "rgba(255,255,255,0.85)", fontWeight: 600, letterSpacing: "0.04em", marginBottom: "4px" }}>♡ A participant-first matching and communication resource</p>
+          <p style={{ width: "100%", textAlign: "center", fontSize: "15px", color: "rgba(255,255,255,0.85)", fontWeight: 600, letterSpacing: "0.04em", marginBottom: "4px" }}>♡ A participant-first matching and communication resource</p>
           {/* About Me button */}
           <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a3a1a", fontSize: "17px", fontWeight: 900, padding: "14px 32px 12px", borderRadius: "40px", textDecoration: "none", boxShadow: "0 4px 20px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", minWidth: "200px" }}>
-            <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "10px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
+            <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "11px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
             <span style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "0.02em" }}>✨ About Me</span>
-            <span style={{ fontSize: "11px", fontWeight: 700, color: "#0a4a1a", letterSpacing: "0.05em", marginTop: "2px" }}>Continuity for Aged &amp; Disabled Persons</span>
+            <span style={{ fontSize: "12px", fontWeight: 700, color: "#0a4a1a", letterSpacing: "0.05em", marginTop: "2px" }}>Continuity for Aged &amp; Disabled Persons</span>
           </Link>
           <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "14px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore Demo SW Profile</Link>
           <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "14px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
@@ -175,7 +175,7 @@ export default function Landing() {
       {/* ── CHALLENGES ── */}
       <section style={{ padding: "80px 24px", background: "#f8fafc" }} aria-labelledby="challenges-heading">
         <div style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0d9488", marginBottom: "12px" }}>Why it matters</p>
+          <p style={{ fontSize: "15px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0d9488", marginBottom: "12px" }}>Why it matters</p>
           <h2 id="challenges-heading" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 900, color: "#0c1f36", marginBottom: "16px", lineHeight: 1.2 }}>The challenges we all know too well</h2>
           <p style={{ fontSize: "16px", color: "#4a6a8a", maxWidth: "560px", margin: "0 auto 56px", lineHeight: 1.7 }}>People deserve more than a name and a photo when choosing who enters their life.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "28px", textAlign: "left" }}>
@@ -190,9 +190,9 @@ export default function Landing() {
                 </div>
                 <div>
                   <div style={{ fontWeight: 800, fontSize: "17px", color: "#0c1f36", lineHeight: 1.3, marginBottom: "4px" }}>{c.title}</div>
-                  <div style={{ fontWeight: 600, fontSize: "13px", color: c.color }}>{c.subtitle}</div>
+                  <div style={{ fontWeight: 600, fontSize: "15px", color: c.color }}>{c.subtitle}</div>
                 </div>
-                <p style={{ fontSize: "14px", color: "#4a6a8a", lineHeight: 1.75, margin: 0, flex: 1 }}>{c.desc}</p>
+                <p style={{ fontSize: "16px", color: "#4a6a8a", lineHeight: 1.75, margin: 0, flex: 1 }}>{c.desc}</p>
                 <div style={{ width: "36px", height: "3px", background: c.accent, borderRadius: "2px" }} />
               </div>
             ))}
@@ -222,11 +222,11 @@ export default function Landing() {
           {/* Comparison table */}
           <div>
             <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "20px" }}>What makes InSync Profiles different?</h2>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "14px" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "16px" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "8px 14px", textAlign: "left", background: "#f1f5f9", color: "#374151", fontWeight: 700, border: "1px solid #e2e8f0", fontSize: "13px" }}>Traditional matching</th>
-                  <th style={{ padding: "8px 14px", textAlign: "left", background: "#0d9488", color: "#fff", fontWeight: 700, border: "1px solid #0d9488", fontSize: "13px" }}>InSync approach</th>
+                  <th style={{ padding: "8px 14px", textAlign: "left", background: "#f1f5f9", color: "#374151", fontWeight: 700, border: "1px solid #e2e8f0", fontSize: "15px" }}>Traditional matching</th>
+                  <th style={{ padding: "8px 14px", textAlign: "left", background: "#0d9488", color: "#fff", fontWeight: 700, border: "1px solid #0d9488", fontSize: "15px" }}>InSync approach</th>
                 </tr>
               </thead>
               <tbody>
@@ -239,10 +239,10 @@ export default function Landing() {
                   ["", "Informed choice & control"],
                 ].map(([old, neo], i) => (
                   <tr key={i}>
-                    <td style={{ padding: "7px 14px", border: "1px solid #e2e8f0", color: "#374151", background: "#fff", fontSize: "13px" }}>
+                    <td style={{ padding: "7px 14px", border: "1px solid #e2e8f0", color: "#374151", background: "#fff", fontSize: "15px" }}>
                       {old && <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ color: "#ef4444", fontWeight: 700 }}>✗</span> {old}</span>}
                     </td>
-                    <td style={{ padding: "7px 14px", border: "1px solid #ccede9", color: "#0c1f36", background: "#f0faf9", fontSize: "13px" }}>
+                    <td style={{ padding: "7px 14px", border: "1px solid #ccede9", color: "#0c1f36", background: "#f0faf9", fontSize: "15px" }}>
                       <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><span style={{ color: "#0d9488", fontWeight: 700 }}>✓</span> {neo}</span>
                     </td>
                   </tr>
@@ -253,7 +253,7 @@ export default function Landing() {
           {/* Ecosystem */}
           <div>
             <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "8px" }}>Built for the whole support circle</h2>
-            <p style={{ fontSize: "14px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
+            <p style={{ fontSize: "16px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
             <div style={{ display: "flex", justifyContent: "space-between", gap: "8px", flexWrap: "wrap" }}>
               {[
                 { svg: "M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z", label: "Participants", bg: "#e0f2f1", color: "#0d9488" },
@@ -267,7 +267,7 @@ export default function Landing() {
                   <div style={{ width: "68px", height: "68px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", border: `2px solid ${e.color}33` }}>
                     <svg viewBox="0 0 24 24" width="32" height="32" fill={e.color}><path d={e.svg} /></svg>
                   </div>
-                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
                 </div>
               ))}
             </div>
@@ -296,7 +296,7 @@ export default function Landing() {
             ].map(a => (
               <div key={a.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", minWidth: "68px" }}>
                 <div style={{ width: "48px", height: "48px", borderRadius: "10px", border: "1.5px solid #d1d9e6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: a.isText ? "15px" : "20px", fontWeight: a.isText ? 800 : 400, color: a.isText ? "#0d9488" : "inherit", background: "#ffffff" }}>{a.icon}</div>
-                <div style={{ fontSize: "10px", fontWeight: 600, color: "#374151", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
+                <div style={{ fontSize: "11px", fontWeight: 600, color: "#374151", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
               </div>
             ))}
           </div>
@@ -316,12 +316,12 @@ export default function Landing() {
             <h2 style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.9rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.4, marginBottom: "12px", textShadow: "0 2px 8px rgba(0,0,0,0.4)" }}>
               When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
             </h2>
-            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.88)", lineHeight: 1.7, maxWidth: "480px", marginBottom: "24px", textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>
+            <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.88)", lineHeight: 1.7, maxWidth: "480px", marginBottom: "24px", textShadow: "0 1px 4px rgba(0,0,0,0.3)" }}>
               InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
             </p>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "14px", fontWeight: 700, padding: "11px 24px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
-              <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "14px", fontWeight: 600, padding: "11px 24px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
+              <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "16px", fontWeight: 700, padding: "11px 24px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
+              <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "16px", fontWeight: 600, padding: "11px 24px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
             </div>
           </div>
           {/* InSync logo card */}
@@ -329,7 +329,7 @@ export default function Landing() {
             <img src="/insync_logo.webp" alt="InSync Profiles logo" style={{ width: "48px", height: "48px", objectFit: "contain" }} />
             <div>
               <div style={{ fontWeight: 900, fontSize: "16px", color: "#0c1f36", letterSpacing: "0.02em" }}>InSync</div>
-              <div style={{ fontWeight: 600, fontSize: "11px", color: "#4a6a8a", letterSpacing: "0.08em", textTransform: "uppercase" }}>PROFILES</div>
+              <div style={{ fontWeight: 600, fontSize: "12px", color: "#4a6a8a", letterSpacing: "0.08em", textTransform: "uppercase" }}>PROFILES</div>
             </div>
           </div>
         </div>
@@ -340,15 +340,15 @@ export default function Landing() {
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
            {["♡ Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
-              <span key={t} style={{ fontSize: "12px", color: "#374151" }}>{t}</span>
+              <span key={t} style={{ fontSize: "13px", color: "#374151" }}>{t}</span>
             ))}
           </div>
           <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
-            <span style={{ fontSize: "12px", color: "#374151" }}>© 2026 InSync Profiles</span>
+            <span style={{ fontSize: "13px", color: "#374151" }}>© 2026 InSync Profiles</span>
             {["Privacy", "Terms", "Contact"].map(l => (
-              <Link key={l} href={`/${l.toLowerCase()}`} style={{ fontSize: "12px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>{l}</Link>
+              <Link key={l} href={`/${l.toLowerCase()}`} style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>{l}</Link>
             ))}
-            <button aria-label="Accessibility" style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", fontSize: "14px" }}>♿</button>
+            <button aria-label="Accessibility" style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", fontSize: "16px" }}>♿</button>
           </div>
         </div>
       </footer>
