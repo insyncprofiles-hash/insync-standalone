@@ -202,6 +202,23 @@ export default function Landing() {
 
       {/* ── SHIFT BANNER ── */}
 
+      {/* ── YOUTUBE INTRO VIDEO ── */}
+      <section style={{ padding: "64px 24px 72px", background: "#ffffff", textAlign: "center" }} aria-labelledby="video-heading">
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <p style={{ fontSize: "15px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0d9488", marginBottom: "12px" }}>See it in action</p>
+          <h2 id="video-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#0c1f36", marginBottom: "32px", lineHeight: 1.2 }}>What InSync Profiles makes possible</h2>
+          <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "16px", boxShadow: "0 8px 40px rgba(0,0,0,0.12)" }}>
+            <iframe
+              src="https://www.youtube.com/embed/MvW0wgr0FyE"
+              title="InSync Profiles intro video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none", borderRadius: "16px" }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── SHIFT BANNER IMAGE ── */}
       <section aria-label="From fitting into services to services fitting around people" style={{ padding: "0 0 48px" }}>
         <img src="/shift_banner.jpg"
