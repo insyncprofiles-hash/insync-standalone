@@ -678,117 +678,55 @@ export default function Landing() {
 
 
                 {/* ── HERO ── */}
-        {/* Landscape mobile buffer — creates gap between nav and hero */}
-        <div className="landscape-hero-buffer" aria-hidden="true" />
-
+        {/* ── PARTNERSHIP BANNER ── */}
         <section
-          className="hero-section"
+          aria-label="About InSync Profiles"
           style={{
-            padding: "48px 24px 80px",
-            maxWidth: "1200px",
-            margin: "0 auto",
             position: "relative",
+            overflow: "hidden",
+            minHeight: "280px",
+            display: "flex",
+            alignItems: "center",
           }}
-          aria-labelledby="hero-heading"
         >
-          {/* Glow orbs */}
-          <div aria-hidden="true" style={{ position: "absolute", top: "60px", left: "30%", transform: "translateX(-50%)", width: "600px", height: "300px", background: `radial-gradient(ellipse at center, ${C.tealDim} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
-          <div aria-hidden="true" style={{ position: "absolute", top: "120px", left: "10%", width: "300px", height: "200px", background: `radial-gradient(ellipse at center, ${C.goldGlow} 0%, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
-
-          <div className="hero-inner-flex" style={{ position: "relative", zIndex: 1, display: "flex", gap: "56px", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-
-            {/* ── LEFT: Headline + CTAs ── */}
-            <div className="hero-left-col" style={{ flex: "1 1 380px", maxWidth: "520px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-              {/* Sector tag */}
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: C.bgGlass, border: `1px solid ${C.border}`, borderRadius: "99px", padding: "6px 16px", marginBottom: "28px" }}>
-                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: C.teal, display: "inline-block", flexShrink: 0 }} aria-hidden="true" />
-                <span style={{ color: C.textBody, fontSize: "11px", fontWeight: 600, letterSpacing: "0.06em" }}>
-                  Aged Care · Disability Support · NDIS · Allied Health · Support Coordination
-                </span>
-              </div>
-
-              <h1
-                id="hero-heading"
-                style={{ fontFamily: "'Cormorant Garamond', serif", color: C.textHead, fontSize: "clamp(36px, 5.5vw, 60px)", fontWeight: 700, lineHeight: 1.08, marginBottom: "24px", letterSpacing: "-0.01em" }}
-              >
-                Your Professional Profile<br />
-                <span style={{ background: `linear-gradient(90deg, ${C.teal} 0%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontStyle: "italic" }}>
-                  Built for Support
-                </span>
+          {/* Background photo */}
+          <img
+            src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=80"
+            alt=""
+            aria-hidden="true"
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.45)" }}
+          />
+          {/* Content overlay */}
+          <div style={{ position: "relative", zIndex: 2, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "56px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "40px", flexWrap: "wrap" }}>
+            <div style={{ flex: "1 1 400px", maxWidth: "620px" }}>
+              <h1 id="hero-heading" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", fontWeight: 800, color: "#ffffff", lineHeight: 1.35, marginBottom: "16px" }}>
+                When people are known before they are supported,{" "}
+                <br />support becomes a{" "}
+                <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
               </h1>
-
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(18px, 2.5vw, 24px)", fontStyle: "italic", fontWeight: 600, color: C.gold, letterSpacing: "0.01em", marginBottom: "20px", lineHeight: 1.3 }}>
-                Beyond the "Sea of Sameness"
+              <p style={{ fontSize: "clamp(13px, 1.6vw, 15px)", color: "rgba(255,255,255,0.82)", lineHeight: 1.8, marginBottom: "28px", maxWidth: "520px", fontFamily: "'Outfit', sans-serif" }}>
+                InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
               </p>
-
-              {/* ── Inclusion sticker strip ── */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center", marginBottom: "24px" }}>
-                {/* Accessibility-first — gold icon image */}
-                <div style={{
-                  display: "inline-flex", alignItems: "center", gap: "8px",
-                  background: "linear-gradient(135deg, #2dd4bf 0%, #7c3aed 100%)",
-                  borderRadius: "99px", padding: "7px 16px 7px 8px",
-                  fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 800,
-                  color: "#ffffff", letterSpacing: "0.04em",
-                  boxShadow: "0 2px 16px rgba(124,58,237,0.35)",
-                }}>
-                  <img src="/assets/accessibility-icon_f6ed13be.png" alt="" aria-hidden="true" style={{ width: "28px", height: "28px", objectFit: "contain", borderRadius: "50%", flexShrink: 0 }} />
-                  Accessibility-first
-                </div>
-                {/* Remaining stickers */}
-                {[
-                  { emoji: "🤝", label: "Participant-led" },
-                  { emoji: "💬", label: "Human connection" },
-                  { emoji: "✨", label: "Inclusive by design" },
-                ].map(({ emoji, label }) => (
-                  <div
-                    key={label}
-                    style={{
-                      display: "inline-flex", alignItems: "center", gap: "7px",
-                      background: "linear-gradient(135deg, #2dd4bf 0%, #7c3aed 100%)",
-                      borderRadius: "99px", padding: "7px 16px",
-                      fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 800,
-                      color: "#ffffff", letterSpacing: "0.04em",
-                      boxShadow: "0 2px 16px rgba(124,58,237,0.35)",
-                    }}
-                  >
-                    <span aria-hidden="true" style={{ fontSize: "15px" }}>{emoji}</span>
-                    {label}
-                  </div>
-                ))}
+              <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                <Link href="/view" style={{ background: C.teal, color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "15px", padding: "11px 24px", borderRadius: "8px", textDecoration: "none" }}>Explore the demo</Link>
+                <Link href="/about" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "15px", padding: "11px 24px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
               </div>
-
-              <p style={{ color: C.textBody, fontSize: "clamp(14px, 2vw, 17px)", lineHeight: 1.8, marginBottom: "36px", maxWidth: "480px" }}>
-                InSync Profiles is an interactive, accessibility-first profile for support workers, allied health practitioners, support coordinators, and every other support role — share your services, availability, credentials, and communication style in one shareable link.
-              </p>
-
-              {/* Social proof — single line, electric blue text, gold star separators */}
-              <div style={{ display: "flex", alignItems: "center", gap: "0", flexWrap: "nowrap", marginBottom: "40px", overflowX: "auto" }}>
-                {[
-                  "WCAG 2.1 AA",
-                  "Made in Australia",
-                  "Accessibility-First",
-                  "Person-Centred",
-                  "Participant-Led",
-                ].map((text, i) => (
-                  <span key={text} style={{ display: "inline-flex", alignItems: "center", gap: "0", whiteSpace: "nowrap" }}>
-                    {i > 0 && (
-                      <span aria-hidden="true" style={{ color: "#f5c842", fontSize: "14px", fontWeight: 900, margin: "0 8px" }}>★</span>
-                    )}
-                    <span style={{ color: "#38bdf8", fontSize: "13px", fontWeight: 700, letterSpacing: "0.02em" }}>{text}</span>
-                  </span>
-                ))}
-              </div>
-
-              {/* CTAs */}
-              <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", justifyContent: "center", marginBottom: "16px" }}>
-                <Link href="/pricing" style={{ background: `linear-gradient(135deg, ${C.gold} 0%, #e8a800 100%)`, color: "#0d1b2a", padding: "15px 36px", borderRadius: "99px", fontSize: "15px", fontWeight: 800, textDecoration: "none", display: "inline-block", boxShadow: `0 6px 32px ${C.goldGlow}`, letterSpacing: "0.01em" }}>See Pricing →</Link>
-                <Link href="/demo" style={{ background: "transparent", color: C.teal, padding: "15px 36px", borderRadius: "99px", fontSize: "15px", fontWeight: 700, textDecoration: "none", display: "inline-block", border: `1.5px solid ${C.tealDim}` }}>Try the Demo</Link>
-              </div>
-
-              {/* About Me diagonal corner sticker — positioned absolutely in hero */}
-
             </div>
+            {/* Logo card */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", background: "rgba(255,255,255,0.10)", borderRadius: "16px", padding: "20px 24px", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)", flexShrink: 0 }}>
+              <img src="/assets/insync-logo-transparent_9e0df532.png" alt="InSync Profiles" style={{ width: "72px", height: "72px", objectFit: "contain" }} />
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 900, fontSize: "1rem", color: "#fff", textAlign: "center" }}>InSync</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", textAlign: "center" }}>PROFILES</div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── POSTCARD CAROUSEL ── */}
+        <section
+          aria-label="Sample profiles"
+          style={{ padding: "48px 24px 64px", maxWidth: "1200px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
 
             {/* ── RIGHT: Sample Postcard Carousel ── */}
             <div className="hero-right-col" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", flexShrink: 0 }}>

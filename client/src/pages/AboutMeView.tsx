@@ -298,12 +298,12 @@ export default function AboutMeView() {
           onClick={handleDownload}
           style={{
             display: "inline-flex", alignItems: "center", gap: "7px",
-            background: downloadDone ? "#16a34a" : "#1e3a5f",
+            background: downloadDone ? "#16a34a" : "#F0C040",
             border: "none",
-            color: "#fff", fontFamily: "'Nunito', sans-serif", fontWeight: 800,
+            color: downloadDone ? "#fff" : "#1a1a1a", fontFamily: "'Nunito', sans-serif", fontWeight: 800,
             fontSize: fs(13), padding: "8px 18px", borderRadius: "99px",
             cursor: "pointer", transition: "background 200ms ease-out",
-            boxShadow: "0 1px 4px rgba(30,58,95,0.25)",
+            boxShadow: "0 1px 4px rgba(240,192,64,0.4)",
           }}
         >
           {downloadDone ? "✅ Downloaded!" : "⬇️ Download Profile"}
