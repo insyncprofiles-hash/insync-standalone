@@ -340,7 +340,6 @@ export default function Landing() {
             <Link href="/privacy" style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>Privacy & Terms</Link>
             <Link href="/contact" style={{ fontSize: "13px", color: "#1f2937", textDecoration: "none", fontWeight: 600 }}>Contact</Link>
             <button aria-label="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%", border: "none", background: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/accessibility_icon.png" alt="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%" }} /></button>
-            </button>
           </div>
         </div>
       </footer>
