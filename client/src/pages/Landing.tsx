@@ -113,7 +113,7 @@ export default function Landing() {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "16px", fontWeight: 700, padding: "9px 20px", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap" }}>View demo</Link>
-            <button aria-label="Accessibility options" style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>♿</button>
+            <button aria-label="Accessibility options" style={{ width: "40px", height: "40px", borderRadius: "50%", border: "none", background: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/accessibility_icon.png" alt="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%" }} /></button>
             {/* Mobile hamburger */}
             <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Open menu" style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px" }}>
               <span style={{ width: "18px", height: "2px", background: "#1f2937", borderRadius: "2px" }} />
@@ -253,7 +253,7 @@ export default function Landing() {
           {/* Ecosystem */}
           <div>
             <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "6px", textAlign: "center" }}>Built for the whole support circle</h2>
-            <p style={{ fontSize: "15px", color: "#374151", marginBottom: "28px", textAlign: "center" }}>Stronger connections. Better outcomes. For everyone.</p>
+            <p style={{ fontSize: "15px", color: "#374151", marginBottom: "28px", textAlign: "center", whiteSpace: "nowrap" }}>Stronger connections. Better outcomes. For everyone.</p>
             <div style={{ display: "flex", justifyContent: "center", gap: "clamp(12px, 3vw, 28px)", flexWrap: "wrap" }}>
               {[
                 { label: "Participants", bg: "#3a9e9e", icon: <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg> },
