@@ -254,24 +254,7 @@ export default function Landing() {
           <div>
             <h2 style={{ fontSize: "clamp(1.1rem, 2vw, 1.3rem)", fontWeight: 800, color: "#0c1f36", marginBottom: "8px" }}>Built for the whole support circle</h2>
             <p style={{ fontSize: "16px", color: "#374151", marginBottom: "32px" }}>Stronger connections. Better outcomes. For everyone.</p>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: "8px", flexWrap: "wrap" }}>
-            {[
-              { svg: "M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z", label: "Participants", bg: "#b2dfdb", color: "#00796b" },
-              { svg: "M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.3 0-7 1.2-7 3.5V19h14v-2.5c0-2.3-4.7-3.5-7-3.5zm8 0c-.3 0-.6 0-.9.1 1.1.8 1.9 1.8 1.9 3.4V19h6v-2.5c0-2.3-4.7-3.5-7-3.5z", label: "Carers &\nFamilies", bg: "#ffe0b2", color: "#e65100" },
-              { svg: "M8 5v14l11-7z", label: "Support\nWorkers", bg: "#d1c4e9", color: "#4527a0" },
-              { svg: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z", label: "Support\nCoordinators", bg: "#b2dfdb", color: "#00695c" },
-              { svg: "M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z", label: "Providers", bg: "#bbdefb", color: "#1565c0" },
-              { svg: "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z", label: "Aged Care", bg: "#f8bbd0", color: "#c2185b" },
-            ].map(e => (
-              <div key={e.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", flex: "1 1 80px" }}>
-                <div style={{ width: "68px", height: "68px", borderRadius: "50%", background: e.bg, display: "flex", alignItems: "center", justifyContent: "center", border: `2px solid ${e.color}33` }}>
-                  <svg viewBox="0 0 24 24" width="32" height="32" fill={e.color}><path d={e.svg} /></svg>
-                </div>
-                <div style={{ fontSize: "13px", fontWeight: 700, color: "#1f2937", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{e.label}</div>
-              </div>
-            ))}
-            <img src="/support_circle_icons.jpg" alt="Participants, Carers and Families, Support Workers, Support Coordinators, Providers, Aged Care — six coloured circles with white icons" style={{ width: "100%", maxWidth: "600px", display: "block", margin: "0 auto" }} />
-          </div>
+            <img src="/support_circle_icons.jpg" alt="Participants, Carers and Families, Support Workers, Support Coordinators, Providers, Aged Care" style={{ width: "100%", maxWidth: "600px", display: "block", margin: "0 auto" }} />
         </div>
         <style>{`@media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr !important; } }`}</style>
       </section>
