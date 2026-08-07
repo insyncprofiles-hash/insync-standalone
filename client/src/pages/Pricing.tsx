@@ -1013,7 +1013,6 @@ export default function Pricing() {
           <span style={{ color: TEXT_DIM }}>·</span>
           <Link href="/privacy" style={{ color: ACCENT_BLUE, fontSize: "12px", fontFamily: "'Outfit', sans-serif", textDecoration: "none" }}>Legal &amp; Privacy</Link>
           <span style={{ color: TEXT_DIM }}>·</span>
-          <Link href="/" style={{ color: ACCENT_BLUE, fontSize: "12px", fontFamily: "'Outfit', sans-serif", textDecoration: "none" }}>Try Template</Link>
         </div>
       </footer>
 
