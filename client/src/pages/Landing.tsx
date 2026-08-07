@@ -719,6 +719,9 @@ export default function Landing() {
         </section>
 
 
+        {/* ── REAL CHOICE INFOGRAPHIC ── */}
+        <InfographicSection />
+
         {/* ── YOUR PROFILE GOES WHERE YOU GO ── */}
         <section
           style={{
