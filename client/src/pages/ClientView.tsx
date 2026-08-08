@@ -1262,7 +1262,7 @@ export default function ClientView() {
           {selectedServices.length > 0 && (
             <div style={{ padding: "24px 20px 32px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "28px 20px", justifyItems: "center" }}>
-                (selectedServices.slice(0, 6).map((svc, svcIdx) => (
+                {selectedServices.slice(0, 6).map((svc, svcIdx) => (
                   <div key={svc.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", width: "100%" }}>
                     <img
                       src={svc.iconImg || `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='64' height='64' rx='12' fill='%231a5fa8'/><text x='32' y='44' font-size='28' text-anchor='middle'>${encodeURIComponent(svc.icon)}</text></svg>`}
