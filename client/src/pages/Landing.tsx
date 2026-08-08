@@ -262,7 +262,7 @@ export default function Landing() {
       </section>
 
       {/* ── SHIFT BANNER IMAGE ── */}
-      <section aria-label="From fitting into services to services fitting around people" style={{ padding: "0 0 48px" }}>
+      <section aria-label="From fitting into services to services fitting around people" style={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <img src="/shift_banner.jpg"
           alt="From fitting into services to services fitting around people. Support that fits you. A teal cube with a hole, a smiling woman with floating support icons around her."
           style={{ width: "100%", display: "block", objectFit: "contain", background: "#f0f7f6" }} />
