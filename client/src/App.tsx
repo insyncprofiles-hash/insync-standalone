@@ -80,6 +80,7 @@ function Router() {
       <Route path="/about-me/view" component={AboutMeView} />
       <Route path="/about-me">{() => { window.location.replace("/about-me/editor"); return null; }}</Route>
       <Route path="/about" component={About} />
+      <Route path="/how-it-works" component={HowToUse} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
@@ -107,7 +108,7 @@ const BACK_ROUTES: Record<string, { href: string; label: string }> = {
 function BackAwareBar() {
   const [location] = useLocation();
   // Landing page has its own full nav — hide the global TopAccessibilityBar there
-  if (location === "/") return null;
+  const isLanding = location === "/";
   let backRoute = BACK_ROUTES[location];
 
   // Helper: did the user navigate here from /coordinators?
@@ -137,6 +138,7 @@ function BackAwareBar() {
 
   return (
     <TopAccessibilityBar
+      hidden={isLanding}
       showBack={!!backRoute}
       backHref={backRoute?.href}
       backLabel={backRoute?.label}

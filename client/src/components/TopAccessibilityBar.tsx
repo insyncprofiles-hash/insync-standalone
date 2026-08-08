@@ -59,12 +59,13 @@ interface Props {
   showBack?: boolean;
   backHref?: string;
   backLabel?: string;
+  hidden?: boolean;
 }
 
 export const TOP_BAR_HEIGHT = 60; // px — height of the fixed top bar
 export const TOP_BARS_TOTAL = 110; // px — top bar (60px) + access bar (50px) combined offset
 
-export default function TopAccessibilityBar({ onSettingsChange, showBack, backHref = "/", backLabel = "← Back" }: Props) {
+export default function TopAccessibilityBar({ onSettingsChange, showBack, backHref = "/", backLabel = "← Back", hidden = false }: Props) {
   const { theme } = useColorTheme();
   const isAurora = theme.id === "aurora";
   const isLight = ['daylight','sage-linen','blush-cream','slate-mint'].includes(theme.id);
@@ -367,6 +368,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     transition: "all 150ms ease-out",
   });
 
+  if (hidden) return null;
   return (
     <>
       <style>{`
