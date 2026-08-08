@@ -173,8 +173,8 @@ export default function Landing() {
           </div>
         )}
         <style>{`
-          @media (max-width: 900px) { .desktop-nav { display: none !important; } }
-          @media (min-width: 901px) { .mobile-menu-btn { display: none !important; } }
+          @media (max-width: 1024px) { .desktop-nav { display: none !important; } }
+          @media (min-width: 1025px) { .mobile-menu-btn { display: none !important; } }
         `}</style>
       </nav>
 
