@@ -349,7 +349,7 @@ export default function Landing() {
               { icon: "🧠", label: "Neurodiversity\naffirming" },
             ].map(a => (
               <div key={a.label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", minWidth: "68px" }}>
-                <div style={{ width: "48px", height: "48px", borderRadius: "10px", border: "1.5px solid #d1d9e6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: a.isText ? "15px" : "20px", fontWeight: a.isText ? 800 : 400, color: a.isText ? "#0d9488" : "inherit", background: "#ffffff" }}>{a.icon}</div>
+                <div style={{ width: "52px", height: "52px", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: a.isText ? "16px" : "22px", fontWeight: a.isText ? 900 : 400, color: "#ffffff", background: "#0d9488" }}>{a.icon}</div>
                 <div style={{ fontSize: "11px", fontWeight: 600, color: "#374151", textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.3 }}>{a.label}</div>
               </div>
             ))}
