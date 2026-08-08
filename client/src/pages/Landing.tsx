@@ -236,6 +236,11 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── INFORMED CHOICE BANNER IMAGE ── */}
+      <div style={{ margin: 0, padding: 0, lineHeight: 0 }}>
+        <img src="/informed_choice_banner.png" alt="I want to know who I'm choosing" style={{ width: "100%", display: "block", margin: 0, padding: 0 }} />
+      </div>
+
       {/* ── SHIFT BANNER ── */}
 
       {/* ── YOUTUBE INTRO VIDEO ── */}
