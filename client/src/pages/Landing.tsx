@@ -5,7 +5,7 @@
    Fonts: Inter (body) + display weights for headings
    ============================================================ */
 import { Link } from "wouter";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 // ── Infographic section with tap-to-zoom lightbox ─────────────
 function InfographicSection() {
@@ -59,6 +59,10 @@ function InfographicSection() {
 export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const toggleSection = useCallback((label: string) => {
+    setOpenSection(prev => prev === label ? null : label);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => { setMobileMenuOpen(false); }, []);
@@ -112,7 +116,6 @@ export default function Landing() {
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "16px", fontWeight: 700, padding: "9px 20px", borderRadius: "8px", textDecoration: "none", whiteSpace: "nowrap" }}>View demo</Link>
             <button aria-label="Accessibility options" style={{ width: "40px", height: "40px", borderRadius: "50%", border: "none", background: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/accessibility_icon.png" alt="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%" }} /></button>
             {/* Mobile hamburger */}
             <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Open menu" style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px" }}>
@@ -125,18 +128,47 @@ export default function Landing() {
         {/* Mobile menu dropdown */}
         {mobileMenuOpen && (
           <div style={{ background: "#fff", borderTop: "1px solid #e8eef5", padding: "16px 24px", display: "flex", flexDirection: "column", gap: "4px" }}>
-            {[
-              { label: "Home", href: "/" },
-              { label: "How it works", href: "/how-it-works" },
-              { label: "For participants & carers", href: "/about-me/editor" },
-              { label: "For support workers", href: "/view" },
-              { label: "For providers", href: "/allied-health" },
-              { label: "About us", href: "/about" },
-              { label: "Contact", href: "/contact" },
-            ].map(item => (
-              <Link key={item.label} href={item.href} onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 600, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>{item.label}</Link>
-            ))}
-            <Link href="/view" onClick={() => setMobileMenuOpen(false)} style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "12px 20px", borderRadius: "8px", textDecoration: "none", textAlign: "center", marginTop: "8px" }}>View demo</Link>
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>Home</Link>
+            <Link href="/how-it-works" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>How it works</Link>
+            {/* Participants & Carers */}
+            <div style={{ borderBottom: "1px solid #f3f4f6" }}>
+              <button onClick={() => toggleSection("participants")} style={{ width: "100%", background: "none", border: "none", padding: "10px 0", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}>
+                <span style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700 }}>For participants &amp; carers</span>
+                <span style={{ color: "#0d9488", fontSize: "20px", fontWeight: 700, lineHeight: 1 }}>{openSection === "participants" ? "−" : "+"}</span>
+              </button>
+              {openSection === "participants" && (
+                <div style={{ paddingLeft: "14px", paddingBottom: "10px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <Link href="/about-me/editor" onClick={() => setMobileMenuOpen(false)} style={{ color: "#0d9488", fontSize: "15px", fontWeight: 600, textDecoration: "none", padding: "5px 0" }}>✨ About Me editor (free)</Link>
+                  <a href="https://tinyurl.com/2cwfb84p" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "#0d9488", fontSize: "15px", fontWeight: 600, textDecoration: "none", padding: "5px 0" }}>Sample participant-led About Me →</a>
+                </div>
+              )}
+            </div>
+            {/* For support workers */}
+            <div style={{ borderBottom: "1px solid #f3f4f6" }}>
+              <button onClick={() => toggleSection("sw")} style={{ width: "100%", background: "none", border: "none", padding: "10px 0", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}>
+                <span style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700 }}>For support workers</span>
+                <span style={{ color: "#0d9488", fontSize: "20px", fontWeight: 700, lineHeight: 1 }}>{openSection === "sw" ? "−" : "+"}</span>
+              </button>
+              {openSection === "sw" && (
+                <div style={{ paddingLeft: "14px", paddingBottom: "10px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <Link href="/view" onClick={() => setMobileMenuOpen(false)} style={{ color: "#0d9488", fontSize: "15px", fontWeight: 600, textDecoration: "none", padding: "5px 0" }}>Pete James — demo SW profile →</Link>
+                  <a href="https://tinyurl.com/25qz5tt3" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "#0d9488", fontSize: "15px", fontWeight: 600, textDecoration: "none", padding: "5px 0" }}>Kira — demo SW profile →</a>
+                </div>
+              )}
+            </div>
+            {/* For providers */}
+            <div style={{ borderBottom: "1px solid #f3f4f6" }}>
+              <button onClick={() => toggleSection("providers")} style={{ width: "100%", background: "none", border: "none", padding: "10px 0", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" }}>
+                <span style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700 }}>For providers</span>
+                <span style={{ color: "#0d9488", fontSize: "20px", fontWeight: 700, lineHeight: 1 }}>{openSection === "providers" ? "−" : "+"}</span>
+              </button>
+              {openSection === "providers" && (
+                <div style={{ paddingLeft: "14px", paddingBottom: "10px", display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <Link href="/allied-health" onClick={() => setMobileMenuOpen(false)} style={{ color: "#0d9488", fontSize: "15px", fontWeight: 600, textDecoration: "none", padding: "5px 0" }}>Sarah Torens — Allied Health sample →</Link>
+                </div>
+              )}
+            </div>
+            <Link href="/contact" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0" }}>Contact</Link>
           </div>
         )}
         <style>{`
@@ -154,8 +186,10 @@ export default function Landing() {
           <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.2, marginBottom: "20px", textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}>
             When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
           </h1>
-          <p style={{ fontSize: "18px", color: "#ffffff", lineHeight: 1.8, maxWidth: "540px", margin: "0 auto", textShadow: "0 1px 8px rgba(0,0,0,0.5)", fontWeight: 500 }}>
-            InSync Profiles was created from lived experience as a family carer and support worker, with one purpose: to make support feel more human, more informed and more in sync.
+          <p style={{ fontSize: "clamp(1.2rem, 3vw, 1.7rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto", textShadow: "0 1px 8px rgba(0,0,0,0.5)", fontWeight: 800, display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
+            <span style={{ background: "rgba(13,148,136,0.85)", color: "#ffffff", borderRadius: "8px", padding: "4px 16px" }}>Interactive.</span>
+            <span style={{ background: "rgba(240,192,64,0.95)", color: "#1a1a00", borderRadius: "8px", padding: "4px 16px" }}>Accessible.</span>
+            <span style={{ background: "rgba(255,255,255,0.22)", color: "#ffffff", borderRadius: "8px", padding: "4px 16px", border: "1.5px solid rgba(255,255,255,0.4)" }}>Person-Centred.</span>
           </p>
         </div>
         {/* Buttons — pinned to bottom */}
