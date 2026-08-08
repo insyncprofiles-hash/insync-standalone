@@ -132,40 +132,59 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     setTtsStatus("idle");
   }, []);
 
-  const doSpeak = useCallback((text: string, retryCount = 0) => {
+  // Chunk text into ~200-word pieces to work around Android Chrome 15s TTS cutoff
+  const chunkText = useCallback((text: string): string[] => {
+    const words = text.split(/\s+/);
+    const chunks: string[] = [];
+    for (let i = 0; i < words.length; i += 200) {
+      chunks.push(words.slice(i, i + 200).join(" "));
+    }
+    return chunks;
+  }, []);
+
+  const doSpeak = useCallback((text: string) => {
     const ss = window.speechSynthesis;
     ss.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.9;
-    // Prefer a local English voice (important on Android)
+    const chunks = chunkText(text);
+    if (chunks.length === 0) return;
+
     const voices = ss.getVoices();
     const preferred = voices.find(v => v.lang.startsWith("en-AU") && v.localService)
       || voices.find(v => v.lang.startsWith("en") && v.localService)
       || voices.find(v => v.lang.startsWith("en"));
-    if (preferred) utterance.voice = preferred;
-    utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
-    utterance.onend = () => { setSpeaking(false); setTtsStatus("idle"); };
-    utterance.onerror = (e) => {
-      setSpeaking(false);
-      setTtsStatus("idle");
-      // synthesis-failed on Android means voices weren't ready — retry up to 2 times
-      if (e.error === "synthesis-failed" && retryCount < 2) {
-        setTimeout(() => doSpeak(text, retryCount + 1), 800);
+
+    let chunkIndex = 0;
+    const speakChunk = (idx: number) => {
+      if (idx >= chunks.length) {
+        setSpeaking(false);
+        setTtsStatus("idle");
         return;
       }
-      // interrupted/canceled are normal (user stopped it) — don't alert
-      if (e.error === "interrupted" || e.error === "canceled") return;
-      // Only alert for truly unsupported environments
-      if (e.error === "not-allowed" || e.error === "audio-busy") {
-        alert("Text-to-speech is not available. Please check that Google Text-to-Speech is enabled in your device settings (Settings → Accessibility → Text-to-speech).");
+      const utterance = new SpeechSynthesisUtterance(chunks[idx]);
+      utterance.rate = 0.9;
+      if (preferred) utterance.voice = preferred;
+      if (idx === 0) {
+        utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
       }
+      utterance.onend = () => {
+        // Android: small delay between chunks prevents synthesis from dying
+        setTimeout(() => speakChunk(idx + 1), 100);
+      };
+      utterance.onerror = (e) => {
+        if (e.error === "interrupted" || e.error === "canceled") return;
+        setSpeaking(false);
+        setTtsStatus("idle");
+        if (e.error === "not-allowed" || e.error === "audio-busy") {
+          alert("Text-to-speech is not available. Please check that Google Text-to-Speech is enabled in your device settings (Settings → Accessibility → Text-to-speech).");
+        }
+      };
+      ss.speak(utterance);
+      // Android Chrome workaround: resume if stuck in pending
+      setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 250);
+      setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 800);
     };
-    ss.speak(utterance);
-    // Android Chrome workaround: synthesis can get stuck in pending state
-    // Multiple resume() calls at different intervals to cover slow-starting voices
-    setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 250);
-    setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 800);
-  }, []);
+    speakChunk(0);
+  }, [chunkText]);
 
   const readPage = useCallback(() => {
     if (!window.speechSynthesis) {
@@ -192,7 +211,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       .map(l => l.trim())
       .filter(l => l.length > 2)
       .join(' ')
-      .slice(0, 5000);
+      .slice(0, 50000);
     if (!text || text.length < 3) {
       alert("No readable text was found on this page.");
       return;
