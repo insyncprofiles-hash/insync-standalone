@@ -186,13 +186,20 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     // Try to get text from the main content area first; fall back to body
     // This ensures we capture profile content on the About Me view
     const mainContent = document.querySelector('[data-tts-content]') || document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('#root > div') || document.body;
-    const rawText = (mainContent as HTMLElement).innerText || document.body.innerText;
+    // innerText can be empty if element is hidden or zoom causes layout issues — fall back to textContent then body
+    const rawText = (mainContent as HTMLElement).innerText
+      || (mainContent as HTMLElement).textContent
+      || document.body.innerText
+      || document.body.textContent
+      || "";
     // Filter out very short lines (nav labels, button text) and join meaningful content
     const text = rawText
       .split('\n')
       .map(l => l.trim())
       .filter(l => l.length > 2)
       .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim()
       .slice(0, 5000);
     if (!text || text.length < 3) {
       alert("No readable text was found on this page.");
