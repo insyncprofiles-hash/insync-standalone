@@ -194,16 +194,18 @@ export default function Landing() {
           </p>
         </div>
         {/* Buttons — pinned to bottom */}
-        <div style={{ position: "relative", zIndex: 2, padding: "24px 32px 40px", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}>
-          <p style={{ width: "100%", textAlign: "center", fontSize: "15px", color: "rgba(255,255,255,0.85)", fontWeight: 600, letterSpacing: "0.04em", marginBottom: "4px" }}>♡ A participant-first matching and communication resource</p>
-          {/* About Me button */}
-          <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a3a1a", fontSize: "17px", fontWeight: 900, padding: "14px 32px 12px", borderRadius: "40px", textDecoration: "none", boxShadow: "0 4px 20px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", minWidth: "200px" }}>
-            <span style={{ position: "absolute", top: "-12px", left: "12px", background: "#c0392b", color: "#fff", fontSize: "11px", fontWeight: 900, padding: "3px 10px", borderRadius: "20px", letterSpacing: "0.08em", textTransform: "uppercase", boxShadow: "0 2px 6px rgba(0,0,0,0.3)" }}>FREE TO USE</span>
-            <span style={{ fontSize: "18px", fontWeight: 900, letterSpacing: "0.02em" }}>✨ About Me</span>
-            <span style={{ fontSize: "12px", fontWeight: 700, color: "#0a4a1a", letterSpacing: "0.05em", marginTop: "2px" }}>Continuity for Aged &amp; Disabled Persons</span>
-          </Link>
-          <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "15px", fontWeight: 700, padding: "14px 28px", borderRadius: "8px", textDecoration: "none" }}>Explore Demo SW Profile</Link>
-          <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "15px", fontWeight: 600, padding: "14px 28px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)" }}>Learn more</Link>
+        <div style={{ position: "relative", zIndex: 2, padding: "16px 16px 32px", background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}>
+          <p style={{ textAlign: "center", fontSize: "13px", color: "rgba(255,255,255,0.8)", fontWeight: 600, letterSpacing: "0.04em", marginBottom: "12px" }}>A participant-first matching and communication resource</p>
+          <div style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
+            {/* About Me button */}
+            <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a1a00", fontSize: "13px", fontWeight: 900, padding: "10px 14px 8px", borderRadius: "30px", textDecoration: "none", boxShadow: "0 3px 12px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", flex: "1 1 0", maxWidth: "140px", textAlign: "center" }}>
+              <span style={{ position: "absolute", top: "-10px", left: "6px", background: "#c0392b", color: "#fff", fontSize: "9px", fontWeight: 900, padding: "2px 7px", borderRadius: "20px", letterSpacing: "0.06em", textTransform: "uppercase" }}>FREE</span>
+              <span style={{ fontSize: "14px", fontWeight: 900 }}>✨ About Me</span>
+              <span style={{ fontSize: "10px", fontWeight: 700, color: "#3a2000", marginTop: "1px", lineHeight: 1.2 }}>Aged &amp; Disabled</span>
+            </Link>
+            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "13px", fontWeight: 700, padding: "10px 14px", borderRadius: "8px", textDecoration: "none", flex: "1 1 0", maxWidth: "140px", textAlign: "center", lineHeight: 1.3 }}>Explore Demo SW Profile</Link>
+            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "13px", fontWeight: 600, padding: "10px 14px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)", flex: "1 1 0", maxWidth: "120px", textAlign: "center" }}>Learn more</Link>
+          </div>
         </div>
       </section>
 
