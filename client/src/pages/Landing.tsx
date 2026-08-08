@@ -210,7 +210,7 @@ export default function Landing() {
       </section>
 
       {/* ── CHALLENGES ── */}
-      <section style={{ padding: "80px 24px", background: "#f8fafc" }} aria-labelledby="challenges-heading">
+      <section style={{ padding: "80px 24px 32px", background: "#f8fafc" }} aria-labelledby="challenges-heading">
         <div style={{ maxWidth: "960px", margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: "15px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0d9488", marginBottom: "12px" }}>Why it matters</p>
           <h2 id="challenges-heading" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 900, color: "#0c1f36", marginBottom: "16px", lineHeight: 1.2 }}>The challenges we all know too well</h2>
