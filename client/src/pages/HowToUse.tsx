@@ -319,7 +319,6 @@ export default function HowToUse() {
 
   return (
     <div
-      data-tts-content="true"
       className="min-h-screen"
       style={{ ...a11yStyle,
         background: pageBg,
@@ -327,7 +326,7 @@ export default function HowToUse() {
         paddingTop: "110px", // 60px top bar + 50px access bar
       }}
     >
-      <main id="main-content" aria-label="How to use InSync Profiles guide">
+      <main id="main-content" data-tts-content="true" aria-label="How to use InSync Profiles guide">
 
       {/* Hero */}
       <div

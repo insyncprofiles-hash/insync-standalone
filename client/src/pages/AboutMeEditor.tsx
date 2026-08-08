@@ -553,7 +553,7 @@ export default function AboutMeEditor() {
   }
 
   return (
-    <div style={{ ...a11yStyle, minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont, paddingTop: "60px" }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont, paddingTop: "60px" }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Header */}

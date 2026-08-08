@@ -209,11 +209,15 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     }
     // Try to get text from the main content area first; fall back to body
     // This ensures we capture profile content on the About Me view
+    // Get text: try data-tts-content element first, but if it has zoom applied
+    // innerText may be empty on Android — always try body.innerText as primary fallback
     const mainContent = document.querySelector('[data-tts-content]') || document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('#root > div') || document.body;
-    // innerText can be empty if element is hidden or zoom causes layout issues — fall back to textContent then body
-    const rawText = (mainContent as HTMLElement).innerText
-      || (mainContent as HTMLElement).textContent
+    const el = mainContent as HTMLElement;
+    // Check if zoom is applied (zoom != 1 causes innerText to be empty on Android Chrome)
+    const hasZoom = el.style.zoom && el.style.zoom !== "1" && el.style.zoom !== "";
+    const rawText = (!hasZoom && el.innerText)
       || document.body.innerText
+      || el.textContent
       || document.body.textContent
       || "";
     // Join all non-empty lines into readable text
@@ -603,6 +607,15 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           aria-modal="false"
           style={{ ...a11yPanelStyle, right: "16px" }}
         >
+          {/* Panel header with Minimise button */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a84c" }}>Accessibility</span>
+            <button
+              onClick={() => setOpenPanel("none")}
+              aria-label="Minimise accessibility panel"
+              style={{ background: "none", border: "1.5px solid #444", borderRadius: "6px", color: "#c9a84c", fontSize: "13px", fontWeight: 700, padding: "2px 10px", cursor: "pointer", lineHeight: 1.4 }}
+            >✕ Close</button>
+          </div>
           {/* Text Size */}
           <span style={a11ySectionLabel}>Text Size</span>
           <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
