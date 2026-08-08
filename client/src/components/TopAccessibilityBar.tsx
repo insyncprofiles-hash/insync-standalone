@@ -173,19 +173,12 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       alert("Text-to-speech is not supported in this browser.");
       return;
     }
-    // Android fix: if status says reading/paused but synthesis has actually stopped, reset
     const ss = window.speechSynthesis;
-    if ((ttsStatus === "reading" || ttsStatus === "paused") && !ss.speaking && !ss.pending) {
+    // If currently reading (or stuck), stop and reset — next tap will restart
+    if (ttsStatus === "reading" || ttsStatus === "paused") {
+      ss.cancel();
       setSpeaking(false);
       setTtsStatus("idle");
-      // fall through to start fresh read
-    } else if (ttsStatus === "reading") {
-      ss.pause();
-      setTtsStatus("paused");
-      return;
-    } else if (ttsStatus === "paused") {
-      ss.resume();
-      setTtsStatus("reading");
       return;
     }
     // Try to get text from the main content area first; fall back to body
@@ -677,7 +670,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             <button
               onClick={readPage}
               onPointerDown={e => e.stopPropagation()}
-              aria-label={ttsStatus === "reading" ? "Pause reading" : ttsStatus === "paused" ? "Resume reading" : "Read page aloud"}
+              aria-label={ttsStatus !== "idle" ? "Stop reading" : "Read page aloud"}
               style={{
                 padding: "8px 14px",
                 borderRadius: "8px",
@@ -692,7 +685,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
                 flexShrink: 0,
               }}
             >
-              {ttsStatus === "reading" ? "⏸ Pause" : ttsStatus === "paused" ? "▶ Resume" : "▶ Read"}
+              {ttsStatus !== "idle" ? "■ Stop" : "▶ Read"}
             </button>
           </div>
         </div>
