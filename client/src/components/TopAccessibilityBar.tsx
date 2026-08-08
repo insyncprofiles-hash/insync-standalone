@@ -89,6 +89,32 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     window.dispatchEvent(new Event("a11y-settings-changed"));
   }, [settings, onSettingsChange]);
 
+  // Cancel TTS when user navigates away
+  useEffect(() => {
+    const cancelOnNav = () => {
+      if (window.speechSynthesis?.speaking || window.speechSynthesis?.pending) {
+        window.speechSynthesis.cancel();
+        setSpeaking(false);
+        setTtsStatus("idle");
+      }
+    };
+    window.addEventListener("popstate", cancelOnNav);
+    window.addEventListener("hashchange", cancelOnNav);
+    // Also listen for wouter navigation (click events on links)
+    const handleClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest("a");
+      if (target && target.href && !target.href.startsWith("mailto") && !target.target) {
+        cancelOnNav();
+      }
+    };
+    document.addEventListener("click", handleClick, true);
+    return () => {
+      window.removeEventListener("popstate", cancelOnNav);
+      window.removeEventListener("hashchange", cancelOnNav);
+      document.removeEventListener("click", handleClick, true);
+    };
+  }, []);
+
   // Close panels on Escape
   useEffect(() => {
     // Listen for custom event fired by landing page accessibility icon
@@ -177,8 +203,13 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       setTtsStatus("reading");
       return;
     }
-    // Always use document.body — never affected by CSS zoom, works on every page
-    const rawText = document.body.innerText || document.body.textContent || "";
+    // Clone body and remove the accessibility panel before reading
+    const bodyClone = document.body.cloneNode(true) as HTMLElement;
+    const panelEl = bodyClone.querySelector("#a11y-panel");
+    if (panelEl) panelEl.remove();
+    const topBarEl = bodyClone.querySelector('[role="banner"]');
+    if (topBarEl) topBarEl.remove();
+    const rawText = bodyClone.innerText || bodyClone.textContent || "";
     const text = rawText
       .split('\n')
       .map(l => l.trim())
