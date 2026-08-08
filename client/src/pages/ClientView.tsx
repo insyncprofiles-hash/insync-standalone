@@ -860,14 +860,11 @@ export default function ClientView() {
     if (!synth) return;
     if (ttsStatus === "reading") { stopTTS(); return; }
 
-    // Collect text from semantic elements only
-    const clone = document.body.cloneNode(true) as HTMLElement;
-    clone.querySelectorAll('nav, button, [data-no-print], #a11y-panel, .top-bar, script, style').forEach(el => el.remove());
-    const mainEl = clone.querySelector('#main-content') || clone;
-    const nodes = mainEl.querySelectorAll('h1,h2,h3,h4,p,li,td,blockquote');
-    const textLines: string[] = [];
-    nodes.forEach(n => { const t = (n.textContent || '').replace(/\s+/g,' ').trim(); if (t.length > 3) textLines.push(t); });
-    const fullText = textLines.join('. ');
+    // Collect all text from main-content including pills/spans
+    const mainEl = document.getElementById('main-content');
+    const clone = (mainEl || document.body).cloneNode(true) as HTMLElement;
+    clone.querySelectorAll('button, [data-no-print], #a11y-panel, .top-bar, script, style, nav').forEach(el => el.remove());
+    const fullText = (clone.innerText || clone.textContent || '').replace(/\s+/g,' ').trim();
     if (!fullText) return;
 
     // Split into ~150-word chunks to avoid Android 15s cutoff
