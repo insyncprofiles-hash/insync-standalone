@@ -79,8 +79,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
   const a11yBtnRef = useRef<HTMLButtonElement>(null);
   const a11yPanelRef = useRef<HTMLDivElement>(null);
-  const ttsTextRef = useRef<string>("");
-  const ttsCharIndexRef = useRef<number>(0);
 
   // Apply settings on mount and change
   useEffect(() => {
@@ -135,14 +133,10 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     setTtsStatus("idle");
   }, []);
 
-  const doSpeak = useCallback((text: string, startOffset = 0, retryCount = 0) => {
+  const doSpeak = useCallback((text: string, retryCount = 0) => {
     const ss = window.speechSynthesis;
     ss.cancel();
-    // Start from the saved position if resuming
-    const textToSpeak = startOffset > 0 ? text.slice(startOffset) : text;
-    ttsTextRef.current = text;
-    ttsCharIndexRef.current = startOffset;
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 0.9;
     // Prefer a local English voice (important on Android)
     const voices = ss.getVoices();
@@ -151,95 +145,50 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       || voices.find(v => v.lang.startsWith("en"));
     if (preferred) utterance.voice = preferred;
     utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
-    utterance.onend = () => {
-      setSpeaking(false);
-      setTtsStatus("idle");
-      ttsCharIndexRef.current = 0; // finished — reset position
-    };
-    // Track position as speech progresses
-    utterance.onboundary = (e) => {
-      if (e.name === "word") {
-        ttsCharIndexRef.current = startOffset + e.charIndex;
-      }
-    };
+    utterance.onend = () => { setSpeaking(false); setTtsStatus("idle"); };
     utterance.onerror = (e) => {
       setSpeaking(false);
       setTtsStatus("idle");
-      // synthesis-failed on Android means voices weren't ready — retry up to 2 times
       if (e.error === "synthesis-failed" && retryCount < 2) {
-        setTimeout(() => doSpeak(text, startOffset, retryCount + 1), 800);
+        setTimeout(() => doSpeak(text, retryCount + 1), 800);
         return;
       }
-      // interrupted/canceled are normal (user stopped it) — don't alert
       if (e.error === "interrupted" || e.error === "canceled") return;
-      // Only alert for truly unsupported environments
       if (e.error === "not-allowed" || e.error === "audio-busy") {
         alert("Text-to-speech is not available. Please check that Google Text-to-Speech is enabled in your device settings (Settings → Accessibility → Text-to-speech).");
       }
     };
     ss.speak(utterance);
-    // Android Chrome workaround: synthesis can get stuck in pending state
     setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 250);
     setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 800);
   }, []);
-
   const readPage = useCallback(() => {
     if (!window.speechSynthesis) {
       alert("Text-to-speech is not supported in this browser.");
       return;
     }
-    const ss = window.speechSynthesis;
-    // If currently reading, stop and save position for resume
     if (ttsStatus === "reading") {
-      ss.cancel();
-      setSpeaking(false);
-      setTtsStatus("paused"); // paused = stopped mid-way, position saved in ttsCharIndexRef
+      window.speechSynthesis.pause();
+      setTtsStatus("paused");
       return;
     }
-    // If paused (stopped mid-way), resume from saved position
     if (ttsStatus === "paused") {
-      const savedText = ttsTextRef.current;
-      const savedOffset = ttsCharIndexRef.current;
-      if (savedText && savedOffset > 0) {
-        doSpeak(savedText, savedOffset);
-        return;
-      }
-      // No saved position — fall through to fresh read
-      setTtsStatus("idle");
+      window.speechSynthesis.resume();
+      setTtsStatus("reading");
+      return;
     }
-    // Try to get text from the main content area first; fall back to body
-    // This ensures we capture profile content on the About Me view
-    // Get text: try data-tts-content element first, but if it has zoom applied
-    // innerText may be empty on Android — always try body.innerText as primary fallback
-    const mainContent = document.querySelector('[data-tts-content]') || document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('#root > div') || document.body;
-    const el = mainContent as HTMLElement;
-    // Check if zoom is applied (zoom != 1 causes innerText to be empty on Android Chrome)
-    const hasZoom = el.style.zoom && el.style.zoom !== "1" && el.style.zoom !== "";
-    const rawText = (!hasZoom && el.innerText)
-      || document.body.innerText
-      || el.textContent
-      || document.body.textContent
-      || "";
-    // Join all non-empty lines into readable text
-    let text = rawText
+    const mainContent = document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('#root > div') || document.body;
+    const rawText = (mainContent as HTMLElement).innerText || document.body.innerText;
+    const text = rawText
       .split('\n')
       .map(l => l.trim())
-      .filter(l => l.length > 0)
+      .filter(l => l.length > 2)
       .join(' ')
-      .replace(/\s+/g, ' ')
-      .trim()
       .slice(0, 5000);
-    // If we got very little text, fall back to full body text
-    if (text.length < 50) {
-      text = (document.body.innerText || document.body.textContent || "")
-        .split('\n').map(l => l.trim()).filter(l => l.length > 0)
-        .join(' ').replace(/\s+/g, ' ').trim().slice(0, 5000);
-    }
     if (!text || text.length < 3) {
       alert("No readable text was found on this page.");
       return;
     }
-    // Android: voices may not be loaded yet — wait for voiceschanged event
     const voices = window.speechSynthesis.getVoices();
     if (voices.length === 0) {
       let fired = false;
@@ -250,7 +199,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
         doSpeak(text);
       };
       window.speechSynthesis.addEventListener("voiceschanged", handler);
-      // Fallback timeout in case voiceschanged never fires
       setTimeout(() => handler(), 1500);
     } else {
       doSpeak(text);
@@ -715,7 +663,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             <button
               onClick={readPage}
               onPointerDown={e => e.stopPropagation()}
-              aria-label={ttsStatus === "reading" ? "Stop reading" : ttsStatus === "paused" ? "Resume reading" : "Read page aloud"}
+              aria-label={ttsStatus === "reading" ? "Pause reading" : ttsStatus === "paused" ? "Resume reading" : "Read page aloud"}
               style={{
                 padding: "8px 14px",
                 borderRadius: "8px",
@@ -730,7 +678,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
                 flexShrink: 0,
               }}
             >
-              {ttsStatus === "reading" ? "■ Stop" : ttsStatus === "paused" ? "▶ Resume" : "▶ Read"}
+              {ttsStatus === "reading" ? "⏸ Pause" : ttsStatus === "paused" ? "▶ Resume" : "▶ Read"}
             </button>
           </div>
         </div>
