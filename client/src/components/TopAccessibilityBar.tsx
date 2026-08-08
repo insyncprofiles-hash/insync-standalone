@@ -257,15 +257,20 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
   const a11yPanelStyle: React.CSSProperties = {
     position: "fixed",
-    top: `${TOP_BAR_HEIGHT + 4}px`,
+    top: hidden ? "70px" : `${TOP_BAR_HEIGHT + 4}px`,
+    right: "16px",
+    left: "auto",
     zIndex: 10001,
     width: "min(360px, calc(100vw - 32px))",
+    maxWidth: "calc(100vw - 32px)",
     background: "#0a0a0a",
     border: "2px solid #c9a84c",
-    borderRadius: "0 0 16px 16px",
+    borderRadius: "16px",
     boxShadow: "0 12px 40px rgba(0,0,0,0.85)",
     padding: "20px",
     animation: "fadeInDown 180ms cubic-bezier(0.23,1,0.32,1)",
+    overflowY: "auto",
+    maxHeight: "calc(100vh - 100px)",
   };
   const panelStyle: React.CSSProperties = {
     position: "fixed",
@@ -595,7 +600,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           role="dialog"
           aria-label="Accessibility settings"
           aria-modal="false"
-          style={{ ...a11yPanelStyle, right: "16px" }}
+          style={a11yPanelStyle}
         >
           {/* Panel header with Minimise button */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
