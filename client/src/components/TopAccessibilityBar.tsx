@@ -177,8 +177,8 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       setTtsStatus("reading");
       return;
     }
-    const mainContent = document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('#root > div') || document.body;
-    const rawText = (mainContent as HTMLElement).innerText || document.body.innerText;
+    // Always use document.body — never affected by CSS zoom, works on every page
+    const rawText = document.body.innerText || document.body.textContent || "";
     const text = rawText
       .split('\n')
       .map(l => l.trim())
