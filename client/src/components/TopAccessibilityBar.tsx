@@ -78,6 +78,10 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
   const a11yBtnRef = useRef<HTMLButtonElement>(null);
   const a11yPanelRef = useRef<HTMLDivElement>(null);
+  const ttsChunksRef = useRef<string[]>([]);
+  const ttsChunkIdxRef = useRef<number>(0);
+  const ttsStoppedRef = useRef<boolean>(false);
+  const ttsKeepaliveRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Apply settings on mount and change
   useEffect(() => {
@@ -127,64 +131,76 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
   // TTS
   const stopSpeaking = useCallback(() => {
+    ttsStoppedRef.current = true;
+    if (ttsKeepaliveRef.current) clearInterval(ttsKeepaliveRef.current);
     window.speechSynthesis?.cancel();
     setSpeaking(false);
     setTtsStatus("idle");
   }, []);
 
-  // Chunk text into ~200-word pieces to work around Android Chrome 15s TTS cutoff
-  const chunkText = useCallback((text: string): string[] => {
-    const words = text.split(/\s+/);
-    const chunks: string[] = [];
-    for (let i = 0; i < words.length; i += 200) {
-      chunks.push(words.slice(i, i + 200).join(" "));
-    }
-    return chunks;
-  }, []);
-
   const doSpeak = useCallback((text: string) => {
     const ss = window.speechSynthesis;
     ss.cancel();
-    const chunks = chunkText(text);
+    if (ttsKeepaliveRef.current) clearInterval(ttsKeepaliveRef.current);
+
+    // Split into ~150-word chunks to beat Android 15s cutoff
+    const words = text.split(/\s+/);
+    const chunks: string[] = [];
+    for (let i = 0; i < words.length; i += 150) {
+      chunks.push(words.slice(i, i + 150).join(" "));
+    }
     if (chunks.length === 0) return;
+
+    ttsChunksRef.current = chunks;
+    ttsChunkIdxRef.current = 0;
+    ttsStoppedRef.current = false;
 
     const voices = ss.getVoices();
     const preferred = voices.find(v => v.lang.startsWith("en-AU") && v.localService)
       || voices.find(v => v.lang.startsWith("en") && v.localService)
       || voices.find(v => v.lang.startsWith("en"));
 
-    let chunkIndex = 0;
-    const speakChunk = (idx: number) => {
-      if (idx >= chunks.length) {
+    // Keepalive: Android kills synthesis if idle too long between chunks
+    ttsKeepaliveRef.current = setInterval(() => {
+      if (ss.speaking || ss.pending) ss.resume();
+    }, 8000);
+
+    const speakNext = () => {
+      if (ttsStoppedRef.current) return;
+      const idx = ttsChunkIdxRef.current;
+      if (idx >= ttsChunksRef.current.length) {
         setSpeaking(false);
         setTtsStatus("idle");
+        if (ttsKeepaliveRef.current) clearInterval(ttsKeepaliveRef.current);
         return;
       }
-      const utterance = new SpeechSynthesisUtterance(chunks[idx]);
+      const utterance = new SpeechSynthesisUtterance(ttsChunksRef.current[idx]);
       utterance.rate = 0.9;
       if (preferred) utterance.voice = preferred;
       if (idx === 0) {
         utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
       }
       utterance.onend = () => {
-        // Android: small delay between chunks prevents synthesis from dying
-        setTimeout(() => speakChunk(idx + 1), 100);
+        if (ttsStoppedRef.current) return;
+        ttsChunkIdxRef.current = idx + 1;
+        setTimeout(speakNext, 150);
       };
       utterance.onerror = (e) => {
+        if (ttsStoppedRef.current) return;
         if (e.error === "interrupted" || e.error === "canceled") return;
         setSpeaking(false);
         setTtsStatus("idle");
+        if (ttsKeepaliveRef.current) clearInterval(ttsKeepaliveRef.current);
         if (e.error === "not-allowed" || e.error === "audio-busy") {
           alert("Text-to-speech is not available. Please check that Google Text-to-Speech is enabled in your device settings (Settings → Accessibility → Text-to-speech).");
         }
       };
       ss.speak(utterance);
-      // Android Chrome workaround: resume if stuck in pending
-      setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 250);
-      setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 800);
+      setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 300);
+      setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 900);
     };
-    speakChunk(0);
-  }, [chunkText]);
+    speakNext();
+  }, []);
 
   const readPage = useCallback(() => {
     if (!window.speechSynthesis) {
