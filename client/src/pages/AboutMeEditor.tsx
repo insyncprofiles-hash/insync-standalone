@@ -208,7 +208,7 @@ function Field({ id, label, hint, value: rawValue, onChange, multiline = false, 
     transition: "border-color 200ms ease-out",
   };
   return (
-    <div data-tts-content="true" style={{ ...a11yStyle, marginBottom: "22px" }}>
+    <div style={{ marginBottom: "22px" }}>
       <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "17px", color: C.accent, marginBottom: "6px" }}>
         {label}
       </label>
@@ -553,7 +553,7 @@ export default function AboutMeEditor() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont, paddingTop: "60px" }}>
+    <div style={{ ...a11yStyle, minHeight: "100vh", background: C.bg, fontFamily: C.bodyFont, paddingTop: "60px" }}>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
 
       {/* Header */}

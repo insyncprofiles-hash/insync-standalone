@@ -293,9 +293,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div
-      data-tts-content="true" style={{ ...a11yStyle,
-        borderBottom: `1px solid rgba(26,74,138,0.18)`,
-      }}
+      style={{ borderBottom: `1px solid rgba(26,74,138,0.18)` }}
     >
       <button
         onClick={() => setOpen(o => !o)}
@@ -344,7 +342,7 @@ export default function Pricing() {
   const [agreed, setAgreed] = useState<Record<string, boolean>>({});
   const toggleAgreed = (id: string) => setAgreed(prev => ({ ...prev, [id]: !prev[id] }));
   return (
-    <div style={{ background: "linear-gradient(160deg, #C8E6FA 0%, #e8f4ff 45%, #F7E08A 100%)", minHeight: "100vh" }}>
+    <div style={{ ...a11yStyle, background: "linear-gradient(160deg, #C8E6FA 0%, #e8f4ff 45%, #F7E08A 100%)", minHeight: "100vh" }}>
       <a href="#main-content" className="skip-link">Skip to main content</a>
 
       <main id="main-content" style={{ paddingTop: "110px" }}>
