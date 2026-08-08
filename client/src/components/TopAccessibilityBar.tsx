@@ -106,12 +106,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [openPanel]);
-  // Custom event: landing page gold icon fires this to toggle the panel
-  useEffect(() => {
-    const openHandler = () => setOpenPanel(p => p === "a11y" ? "none" : "a11y");
-    window.addEventListener("open-a11y-panel", openHandler);
-    return () => window.removeEventListener("open-a11y-panel", openHandler);
-  }, []);
 
   // Close panels on outside click — but NOT while TTS is active (Android: tap fires mousedown before click, closing panel would cancel synthesis)
   useEffect(() => {
