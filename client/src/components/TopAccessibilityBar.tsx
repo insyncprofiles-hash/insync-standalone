@@ -79,6 +79,8 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
   const a11yBtnRef = useRef<HTMLButtonElement>(null);
   const a11yPanelRef = useRef<HTMLDivElement>(null);
+  const ttsTextRef = useRef<string>("");
+  const ttsCharIndexRef = useRef<number>(0);
 
   // Apply settings on mount and change
   useEffect(() => {
@@ -133,10 +135,14 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     setTtsStatus("idle");
   }, []);
 
-  const doSpeak = useCallback((text: string, retryCount = 0) => {
+  const doSpeak = useCallback((text: string, startOffset = 0, retryCount = 0) => {
     const ss = window.speechSynthesis;
     ss.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    // Start from the saved position if resuming
+    const textToSpeak = startOffset > 0 ? text.slice(startOffset) : text;
+    ttsTextRef.current = text;
+    ttsCharIndexRef.current = startOffset;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.rate = 0.9;
     // Prefer a local English voice (important on Android)
     const voices = ss.getVoices();
@@ -145,13 +151,23 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       || voices.find(v => v.lang.startsWith("en"));
     if (preferred) utterance.voice = preferred;
     utterance.onstart = () => { setSpeaking(true); setTtsStatus("reading"); };
-    utterance.onend = () => { setSpeaking(false); setTtsStatus("idle"); };
+    utterance.onend = () => {
+      setSpeaking(false);
+      setTtsStatus("idle");
+      ttsCharIndexRef.current = 0; // finished — reset position
+    };
+    // Track position as speech progresses
+    utterance.onboundary = (e) => {
+      if (e.name === "word") {
+        ttsCharIndexRef.current = startOffset + e.charIndex;
+      }
+    };
     utterance.onerror = (e) => {
       setSpeaking(false);
       setTtsStatus("idle");
       // synthesis-failed on Android means voices weren't ready — retry up to 2 times
       if (e.error === "synthesis-failed" && retryCount < 2) {
-        setTimeout(() => doSpeak(text, retryCount + 1), 800);
+        setTimeout(() => doSpeak(text, startOffset, retryCount + 1), 800);
         return;
       }
       // interrupted/canceled are normal (user stopped it) — don't alert
@@ -163,7 +179,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     };
     ss.speak(utterance);
     // Android Chrome workaround: synthesis can get stuck in pending state
-    // Multiple resume() calls at different intervals to cover slow-starting voices
     setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 250);
     setTimeout(() => { if (ss.pending || ss.speaking) ss.resume(); }, 800);
   }, []);
@@ -174,12 +189,23 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       return;
     }
     const ss = window.speechSynthesis;
-    // If currently reading (or stuck), stop and reset — next tap will restart
-    if (ttsStatus === "reading" || ttsStatus === "paused") {
+    // If currently reading, stop and save position for resume
+    if (ttsStatus === "reading") {
       ss.cancel();
       setSpeaking(false);
-      setTtsStatus("idle");
+      setTtsStatus("paused"); // paused = stopped mid-way, position saved in ttsCharIndexRef
       return;
+    }
+    // If paused (stopped mid-way), resume from saved position
+    if (ttsStatus === "paused") {
+      const savedText = ttsTextRef.current;
+      const savedOffset = ttsCharIndexRef.current;
+      if (savedText && savedOffset > 0) {
+        doSpeak(savedText, savedOffset);
+        return;
+      }
+      // No saved position — fall through to fresh read
+      setTtsStatus("idle");
     }
     // Try to get text from the main content area first; fall back to body
     // This ensures we capture profile content on the About Me view
@@ -670,7 +696,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             <button
               onClick={readPage}
               onPointerDown={e => e.stopPropagation()}
-              aria-label={ttsStatus !== "idle" ? "Stop reading" : "Read page aloud"}
+              aria-label={ttsStatus === "reading" ? "Stop reading" : ttsStatus === "paused" ? "Resume reading" : "Read page aloud"}
               style={{
                 padding: "8px 14px",
                 borderRadius: "8px",
@@ -685,7 +711,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
                 flexShrink: 0,
               }}
             >
-              {ttsStatus !== "idle" ? "■ Stop" : "▶ Read"}
+              {ttsStatus === "reading" ? "■ Stop" : ttsStatus === "paused" ? "▶ Resume" : "▶ Read"}
             </button>
           </div>
         </div>
