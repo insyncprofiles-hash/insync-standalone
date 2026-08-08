@@ -173,13 +173,18 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       alert("Text-to-speech is not supported in this browser.");
       return;
     }
-    if (ttsStatus === "reading") {
-      window.speechSynthesis.pause();
+    // Android fix: if status says reading/paused but synthesis has actually stopped, reset
+    const ss = window.speechSynthesis;
+    if ((ttsStatus === "reading" || ttsStatus === "paused") && !ss.speaking && !ss.pending) {
+      setSpeaking(false);
+      setTtsStatus("idle");
+      // fall through to start fresh read
+    } else if (ttsStatus === "reading") {
+      ss.pause();
       setTtsStatus("paused");
       return;
-    }
-    if (ttsStatus === "paused") {
-      window.speechSynthesis.resume();
+    } else if (ttsStatus === "paused") {
+      ss.resume();
       setTtsStatus("reading");
       return;
     }
