@@ -5,6 +5,7 @@
    ============================================================ */
 import { useEffect } from "react";
 import { Link } from "wouter";
+import { useA11y } from "@/hooks/useA11y";
 
 const LAST_UPDATED = "14 June 2026";
 const CONTACT_EMAIL = "insyncprofiles@gmail.com";
@@ -20,6 +21,8 @@ const DIM  = "oklch(0.55 0.04 155)";
 const BORDER = "oklch(0.72 0.14 75 / 18%)";
 
 export default function Privacy() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   // Prevent search engines from indexing this page (contains ABN and legal content)
   useEffect(() => {
     const meta = document.createElement("meta");
@@ -34,7 +37,7 @@ export default function Privacy() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: BG, color: HEAD }}>
+    <div data-tts-content="true" className="min-h-screen" style={{ ...a11yStyle, background: BG, color: HEAD }}>
 
       {/* Hero */}
       <div className="text-center py-16 px-6" style={{ borderBottom: `1px solid ${BORDER}`, paddingTop: "110px" }}>

@@ -1,7 +1,10 @@
 import { Link } from "wouter";
 import { useEffect } from "react";
+import { useA11y } from "@/hooks/useA11y";
 
 export default function About() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   // Force light background
   useEffect(() => {
     const root = document.documentElement;
@@ -17,7 +20,7 @@ export default function About() {
   }, []);
 
   return (
-    <div style={{ background: "#ffffff", minHeight: "100vh", fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", color: "#111827", paddingTop: "80px" }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, background: "#ffffff", minHeight: "100vh", fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", color: "#111827", paddingTop: "80px" }}>
 
       {/* Hero strip */}
       <section style={{ background: "linear-gradient(135deg, #0c1f36 0%, #0d9488 100%)", padding: "64px 24px 56px", textAlign: "center" }}>

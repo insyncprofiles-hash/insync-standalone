@@ -5,11 +5,14 @@
    Fonts: Cormorant Garamond (display) + Outfit (body)
    ============================================================ */
 import { Link } from "wouter";
+import { useA11y } from "@/hooks/useA11y";
 
 export default function Directory() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   return (
     <div
-      style={{
+      data-tts-content="true" style={{ ...a11yStyle,
         minHeight: "100vh",
         background: "linear-gradient(160deg, #0d1b2a 0%, #0a2540 50%, #0d1b2a 100%)",
         display: "flex",

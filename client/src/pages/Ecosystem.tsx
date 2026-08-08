@@ -1,11 +1,14 @@
 import EcosystemGraphic from "../components/EcosystemGraphic";
+import { useA11y } from "@/hooks/useA11y";
 
 const H = "'Outfit', 'Nunito', sans-serif";
 const B = "'Nunito', sans-serif";
 
 export default function Ecosystem() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   return (
-    <div style={{ background: "#f8fafc", minHeight: "100vh", paddingBottom: "60px" }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, background: "#f8fafc", minHeight: "100vh", paddingBottom: "60px" }}>
 
       {/* Hero header */}
       <div style={{

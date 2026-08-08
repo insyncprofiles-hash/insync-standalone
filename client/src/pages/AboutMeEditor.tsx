@@ -10,6 +10,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Link } from "wouter";
 import { generateAboutMeHTML } from "@/lib/generateAboutMeHTML";
+import { useA11y } from "@/hooks/useA11y";
 
 // ── TYPES ─────────────────────────────────────────────────────
 
@@ -207,7 +208,7 @@ function Field({ id, label, hint, value: rawValue, onChange, multiline = false, 
     transition: "border-color 200ms ease-out",
   };
   return (
-    <div style={{ marginBottom: "22px" }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, marginBottom: "22px" }}>
       <label style={{ display: "block", fontFamily: C.headFont, fontWeight: 800, fontSize: "17px", color: C.accent, marginBottom: "6px" }}>
         {label}
       </label>
@@ -304,6 +305,8 @@ function SelectField({ id, label, hint, value, onChange, options, listeningFor, 
 // ── MAIN COMPONENT ────────────────────────────────────────────
 
 export default function AboutMeEditor() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   const [profile, setProfile] = useState<AboutMeProfile>(EMPTY);
   const [profileType, setProfileType] = useState<"disability" | "agedcare" | null>(null);
   const [activeTab, setActiveTab] = useState("who");

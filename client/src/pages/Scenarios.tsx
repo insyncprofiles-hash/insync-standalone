@@ -7,6 +7,7 @@
    ============================================================ */
 import { Link } from "wouter";
 import ScenarioFlowchart, { FlowchartData } from "@/components/ScenarioFlowchart";
+import { useA11y } from "@/hooks/useA11y";
 
 // ── Design tokens (matches Landing.tsx) ─────────────────────
 const C = {
@@ -262,8 +263,10 @@ Stand out. Be visible. Be part of the wave.`,
 ];
 
 export default function Scenarios() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   return (
-    <div style={{ background: C.bgPage, minHeight: "100vh", fontFamily: "'Outfit', sans-serif", color: C.textBody }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, background: C.bgPage, minHeight: "100vh", fontFamily: "'Outfit', sans-serif", color: C.textBody }}>
       <a href="#main-content" style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}>Skip to main content</a>
 
       <main id="main-content" style={{ paddingTop: "110px" }}>

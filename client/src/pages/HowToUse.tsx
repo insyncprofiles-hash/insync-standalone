@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { useColorTheme } from "@/contexts/ColorThemeContext";
+import { useA11y } from "@/hooks/useA11y";
 
 // ── DATA ─────────────────────────────────────────────────────
 
@@ -301,6 +302,8 @@ Most support workers set up their profile once on their main device (usually the
 // ── COMPONENT ────────────────────────────────────────────────
 
 export default function HowToUse() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   useColorTheme(); // keep theme context alive for nav bar
   const [expandedStep, setExpandedStep] = useState<string | null>("01");
   const [activeSection, setActiveSection] = useState("setup");
@@ -316,8 +319,9 @@ export default function HowToUse() {
 
   return (
     <div
+      data-tts-content="true"
       className="min-h-screen"
-      style={{
+      style={{ ...a11yStyle,
         background: pageBg,
         color: headText,
         paddingTop: "110px", // 60px top bar + 50px access bar

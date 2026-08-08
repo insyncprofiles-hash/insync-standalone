@@ -6,6 +6,7 @@
    ============================================================ */
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
+import { useA11y } from "@/hooks/useA11y";
 
 // ── Colour constants (mirrors Landing.tsx) ─────────────────────
 const C = {
@@ -60,6 +61,8 @@ const PROFILE_HOLDS = [
 ];
 
 export default function AlliedHealth() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   const [showBackTop, setShowBackTop] = useState(false);
 
   useEffect(() => {
@@ -69,7 +72,7 @@ export default function AlliedHealth() {
   }, []);
 
   return (
-    <div style={{ background: C.bgPage, minHeight: "100vh", fontFamily: "'Outfit', sans-serif", color: C.textBody }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, background: C.bgPage, minHeight: "100vh", fontFamily: "'Outfit', sans-serif", color: C.textBody }}>
 
       {/* ── HEADER ── */}
       <header style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(13,27,42,0.92)", backdropFilter: "blur(12px)", borderBottom: `1px solid ${C.border}`, padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 import { useColorTheme } from "@/contexts/ColorThemeContext";
+import { useA11y } from "@/hooks/useA11y";
 
 // ── PayPal payment links ─────────────────────────────────────
 const PURCHASE_LINKS = {
@@ -292,7 +293,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div
-      style={{
+      data-tts-content="true" style={{ ...a11yStyle,
         borderBottom: `1px solid rgba(26,74,138,0.18)`,
       }}
     >
@@ -331,6 +332,8 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 // ── Main page ─────────────────────────────────────────────────
 export default function Pricing() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   useColorTheme(); // keep context alive for nav bar
   // Pricing is always light — hardcoded for consistent readability
   const ACCENT = "#2563eb";

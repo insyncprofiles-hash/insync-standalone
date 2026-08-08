@@ -5,6 +5,7 @@
    ============================================================ */
 import { Link, useLocation } from "wouter";
 import { useState, useCallback } from "react";
+import { useA11y } from "@/hooks/useA11y";
 
 // Mark navigation source so back button knows to return here
 function useCoordNav() {
@@ -152,6 +153,8 @@ Worth a look — I think it would really help you connect with the right partici
 [Your name]`;
 
 export default function Coordinators() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [emailCopied, setEmailCopied] = useState(false);
   const coordNav = useCoordNav();
@@ -165,7 +168,7 @@ export default function Coordinators() {
 
   return (
     <div
-      style={{
+      data-tts-content="true" style={{ ...a11yStyle,
         background: C.bgPage,
         minHeight: "100vh",
         fontFamily: "'Outfit', sans-serif",

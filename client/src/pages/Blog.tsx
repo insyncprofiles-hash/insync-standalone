@@ -4,6 +4,7 @@
    Fonts: Cormorant Garamond (display) + Outfit (body)
    ============================================================ */
 import { Link } from "wouter";
+import { useA11y } from "@/hooks/useA11y";
 
 const C = {
   bgPage:    "linear-gradient(160deg, #0d1b2a 0%, #0f2d3d 40%, #0a2a1e 100%)",
@@ -77,8 +78,10 @@ const POSTS = [
 ];
 
 export default function Blog() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   return (
-    <div style={{ minHeight: "100vh", background: C.bgPage, fontFamily: "'Outfit', sans-serif" }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, minHeight: "100vh", background: C.bgPage, fontFamily: "'Outfit', sans-serif" }}>
       {/* Google Fonts */}
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');`}</style>
 

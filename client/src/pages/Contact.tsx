@@ -4,6 +4,7 @@
    ============================================================ */
 import { Link } from "wouter";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
+import { useA11y } from "@/hooks/useA11y";
 
 const TEXT_HEAD  = "#0f2336";
 const TEXT_BODY  = "#1e3a52";
@@ -15,8 +16,10 @@ const BORDER     = "rgba(100,160,220,0.30)";
 const CARD_BG    = "rgba(255,255,255,0.72)";
 
 export default function Contact() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   return (
-    <div style={{
+    <div data-tts-content="true" style={{ ...a11yStyle,
       minHeight: "100vh",
       background: "linear-gradient(160deg, #e8f4fd 0%, #d4eaf7 30%, #f0f7e8 60%, #fdf6e3 100%)",
       fontFamily: "'Outfit', 'Inter', sans-serif",

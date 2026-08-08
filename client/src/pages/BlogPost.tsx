@@ -6,6 +6,7 @@
 import React, { useEffect } from "react";
 import { Link } from "wouter";
 import { useSEO } from "@/hooks/useSEO";
+import { useA11y } from "@/hooks/useA11y";
 
 const C = {
   bgPage:    "linear-gradient(160deg, #0d1b2a 0%, #0f2d3d 40%, #0a2a1e 100%)",
@@ -715,11 +716,13 @@ interface BlogPostProps {
 }
 
 export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   const article = ARTICLES[slug];
 
   if (!article) {
     return (
-      <div style={{ minHeight: "100vh", background: C.bgPage, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit', sans-serif" }}>
+      <div data-tts-content="true" style={{ ...a11yStyle, minHeight: "100vh", background: C.bgPage, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit', sans-serif" }}>
         <div style={{ textAlign: "center", color: C.textBody }}>
           <div style={{ fontSize: "48px", marginBottom: "16px" }}>📄</div>
           <h1 style={{ color: C.textHead, marginBottom: "12px" }}>Article not found</h1>

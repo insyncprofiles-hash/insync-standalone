@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
+import { useA11y } from "@/hooks/useA11y";
 
 const GUIDES = [
   {
@@ -37,10 +38,12 @@ const C = {
 };
 
 export default function Guides() {
+  const { wrapperStyle: a11yStyle } = useA11y();
+
   const [zoomed, setZoomed] = useState<string | null>(null);
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.textHead, fontFamily: "'Inter', sans-serif", paddingTop: "110px" }}>
+    <div data-tts-content="true" style={{ ...a11yStyle, minHeight: "100vh", background: C.bg, color: C.textHead, fontFamily: "'Inter', sans-serif", paddingTop: "110px" }}>
 
       {/* Hero */}
       <section style={{ maxWidth: "860px", margin: "0 auto", padding: "60px 24px 32px", textAlign: "center" }}>
