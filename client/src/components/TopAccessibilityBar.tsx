@@ -216,15 +216,21 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       || document.body.innerText
       || document.body.textContent
       || "";
-    // Filter out very short lines (nav labels, button text) and join meaningful content
-    const text = rawText
+    // Join all non-empty lines into readable text
+    let text = rawText
       .split('\n')
       .map(l => l.trim())
-      .filter(l => l.length > 2)
+      .filter(l => l.length > 0)
       .join(' ')
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 5000);
+    // If we got very little text, fall back to full body text
+    if (text.length < 50) {
+      text = (document.body.innerText || document.body.textContent || "")
+        .split('\n').map(l => l.trim()).filter(l => l.length > 0)
+        .join(' ').replace(/\s+/g, ' ').trim().slice(0, 5000);
+    }
     if (!text || text.length < 3) {
       alert("No readable text was found on this page.");
       return;
