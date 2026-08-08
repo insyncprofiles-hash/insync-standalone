@@ -495,3 +495,25 @@ body {
 .landing-page {
   zoom: var(--a11y-font-scale, 1);
 }
+
+/* Prevent horizontal scroll globally */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Landing page comparison + ecosystem grids — stack on mobile */
+@media (max-width: 768px) {
+  .compare-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .access-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    text-align: center;
+  }
+  .compare-section {
+    padding: 32px 16px !important;
+  }
+}
