@@ -60,7 +60,6 @@ interface Props {
   backHref?: string;
   hidden?: boolean;
   backLabel?: string;
-  hidden?: boolean;
 }
 
 export const TOP_BAR_HEIGHT = 60; // px — height of the fixed top bar
