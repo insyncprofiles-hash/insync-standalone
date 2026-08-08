@@ -193,21 +193,20 @@ export default function Landing() {
             <span style={{ background: "rgba(255,255,255,0.22)", color: "#ffffff", borderRadius: "8px", padding: "4px 16px", border: "1.5px solid rgba(255,255,255,0.4)" }}>Person-Centred.</span>
           </p>
         </div>
-        {/* Buttons — pinned to bottom */}
-        <div style={{ position: "relative", zIndex: 2, padding: "16px 16px 32px", background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)" }}>
-          <p style={{ textAlign: "center", fontSize: "13px", color: "rgba(255,255,255,0.8)", fontWeight: 600, letterSpacing: "0.04em", marginBottom: "12px" }}>A participant-first matching and communication resource</p>
-          <div style={{ display: "flex", gap: "8px", justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
-            {/* About Me button */}
-            <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a1a00", fontSize: "13px", fontWeight: 900, padding: "10px 14px 8px", borderRadius: "30px", textDecoration: "none", boxShadow: "0 3px 12px rgba(240,192,64,0.4)", border: "2px solid rgba(255,255,255,0.3)", flex: "1 1 0", maxWidth: "140px", textAlign: "center" }}>
-              <span style={{ position: "absolute", top: "-10px", left: "6px", background: "#c0392b", color: "#fff", fontSize: "9px", fontWeight: 900, padding: "2px 7px", borderRadius: "20px", letterSpacing: "0.06em", textTransform: "uppercase" }}>FREE</span>
-              <span style={{ fontSize: "14px", fontWeight: 900 }}>✨ About Me</span>
-              <span style={{ fontSize: "10px", fontWeight: 700, color: "#3a2000", marginTop: "1px", lineHeight: 1.2 }}>PWD &amp; Elderly</span>
-            </Link>
-            <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "13px", fontWeight: 700, padding: "10px 14px", borderRadius: "8px", textDecoration: "none", flex: "1 1 0", maxWidth: "140px", textAlign: "center", lineHeight: 1.3 }}>Explore Demo SW Profile</Link>
-            <Link href="/ecosystem" style={{ background: "rgba(255,255,255,0.12)", color: "#fff", fontSize: "13px", fontWeight: 600, padding: "10px 14px", borderRadius: "8px", textDecoration: "none", border: "1.5px solid rgba(255,255,255,0.35)", flex: "1 1 0", maxWidth: "120px", textAlign: "center" }}>Learn more</Link>
-          </div>
-        </div>
       </section>
+      {/* ── HERO BUTTONS — below hero image ── */}
+      <div style={{ background: "#ffffff", padding: "24px 16px 32px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+        <p style={{ textAlign: "center", fontSize: "14px", color: "#4a6a8a", fontWeight: 600, letterSpacing: "0.04em", margin: 0 }}>A participant-first matching and communication resource</p>
+        <div style={{ display: "flex", gap: "10px", justifyContent: "center", alignItems: "center", flexWrap: "wrap", width: "100%", maxWidth: "500px" }}>
+          <Link href="/about-me/editor" style={{ position: "relative", display: "inline-flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, #f0c040 0%, #e6a800 100%)", color: "#1a1a00", fontSize: "14px", fontWeight: 900, padding: "12px 18px 10px", borderRadius: "30px", textDecoration: "none", boxShadow: "0 3px 12px rgba(240,192,64,0.35)", flex: "1 1 0", maxWidth: "160px", textAlign: "center" }}>
+            <span style={{ position: "absolute", top: "-10px", left: "8px", background: "#c0392b", color: "#fff", fontSize: "9px", fontWeight: 900, padding: "2px 7px", borderRadius: "20px", letterSpacing: "0.06em", textTransform: "uppercase" }}>FREE</span>
+            <span style={{ fontSize: "15px", fontWeight: 900 }}>✨ About Me</span>
+            <span style={{ fontSize: "11px", fontWeight: 700, color: "#3a2000", marginTop: "2px", lineHeight: 1.2 }}>PWD &amp; Elderly</span>
+          </Link>
+          <Link href="/view" style={{ background: "#0d9488", color: "#fff", fontSize: "14px", fontWeight: 700, padding: "12px 16px", borderRadius: "10px", textDecoration: "none", flex: "1 1 0", maxWidth: "160px", textAlign: "center", lineHeight: 1.3 }}>Explore Demo SW Profile</Link>
+          <Link href="/ecosystem" style={{ background: "#f0f7f6", color: "#0d9488", fontSize: "14px", fontWeight: 700, padding: "12px 16px", borderRadius: "10px", textDecoration: "none", border: "1.5px solid #0d9488", flex: "1 1 0", maxWidth: "130px", textAlign: "center" }}>Learn more</Link>
+        </div>
+      </div>
 
       {/* ── CHALLENGES ── */}
       <section style={{ padding: "80px 24px 32px", background: "#f8fafc" }} aria-labelledby="challenges-heading">
