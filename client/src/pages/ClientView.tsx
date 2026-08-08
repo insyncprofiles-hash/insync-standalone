@@ -844,69 +844,72 @@ export default function ClientView() {
     window.speechSynthesis?.cancel();
     setTtsStatus("idle");
   }, []);
+  const ttsChunksRef = React.useRef<string[]>([]);
+  const ttsStoppedRef = React.useRef(false);
+  const ttsKeepaliveRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stopTTS = useCallback(() => {
+    ttsStoppedRef.current = true;
+    if (ttsKeepaliveRef.current) { clearInterval(ttsKeepaliveRef.current); ttsKeepaliveRef.current = null; }
+    window.speechSynthesis?.cancel();
+    setTtsStatus("idle");
+  }, []);
+
   const handleReadAloud = useCallback(() => {
     const synth = window.speechSynthesis;
     if (!synth) return;
+    if (ttsStatus === "reading") { stopTTS(); return; }
 
-    // If already reading, stop completely (pause is unreliable on Android)
-    if (ttsStatus === "reading" || ttsStatus === "paused") {
-      synth.cancel();
-      setTtsStatus("idle");
-      return;
-    }
+    // Collect text from semantic elements only
+    const clone = document.body.cloneNode(true) as HTMLElement;
+    clone.querySelectorAll('nav, button, [data-no-print], #a11y-panel, .top-bar, script, style').forEach(el => el.remove());
+    const mainEl = clone.querySelector('#main-content') || clone;
+    const nodes = mainEl.querySelectorAll('h1,h2,h3,h4,p,li,td,blockquote');
+    const textLines: string[] = [];
+    nodes.forEach(n => { const t = (n.textContent || '').replace(/\s+/g,' ').trim(); if (t.length > 3) textLines.push(t); });
+    const fullText = textLines.join('. ');
+    if (!fullText) return;
 
-    // Collect text from main content only
-    const mainEl = document.getElementById('main-content');
-    const rawText = mainEl ? mainEl.innerText : document.body.innerText;
-    const text = rawText.replace(/\s+/g, ' ').trim().slice(0, 4000);
-    if (!text) return;
-
-    // Mark reading immediately so button updates right away
+    // Split into ~150-word chunks to avoid Android 15s cutoff
+    const words = fullText.split(' ');
+    const chunks: string[] = [];
+    for (let i = 0; i < words.length; i += 150) chunks.push(words.slice(i, i+150).join(' '));
+    ttsChunksRef.current = chunks;
+    ttsStoppedRef.current = false;
     setTtsStatus("reading");
 
-    const speak = () => {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.85;
-      utterance.lang = 'en-AU';
-
-      // Pick an English voice if available
+    const getVoice = () => {
       const voices = synth.getVoices();
-      const voice = voices.find(v => v.lang.startsWith('en-AU'))
-        || voices.find(v => v.lang.startsWith('en'))
-        || null;
-      if (voice) utterance.voice = voice;
-
-      utterance.onend = () => setTtsStatus("idle");
-      utterance.onerror = (e: any) => {
-        if (e.error !== 'interrupted' && e.error !== 'canceled') setTtsStatus("idle");
-      };
-
-      // Android Chrome keepAlive: re-trigger every 10s to prevent stalling
-      let keepAlive: ReturnType<typeof setInterval> | null = setInterval(() => {
-        if (!synth.speaking) { if (keepAlive) clearInterval(keepAlive); return; }
-        if (!synth.paused) { synth.pause(); synth.resume(); }
-      }, 10000);
-      const cleanup = () => { if (keepAlive) { clearInterval(keepAlive); keepAlive = null; } };
-      utterance.onend = () => { cleanup(); setTtsStatus("idle"); };
-      utterance.onerror = (e: any) => {
-        cleanup();
-        if (e.error !== 'interrupted' && e.error !== 'canceled') setTtsStatus("idle");
-      };
-
-      synth.speak(utterance);
+      return voices.find(v => v.lang.startsWith('en-AU')) || voices.find(v => v.lang.startsWith('en')) || null;
     };
 
-    // Android Chrome: voices may not be ready on first call
+    const speakChunk = (idx: number) => {
+      if (ttsStoppedRef.current || idx >= ttsChunksRef.current.length) {
+        if (!ttsStoppedRef.current) { if (ttsKeepaliveRef.current) { clearInterval(ttsKeepaliveRef.current); ttsKeepaliveRef.current = null; } setTtsStatus("idle"); }
+        return;
+      }
+      const utt = new SpeechSynthesisUtterance(ttsChunksRef.current[idx]);
+      utt.rate = 0.85;
+      utt.lang = 'en-AU';
+      const voice = getVoice();
+      if (voice) utt.voice = voice;
+      utt.onend = () => { if (!ttsStoppedRef.current) setTimeout(() => speakChunk(idx + 1), 150); };
+      utt.onerror = (e: any) => { if (e.error !== 'interrupted' && e.error !== 'canceled') { if (!ttsStoppedRef.current) setTimeout(() => speakChunk(idx + 1), 300); } };
+      synth.cancel();
+      setTimeout(() => { if (!ttsStoppedRef.current) synth.speak(utt); }, 50);
+    };
+
+    if (ttsKeepaliveRef.current) clearInterval(ttsKeepaliveRef.current);
+    ttsKeepaliveRef.current = setInterval(() => { if (!synth.speaking && !ttsStoppedRef.current) synth.resume(); }, 8000);
+
     const voices = synth.getVoices();
-    if (voices.length > 0) {
-      speak();
-    } else {
-      const handler = () => { synth.removeEventListener('voiceschanged', handler); speak(); };
+    if (voices.length > 0) { speakChunk(0); }
+    else {
+      const handler = () => { synth.removeEventListener('voiceschanged', handler); speakChunk(0); };
       synth.addEventListener('voiceschanged', handler);
-      // Safety fallback — try after 600ms regardless
-      setTimeout(() => { synth.removeEventListener('voiceschanged', handler); speak(); }, 600);
+      setTimeout(() => { synth.removeEventListener('voiceschanged', handler); speakChunk(0); }, 600);
     }
-  }, [ttsStatus]);
+  }, [ttsStatus, stopTTS]);
 
   return (
     <>
