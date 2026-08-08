@@ -386,7 +386,9 @@ export default function Landing() {
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
            {["Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
-              <span key={t} style={{ fontSize: "13px", color: "#374151" }}>{t}</span>
+              t === "Participant-led"
+                ? <span key={t} style={{ fontSize: "13px", fontWeight: 800, color: "#1a1a00", background: "#f0c040", borderRadius: "4px", padding: "2px 8px" }}>{t}</span>
+                : <span key={t} style={{ fontSize: "13px", color: "#374151" }}>{t}</span>
             ))}
           </div>
           <div style={{ display: "flex", gap: "16px", alignItems: "center", flexWrap: "wrap" }}>
