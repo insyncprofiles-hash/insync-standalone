@@ -389,7 +389,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
         aria-label="Accessibility and display options"
         className="no-print"
         style={{
-          display: hidden ? "none" : undefined,
           position: "fixed",
           top: 0,
           left: 0,
@@ -400,7 +399,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           borderBottom: "1.5px solid rgba(200,230,250,0.7)",
-          display: "flex",
+          display: hidden ? "none" : "flex",
           alignItems: "center",
           justifyContent: "space-between",
           paddingLeft: "16px",
