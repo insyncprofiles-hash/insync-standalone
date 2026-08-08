@@ -385,7 +385,7 @@ export default function Landing() {
       <footer style={{ background: "#ffffff", borderTop: "1px solid #e8eef5", padding: "16px 24px" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-           {["♡ Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
+           {["Participant-led", "• Choice and control", "• Understanding over assumptions"].map(t => (
               <span key={t} style={{ fontSize: "13px", color: "#374151" }}>{t}</span>
             ))}
           </div>
