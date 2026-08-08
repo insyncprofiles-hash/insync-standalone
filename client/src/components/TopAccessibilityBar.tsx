@@ -194,14 +194,17 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       return;
     }
     if (ttsStatus === "reading") {
-      window.speechSynthesis.pause();
-      setTtsStatus("paused");
+      // Android pause() is broken — just stop entirely
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      setTtsStatus("idle");
       return;
     }
+    // If paused (shouldn't happen on Android) or idle — start fresh
     if (ttsStatus === "paused") {
-      window.speechSynthesis.resume();
-      setTtsStatus("reading");
-      return;
+      window.speechSynthesis.cancel();
+      setSpeaking(false);
+      setTtsStatus("idle");
     }
     // Extract only meaningful text from semantic elements — skip nav, buttons, UI chrome
     const bodyClone = document.body.cloneNode(true) as HTMLElement;
@@ -710,7 +713,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
             <button
               onClick={readPage}
               onPointerDown={e => e.stopPropagation()}
-              aria-label={ttsStatus === "reading" ? "Pause reading" : ttsStatus === "paused" ? "Resume reading" : "Read page aloud"}
+              aria-label={ttsStatus === "reading" ? "Stop reading" : "Read page aloud"}
               style={{
                 padding: "8px 14px",
                 borderRadius: "8px",
@@ -725,7 +728,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
                 flexShrink: 0,
               }}
             >
-              {ttsStatus === "reading" ? "⏸ Pause" : ttsStatus === "paused" ? "▶ Resume" : "▶ Read"}
+              {ttsStatus === "reading" ? "■ Stop" : "▶ Read"}
             </button>
           </div>
         </div>
