@@ -487,3 +487,11 @@ body {
     display: none !important;
   }
 }
+
+/* Landing page font scaling — zoom scales even inline px font sizes */
+.landing-page * {
+  font-size: revert;
+}
+.landing-page {
+  zoom: var(--a11y-font-scale, 1);
+}
