@@ -116,7 +116,7 @@ export default function Landing() {
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <button aria-label="Accessibility options" style={{ width: "40px", height: "40px", borderRadius: "50%", border: "none", background: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/accessibility_icon.png" alt="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%" }} /></button>
+            <button aria-label="Accessibility options" onClick={() => window.dispatchEvent(new Event("open-a11y-panel"))} style={{ width: "40px", height: "40px", borderRadius: "50%", border: "none", background: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/accessibility_icon.png" alt="Accessibility" style={{ width: "40px", height: "40px", borderRadius: "50%" }} /></button>
             {/* Mobile hamburger */}
             <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(o => !o)} aria-label="Open menu" style={{ width: "36px", height: "36px", borderRadius: "8px", border: "1.5px solid #e0e7ef", background: "#fff", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "5px" }}>
               <span style={{ width: "18px", height: "2px", background: "#1f2937", borderRadius: "2px" }} />

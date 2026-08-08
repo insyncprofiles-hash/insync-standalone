@@ -90,6 +90,12 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
 
   // Close panels on Escape
   useEffect(() => {
+    // Listen for custom event fired by landing page accessibility icon
+    const openHandler = () => setOpenPanel("a11y");
+    window.addEventListener("open-a11y-panel", openHandler);
+    return () => window.removeEventListener("open-a11y-panel", openHandler);
+  }, []);
+  useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape" && openPanel !== "none") {
         setOpenPanel("none");
@@ -368,7 +374,6 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
     transition: "all 150ms ease-out",
   });
 
-  if (hidden) return null;
   return (
     <>
       <style>{`
@@ -384,6 +389,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
         aria-label="Accessibility and display options"
         className="no-print"
         style={{
+          display: hidden ? "none" : undefined,
           position: "fixed",
           top: 0,
           left: 0,
