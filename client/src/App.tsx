@@ -104,6 +104,8 @@ const BACK_ROUTES: Record<string, { href: string; label: string }> = {
 
 function BackAwareBar() {
   const [location] = useLocation();
+  // Landing page has its own full nav — hide the global TopAccessibilityBar there
+  if (location === "/") return null;
   let backRoute = BACK_ROUTES[location];
 
   // Helper: did the user navigate here from /coordinators?
