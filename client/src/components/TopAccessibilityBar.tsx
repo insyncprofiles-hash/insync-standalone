@@ -203,19 +203,30 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
       setTtsStatus("reading");
       return;
     }
-    // Clone body and remove the accessibility panel before reading
+    // Extract only meaningful text from semantic elements — skip nav, buttons, UI chrome
     const bodyClone = document.body.cloneNode(true) as HTMLElement;
-    const panelEl = bodyClone.querySelector("#a11y-panel");
-    if (panelEl) panelEl.remove();
-    const topBarEl = bodyClone.querySelector('[role="banner"]');
-    if (topBarEl) topBarEl.remove();
-    const rawText = bodyClone.innerText || bodyClone.textContent || "";
-    const text = rawText
-      .split('\n')
-      .map(l => l.trim())
-      .filter(l => l.length > 2)
-      .join(' ')
-      .slice(0, 5000);
+    // Remove UI elements that should not be read
+    ["#a11y-panel", '[role="banner"]', "nav", "button", '[role="navigation"]', ".no-print"].forEach(sel => {
+      bodyClone.querySelectorAll(sel).forEach(el => el.remove());
+    });
+    // Collect text from semantic content elements only
+    const contentEls = bodyClone.querySelectorAll("h1, h2, h3, h4, p, li, blockquote, td, th, label, [data-tts-text]");
+    let text = "";
+    if (contentEls.length > 0) {
+      text = Array.from(contentEls)
+        .map(el => (el as HTMLElement).innerText?.trim() || "")
+        .filter(t => t.length > 3)
+        .join(". ")
+        .replace(/\.{2,}/g, ".")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 5000);
+    }
+    // Fallback: use full body text if no semantic elements found
+    if (!text || text.length < 10) {
+      text = (bodyClone.innerText || bodyClone.textContent || "")
+        .split("\n").map(l => l.trim()).filter(l => l.length > 5).join(" ").slice(0, 5000);
+    }
     if (!text || text.length < 3) {
       alert("No readable text was found on this page.");
       return;
