@@ -91,7 +91,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
   // Close panels on Escape
   useEffect(() => {
     // Listen for custom event fired by landing page accessibility icon
-    const openHandler = () => setOpenPanel("a11y");
+    const openHandler = () => setOpenPanel(p => p === "a11y" ? "none" : "a11y");
     window.addEventListener("open-a11y-panel", openHandler);
     return () => window.removeEventListener("open-a11y-panel", openHandler);
   }, []);

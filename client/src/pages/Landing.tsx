@@ -88,7 +88,7 @@ export default function Landing() {
   }, []);
 
   return (
-    <div style={{ background: "#ffffff", minHeight: "100vh", fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", color: "#111827" }}>
+    <div style={{ background: "#ffffff", minHeight: "100vh", fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", color: "#111827", fontSize: "calc(1rem * var(--a11y-font-scale, 1))" }}>
 
       {/* ── NAV ── */}
       <nav style={{ position: "sticky", top: 0, zIndex: 100, background: scrolled ? "rgba(255,255,255,0.98)" : "#ffffff", borderBottom: "1px solid #e8eef5", boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.08)" : "none", transition: "all 0.2s ease" }}>
