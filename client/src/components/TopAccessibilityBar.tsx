@@ -478,7 +478,7 @@ export default function TopAccessibilityBar({ onSettingsChange, showBack, backHr
           left: 0,
           right: 0,
           zIndex: 9999,
-          display: "flex",
+          display: hidden ? "none" : "flex",
           justifyContent: "center",
           alignItems: "center",
           gap: "10px",
