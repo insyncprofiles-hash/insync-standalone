@@ -1020,7 +1020,7 @@ export default function ClientView() {
               {/* Read Aloud */}
               <button
                 onClick={handleReadAloud}
-                aria-label={ttsStatus === "reading" ? "Pause reading aloud" : ttsStatus === "paused" ? "Resume reading aloud" : "Read this page aloud"}
+                aria-label={ttsStatus === "reading" ? "Stop reading aloud" : "Read this page aloud"}
                 className="banner-btn"
                 style={{
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px",
@@ -1034,33 +1034,15 @@ export default function ClientView() {
                 }}
               >
                 <span className="banner-btn-icon" style={{ fontSize: "30px", lineHeight: 1 }} aria-hidden="true">
-                  {ttsStatus === "reading" ? "⏸" : ttsStatus === "paused" ? "▶" : "🔊"}
+                  {ttsStatus === "reading" ? "⏹" : "🔊"}
                 </span>
                 <span className="banner-btn-label" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "13px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                  {ttsStatus === "reading" ? "PAUSE" : ttsStatus === "paused" ? "RESUME" : "READ"}
+                  {ttsStatus === "reading" ? "STOP" : "READ"}
                 </span>
               </button>
 
               {/* Stop reading — only when active */}
-              {ttsStatus !== "idle" && (
-                <button
-                  onClick={stopReading}
-                  aria-label="Stop reading aloud"
-                  style={{
-                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "3px",
-                    background: "#F0C040",
-                    border: "2.5px solid #000000",
-                    borderRadius: "14px",
-                    padding: "4px",
-                    cursor: "pointer",
-                    width: "68px", height: "68px",
-                    flexShrink: 0,
-                  }}
-                >
-                  <span style={{ fontSize: "22px", lineHeight: 1 }} aria-hidden="true">⏹</span>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "12px", fontWeight: 900, color: "#000000", letterSpacing: 0, textTransform: "uppercase" }}>STOP</span>
-                </button>
-              )}
+
 
               {/* Accessibility settings */}
               <button

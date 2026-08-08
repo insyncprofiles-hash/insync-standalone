@@ -558,13 +558,12 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
   const [a11yHighContrast, setA11yHighContrast] = React.useState(false);
   const [a11yDyslexia, setA11yDyslexia] = React.useState(false);
   const [a11yReducedMotion, setA11yReducedMotion] = React.useState(false);
-  const [ttsStatus, setTtsStatus] = React.useState<'idle'|'reading'|'paused'>('idle');
+  const [ttsStatus, setTtsStatus] = React.useState<'idle'|'reading'>('idle');
   const [showAACBoard, setShowAACBoard] = React.useState(false);
 
   const readOverlay = React.useCallback(() => {
     if (!window.speechSynthesis) return;
-    if (ttsStatus === 'reading') { window.speechSynthesis.pause(); setTtsStatus('paused'); return; }
-    if (ttsStatus === 'paused') { window.speechSynthesis.resume(); setTtsStatus('reading'); return; }
+    if (ttsStatus === 'reading') { window.speechSynthesis.cancel(); setTtsStatus('idle'); return; }
     window.speechSynthesis.cancel();
     const el = document.getElementById('demo-overlay-content');
     const text = el ? el.innerText.slice(0, 5000) : document.body.innerText.slice(0, 5000);
@@ -772,7 +771,7 @@ function DemoClientViewOverlay({ profile, onClose, videoUrl, isDemo, hostedUrl, 
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button onClick={readOverlay}
                   style={{ flex: 1, padding: '10px 8px', borderRadius: '10px', border: ttsStatus !== 'idle' ? '2px solid #4a90d9' : '1.5px solid #e0e8f0', background: ttsStatus !== 'idle' ? '#e8f4ff' : 'white', cursor: 'pointer', fontFamily: "'Outfit',sans-serif", fontSize: '13px', fontWeight: 700, color: '#1a2e4a', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                  {ttsStatus === 'reading' ? '⏸ Pause' : ttsStatus === 'paused' ? '▶ Resume' : '🔊 Read Page'}
+                  {ttsStatus === 'reading' ? '⏹ Stop' : '🔊 Read Page'}
                 </button>
                 {ttsStatus !== 'idle' && (
                   <button onClick={stopTTS}
