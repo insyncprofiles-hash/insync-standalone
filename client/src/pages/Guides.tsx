@@ -122,6 +122,10 @@ export default function Guides() {
         ))}
       </section>
 
+      {/* Real Choice Infographic */}
+      <section style={{ maxWidth: "900px", margin: "0 auto", padding: "0 20px 56px" }}>
+        <img src="/real_choice_infographic.png" alt="Real choice starts when everyone is included. Accessible. Interactive. Family informed. Because choice and control belongs to the person, and the people who know them best. For Clients, For Families, For Children, For Everyone, Real Inclusion." style={{ width: "100%", display: "block", borderRadius: "12px" }} />
+      </section>
       {/* Footer nav */}
       <div style={{ textAlign: "center", padding: "0 20px 48px", display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
         <Link href="/" style={{ fontSize: "14px", color: C.textDim, textDecoration: "none", fontWeight: 600 }}>← Back to Home</Link>
