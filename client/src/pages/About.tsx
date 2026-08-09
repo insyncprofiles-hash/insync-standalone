@@ -105,6 +105,10 @@ export default function About() {
         {/* Divider */}
         <div style={{ borderTop: "2px solid #e8eef5", marginBottom: "48px" }} />
 
+        {/* Informed choice quote image */}
+        <div style={{ margin: "0 0 48px", lineHeight: 0, borderRadius: "12px", overflow: "hidden" }}>
+          <img src="/informed_choice_quote.jpg" alt="A parent watching alongside their child can see it in real time: the lean forward, the smile, the stillness. That's informed choice." style={{ width: "100%", display: "block", borderRadius: "12px" }} />
+        </div>
         {/* Closing statement */}
         <div style={{ background: "linear-gradient(135deg, #f0faf9 0%, #fefce8 100%)", borderRadius: "16px", padding: "36px 32px", borderLeft: "5px solid #0d9488" }}>
           <p style={{ fontSize: "18px", lineHeight: 1.85, color: "#374151", marginBottom: "16px" }}>
