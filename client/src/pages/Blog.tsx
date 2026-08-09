@@ -153,11 +153,6 @@ export default function Blog() {
             Try the interactive demo and see exactly how a InSync Profiles profile looks to clients — no sign-up required.
           </p>
           <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/demo">
-              <button style={{ padding: "14px 36px", borderRadius: "99px", background: `linear-gradient(135deg, #2dd4bf 0%, #f5c842 100%)`, border: "none", color: "#0d1b2a", fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, cursor: "pointer", letterSpacing: "0.02em" }}>
-                Try Demo →
-              </button>
-            </Link>
             <Link href="/pricing">
               <button style={{ padding: "14px 36px", borderRadius: "99px", background: "transparent", border: `1.5px solid rgba(245,200,66,0.5)`, color: C.gold, fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 700, cursor: "pointer", letterSpacing: "0.02em" }}>
                 View Pricing
