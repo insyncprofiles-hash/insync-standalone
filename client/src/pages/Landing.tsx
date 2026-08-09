@@ -109,6 +109,7 @@ export default function Landing() {
               { label: "For participants & carers", href: "/about-me/editor" },
               { label: "For support workers", href: "/view" },
               { label: "For providers", href: "/allied-health" },
+              { label: "Blog", href: "/blog" },
               { label: "Guides", href: "/guides" },
               { label: "About us", href: "/about" },
               { label: "Contact", href: "/contact" },
@@ -169,6 +170,7 @@ export default function Landing() {
                 </div>
               )}
             </div>
+            <Link href="/blog" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>Blog</Link>
             <Link href="/guides" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>Guides</Link>
             <Link href="/about" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>About us</Link>
             <Link href="/contact" onClick={() => setMobileMenuOpen(false)} style={{ color: "#1f2937", fontSize: "16px", fontWeight: 700, textDecoration: "none", padding: "10px 0" }}>Contact</Link>
