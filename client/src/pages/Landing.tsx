@@ -250,9 +250,8 @@ export default function Landing() {
       {/* ── YOUTUBE INTRO VIDEO ── */}
       <section style={{ padding: "64px 24px 72px", background: "#ffffff", textAlign: "center" }} aria-labelledby="video-heading">
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <p style={{ fontSize: "15px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0d9488", marginBottom: "12px" }}>See it in action</p>
-          <h2 id="video-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#0c1f36", marginBottom: "32px", lineHeight: 1.2 }}>What InSync Profiles makes possible</h2>
-          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1rem, 2.5vw, 1.15rem)", fontWeight: 600, color: "#3a9e9e", marginBottom: "32px", lineHeight: 1.4 }}>A Professional Support Worker Profile built for Informed Choice</p>
+          <h2 id="video-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1.4rem, 3vw, 2rem)", fontWeight: 900, color: "#0c1f36", marginBottom: "12px", lineHeight: 1.2 }}>Your workforce is your point of difference.</h2>
+          <p style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(1rem, 2.5vw, 1.2rem)", fontWeight: 500, color: "#374151", marginBottom: "36px", lineHeight: 1.6, maxWidth: "600px", margin: "0 auto 36px" }}>Give people a reason to choose them with accessible, multimodal support profiles.</p>
           <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "16px", boxShadow: "0 8px 40px rgba(0,0,0,0.12)" }}>
             <iframe
               src="https://www.youtube.com/embed/MvW0wgr0FyE"
