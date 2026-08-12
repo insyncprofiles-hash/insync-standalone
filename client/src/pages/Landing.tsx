@@ -189,7 +189,7 @@ export default function Landing() {
         {/* Text content — top */}
         <div style={{ position: "relative", zIndex: 2, maxWidth: "700px", margin: "0 auto", padding: "64px 32px 24px", textAlign: "center", flex: 1 }}>
           <h1 id="hero-heading" style={{ fontFamily: "Inter, sans-serif", fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#ffffff", lineHeight: 1.2, marginBottom: "20px", textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}>
-            When people are known before they are supported,<br />support becomes a <em style={{ fontStyle: "italic", color: "#f0c040" }}>partnership.</em>
+            Helping support workers be recognised for their<br />person-centred, accessibility-first <em style={{ fontStyle: "italic", color: "#f0c040" }}>approach.</em>
           </h1>
           <p style={{ fontSize: "clamp(1.2rem, 3vw, 1.7rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto", textShadow: "0 1px 8px rgba(0,0,0,0.5)", fontWeight: 800, display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
             <span style={{ background: "rgba(13,148,136,0.85)", color: "#ffffff", borderRadius: "8px", padding: "4px 16px" }}>Interactive.</span>
