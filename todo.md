@@ -9,3 +9,6 @@
 ## New Tasks
 
 <!-- Add new tasks here as instructed by the user -->
+- [x] Create and publish a branded Open Graph sharing image for Facebook link previews.
+- [x] Add Facebook-compatible Open Graph and Twitter card metadata to the site entry page.
+- [ ] Build, deploy, and validate the refreshed social sharing preview.
