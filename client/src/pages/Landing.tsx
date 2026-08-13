@@ -255,7 +255,6 @@ export default function Landing() {
           </div>
           <div style={{ paddingBottom: "4px" }}>
             <Link href="/blog/floating-not-landing" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "100%", boxSizing: "border-box", background: "#f0c040", color: "#101827", padding: "16px 18px", borderRadius: "8px", textDecoration: "none", fontSize: "17px", fontWeight: 900 }}>Read the article&nbsp; →</Link>
-            <p style={{ margin: "16px 0 0", color: "#ffffff", fontSize: "16px", fontWeight: 700, textAlign: "center", lineHeight: 1.55 }}>Why meaningful information has to land before a match is made.</p>
           </div>
         </div>
         <style>{`@media (max-width: 700px) { .featured-article-grid { grid-template-columns: 1fr !important; } }`}</style>
