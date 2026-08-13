@@ -26,3 +26,6 @@
 - [x] Change article links and the bottom call-to-action panel from gold to accessible teal.
 - [x] Add a larger two-column article reading layout for desktop while preserving a single column on mobile.
 - [x] Build, deploy, and verify the teal two-column article design.
+- [x] Update the bottom article call-to-action heading with the approved professional-recognition wording.
+- [x] Remove the bottom article call-to-action sentence about being invisible.
+- [x] Keep the article layout responsive: two columns on desktop and one readable column on mobile.

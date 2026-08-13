@@ -941,10 +941,7 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
         {/* CTA */}
         <div style={{ textAlign: "center", padding: "48px 32px", background: "#e6f7f5", border: "1px solid #0f766e", borderRadius: "20px", marginBottom: "48px" }}>
           <div style={{ fontSize: "32px", marginBottom: "12px" }}>💼</div>
-          <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: 700, color: "#0c1f36", margin: "0 0 12px" }}>Ready to stand out?</h3>
-          <p style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: "0 0 24px", lineHeight: 1.7 }}>
-            Build your InSync Profiles profile and stop being invisible in the support sector.
-          </p>
+          <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(26px, 3vw, 34px)", fontWeight: 700, color: "#0c1f36", margin: "0 0 24px", lineHeight: 1.15 }}>Ready to be recognised as a professional in the support sector?</h3>
           <Link href="/pricing">
             <button style={{ padding: "14px 36px", borderRadius: "99px", background: "#0f766e", border: "none", color: "#ffffff", fontFamily: "'Outfit', sans-serif", fontSize: "16px", fontWeight: 800, cursor: "pointer", letterSpacing: "0.02em" }}>
               Get Started →
