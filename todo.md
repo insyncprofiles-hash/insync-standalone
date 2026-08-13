@@ -23,3 +23,6 @@
 - [x] Build, deploy, and verify the restored article.
 - [x] Remove the explanatory line beneath the featured article call-to-action.
 - [x] Restyle article pages with a light background and high-contrast black text.
+- [x] Change article links and the bottom call-to-action panel from gold to accessible teal.
+- [x] Add a larger two-column article reading layout for desktop while preserving a single column on mobile.
+- [x] Build, deploy, and verify the teal two-column article design.

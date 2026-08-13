@@ -644,13 +644,13 @@ function FloatingNotLandingArticle() {
         The #NDISreform agenda has leaned heavily into provider registration, worker screening and fraud prevention. All important, but they&apos;re system-facing responses to system failures. Not participant-facing solutions to participant experience.
       </p>
       <p>
-        A worker screening tells you someone hasn&apos;t been convicted of a serious offence. It says nothing about whether they&apos;re a good match for this person, communication style, the soft skills that make all the difference. <a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[1]</a>
+        A worker screening tells you someone hasn&apos;t been convicted of a serious offence. It says nothing about whether they&apos;re a good match for this person, communication style, the soft skills that make all the difference. <a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: "#0f5e5a" }}>[1]</a>
       </p>
       <p>
         Provider registration tells you an organisation passed an audit cycle. It doesn&apos;t tell a participant whether that provider&apos;s workers are trauma-informed, neurodiversity-affirming or even patient.
       </p>
       <p>
-        The #NDISPracticeStandards include participant rights, but they&apos;re written as obligations on providers, not as tools participants can actually use. The information asymmetry is enormous. <a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[2]</a>
+        The #NDISPracticeStandards include participant rights, but they&apos;re written as obligations on providers, not as tools participants can actually use. The information asymmetry is enormous. <a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: "#0f5e5a" }}>[2]</a>
       </p>
       <p>
         Providers know everything about their workers. Participants know almost nothing and are expected to choose anyway.
@@ -683,8 +683,8 @@ function FloatingNotLandingArticle() {
       <div style={{ marginTop: "48px", paddingTop: "24px", borderTop: `1px solid ${C.border}` }}>
         <h2 style={{ fontSize: "24px" }}>References</h2>
         <ol style={{ paddingLeft: "22px" }}>
-          <li><a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: C.gold }}>NDIS Quality and Safeguards Commission, “Worker screening”.</a></li>
-          <li><a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: C.gold }}>NDIS Quality and Safeguards Commission, “NDIS Practice Standards”.</a></li>
+          <li><a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: "#0f5e5a" }}>NDIS Quality and Safeguards Commission, “Worker screening”.</a></li>
+          <li><a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: "#0f5e5a" }}>NDIS Quality and Safeguards Commission, “NDIS Practice Standards”.</a></li>
         </ol>
       </div>
     </>
@@ -846,17 +846,25 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           margin: 28px 0 12px;
         }
         .article-body p {
-          font-size: clamp(18px, 2.3vw, 21px);
+          font-size: clamp(19px, 1.75vw, 23px);
           color: #111827;
           font-weight: 500;
           line-height: 1.8;
           margin: 0 0 24px;
         }
+        .article-reading-layout {
+          column-count: 2;
+          column-gap: clamp(44px, 6vw, 86px);
+        }
+        .article-reading-layout > * {
+          break-inside: avoid-column;
+          page-break-inside: avoid;
+        }
         .article-body blockquote {
-          border-left: 3px solid ${C.gold};
+          border-left: 4px solid #0f766e;
           margin: 24px 0;
           padding: 16px 24px;
-          background: #fff7e2;
+          background: #e6f7f5;
           border-radius: 0 12px 12px 0;
         }
         .article-body blockquote p {
@@ -883,16 +891,19 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           content: '✦';
           position: absolute;
           left: 0;
-          color: ${C.gold};
+          color: #0f766e;
           font-size: 10px;
           top: 6px;
         }
         .article-body strong { color: #0c1f36; }
         .article-body a { color: #0f5e5a; text-decoration: underline; text-decoration-thickness: 2px; }
+        @media (max-width: 900px) {
+          .article-reading-layout { column-count: 1; }
+        }
       `}</style>
 
       {/* Article header */}
-      <div style={{ maxWidth: "760px", margin: "0 auto", padding: "130px 24px 0" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "130px 24px 0" }}>
         {/* Breadcrumb */}
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "32px", fontSize: "14px", fontWeight: 600, color: "#526170" }}>
           <Link href="/"><span style={{ color: "#0f5e5a", cursor: "pointer", textDecoration: "underline", textDecorationThickness: "2px" }}>Home</span></Link>
@@ -919,8 +930,8 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
       </div>
 
       {/* Article body */}
-      <div style={{ maxWidth: "760px", margin: "0 auto", padding: "0 24px 100px" }}>
-        <div className="article-body">
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px 100px" }}>
+        <div className="article-body article-reading-layout">
           <ArticleContent />
         </div>
 
@@ -928,14 +939,14 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
         <div style={{ height: "1px", background: "#d8e1e8", margin: "60px 0 48px" }} />
 
         {/* CTA */}
-        <div style={{ textAlign: "center", padding: "48px 32px", background: "#fff7e2", border: "1px solid #d4a017", borderRadius: "20px", marginBottom: "48px" }}>
+        <div style={{ textAlign: "center", padding: "48px 32px", background: "#e6f7f5", border: "1px solid #0f766e", borderRadius: "20px", marginBottom: "48px" }}>
           <div style={{ fontSize: "32px", marginBottom: "12px" }}>💼</div>
           <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: 700, color: "#0c1f36", margin: "0 0 12px" }}>Ready to stand out?</h3>
           <p style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: "0 0 24px", lineHeight: 1.7 }}>
             Build your InSync Profiles profile and stop being invisible in the support sector.
           </p>
           <Link href="/pricing">
-            <button style={{ padding: "14px 36px", borderRadius: "99px", background: `linear-gradient(135deg, #f5c842 0%, #e6a817 100%)`, border: "none", color: "#0d1b2a", fontFamily: "'Outfit', sans-serif", fontSize: "15px", fontWeight: 800, cursor: "pointer", letterSpacing: "0.02em" }}>
+            <button style={{ padding: "14px 36px", borderRadius: "99px", background: "#0f766e", border: "none", color: "#ffffff", fontFamily: "'Outfit', sans-serif", fontSize: "16px", fontWeight: 800, cursor: "pointer", letterSpacing: "0.02em" }}>
               Get Started →
             </button>
           </Link>
