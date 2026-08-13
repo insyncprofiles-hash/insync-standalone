@@ -827,14 +827,14 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
   }, [article]);
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bgPage, fontFamily: "'Outfit', sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: "#f8fafc", color: "#111827", fontFamily: "'Outfit', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
         .article-body h2 {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(22px, 3vw, 30px);
           font-weight: 700;
-          color: ${C.textHead};
+          color: #0c1f36;
           margin: 40px 0 16px;
           line-height: 1.25;
         }
@@ -842,12 +842,12 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           font-family: 'Outfit', sans-serif;
           font-size: 18px;
           font-weight: 700;
-          color: ${C.gold};
+          color: #0f5e5a;
           margin: 28px 0 12px;
         }
         .article-body p {
           font-size: clamp(18px, 2.3vw, 21px);
-          color: #ffffff;
+          color: #111827;
           font-weight: 500;
           line-height: 1.8;
           margin: 0 0 24px;
@@ -856,14 +856,14 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           border-left: 3px solid ${C.gold};
           margin: 24px 0;
           padding: 16px 24px;
-          background: rgba(245,200,66,0.06);
+          background: #fff7e2;
           border-radius: 0 12px 12px 0;
         }
         .article-body blockquote p {
           font-style: italic;
-          color: rgba(255,255,255,0.65);
+          color: #0c1f36;
           margin: 0 0 8px;
-          font-size: 16px;
+          font-size: 18px;
         }
         .article-body blockquote p:last-child { margin: 0; }
         .article-body ul {
@@ -872,8 +872,8 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           list-style: none;
         }
         .article-body ul li {
-          font-size: 16px;
-          color: ${C.textBody};
+          font-size: 18px;
+          color: #111827;
           line-height: 1.75;
           margin-bottom: 14px;
           padding-left: 20px;
@@ -887,35 +887,35 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           font-size: 10px;
           top: 6px;
         }
-        .article-body strong { color: ${C.textHead}; }
-        .article-body a { color: ${C.gold}; text-decoration: underline; }
+        .article-body strong { color: #0c1f36; }
+        .article-body a { color: #0f5e5a; text-decoration: underline; text-decoration-thickness: 2px; }
       `}</style>
 
       {/* Article header */}
       <div style={{ maxWidth: "760px", margin: "0 auto", padding: "130px 24px 0" }}>
         {/* Breadcrumb */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "32px", fontSize: "13px", color: C.textDim }}>
-          <Link href="/"><span style={{ color: C.textDim, cursor: "pointer", textDecoration: "none" }}>Home</span></Link>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "32px", fontSize: "14px", fontWeight: 600, color: "#526170" }}>
+          <Link href="/"><span style={{ color: "#0f5e5a", cursor: "pointer", textDecoration: "underline", textDecorationThickness: "2px" }}>Home</span></Link>
           <span>›</span>
-          <Link href="/blog"><span style={{ color: C.textDim, cursor: "pointer", textDecoration: "none" }}>Blog</span></Link>
+          <Link href="/blog"><span style={{ color: "#0f5e5a", cursor: "pointer", textDecoration: "underline", textDecorationThickness: "2px" }}>Blog</span></Link>
           <span>›</span>
-          <span style={{ color: C.textBody }}>Article</span>
+          <span style={{ color: "#374151" }}>Article</span>
         </div>
 
         {/* Category + meta */}
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px", flexWrap: "wrap" }}>
           <span style={{ fontSize: "28px" }}>{article.emoji}</span>
-          <span style={{ background: `rgba(45,212,191,0.12)`, border: `1px solid rgba(45,212,191,0.3)`, borderRadius: "99px", padding: "3px 12px", fontSize: "11px", fontWeight: 700, color: C.teal, letterSpacing: "0.06em", textTransform: "uppercase" }}>{article.category}</span>
-          <span style={{ fontSize: "13px", color: C.textDim }}>{article.date} · {article.readTime}</span>
+          <span style={{ background: "#e6f7f5", border: "1px solid #0f766e", borderRadius: "99px", padding: "3px 12px", fontSize: "11px", fontWeight: 800, color: "#0f5e5a", letterSpacing: "0.06em", textTransform: "uppercase" }}>{article.category}</span>
+          <span style={{ fontSize: "14px", fontWeight: 600, color: "#526170" }}>{article.date} · {article.readTime}</span>
         </div>
 
         {/* Title */}
-        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 5vw, 48px)", fontWeight: 700, color: C.textHead, margin: "0 0 32px", lineHeight: 1.15 }}>
+        <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 700, color: "#0c1f36", margin: "0 0 32px", lineHeight: 1.15 }}>
           {article.title}
         </h1>
 
         {/* Divider */}
-        <div style={{ height: "1px", background: `linear-gradient(90deg, ${C.gold} 0%, transparent 100%)`, marginBottom: "40px", opacity: 0.4 }} />
+        <div style={{ height: "2px", background: "linear-gradient(90deg, #c99716 0%, transparent 100%)", marginBottom: "40px", opacity: 0.8 }} />
       </div>
 
       {/* Article body */}
@@ -925,13 +925,13 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
         </div>
 
         {/* Divider */}
-        <div style={{ height: "1px", background: C.border, margin: "60px 0 48px" }} />
+        <div style={{ height: "1px", background: "#d8e1e8", margin: "60px 0 48px" }} />
 
         {/* CTA */}
-        <div style={{ textAlign: "center", padding: "48px 32px", background: `rgba(245,200,66,0.06)`, border: `1px solid ${C.borderGold}`, borderRadius: "20px", marginBottom: "48px" }}>
+        <div style={{ textAlign: "center", padding: "48px 32px", background: "#fff7e2", border: "1px solid #d4a017", borderRadius: "20px", marginBottom: "48px" }}>
           <div style={{ fontSize: "32px", marginBottom: "12px" }}>💼</div>
-          <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: 700, color: C.textHead, margin: "0 0 12px" }}>Ready to stand out?</h3>
-          <p style={{ fontSize: "15px", color: C.textBody, margin: "0 0 24px", lineHeight: 1.7 }}>
+          <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "28px", fontWeight: 700, color: "#0c1f36", margin: "0 0 12px" }}>Ready to stand out?</h3>
+          <p style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: "0 0 24px", lineHeight: 1.7 }}>
             Build your InSync Profiles profile and stop being invisible in the support sector.
           </p>
           <Link href="/pricing">
@@ -944,7 +944,7 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
         {/* Back to blog */}
         <div style={{ textAlign: "center" }}>
           <Link href="/blog">
-            <span style={{ color: C.gold, fontWeight: 700, fontSize: "14px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <span style={{ color: "#0f5e5a", fontWeight: 800, fontSize: "16px", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "underline", textDecorationThickness: "2px" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
               </svg>

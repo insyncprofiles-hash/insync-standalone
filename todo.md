@@ -22,3 +22,4 @@
 - [x] Increase article body text size and contrast for low-vision readability.
 - [x] Build, deploy, and verify the restored article.
 - [x] Remove the explanatory line beneath the featured article call-to-action.
+- [x] Restyle article pages with a light background and high-contrast black text.
