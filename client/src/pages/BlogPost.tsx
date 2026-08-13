@@ -640,73 +640,45 @@ function WhenImWellArticle() {
 function FloatingNotLandingArticle() {
   return (
     <>
-      <p style={{ fontSize: "clamp(20px, 3vw, 25px)", lineHeight: 1.55, color: "#ffffff", fontFamily: "'Cormorant Garamond', serif", marginBottom: "34px" }}>
-        We talk a lot about choice and control in disability support. Sometimes the words are everywhere — and the practical way to use them is nowhere in sight.
-      </p>
-
       <p>
-        The NDIS reform conversation has rightly put serious attention on provider registration, worker screening, fraud prevention and safer systems. Those things matter. They are important protections.
+        The #NDISreform agenda has leaned heavily into provider registration, worker screening and fraud prevention. All important, but they&apos;re system-facing responses to system failures. Not participant-facing solutions to participant experience.
       </p>
       <p>
-        But they are largely system-facing responses to system failure. They do not automatically give a participant, carer, family member or nominee enough information to work out whether a particular person is likely to fit into their life.
-      </p>
-
-      <h2>Gatekeeping is not matching</h2>
-      <p>
-        An NDIS Worker Screening Check assesses whether a worker poses a threat to people with disability and determines whether they are cleared or excluded for certain roles. That is an essential safeguard. <a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[1]</a>
+        A worker screening tells you someone hasn&apos;t been convicted of a serious offence. It says nothing about whether they&apos;re a good match for this person, communication style, the soft skills that make all the difference. <a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[1]</a>
       </p>
       <p>
-        It cannot tell someone whether that worker communicates in a way they understand, notices when they are overwhelmed, has the patience they need, or knows how to support their particular disability, culture, routine and boundaries.
-      </p>
-
-      <blockquote>
-        <p><strong>Screened is not the same as known.</strong></p>
-        <p><strong>Registered is not the same as right for me.</strong></p>
-      </blockquote>
-
-      <h2>What registration can — and cannot — show</h2>
-      <p>
-        The NDIS Practice Standards set the quality standards registered providers must meet. They include participant rights and responsibilities, governance, provision of supports and quality indicators that auditors use to assess compliance. <a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[2]</a>
+        Provider registration tells you an organisation passed an audit cycle. It doesn&apos;t tell a participant whether that provider&apos;s workers are trauma-informed, neurodiversity-affirming or even patient.
       </p>
       <p>
-        That framework is necessary. Yet a participant still often meets the choice point with a name, a photo, a service list and an available time slot. The provider may know a great deal about the workers they employ. The person expected to choose one may know almost nothing — and still be expected to say yes.
-      </p>
-
-      <h2>The vast middle ground</h2>
-      <p>
-        There is a whole middle ground between clearly unsafe and genuinely right for someone. It is where personality, communication, consistency, sensory awareness, trauma-aware practice, culture, soft skills and trust sit.
+        The #NDISPracticeStandards include participant rights, but they&apos;re written as obligations on providers, not as tools participants can actually use. The information asymmetry is enormous. <a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[2]</a>
       </p>
       <p>
-        A worker can be screened, registered, qualified and genuinely good at their job — and still be completely wrong for a particular person. That is not a failure of either person. It is what happens when a high-stakes human decision is made with too little human information.
-      </p>
-
-      <h2>Choice and control has to land somewhere</h2>
-      <p>
-        “Choice and control” appears in policy, welcome packs and provider websites. Saying it and building for it are different things.
+        Providers know everything about their workers. Participants know almost nothing and are expected to choose anyway.
       </p>
       <p>
-        Independent decisions need information that is meaningful, accessible and available before a match is made. It may need to be read, heard, watched, translated or explored with a trusted person. It needs time to process. It needs to make room for the participant’s own voice, preferences and understanding.
+        We see #ProviderRegistration and screening as gatekeeping mechanisms. They filter out the clearly unsafe. They don&apos;t help #participants, #carers, families navigate the vast middle ground in navigating #supportservices. Workers can be screened, registered and still completely wrong for them.
       </p>
       <p>
-        The participant should be at the centre of the process — not the end recipient of a decision someone else has already made.
-      </p>
-
-      <h2>Floating. Not landing.</h2>
-      <p>
-        The empathy is often genuine. The foresight is often there in individual workers, coordinators and providers. But it can float from person to person, moment to moment, because there is no consistent way to make it visible before support begins.
+        The NDIS was designed around choice and control. The infrastructure built around it has mostly been about compliance and risk management.
       </p>
       <p>
-        That is the work in front of us: helping the words land. Transparent information. Multimodal access. Enough to genuinely choose.
+        &quot;#Choiceandcontrol&quot; gets said in policies, welcome packs, provider websites. But saying it and building for it are completely different things. Many providers have adopted the vocabulary without the considered practices.
       </p>
       <p>
-        <strong style={{ color: C.teal }}>Inclusive foundations mean no one is excluded from the decision about their own life.</strong>
+        #IndependentDecisions requires information. Real information to match key life decisions. It requires accessible formats, time to process, someone who isn&apos;t also the one being chosen.
       </p>
-
-      <div style={{ marginTop: "48px", padding: "30px", background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.28)", borderRadius: "18px" }}>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 3vw, 30px)", color: "#ffffff", lineHeight: 1.25, margin: "0 0 12px" }}>See what enough information can look like.</p>
-        <p style={{ margin: "0 0 22px" }}>Explore an interactive, accessible support worker profile designed to help people get a feel for the person before support starts.</p>
-        <Link href="/view" style={{ display: "inline-block", background: C.gold, color: "#112233", padding: "12px 20px", borderRadius: "8px", fontWeight: 800, textDecoration: "none" }}>Explore a sample profile</Link>
-      </div>
+      <p>
+        The participant should be the centre of the process, not the end recipient of a decision someone else already made.
+      </p>
+      <p>
+        The empathy is often genuine. The foresight is often there in individuals. But it&apos;s floating, person to person, moment to moment, because there&apos;s no systemic tool that puts the participant&apos;s own voice, preferences and understanding at the centre before a match is made.
+      </p>
+      <p>
+        This is our focus — making it land. Giving participants transparent information, #multimodal and knowing enough to genuinely choose.
+      </p>
+      <p>
+        <strong style={{ color: "#ffffff" }}>#InclusiveFoundations so no one is excluded from the decision about their own life.</strong>
+      </p>
 
       <div style={{ marginTop: "48px", paddingTop: "24px", borderTop: `1px solid ${C.border}` }}>
         <h2 style={{ fontSize: "24px" }}>References</h2>
@@ -874,10 +846,11 @@ export default function BlogPost({ slug = "sea-of-sameness" }: BlogPostProps) {
           margin: 28px 0 12px;
         }
         .article-body p {
-          font-size: 17px;
-          color: ${C.textBody};
-          line-height: 1.85;
-          margin: 0 0 20px;
+          font-size: clamp(18px, 2.3vw, 21px);
+          color: #ffffff;
+          font-weight: 500;
+          line-height: 1.8;
+          margin: 0 0 24px;
         }
         .article-body blockquote {
           border-left: 3px solid ${C.gold};

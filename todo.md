@@ -18,3 +18,6 @@
 - [x] Add a landing-page call-to-action linking to the featured article.
 - [x] Build, deploy, and verify the featured article and landing-page call-to-action.
 - [x] Improve the featured article call-to-action text contrast and readability for low-vision users.
+- [x] Restore “Floating. Not Landing.” to the user’s original wording and paragraph structure.
+- [x] Increase article body text size and contrast for low-vision readability.
+- [x] Build, deploy, and verify the restored article.
