@@ -254,8 +254,8 @@ export default function Landing() {
             <p style={{ margin: 0, maxWidth: "630px", color: "rgba(255,255,255,0.86)", fontSize: "clamp(1rem, 2vw, 1.16rem)", lineHeight: 1.75 }}>Choice and control is everywhere in the language of the sector. But what helps a participant genuinely choose the person coming into their life?</p>
           </div>
           <div style={{ paddingBottom: "4px" }}>
-            <Link href="/blog/floating-not-landing" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "100%", boxSizing: "border-box", background: "#f0c040", color: "#101827", padding: "15px 18px", borderRadius: "8px", textDecoration: "none", fontSize: "16px", fontWeight: 800 }}>Read the article&nbsp; →</Link>
-            <p style={{ margin: "14px 0 0", color: "rgba(255,255,255,0.56)", fontSize: "13px", textAlign: "center", lineHeight: 1.45 }}>Why meaningful information has to land before a match is made.</p>
+            <Link href="/blog/floating-not-landing" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "100%", boxSizing: "border-box", background: "#f0c040", color: "#101827", padding: "16px 18px", borderRadius: "8px", textDecoration: "none", fontSize: "17px", fontWeight: 900 }}>Read the article&nbsp; →</Link>
+            <p style={{ margin: "16px 0 0", color: "#ffffff", fontSize: "16px", fontWeight: 700, textAlign: "center", lineHeight: 1.55 }}>Why meaningful information has to land before a match is made.</p>
           </div>
         </div>
         <style>{`@media (max-width: 700px) { .featured-article-grid { grid-template-columns: 1fr !important; } }`}</style>

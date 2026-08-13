@@ -17,3 +17,4 @@
 - [x] Publish the “Floating. Not Landing.” article in the InSync Blog.
 - [x] Add a landing-page call-to-action linking to the featured article.
 - [x] Build, deploy, and verify the featured article and landing-page call-to-action.
+- [x] Improve the featured article call-to-action text contrast and readability for low-vision users.
