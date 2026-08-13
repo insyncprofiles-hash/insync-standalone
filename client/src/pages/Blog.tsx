@@ -22,6 +22,15 @@ const C = {
 
 const POSTS = [
   {
+    slug: "floating-not-landing",
+    title: "Floating. Not Landing.",
+    excerpt: "Choice and control is everywhere in the language of the sector. But what helps a participant, carer or family genuinely choose the person coming into their life?",
+    date: "August 2026",
+    readTime: "6 min read",
+    category: "Informed Choice",
+    emoji: "⬇️",
+  },
+  {
     slug: "when-im-well",
     title: "When I'm Well: Why a 30-Second Video Changes Everything in Disability Support",
     excerpt: "Most support systems only ever see a person at their worst. The About Me profile's When I'm Well video gives clinicians, support workers, and hospitals a baseline — who this person is when the world is working for them.",

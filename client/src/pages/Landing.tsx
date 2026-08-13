@@ -245,6 +245,22 @@ export default function Landing() {
         <img src="/informed_choice_banner.png" alt="I want to know who I'm choosing" style={{ width: "100%", display: "block", margin: 0, padding: 0 }} />
       </div>
 
+      {/* ── FEATURED ARTICLE ── */}
+      <section style={{ background: "#0c1f36", padding: "clamp(42px, 7vw, 76px) 24px" }} aria-labelledby="featured-article-heading">
+        <div style={{ maxWidth: "920px", margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(0, 1.4fr) minmax(220px, 0.6fr)", gap: "clamp(28px, 6vw, 72px)", alignItems: "end" }} className="featured-article-grid">
+          <div>
+            <p style={{ margin: "0 0 14px", color: "#5eead4", fontSize: "13px", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase" }}>Featured article · Informed Choice</p>
+            <h2 id="featured-article-heading" style={{ margin: "0 0 16px", color: "#ffffff", fontSize: "clamp(2.15rem, 5vw, 4rem)", fontWeight: 900, lineHeight: 0.98, letterSpacing: "-0.045em" }}>Floating.<br /><em style={{ color: "#f0c040", fontStyle: "italic" }}>Not Landing.</em></h2>
+            <p style={{ margin: 0, maxWidth: "630px", color: "rgba(255,255,255,0.86)", fontSize: "clamp(1rem, 2vw, 1.16rem)", lineHeight: 1.75 }}>Choice and control is everywhere in the language of the sector. But what helps a participant genuinely choose the person coming into their life?</p>
+          </div>
+          <div style={{ paddingBottom: "4px" }}>
+            <Link href="/blog/floating-not-landing" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "100%", boxSizing: "border-box", background: "#f0c040", color: "#101827", padding: "15px 18px", borderRadius: "8px", textDecoration: "none", fontSize: "16px", fontWeight: 800 }}>Read the article&nbsp; →</Link>
+            <p style={{ margin: "14px 0 0", color: "rgba(255,255,255,0.56)", fontSize: "13px", textAlign: "center", lineHeight: 1.45 }}>Why meaningful information has to land before a match is made.</p>
+          </div>
+        </div>
+        <style>{`@media (max-width: 700px) { .featured-article-grid { grid-template-columns: 1fr !important; } }`}</style>
+      </section>
+
       {/* ── SHIFT BANNER ── */}
 
       {/* ── YOUTUBE INTRO VIDEO ── */}

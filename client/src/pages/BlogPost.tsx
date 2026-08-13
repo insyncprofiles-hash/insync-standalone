@@ -636,6 +636,89 @@ function WhenImWellArticle() {
   );
 }
 
+// ── Floating. Not Landing. ────────────────────────────────────────────────
+function FloatingNotLandingArticle() {
+  return (
+    <>
+      <p style={{ fontSize: "clamp(20px, 3vw, 25px)", lineHeight: 1.55, color: "#ffffff", fontFamily: "'Cormorant Garamond', serif", marginBottom: "34px" }}>
+        We talk a lot about choice and control in disability support. Sometimes the words are everywhere — and the practical way to use them is nowhere in sight.
+      </p>
+
+      <p>
+        The NDIS reform conversation has rightly put serious attention on provider registration, worker screening, fraud prevention and safer systems. Those things matter. They are important protections.
+      </p>
+      <p>
+        But they are largely system-facing responses to system failure. They do not automatically give a participant, carer, family member or nominee enough information to work out whether a particular person is likely to fit into their life.
+      </p>
+
+      <h2>Gatekeeping is not matching</h2>
+      <p>
+        An NDIS Worker Screening Check assesses whether a worker poses a threat to people with disability and determines whether they are cleared or excluded for certain roles. That is an essential safeguard. <a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[1]</a>
+      </p>
+      <p>
+        It cannot tell someone whether that worker communicates in a way they understand, notices when they are overwhelmed, has the patience they need, or knows how to support their particular disability, culture, routine and boundaries.
+      </p>
+
+      <blockquote>
+        <p><strong>Screened is not the same as known.</strong></p>
+        <p><strong>Registered is not the same as right for me.</strong></p>
+      </blockquote>
+
+      <h2>What registration can — and cannot — show</h2>
+      <p>
+        The NDIS Practice Standards set the quality standards registered providers must meet. They include participant rights and responsibilities, governance, provision of supports and quality indicators that auditors use to assess compliance. <a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: C.gold }}>[2]</a>
+      </p>
+      <p>
+        That framework is necessary. Yet a participant still often meets the choice point with a name, a photo, a service list and an available time slot. The provider may know a great deal about the workers they employ. The person expected to choose one may know almost nothing — and still be expected to say yes.
+      </p>
+
+      <h2>The vast middle ground</h2>
+      <p>
+        There is a whole middle ground between clearly unsafe and genuinely right for someone. It is where personality, communication, consistency, sensory awareness, trauma-aware practice, culture, soft skills and trust sit.
+      </p>
+      <p>
+        A worker can be screened, registered, qualified and genuinely good at their job — and still be completely wrong for a particular person. That is not a failure of either person. It is what happens when a high-stakes human decision is made with too little human information.
+      </p>
+
+      <h2>Choice and control has to land somewhere</h2>
+      <p>
+        “Choice and control” appears in policy, welcome packs and provider websites. Saying it and building for it are different things.
+      </p>
+      <p>
+        Independent decisions need information that is meaningful, accessible and available before a match is made. It may need to be read, heard, watched, translated or explored with a trusted person. It needs time to process. It needs to make room for the participant’s own voice, preferences and understanding.
+      </p>
+      <p>
+        The participant should be at the centre of the process — not the end recipient of a decision someone else has already made.
+      </p>
+
+      <h2>Floating. Not landing.</h2>
+      <p>
+        The empathy is often genuine. The foresight is often there in individual workers, coordinators and providers. But it can float from person to person, moment to moment, because there is no consistent way to make it visible before support begins.
+      </p>
+      <p>
+        That is the work in front of us: helping the words land. Transparent information. Multimodal access. Enough to genuinely choose.
+      </p>
+      <p>
+        <strong style={{ color: C.teal }}>Inclusive foundations mean no one is excluded from the decision about their own life.</strong>
+      </p>
+
+      <div style={{ marginTop: "48px", padding: "30px", background: "rgba(45,212,191,0.08)", border: "1px solid rgba(45,212,191,0.28)", borderRadius: "18px" }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 3vw, 30px)", color: "#ffffff", lineHeight: 1.25, margin: "0 0 12px" }}>See what enough information can look like.</p>
+        <p style={{ margin: "0 0 22px" }}>Explore an interactive, accessible support worker profile designed to help people get a feel for the person before support starts.</p>
+        <Link href="/view" style={{ display: "inline-block", background: C.gold, color: "#112233", padding: "12px 20px", borderRadius: "8px", fontWeight: 800, textDecoration: "none" }}>Explore a sample profile</Link>
+      </div>
+
+      <div style={{ marginTop: "48px", paddingTop: "24px", borderTop: `1px solid ${C.border}` }}>
+        <h2 style={{ fontSize: "24px" }}>References</h2>
+        <ol style={{ paddingLeft: "22px" }}>
+          <li><a href="https://www.ndiscommission.gov.au/workforce/worker-screening" target="_blank" rel="noreferrer" style={{ color: C.gold }}>NDIS Quality and Safeguards Commission, “Worker screening”.</a></li>
+          <li><a href="https://www.ndiscommission.gov.au/rules-and-standards/ndis-practice-standards" target="_blank" rel="noreferrer" style={{ color: C.gold }}>NDIS Quality and Safeguards Commission, “NDIS Practice Standards”.</a></li>
+        </ol>
+      </div>
+    </>
+  );
+}
+
 // ── Article metadata registry ─────────────────────────────────────────────
 const ARTICLES: Record<string, {
   title: string;
@@ -648,6 +731,16 @@ const ARTICLES: Record<string, {
   keywords?: string;
   content: () => React.ReactElement;
 }> = {
+  "floating-not-landing": {
+    title: "Floating. Not Landing.",
+    date: "August 2026",
+    readTime: "6 min read",
+    category: "Informed Choice",
+    emoji: "⬇️",
+    metaDescription: "Choice and control needs more than a policy statement. Why meaningful, accessible information is essential before a participant chooses support.",
+    keywords: "NDIS choice and control, NDIS informed choice, participant rights NDIS, NDIS worker screening, provider registration, accessible support worker profiles, InSync Profiles",
+    content: FloatingNotLandingArticle,
+  },
   "more-power-to-you": {
     title: "More power to You — A Participant-Led Journey into the Most Important Decisions of Their Life",
     date: "June 2026",

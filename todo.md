@@ -13,3 +13,7 @@
 - [x] Add Facebook-compatible Open Graph and Twitter card metadata to the site entry page.
 - [x] Build, deploy, and validate the refreshed social sharing preview.
 - [x] Replace the landing-page hero heading with the approved person-centred, accessibility-first purpose statement.
+- [ ] Select a new hero background-image direction that supports the revised purpose statement.
+- [x] Publish the “Floating. Not Landing.” article in the InSync Blog.
+- [x] Add a landing-page call-to-action linking to the featured article.
+- [x] Build, deploy, and verify the featured article and landing-page call-to-action.
